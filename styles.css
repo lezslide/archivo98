@@ -1997,10 +1997,30 @@ textarea {
     inset 0 0 10px rgba(57, 255, 20, 0.08);
 }
 
+.retro-mp3-shell .player.live-mode #btn-setup {
+  background: linear-gradient(180deg, rgba(22, 22, 22, 0.96), rgba(58, 58, 58, 0.92));
+  border: 1px solid rgba(184, 184, 184, 0.45);
+  color: #e5f7d6;
+  font-size: 7px;
+  line-height: 1;
+  text-indent: 0;
+  overflow: visible;
+  box-shadow:
+    0 0 10px rgba(0, 0, 0, 0.32),
+    inset 0 0 8px rgba(255, 255, 255, 0.06);
+}
+
 .retro-mp3-shell .player.live-mode .btn:hover {
   box-shadow:
     0 0 18px rgba(57, 255, 20, 0.32),
     inset 0 0 14px rgba(57, 255, 20, 0.16);
+}
+
+.retro-mp3-shell .player.live-mode #btn-setup:hover {
+  background: linear-gradient(180deg, rgba(36, 36, 36, 0.98), rgba(78, 78, 78, 0.94));
+  box-shadow:
+    0 0 12px rgba(0, 0, 0, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.08);
 }
 
 .retro-mp3-shell .player.live-mode .btn:active {
@@ -2200,6 +2220,50 @@ textarea {
 .retro-design-list {
   display: grid;
   gap: 14px;
+}
+
+.retro-now-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.retro-now-row {
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(113, 255, 46, 0.15);
+}
+
+.retro-now-row span {
+  color: #9fb69a;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.retro-now-row strong {
+  color: #eef6e9;
+  font-size: 13px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.retro-now-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.retro-now-btn {
+  border: 1px solid rgba(113, 255, 46, 0.28);
+  background: linear-gradient(180deg, rgba(32, 32, 32, 0.96), rgba(58, 58, 58, 0.9));
+  color: #e5f7d6;
+  padding: 7px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
 }
 
 .retro-design-row {

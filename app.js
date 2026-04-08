@@ -798,6 +798,9 @@ function refreshWindow(appId) {
   }));
   current.element.querySelector(".window-body").innerHTML = desktopApps[appId].render();
   if (typeof desktopApps[appId].bind === "function") desktopApps[appId].bind(current.element);
+  if (appId === "winamp") {
+    makeDraggable(current.element);
+  }
   const nextScrollContainers = Array.from(current.element.querySelectorAll(".window-content, .discord-messages, .msn-chatlog, .slot98-window-content"));
   requestAnimationFrame(() => {
     formState.forEach((entry) => {
@@ -1639,6 +1642,27 @@ function renderRetroTrackListV2() {
       </div>
     `;
   }).join("");
+}
+
+function renderRetroNowPanel() {
+  const track = getCurrentMusicTrack();
+  if (!track) {
+    return `<div class="retro-now-panel"><div class="retro-now-empty">No hay track seleccionado.</div></div>`;
+  }
+  const sourceLabel = track.visibility === "private" ? "Biblioteca privada" : "Biblioteca publica";
+  return `
+    <div class="retro-now-panel">
+      <div class="retro-now-row"><span>Titulo</span><strong>${escapeHtml(track.title || "SIN TITULO")}</strong></div>
+      <div class="retro-now-row"><span>Artista</span><strong>${escapeHtml(track.artist || "UNDER COMMUNITY")}</strong></div>
+      <div class="retro-now-row"><span>Fuente</span><strong>${escapeHtml(sourceLabel)}</strong></div>
+      <div class="retro-now-row"><span>Tiempo</span><strong>${escapeHtml(formatMusicTime(state.player.currentTime))} / ${escapeHtml(formatMusicTime(state.player.duration))}</strong></div>
+      <div class="retro-now-actions">
+        <button type="button" class="retro-now-btn" data-now-action="play">${state.player.isPlaying ? "PAUSAR" : "REPRODUCIR"}</button>
+        <button type="button" class="retro-now-btn" data-now-action="prev">ANTERIOR</button>
+        <button type="button" class="retro-now-btn" data-now-action="next">SIGUIENTE</button>
+      </div>
+    </div>
+  `;
 }
 
 function toggleRetroPlayerModal(forceOpen) {
@@ -3224,13 +3248,13 @@ const desktopApps = {
             <div id="btn-next" class="btn" data-id="next" style="${getRetroControlStyle("next")}">Nxt</div>
             <div id="btn-stop" class="btn" data-id="stop" style="${getRetroControlStyle("stop")}">Stop</div>
             <div id="btn-power" class="btn" data-id="power" style="${getRetroControlStyle("power")}">Pwr</div>
-            <div id="btn-setup" class="btn" data-id="setup" title="Abrir playlist" aria-label="Abrir playlist" style="${getRetroControlStyle("setup")}">List</div>
+            <div id="btn-setup" class="btn" data-id="setup" title="Abrir playlist" aria-label="Abrir playlist" style="${getRetroControlStyle("setup")}">PLAYLIST</div>
           </div>
 
           <div id="config-modal" class="${state.player.modalOpen ? "open" : ""}">
             <div class="retro-modal-tabs">
               <button type="button" class="${state.player.activeTab === "playlist" ? "active" : ""}" data-retro-tab="playlist">PLAYLIST</button>
-              <button type="button" class="${state.player.activeTab === "design" ? "active" : ""}" data-retro-tab="design">DISENO</button>
+              <button type="button" class="${state.player.activeTab === "now" ? "active" : ""}" data-retro-tab="now">AHORA</button>
             </div>
             <div id="content-playlist" class="${state.player.activeTab === "playlist" ? "" : "hidden"}">
               <div class="retro-library-filters">
@@ -3243,9 +3267,8 @@ const desktopApps = {
               <div class="retro-playlist-copy">Tracks aprobados por la comunidad. Likes y plays arman el top.</div>
               <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
             </div>
-            <div id="content-design" class="${state.player.activeTab === "design" ? "" : "hidden"} retro-design-list">
-              <div class="retro-design-row"><span>Color Texto</span><input type="color" id="input-lcd-text" value="${escapeHtml(state.player.lcdText)}"></div>
-              <div class="retro-design-row"><span>Fondo App</span><input type="color" id="input-app-bg" value="${escapeHtml(state.player.appBg)}"></div>
+            <div id="content-now" class="${state.player.activeTab === "now" ? "" : "hidden"} retro-design-list">
+              ${renderRetroNowPanel()}
             </div>
             <button type="button" class="retro-close-btn" data-close-modal="1">CERRAR</button>
           </div>
@@ -3261,16 +3284,18 @@ const desktopApps = {
         button.addEventListener("click", () => setMusicLibraryView(button.dataset.libraryView));
       });
       win.querySelector("[data-close-modal]")?.addEventListener("click", () => toggleRetroPlayerModal(false));
-      win.querySelector("#input-lcd-text")?.addEventListener("input", (event) => {
-        updateRetroPlayerColors({ lcdText: event.target.value });
-      });
-      win.querySelector("#input-app-bg")?.addEventListener("input", (event) => {
-        updateRetroPlayerColors({ appBg: event.target.value });
-      });
       win.querySelectorAll("[data-play-track-id]").forEach((button) => {
         button.addEventListener("click", () => {
           playMusicTrack(button.dataset.playTrackId);
           toggleRetroPlayerModal(false);
+        });
+      });
+      win.querySelectorAll("[data-now-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const action = button.dataset.nowAction;
+          if (action === "play") void toggleMusicPlayback();
+          if (action === "prev") playAdjacentTrack(-1);
+          if (action === "next") playAdjacentTrack(1);
         });
       });
       win.querySelectorAll("[data-like-track-id]").forEach((button) => {
