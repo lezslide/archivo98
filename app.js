@@ -104,6 +104,7 @@ const state = {
     audio: null,
     audioContext: null,
     analyser: null,
+    gainNode: null,
     sourceNode: null,
     frequencyData: null,
     vizFrame: 0,
@@ -113,6 +114,7 @@ const state = {
     currentTime: 0,
     duration: 0,
     volume: 0.85,
+    boost: 1,
     modalOpen: false,
     activeTab: "playlist",
     libraryView: "top",
@@ -1320,6 +1322,14 @@ function setMusicUploadStatus(container, text) {
   if (node) node.textContent = state.musicUpload.status;
 }
 
+function syncMusicOutputGain() {
+  const audio = ensureMusicAudio();
+  audio.volume = Math.min(1, state.player.volume);
+  if (state.player.gainNode) {
+    state.player.gainNode.gain.value = Math.max(0, Math.min(3, state.player.volume * state.player.boost));
+  }
+}
+
 function rememberUserPanelScroll(container) {
   const panel = (container instanceof Element ? container : document).querySelector(".window-content.user-panel");
   if (!panel) return;
@@ -1353,7 +1363,7 @@ function ensureMusicAudio() {
   const audio = new Audio();
   audio.preload = "metadata";
   audio.crossOrigin = "anonymous";
-  audio.volume = state.player.volume;
+  audio.volume = Math.min(1, state.player.volume);
   audio.addEventListener("timeupdate", () => {
     state.player.currentTime = audio.currentTime || 0;
     state.player.duration = audio.duration || 0;
@@ -1407,11 +1417,16 @@ async function ensureMusicAnalyser() {
     state.player.analyser.smoothingTimeConstant = 0.82;
     state.player.frequencyData = new Uint8Array(state.player.analyser.frequencyBinCount);
   }
+  if (!state.player.gainNode) {
+    state.player.gainNode = state.player.audioContext.createGain();
+  }
   if (!state.player.sourceNode) {
     state.player.sourceNode = state.player.audioContext.createMediaElementSource(audio);
-    state.player.sourceNode.connect(state.player.analyser);
+    state.player.sourceNode.connect(state.player.gainNode);
+    state.player.gainNode.connect(state.player.analyser);
     state.player.analyser.connect(state.player.audioContext.destination);
   }
+  syncMusicOutputGain();
   return state.player.analyser;
 }
 
@@ -1656,10 +1671,14 @@ function renderRetroNowPanel() {
       <div class="retro-now-row"><span>Artista</span><strong>${escapeHtml(track.artist || "UNDER COMMUNITY")}</strong></div>
       <div class="retro-now-row"><span>Fuente</span><strong>${escapeHtml(sourceLabel)}</strong></div>
       <div class="retro-now-row"><span>Tiempo</span><strong>${escapeHtml(formatMusicTime(state.player.currentTime))} / ${escapeHtml(formatMusicTime(state.player.duration))}</strong></div>
+      <div class="retro-now-row"><span>Boost</span><strong>x${escapeHtml(state.player.boost.toFixed(1))}</strong></div>
       <div class="retro-now-actions">
         <button type="button" class="retro-now-btn" data-now-action="play">${state.player.isPlaying ? "PAUSAR" : "REPRODUCIR"}</button>
         <button type="button" class="retro-now-btn" data-now-action="prev">ANTERIOR</button>
         <button type="button" class="retro-now-btn" data-now-action="next">SIGUIENTE</button>
+        <button type="button" class="retro-now-btn" data-now-action="boost-normal">BOOST 1X</button>
+        <button type="button" class="retro-now-btn" data-now-action="boost-mid">BOOST 1.5X</button>
+        <button type="button" class="retro-now-btn" data-now-action="boost-max">BOOST 2X</button>
       </div>
     </div>
   `;
@@ -3296,6 +3315,11 @@ const desktopApps = {
           if (action === "play") void toggleMusicPlayback();
           if (action === "prev") playAdjacentTrack(-1);
           if (action === "next") playAdjacentTrack(1);
+          if (action === "boost-normal") state.player.boost = 1;
+          if (action === "boost-mid") state.player.boost = 1.5;
+          if (action === "boost-max") state.player.boost = 2;
+          syncMusicOutputGain();
+          refreshWindow("winamp");
         });
       });
       win.querySelectorAll("[data-like-track-id]").forEach((button) => {
@@ -3311,12 +3335,12 @@ const desktopApps = {
           if (id === "prev") playAdjacentTrack(-1);
           if (id === "vol-up") {
             state.player.volume = Math.min(1, state.player.volume + 0.05);
-            ensureMusicAudio().volume = state.player.volume;
+            syncMusicOutputGain();
             updateUnderMusicUi();
           }
           if (id === "vol-down") {
             state.player.volume = Math.max(0, state.player.volume - 0.05);
-            ensureMusicAudio().volume = state.player.volume;
+            syncMusicOutputGain();
             updateUnderMusicUi();
           }
           if (id === "power") {
