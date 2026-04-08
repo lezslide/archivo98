@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Windows 98 Web OS</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <div id="desktop">
+    <div class="desktop-shortcuts" id="desktop-shortcuts">
+      <div class="shortcut" data-app="users">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/user_1.png?v=1775528275" class="shortcut-icon icon-large" alt="User" />
+        <span>User</span>
+      </div>
+      <div class="shortcut" data-app="chat-global">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/global_1.png?v=1775528275" class="shortcut-icon" alt="Global Under" />
+        <span>Global Chat</span>
+      </div>
+      <div class="shortcut" data-app="proyectos">
+        <svg class="shortcut-icon" viewBox="0 0 24 24" fill="#ffe066">
+          <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+        </svg>
+        <span>Proyectos</span>
+      </div>
+      <div class="shortcut" data-app="private-chat">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/msn_367e7189-7738-45ba-baac-fe60233a0a09.png?v=1775529015" class="shortcut-icon" alt="MSN Under" />
+        <span>MSN Under</span>
+      </div>
+      <div class="shortcut" data-app="explorer-games">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/juegos.png?v=1775529104" class="shortcut-icon icon-large" alt="Juegos" />
+        <span>Juegos</span>
+      </div>
+      <div class="shortcut" data-app="winamp">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/winunder.png?v=1775529015" class="shortcut-icon" alt="Under Music" />
+        <span>Under Music</span>
+      </div>
+    </div>
+
+    <div id="window-layer"></div>
+  </div>
+
+  <div class="taskbar">
+    <button class="start-btn" id="start-btn">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Windows_logo_1992.svg" width="16" alt="Inicio" />
+      Inicio
+    </button>
+    <div id="taskbar-items" class="taskbar-items"></div>
+    <div class="systray">
+      <span id="online-indicator">Offline</span>
+      <span class="systray-separator"></span>
+      <span id="clock">--:--</span>
+    </div>
+  </div>
+
+  <div id="start-menu" class="start-menu hidden">
+    <div class="start-menu-layout">
+      <div class="start-sidebar"><span>Windows 98</span></div>
+      <div class="start-content">
+        <button class="start-item" data-app="users">Perfil</button>
+        <button class="start-item" data-app="proyectos">Proyectos</button>
+        <button class="start-item" data-app="private-chat">MSN Under</button>
+        <button class="start-item" data-app="chat-global">Global Chat</button>
+        <button class="start-item" data-app="explorer-games">Juegos</button>
+        <button class="start-item" data-app="winamp">Under Music</button>
+        <hr />
+        <button class="start-item" id="restart-app">Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <template id="window-template">
+    <section class="window">
+      <div class="window-header">
+        <div class="header-title"></div>
+        <div class="header-controls">
+          <button class="win-btn" data-action="minimize">_</button>
+          <button class="win-btn" data-action="maximize">□</button>
+          <button class="win-btn" data-action="close">X</button>
+        </div>
+      </div>
+      <div class="window-body"></div>
+      <div class="window-resizer"></div>
+    </section>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>

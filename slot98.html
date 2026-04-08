@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>slot98</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --win-gray: #c0c0c0;
+      --win-dark: #808080;
+      --win-light: #ffffff;
+      --bg-blue: #1e4ea1;
+    }
+    html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; background: var(--bg-blue); font-family: "MS Sans Serif", Arial, sans-serif; color: #fff; }
+    .page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; box-sizing: border-box; }
+    .shell { width: 980px; background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); color: #000; box-shadow: 6px 6px 0 #000; }
+    .title { background: linear-gradient(90deg, #000080, #1084d0); color: #fff; padding: 6px 8px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; padding: 16px; }
+    .slot-body { background: linear-gradient(145deg, #111, #333 45%, #000); padding: 18px; border: 4px solid #888; color: #fff; }
+    .hud { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; margin-bottom: 12px; font-family: monospace; }
+    .reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: #000; padding: 10px; border: 2px solid #333; }
+    .reel { height: 220px; background: #fff; overflow: hidden; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+    .strip { position: absolute; width: 100%; display: flex; flex-direction: column; }
+    .symbol { height: 73.33px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eee; }
+    .symbol img { max-width: 85%; max-height: 85%; object-fit: contain; }
+    .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .btn { background: var(--win-gray); border: 2px solid; border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light); padding: 6px 12px; cursor: pointer; font-weight: bold; }
+    .btn:active { border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark); }
+    .sidebar { display: grid; gap: 12px; }
+    .panel { background: #eef4ff; border: 2px inset var(--win-gray); padding: 10px; color: #000; }
+    .panel h3 { margin: 0 0 8px; font-size: 14px; color: #1c4a77; }
+    .code-row, .claim-row { display: flex; gap: 8px; }
+    .input { width: 100%; padding: 6px; border: 2px inset var(--win-gray); }
+    .status { font-size: 12px; font-weight: bold; color: #0f3f73; min-height: 18px; }
+    .album { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .sticker-card { border: 1px solid #a7c1de; background: #fff; padding: 6px; display: grid; gap: 6px; justify-items: center; text-align: center; font-size: 11px; }
+    .sticker-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+    .sticker-card.empty { opacity: 0.5; }
+    .small-btn { padding: 4px 8px; font-size: 11px; }
+    .track { font-size: 12px; color: #36587d; }
+    @media (max-width: 900px) {
+      .content { grid-template-columns: 1fr; }
+      .shell { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="shell">
+      <div class="title">
+        <span>SLOT98_REELOK.EXE</span>
+        <button class="btn" onclick="location.reload()">X</button>
+      </div>
+      <div class="content">
+        <section class="slot-body">
+          <div class="hud">
+            <div>CREDITS: <span id="credits-value">0</span></div>
+            <div>BET: 10</div>
+            <div>WIN RATE: <span id="win-rate-label">10%</span></div>
+          </div>
+          <div class="reels">
+            <div class="reel"><div class="strip" id="strip-1"></div></div>
+            <div class="reel"><div class="strip" id="strip-2"></div></div>
+            <div class="reel"><div class="strip" id="strip-3"></div></div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="spin-btn">SPIN</button>
+            <button class="btn" id="claim-album-btn">RECLAMAR ALBUM</button>
+          </div>
+          <div class="status" id="status-text">Cargando sesion...</div>
+        </section>
+        <aside class="sidebar">
+          <section class="panel">
+            <h3>Recargar 10 credits</h3>
+            <div class="code-row">
+              <input id="code-input" class="input" type="text" placeholder="Pega tu codigo RX..." />
+              <button class="btn small-btn" id="redeem-btn">Cargar</button>
+            </div>
+            <div class="track">ManyChat te puede mandar el codigo por DM y vos lo pegás acá.</div>
+          </section>
+          <section class="panel">
+            <h3>Album de stickers</h3>
+            <div class="track">Completá 8 stickers distintos y reclamá el premio total. Cada sticker vendido da 20 credits.</div>
+            <div class="album" id="album-grid"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://simmltkpoqfrbkianyza.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_PnA09ddT1Jz_hWAS0TRCbw_lG_Jd3pE";
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const BET = 10;
+    const ALBUM_PRIZE = 500;
+    const SYMBOLS = [
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/1_9e93997f-11bc-4318-bdee-be673ac1a38d.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/6.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/5.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/4.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/8.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/3.jpg?v=1774789967",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/2.jpg?v=1774789178",
+      "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/5a6f3b0ad467738ca46c19c57db87cd0.jpg?v=1774953008"
+    ];
+
+    let user = null;
+    let credits = 0;
+    let isSpinning = false;
+    let winRate = 10;
+    let ownedStickers = [];
+
+    function setStatus(text) {
+      document.getElementById("status-text").textContent = text;
+    }
+
+    function updateCreditsUI() {
+      document.getElementById("credits-value").textContent = credits;
+      document.getElementById("win-rate-label").textContent = `${winRate}%`;
+    }
+
+    async function loadSession() {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session?.user) {
+        setStatus("Iniciá sesion en la app principal antes de usar slot98.");
+        document.getElementById("spin-btn").disabled = true;
+        return;
+      }
+
+      user = data.session.user;
+      await Promise.all([loadProfile(), loadGameConfig(), loadStickerAlbum()]);
+      updateCreditsUI();
+      setStatus("Listo para jugar.");
+    }
+
+    async function loadProfile() {
+      const { data } = await supabase.from("users").select("credits").eq("id", user.id).single();
+      credits = Number(data?.credits || 0);
+    }
+
+    async function loadGameConfig() {
+      const { data } = await supabase.from("game_config").select("key_value").eq("key_name", "slot_win_rate").maybeSingle();
+      winRate = Number(data?.key_value || 10);
+    }
+
+    async function loadStickerAlbum() {
+      const { data } = await supabase.from("user_stickers").select("sticker_key,quantity").eq("user_id", user.id);
+      ownedStickers = data || [];
+      renderAlbum();
+    }
+
+    function renderAlbum() {
+      const grid = document.getElementById("album-grid");
+      grid.innerHTML = SYMBOLS.map((symbolUrl, index) => {
+        const entry = ownedStickers.find((item) => item.sticker_key === symbolUrl);
+        if (!entry) {
+          return `<div class="sticker-card empty"><img src="${symbolUrl}" alt=""><div>Slot ${index + 1}</div><div>0</div></div>`;
+        }
+        return `<div class="sticker-card"><img src="${symbolUrl}" alt=""><div>Slot ${index + 1}</div><div>x${entry.quantity}</div><button class="btn small-btn" data-sell="${symbolUrl}">Vender +20</button></div>`;
+      }).join("");
+
+      grid.querySelectorAll("[data-sell]").forEach((button) => {
+        button.addEventListener("click", () => sellSticker(button.dataset.sell));
+      });
+    }
+
+    function buildStrip(id) {
+      const strip = document.getElementById(`strip-${id}`);
+      strip.innerHTML = "";
+      const pool = [...SYMBOLS, ...SYMBOLS, ...SYMBOLS, ...SYMBOLS];
+      pool.forEach((symbol) => {
+        const div = document.createElement("div");
+        div.className = "symbol";
+        div.innerHTML = `<img src="${symbol}" alt="">`;
+        strip.appendChild(div);
+      });
+      strip.style.transform = "translateY(-73.33px)";
+    }
+
+    function animateReel(id, target, time) {
+      return new Promise((resolve) => {
+        const strip = document.getElementById(`strip-${id}`);
+        const h = 73.33;
+        const totalH = SYMBOLS.length * h;
+        const start = Date.now();
+        const dist = totalH * 7 + (target * h) - h;
+        function frame() {
+          const progress = Math.min((Date.now() - start) / time, 1);
+          const ease = 1 - Math.pow(1 - progress, 4);
+          const currentPos = (ease * dist) % totalH;
+          strip.style.transform = `translateY(${-currentPos}px)`;
+          if (progress < 1) requestAnimationFrame(frame);
+          else {
+            strip.style.transform = `translateY(${-((target * h) - h)}px)`;
+            resolve();
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+
+    async function updateCredits(nextValue) {
+      const { error } = await supabase.from("users").update({
+        credits: nextValue,
+        last_seen: new Date().toISOString(),
+      }).eq("id", user.id);
+      if (error) throw error;
+      credits = nextValue;
+      updateCreditsUI();
+    }
+
+    async function spin() {
+      if (isSpinning || credits < BET || !user) return;
+      isSpinning = true;
+      setStatus("Girando...");
+      await updateCredits(credits - BET);
+
+      const rand = Math.random() * 100;
+      let results;
+      if (rand < winRate) {
+        const winSym = Math.floor(Math.random() * SYMBOLS.length);
+        results = [winSym, winSym, winSym];
+      } else {
+        results = [
+          Math.floor(Math.random() * SYMBOLS.length),
+          Math.floor(Math.random() * SYMBOLS.length),
+          Math.floor(Math.random() * SYMBOLS.length),
+        ];
+        if (results[0] === results[1] && results[1] === results[2]) {
+          results[2] = (results[2] + 1) % SYMBOLS.length;
+        }
+      }
+
+      await Promise.all([
+        animateReel(1, results[0], 1200),
+        animateReel(2, results[1], 1800),
+        animateReel(3, results[2], 2400),
+      ]);
+
+      if (results[0] === results[1] && results[1] === results[2]) {
+        await updateCredits(credits + 250);
+        await addSticker(SYMBOLS[results[0]]);
+        setStatus("Jackpot! +250 credits y sticker nuevo.");
+      } else {
+        setStatus("Casi... probá otra vez.");
+      }
+
+      isSpinning = false;
+    }
+
+    async function addSticker(symbolUrl) {
+      const existing = ownedStickers.find((item) => item.sticker_key === symbolUrl);
+      if (existing) {
+        await supabase.from("user_stickers").update({ quantity: existing.quantity + 1 }).eq("id", existing.id);
+      } else {
+        await supabase.from("user_stickers").insert({ user_id: user.id, sticker_key: symbolUrl, quantity: 1 });
+      }
+      await loadStickerAlbum();
+    }
+
+    async function sellSticker(symbolUrl) {
+      const entry = ownedStickers.find((item) => item.sticker_key === symbolUrl);
+      if (!entry) return;
+      if (entry.quantity <= 1) {
+        await supabase.from("user_stickers").delete().eq("id", entry.id);
+      } else {
+        await supabase.from("user_stickers").update({ quantity: entry.quantity - 1 }).eq("id", entry.id);
+      }
+      await updateCredits(credits + 20);
+      await loadStickerAlbum();
+      setStatus("Sticker vendido. +20 credits.");
+    }
+
+    async function claimAlbumPrize() {
+      const uniqueCount = ownedStickers.filter((item) => item.quantity > 0).length;
+      if (uniqueCount < 8) {
+        setStatus(`Te faltan ${8 - uniqueCount} stickers para completar el album.`);
+        return;
+      }
+      await updateCredits(credits + ALBUM_PRIZE);
+      await supabase.from("user_stickers").delete().eq("user_id", user.id);
+      await loadStickerAlbum();
+      setStatus(`Coleccion completa! Premio cobrado: +${ALBUM_PRIZE} credits.`);
+    }
+
+    async function redeemCode() {
+      const code = document.getElementById("code-input").value.trim().toUpperCase();
+      if (!code) return;
+      const { data } = await supabase.from("promo_codes").select("id,credits_amount,claimed_at,claimed_by").eq("code", code).maybeSingle();
+      if (!data) {
+        setStatus("Codigo invalido.");
+        return;
+      }
+      if (data.claimed_at || data.claimed_by) {
+        setStatus("Ese codigo ya fue usado.");
+        return;
+      }
+
+      const nextCredits = credits + Number(data.credits_amount || 10);
+      const [userUpdate, codeUpdate] = await Promise.all([
+        supabase.from("users").update({ credits: nextCredits, last_seen: new Date().toISOString() }).eq("id", user.id),
+        supabase.from("promo_codes").update({ claimed_by: user.id, claimed_at: new Date().toISOString() }).eq("id", data.id),
+      ]);
+
+      if (userUpdate.error || codeUpdate.error) {
+        setStatus("No se pudo cargar el codigo.");
+        return;
+      }
+      credits = nextCredits;
+      updateCreditsUI();
+      document.getElementById("code-input").value = "";
+      setStatus(`Codigo aplicado: +${data.credits_amount} credits.`);
+    }
+
+    document.getElementById("spin-btn").addEventListener("click", spin);
+    document.getElementById("redeem-btn").addEventListener("click", redeemCode);
+    document.getElementById("claim-album-btn").addEventListener("click", claimAlbumPrize);
+
+    for (let i = 1; i <= 3; i += 1) buildStrip(i);
+    loadSession();
+  </script>
+</body>
+</html>

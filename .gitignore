@@ -1,0 +1,10 @@
+Thumbs.db
+.DS_Store
+desktop.ini
+
+.vercel
+node_modules
+
+.env
+.env.*
+!.env.example
