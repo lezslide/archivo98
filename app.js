@@ -1718,13 +1718,27 @@ async function addMusicTrack() {
 
 async function uploadMusicFile(file) {
   if (!state.supabase || !file) return "";
+  const originalName = String(file.name || "track.mp3");
+  const lowerName = originalName.toLowerCase();
+  const looksLikeMp3 = lowerName.endsWith(".mp3");
+  const normalizedType = file.type || (looksLikeMp3 ? "audio/mpeg" : "");
+  if (!looksLikeMp3 && normalizedType !== "audio/mpeg" && normalizedType !== "audio/mp3") {
+    throw new Error("Solo se permiten archivos MP3.");
+  }
   const safeName = `${Date.now()}-${String(file.name || "track.mp3").replace(/[^a-zA-Z0-9._-]/g, "-")}`;
   const path = `${state.user.id}/${safeName}`;
-  const { error } = await state.supabase.storage.from("music").upload(path, file, {
+  const uploadFile = normalizedType && normalizedType !== file.type
+    ? new File([file], originalName, { type: normalizedType })
+    : file;
+  const { error } = await state.supabase.storage.from("music").upload(path, uploadFile, {
     cacheControl: "3600",
+    contentType: normalizedType || "audio/mpeg",
     upsert: false,
   });
   if (error) {
+    if (String(error.message || "").toLowerCase().includes("mime")) {
+      throw new Error("Supabase rechazo el MP3 por tipo MIME. Ejecuta la migracion nueva del bucket music.");
+    }
     throw error;
   }
   const { data } = state.supabase.storage.from("music").getPublicUrl(path);
