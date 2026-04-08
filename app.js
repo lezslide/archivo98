@@ -428,10 +428,6 @@ function renderEmojiPicker(targetId, attrName) {
 }
 
 function init() {
-  if (isStandalonePlayerMode()) {
-    initStandalonePlayerMode();
-    return;
-  }
   loadStoredContacts();
   loadModerationStrikes();
   bindDesktop();
@@ -441,44 +437,6 @@ function init() {
   initSupabaseClient();
   applyUserSkin();
   window.addEventListener("orientationchange", adjustWindowsForViewport);
-}
-
-function isStandalonePlayerMode() {
-  return new URLSearchParams(window.location.search).get("player") === "1";
-}
-
-function initStandalonePlayerMode() {
-  document.body.classList.add("standalone-player-mode");
-  loadStoredContacts();
-  loadModerationStrikes();
-  updateClock();
-  setInterval(updateClock, 1000);
-  initSupabaseClient();
-  applyUserSkin();
-  renderStandalonePlayerPage();
-}
-
-function renderStandalonePlayerPage() {
-  document.body.innerHTML = desktopApps.winamp.render();
-  desktopApps.winamp.bind(document.body);
-  updateUnderMusicUi();
-}
-
-function refreshWinampView() {
-  if (isStandalonePlayerMode()) {
-    renderStandalonePlayerPage();
-    return;
-  }
-  refreshWindow("winamp");
-}
-
-function openMusicPlayer() {
-  if (isStandalonePlayerMode()) return;
-  const popupUrl = `${window.location.origin}${window.location.pathname}?player=1`;
-  const popup = window.open(popupUrl, "archivo98-player", "popup=yes,width=520,height=900,left=80,top=40");
-  if (!popup) {
-    openWindow("winamp");
-  }
 }
 
 function isMobileViewport() {
@@ -567,13 +525,7 @@ function rerenderCoreApps() {
 
 function bindDesktop() {
   document.querySelectorAll(".shortcut").forEach((shortcut) => {
-    shortcut.addEventListener("dblclick", () => {
-      if (shortcut.dataset.app === "winamp") {
-        openMusicPlayer();
-        return;
-      }
-      openWindow(shortcut.dataset.app);
-    });
+    shortcut.addEventListener("dblclick", () => openWindow(shortcut.dataset.app));
     shortcut.addEventListener("click", () => {
       document.querySelectorAll(".shortcut").forEach((item) => item.classList.remove("selected"));
       shortcut.classList.add("selected");
@@ -597,11 +549,7 @@ function bindStartMenu() {
 
   document.querySelectorAll(".start-item[data-app]").forEach((item) => {
     item.addEventListener("click", () => {
-      if (item.dataset.app === "winamp") {
-        openMusicPlayer();
-      } else {
-        openWindow(item.dataset.app);
-      }
+      openWindow(item.dataset.app);
       closeStartMenu();
     });
   });
@@ -1547,7 +1495,7 @@ function getRetroClockText() {
 }
 
 function updateUnderMusicUi() {
-  const win = state.windows.get("winamp")?.element || (isStandalonePlayerMode() ? document : null);
+  const win = state.windows.get("winamp")?.element;
   if (!win) return;
   const track = getRetroCurrentTrack();
   const playerNode = win.querySelector("#player-container");
@@ -1695,7 +1643,12 @@ function renderRetroTrackListV2() {
 
 function toggleRetroPlayerModal(forceOpen) {
   state.player.modalOpen = typeof forceOpen === "boolean" ? forceOpen : !state.player.modalOpen;
-  refreshWinampView();
+  refreshWindow("winamp");
+}
+
+function setRetroPlayerTab(tabId) {
+  state.player.activeTab = tabId;
+  refreshWindow("winamp");
 }
 
 function setMusicLibraryView(viewId) {
@@ -1706,13 +1659,13 @@ function setMusicLibraryView(viewId) {
   if (viewId !== "mine" && state.musicTracks.length && !state.musicTracks.some((track) => track.id === state.player.currentTrackId)) {
     state.player.currentTrackId = state.musicTracks[0].id;
   }
-  refreshWinampView();
+  refreshWindow("winamp");
 }
 
 function updateRetroPlayerColors({ lcdText, appBg }) {
   if (lcdText) state.player.lcdText = lcdText;
   if (appBg) state.player.appBg = appBg;
-  refreshWinampView();
+  refreshWindow("winamp");
 }
 
 function stopMusicPlayback() {
@@ -3066,7 +3019,7 @@ const desktopApps = {
         localStorage.setItem("win98_text_color", state.user.text_color);
       });
       win.querySelector("[data-open-private]")?.addEventListener("click", () => openWindow("private-chat"));
-      win.querySelector("[data-open-music]")?.addEventListener("click", () => openMusicPlayer());
+      win.querySelector("[data-open-music]")?.addEventListener("click", () => openWindow("winamp"));
       win.querySelector('[data-action="add-global-contact"]')?.addEventListener("click", async () => {
         const input = win.querySelector("#global-contact-input");
         if (await addPrivateContact(input?.value || "")) {
@@ -3181,7 +3134,7 @@ const desktopApps = {
         button.addEventListener("click", () => openPrivateConversation(button.dataset.contact));
       });
       win.querySelector("[data-open-global]")?.addEventListener("click", () => openWindow("chat-global"));
-      win.querySelector("[data-open-music]")?.addEventListener("click", () => openMusicPlayer());
+      win.querySelector("[data-open-music]")?.addEventListener("click", () => openWindow("winamp"));
       win.querySelector('[data-action="add-msn-contact"]')?.addEventListener("click", async () => {
         const input = win.querySelector("#msn-contact-input");
         if (await addPrivateContact(input?.value || "")) {
@@ -3271,37 +3224,49 @@ const desktopApps = {
             <div id="btn-next" class="btn" data-id="next" style="${getRetroControlStyle("next")}">Nxt</div>
             <div id="btn-stop" class="btn" data-id="stop" style="${getRetroControlStyle("stop")}">Stop</div>
             <div id="btn-power" class="btn" data-id="power" style="${getRetroControlStyle("power")}">Pwr</div>
-            <div id="btn-setup" class="btn" data-id="setup" style="${getRetroControlStyle("setup")}">Set</div>
+            <div id="btn-setup" class="btn" data-id="setup" title="Abrir playlist" aria-label="Abrir playlist" style="${getRetroControlStyle("setup")}">List</div>
           </div>
 
           <div id="config-modal" class="${state.player.modalOpen ? "open" : ""}">
-            <div class="retro-modal-title">PLAYLIST</div>
-            <div class="retro-library-filters">
-              <button type="button" class="retro-filter-btn ${state.player.libraryView === "top" ? "active" : ""}" data-library-view="top">TOP</button>
-              <button type="button" class="retro-filter-btn ${state.player.libraryView === "new" ? "active" : ""}" data-library-view="new">NUEVAS</button>
-              <button type="button" class="retro-filter-btn ${state.player.libraryView === "plays" ? "active" : ""}" data-library-view="plays">MAS ESCUCHADAS</button>
-              <button type="button" class="retro-filter-btn ${state.player.libraryView === "likes" ? "active" : ""}" data-library-view="likes">MAS LIKES</button>
-              <button type="button" class="retro-filter-btn ${state.player.libraryView === "mine" ? "active" : ""}" data-library-view="mine">MIS TRACKS</button>
+            <div class="retro-modal-tabs">
+              <button type="button" class="${state.player.activeTab === "playlist" ? "active" : ""}" data-retro-tab="playlist">PLAYLIST</button>
+              <button type="button" class="${state.player.activeTab === "design" ? "active" : ""}" data-retro-tab="design">DISENO</button>
             </div>
-            <div class="retro-playlist-copy">${state.player.libraryView === "mine" ? "Tus tracks privados y personales." : "Tracks aprobados por la comunidad. Likes y plays arman el top."}</div>
-            <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
+            <div id="content-playlist" class="${state.player.activeTab === "playlist" ? "" : "hidden"}">
+              <div class="retro-library-filters">
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "top" ? "active" : ""}" data-library-view="top">TOP</button>
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "new" ? "active" : ""}" data-library-view="new">NUEVAS</button>
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "plays" ? "active" : ""}" data-library-view="plays">MAS ESCUCHADAS</button>
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "likes" ? "active" : ""}" data-library-view="likes">MAS LIKES</button>
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "mine" ? "active" : ""}" data-library-view="mine">MIS TRACKS</button>
+              </div>
+              <div class="retro-playlist-copy">Tracks aprobados por la comunidad. Likes y plays arman el top.</div>
+              <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
+            </div>
+            <div id="content-design" class="${state.player.activeTab === "design" ? "" : "hidden"} retro-design-list">
+              <div class="retro-design-row"><span>Color Texto</span><input type="color" id="input-lcd-text" value="${escapeHtml(state.player.lcdText)}"></div>
+              <div class="retro-design-row"><span>Fondo App</span><input type="color" id="input-app-bg" value="${escapeHtml(state.player.appBg)}"></div>
+            </div>
             <button type="button" class="retro-close-btn" data-close-modal="1">CERRAR</button>
           </div>
         </div>
       `;
     },
     bind(win) {
-      win.querySelector("[data-close-player]")?.addEventListener("click", () => {
-        if (isStandalonePlayerMode()) {
-          window.close();
-          return;
-        }
-        closeWindow("winamp");
+      win.querySelector("[data-close-player]")?.addEventListener("click", () => closeWindow("winamp"));
+      win.querySelectorAll("[data-retro-tab]").forEach((button) => {
+        button.addEventListener("click", () => setRetroPlayerTab(button.dataset.retroTab));
       });
       win.querySelectorAll("[data-library-view]").forEach((button) => {
         button.addEventListener("click", () => setMusicLibraryView(button.dataset.libraryView));
       });
       win.querySelector("[data-close-modal]")?.addEventListener("click", () => toggleRetroPlayerModal(false));
+      win.querySelector("#input-lcd-text")?.addEventListener("input", (event) => {
+        updateRetroPlayerColors({ lcdText: event.target.value });
+      });
+      win.querySelector("#input-app-bg")?.addEventListener("input", (event) => {
+        updateRetroPlayerColors({ appBg: event.target.value });
+      });
       win.querySelectorAll("[data-play-track-id]").forEach((button) => {
         button.addEventListener("click", () => {
           playMusicTrack(button.dataset.playTrackId);

@@ -1869,8 +1869,8 @@ textarea {
 
 .retro-player-close {
   position: absolute;
-  top: 6%;
-  right: 8%;
+  top: 1.2%;
+  right: 1.2%;
   z-index: 30;
   width: 28px;
   height: 28px;
@@ -1886,6 +1886,15 @@ textarea {
 .retro-player-close:hover {
   background: rgba(18, 40, 18, 0.92);
   box-shadow: 0 0 16px rgba(87, 255, 25, 0.28);
+}
+
+@media (max-width: 768px) {
+  .retro-player-close {
+    top: 0.8%;
+    right: 0.8%;
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .retro-mp3-shell .skin {
@@ -2058,12 +2067,20 @@ textarea {
   display: block;
 }
 
-.retro-modal-title {
-  margin-bottom: 14px;
+.retro-modal-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #374151;
+  padding-bottom: 8px;
+}
+
+.retro-modal-tabs button {
+  color: white;
+}
+
+.retro-modal-tabs button.active {
   color: var(--neon);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
 }
 
 .retro-playlist-copy {
@@ -2100,12 +2117,12 @@ textarea {
 
 .retro-track-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
   background: #27272a;
-  padding: 10px;
-  margin-bottom: 6px;
+  padding: 8px;
+  margin-bottom: 4px;
   border-radius: 8px;
   font-size: 13px;
 }
@@ -2118,15 +2135,13 @@ textarea {
   display: grid;
   gap: 3px;
   min-width: 0;
-  flex: 1;
 }
 
 .retro-track-meta strong,
 .retro-track-meta span {
-  white-space: normal;
-  overflow: visible;
-  text-overflow: initial;
-  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .retro-track-meta span {
@@ -2138,27 +2153,6 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-shrink: 0;
-}
-
-body.standalone-player-mode {
-  background:
-    radial-gradient(circle at top, rgba(48, 143, 255, 0.18), transparent 36%),
-    linear-gradient(180deg, #020617, #08111f 55%, #030712);
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-body.standalone-player-mode #desktop,
-body.standalone-player-mode .taskbar,
-body.standalone-player-mode #start-menu {
-  display: none;
-}
-
-body.standalone-player-mode .retro-mp3-shell {
-  width: min(100%, 520px);
 }
 
 .retro-track-play,
