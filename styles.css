@@ -1869,8 +1869,8 @@ textarea {
 
 .retro-player-close {
   position: absolute;
-  top: 1.2%;
-  right: 1.2%;
+  top: 8.6%;
+  right: 12.4%;
   z-index: 30;
   width: 28px;
   height: 28px;
@@ -1890,8 +1890,8 @@ textarea {
 
 @media (max-width: 768px) {
   .retro-player-close {
-    top: 0.8%;
-    right: 0.8%;
+    top: 8.4%;
+    right: 12%;
     width: 24px;
     height: 24px;
   }
