@@ -92,6 +92,7 @@ const state = {
   generatedCodes: [],
   generatedCodeCursor: 0,
   musicTracks: [],
+  privateMusicTracks: [],
   musicPending: [],
   musicUpload: {
     file: null,
@@ -489,6 +490,7 @@ async function handleSessionChange(session) {
     state.isAdmin = false;
     state.generatedCodes = [];
     state.musicTracks = [];
+    state.privateMusicTracks = [];
     state.musicPending = [];
     state.rankings.lecoins = [];
     state.rankings.credits = [];
@@ -1216,22 +1218,35 @@ async function loadGameConfig() {
 async function loadMusicTracks() {
   if (!state.supabase || !state.user.loggedIn) {
     state.musicTracks = [];
+    state.privateMusicTracks = [];
     state.musicPending = [];
     return;
   }
-  const { data, error } = await state.supabase
-    .from("music_tracks")
-    .select("id,title,artist,stream_url,cover_url,created_at,status,created_by")
-    .eq("status", "approved")
-    .order("created_at", { ascending: false })
-    .limit(50);
-  if (error) {
-    console.error(error);
+  const [publicResult, privateResult] = await Promise.all([
+    state.supabase
+      .from("music_tracks")
+      .select("id,title,artist,stream_url,cover_url,created_at,status,created_by,visibility")
+      .eq("status", "approved")
+      .eq("visibility", "public")
+      .order("created_at", { ascending: false })
+      .limit(50),
+    state.supabase
+      .from("music_tracks")
+      .select("id,title,artist,stream_url,cover_url,created_at,status,created_by,visibility")
+      .eq("created_by", state.user.id)
+      .eq("visibility", "private")
+      .order("created_at", { ascending: false })
+      .limit(50),
+  ]);
+  if (publicResult.error || privateResult.error) {
+    console.error(publicResult.error || privateResult.error);
     state.musicTracks = [];
+    state.privateMusicTracks = [];
     state.musicPending = [];
     return;
   }
-  const approvedTracks = data || [];
+  const approvedTracks = publicResult.data || [];
+  const privateTracks = privateResult.data || [];
   const trackIds = approvedTracks.map((track) => track.id);
   const [likesResult, playsResult, pendingResult] = await Promise.all([
     trackIds.length
@@ -1243,7 +1258,7 @@ async function loadMusicTracks() {
     isEffectiveAdmin()
       ? state.supabase
           .from("music_tracks")
-          .select("id,title,artist,stream_url,cover_url,created_at,status,created_by")
+          .select("id,title,artist,stream_url,cover_url,created_at,status,created_by,visibility")
           .eq("status", "pending")
           .order("created_at", { ascending: false })
           .limit(20)
@@ -1268,12 +1283,19 @@ async function loadMusicTracks() {
     play_count: playCounts.get(track.id) || 0,
     liked_by_me: likedByMe.has(track.id),
   }));
+  state.privateMusicTracks = privateTracks.map((track) => ({
+    ...track,
+    like_count: 0,
+    play_count: 0,
+    liked_by_me: false,
+  }));
   state.musicPending = pendingResult.data || [];
-  if (state.player.currentTrackId && !state.musicTracks.some((track) => track.id === state.player.currentTrackId)) {
+  const availableTracks = [...state.privateMusicTracks, ...state.musicTracks];
+  if (state.player.currentTrackId && !availableTracks.some((track) => track.id === state.player.currentTrackId)) {
     state.player.currentTrackId = "";
   }
-  if (state.musicTracks.length && !state.player.currentTrackId) {
-    state.player.currentTrackId = state.musicTracks[0].id;
+  if (availableTracks.length && !state.player.currentTrackId) {
+    state.player.currentTrackId = availableTracks[0].id;
   }
   updateMediaSession();
   if (state.windows.has("winamp")) {
@@ -1282,7 +1304,10 @@ async function loadMusicTracks() {
 }
 
 function getCurrentMusicTrack() {
-  return state.musicTracks.find((track) => track.id === state.player.currentTrackId) || state.musicTracks[0] || null;
+  return [...state.privateMusicTracks, ...state.musicTracks].find((track) => track.id === state.player.currentTrackId)
+    || state.privateMusicTracks[0]
+    || state.musicTracks[0]
+    || null;
 }
 
 function setMusicUploadStatus(container, text) {
@@ -1510,8 +1535,9 @@ function formatMusicTime(seconds) {
 }
 
 function getRetroPlayerPlaylist() {
-  return state.musicTracks.length
-    ? state.musicTracks.map((track) => ({
+  const allTracks = [...state.privateMusicTracks, ...state.musicTracks];
+  return allTracks.length
+    ? allTracks.map((track) => ({
         id: track.id,
         title: track.title || "SIN TITULO",
         artist: track.artist || "UNDER COMMUNITY",
@@ -1519,6 +1545,7 @@ function getRetroPlayerPlaylist() {
         like_count: Number(track.like_count || 0),
         liked_by_me: Boolean(track.liked_by_me),
         created_at: track.created_at || "",
+        visibility: track.visibility || "public",
       }))
     : [{ id: "fallback-track", title: "LISTO PARA REPRODUCIR", artist: "UNDER COMMUNITY" }];
 }
@@ -1529,8 +1556,12 @@ function getRetroCurrentTrack() {
 }
 
 function getSortedMusicTracks() {
-  const list = [...state.musicTracks];
+  const list = state.player.libraryView === "mine"
+    ? [...state.privateMusicTracks]
+    : [...state.musicTracks];
   switch (state.player.libraryView) {
+    case "mine":
+      return list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
     case "new":
       return list.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
     case "plays":
@@ -1584,6 +1615,32 @@ function renderRetroTrackList() {
   `).join("");
 }
 
+function renderRetroTrackListV2() {
+  const playlist = getSortedMusicTracks();
+  if (!playlist.length) {
+    return `<div class="retro-track-empty">${state.player.libraryView === "mine" ? "Todavia no tenes tracks privados." : "Todavia no hay tracks aprobados."}</div>`;
+  }
+  return playlist.map((track) => {
+    const metaLine = track.visibility === "private"
+      ? "Solo para vos · URL o upload privado"
+      : `${escapeHtml(track.artist || "UNDER COMMUNITY")} · ${escapeHtml(String(track.play_count || 0))} plays · ${escapeHtml(String(track.like_count || 0))} likes`;
+    return `
+      <div class="retro-track-row ${track.id === state.player.currentTrackId ? "active" : ""}">
+        <div class="retro-track-meta">
+          <strong>${escapeHtml(track.title)}</strong>
+          <span>${metaLine}</span>
+        </div>
+        <div class="retro-track-actions">
+          <button type="button" class="retro-track-play" data-play-track-id="${escapeHtml(track.id)}">PLAY</button>
+          ${track.visibility === "private"
+            ? ""
+            : `<button type="button" class="retro-track-like ${track.liked_by_me ? "active" : ""}" data-like-track-id="${escapeHtml(track.id)}">${track.liked_by_me ? "LIKED" : "LIKE"}</button>`}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
 function toggleRetroPlayerModal(forceOpen) {
   state.player.modalOpen = typeof forceOpen === "boolean" ? forceOpen : !state.player.modalOpen;
   refreshWindow("winamp");
@@ -1596,6 +1653,12 @@ function setRetroPlayerTab(tabId) {
 
 function setMusicLibraryView(viewId) {
   state.player.libraryView = viewId;
+  if (viewId === "mine" && state.privateMusicTracks.length && !state.privateMusicTracks.some((track) => track.id === state.player.currentTrackId)) {
+    state.player.currentTrackId = state.privateMusicTracks[0].id;
+  }
+  if (viewId !== "mine" && state.musicTracks.length && !state.musicTracks.some((track) => track.id === state.player.currentTrackId)) {
+    state.player.currentTrackId = state.musicTracks[0].id;
+  }
   refreshWindow("winamp");
 }
 
@@ -1844,6 +1907,7 @@ async function submitCommunityTrack(win = document) {
   const artist = win.querySelector("#music-submit-artist")?.value.trim();
   const directUrl = win.querySelector("#music-submit-url")?.value.trim();
   const coverUrl = win.querySelector("#music-submit-cover")?.value.trim() || "";
+  const visibility = win.querySelector("#music-submit-visibility")?.value === "public" ? "public" : "private";
   const file = state.musicUpload.file || win.querySelector("#music-submit-file")?.files?.[0];
   if (!title || (!directUrl && !file)) {
     alert("Poné titulo y un MP3 por URL o archivo.");
@@ -1864,7 +1928,8 @@ async function submitCommunityTrack(win = document) {
     stream_url: streamUrl,
     cover_url: coverUrl,
     created_by: state.user.id,
-    status: isEffectiveAdmin() ? "approved" : "pending",
+    visibility,
+    status: visibility === "private" ? "approved" : (isEffectiveAdmin() ? "approved" : "pending"),
   };
   const { error } = await state.supabase.from("music_tracks").insert(payload);
   if (error) {
@@ -1920,11 +1985,19 @@ async function submitCommunityTrack(win = document) {
     alert(error.message);
     return;
   }
-  setMusicUploadStatus(win, isEffectiveAdmin() ? "Track publicado." : "Track enviado a revision.");
-  alert(isEffectiveAdmin() ? "Track publicado." : "Track enviado para aprobacion.");
-  ["#music-submit-title", "#music-submit-artist", "#music-submit-url", "#music-submit-cover"].forEach((selector) => {
+  const successMessage = visibility === "private"
+    ? "Track privado guardado."
+    : (isEffectiveAdmin() ? "Track publicado." : "Track enviado para aprobacion.");
+  setMusicUploadStatus(win, visibility === "private" ? "Track privado listo en Mis Tracks." : (isEffectiveAdmin() ? "Track publicado." : "Track enviado a revision."));
+  alert(successMessage);
+  ["#music-submit-title", "#music-submit-artist", "#music-submit-url", "#music-submit-cover", "#music-submit-visibility"].forEach((selector) => {
     const input = win.querySelector(selector);
-    if (input) input.value = "";
+    if (!input) return;
+    if (selector === "#music-submit-visibility") {
+      input.value = "private";
+    } else {
+      input.value = "";
+    }
   });
   const fileInput = win.querySelector("#music-submit-file");
   if (fileInput) fileInput.value = "";
@@ -2713,6 +2786,10 @@ const desktopApps = {
                 <input id="music-submit-artist" class="win-input" type="text" placeholder="Artista / alias" />
                 <input id="music-submit-url" class="win-input" type="text" placeholder="URL directa a MP3" />
                 <input id="music-submit-cover" class="win-input" type="text" placeholder="URL de cover (opcional)" />
+                <select id="music-submit-visibility" class="win-input">
+                  <option value="private">Solo para mi</option>
+                  <option value="public">Enviar a comunidad</option>
+                </select>
                 <input id="music-submit-file" class="win-input" type="file" accept=".mp3,audio/mpeg" />
               </div>
               <div class="shop-copy" id="music-upload-file">${escapeHtml(state.musicUpload.fileName ? `Archivo listo: ${state.musicUpload.fileName}` : "Sin archivo seleccionado.")}</div>
@@ -3160,9 +3237,10 @@ const desktopApps = {
                 <button type="button" class="retro-filter-btn ${state.player.libraryView === "new" ? "active" : ""}" data-library-view="new">NUEVAS</button>
                 <button type="button" class="retro-filter-btn ${state.player.libraryView === "plays" ? "active" : ""}" data-library-view="plays">MAS ESCUCHADAS</button>
                 <button type="button" class="retro-filter-btn ${state.player.libraryView === "likes" ? "active" : ""}" data-library-view="likes">MAS LIKES</button>
+                <button type="button" class="retro-filter-btn ${state.player.libraryView === "mine" ? "active" : ""}" data-library-view="mine">MIS TRACKS</button>
               </div>
               <div class="retro-playlist-copy">Tracks aprobados por la comunidad. Likes y plays arman el top.</div>
-              <div id="track-list-container" class="retro-track-list">${renderRetroTrackList()}</div>
+              <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
             </div>
             <div id="content-design" class="${state.player.activeTab === "design" ? "" : "hidden"} retro-design-list">
               <div class="retro-design-row"><span>Color Texto</span><input type="color" id="input-lcd-text" value="${escapeHtml(state.player.lcdText)}"></div>
