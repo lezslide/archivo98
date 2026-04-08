@@ -93,8 +93,19 @@ const state = {
   generatedCodeCursor: 0,
   musicTracks: [],
   musicPending: [],
+  musicUpload: {
+    file: null,
+    fileName: "",
+    status: "",
+    scrollTop: 0,
+  },
   player: {
     audio: null,
+    audioContext: null,
+    analyser: null,
+    sourceNode: null,
+    frequencyData: null,
+    vizFrame: 0,
     currentTrackId: "",
     isPlaying: false,
     powerOn: true,
@@ -1274,6 +1285,27 @@ function getCurrentMusicTrack() {
   return state.musicTracks.find((track) => track.id === state.player.currentTrackId) || state.musicTracks[0] || null;
 }
 
+function setMusicUploadStatus(container, text) {
+  const scope = container instanceof Element ? container : document;
+  const node = scope.querySelector("#music-upload-status");
+  state.musicUpload.status = text || "";
+  if (node) node.textContent = state.musicUpload.status;
+}
+
+function rememberUserPanelScroll(container) {
+  const panel = (container instanceof Element ? container : document).querySelector(".window-content.user-panel");
+  if (!panel) return;
+  state.musicUpload.scrollTop = panel.scrollTop || 0;
+}
+
+function restoreUserPanelScroll(container) {
+  const panel = (container instanceof Element ? container : document).querySelector(".window-content.user-panel");
+  if (!panel) return;
+  requestAnimationFrame(() => {
+    panel.scrollTop = state.musicUpload.scrollTop || panel.scrollTop || 0;
+  });
+}
+
 async function recordMusicPlay(trackId) {
   if (!state.supabase || !state.user.loggedIn || !trackId) return;
   const { error } = await state.supabase
@@ -1308,20 +1340,71 @@ function ensureMusicAudio() {
   });
   audio.addEventListener("play", () => {
     state.player.isPlaying = true;
+    void ensureMusicAnalyser();
+    startMusicVisualizerLoop();
     updateMediaSession();
     updateUnderMusicUi();
   });
   audio.addEventListener("pause", () => {
     state.player.isPlaying = false;
+    stopMusicVisualizerLoop();
     updateMediaSession();
     updateUnderMusicUi();
   });
   audio.addEventListener("ended", () => {
+    stopMusicVisualizerLoop();
     playAdjacentTrack(1);
   });
   state.player.audio = audio;
   bindMediaSessionActions();
   return audio;
+}
+
+async function ensureMusicAnalyser() {
+  const audio = ensureMusicAudio();
+  const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextCtor) return null;
+  if (!state.player.audioContext) {
+    state.player.audioContext = new AudioContextCtor();
+  }
+  if (state.player.audioContext.state === "suspended") {
+    try {
+      await state.player.audioContext.resume();
+    } catch (_error) {
+    }
+  }
+  if (!state.player.analyser) {
+    state.player.analyser = state.player.audioContext.createAnalyser();
+    state.player.analyser.fftSize = 64;
+    state.player.analyser.smoothingTimeConstant = 0.82;
+    state.player.frequencyData = new Uint8Array(state.player.analyser.frequencyBinCount);
+  }
+  if (!state.player.sourceNode) {
+    state.player.sourceNode = state.player.audioContext.createMediaElementSource(audio);
+    state.player.sourceNode.connect(state.player.analyser);
+    state.player.analyser.connect(state.player.audioContext.destination);
+  }
+  return state.player.analyser;
+}
+
+function stopMusicVisualizerLoop() {
+  if (state.player.vizFrame) {
+    cancelAnimationFrame(state.player.vizFrame);
+    state.player.vizFrame = 0;
+  }
+}
+
+function startMusicVisualizerLoop() {
+  stopMusicVisualizerLoop();
+  const paint = () => {
+    updateUnderMusicUi();
+    if (!state.player.isPlaying || !state.player.powerOn) {
+      state.player.vizFrame = 0;
+      return;
+    }
+    state.player.vizFrame = requestAnimationFrame(paint);
+  };
+  state.player.vizFrame = requestAnimationFrame(paint);
 }
 
 function bindMediaSessionActions() {
@@ -1409,9 +1492,12 @@ function updateUnderMusicUi() {
     node.closest(".retro-track-row")?.classList.toggle("active", node.dataset.playTrackId === state.player.currentTrackId);
   });
   win.querySelectorAll("#viz .bar").forEach((bar, index) => {
-    const nextHeight = !state.player.powerOn || !state.player.isPlaying
-      ? 2
-      : 4 + Math.abs(Math.sin((state.player.currentTime * 2.6) + index)) * 14;
+    let nextHeight = 2;
+    if (state.player.powerOn && state.player.isPlaying && state.player.analyser && state.player.frequencyData) {
+      state.player.analyser.getByteFrequencyData(state.player.frequencyData);
+      const bucket = state.player.frequencyData[index % state.player.frequencyData.length] || 0;
+      nextHeight = 2 + ((bucket / 255) * 18);
+    }
     bar.style.height = `${nextHeight.toFixed(1)}px`;
   });
 }
@@ -1531,6 +1617,7 @@ function stopMusicPlayback() {
   state.player.currentTime = 0;
   state.player.duration = 0;
   state.player.isPlaying = false;
+  stopMusicVisualizerLoop();
   updateMediaSession();
   updateMediaSessionPosition();
   updateUnderMusicUi();
@@ -1553,6 +1640,7 @@ async function playMusicTrack(trackId, { autoplay = true } = {}) {
   updateUnderMusicUi();
   if (!autoplay) return;
   try {
+    await ensureMusicAnalyser();
     await audio.play();
     if (sourceChanged) {
       recordMusicPlay(track.id);
@@ -1584,18 +1672,22 @@ function seekMusicBy(deltaSeconds) {
   updateUnderMusicUi();
 }
 
-function toggleMusicPlayback(forcePlay) {
+async function toggleMusicPlayback(forcePlay) {
   if (!state.player.powerOn) return;
   const track = getRetroCurrentTrack();
   if (!track) return;
   const audio = ensureMusicAudio();
   if (!audio.src) {
-    playMusicTrack(track.id, { autoplay: true });
+    await playMusicTrack(track.id, { autoplay: true });
     return;
   }
   const shouldPlay = typeof forcePlay === "boolean" ? forcePlay : audio.paused;
   if (shouldPlay) {
-    audio.play().catch(() => {});
+    try {
+      await ensureMusicAnalyser();
+      await audio.play();
+    } catch (_error) {
+    }
   } else {
     audio.pause();
   }
@@ -1747,11 +1839,12 @@ async function uploadMusicFile(file) {
 
 async function submitCommunityTrack(win = document) {
   if (!state.supabase || !state.user.loggedIn) return;
+  setMusicUploadStatus(win, "Preparando track...");
   const title = win.querySelector("#music-submit-title")?.value.trim();
   const artist = win.querySelector("#music-submit-artist")?.value.trim();
   const directUrl = win.querySelector("#music-submit-url")?.value.trim();
   const coverUrl = win.querySelector("#music-submit-cover")?.value.trim() || "";
-  const file = win.querySelector("#music-submit-file")?.files?.[0];
+  const file = state.musicUpload.file || win.querySelector("#music-submit-file")?.files?.[0];
   if (!title || (!directUrl && !file)) {
     alert("Poné titulo y un MP3 por URL o archivo.");
     return;
@@ -1785,6 +1878,58 @@ async function submitCommunityTrack(win = document) {
   });
   const fileInput = win.querySelector("#music-submit-file");
   if (fileInput) fileInput.value = "";
+  await loadMusicTracks();
+  rerenderCoreApps();
+}
+
+async function submitCommunityTrack(win = document) {
+  if (!state.supabase || !state.user.loggedIn) return;
+  setMusicUploadStatus(win, "Preparando track...");
+  const title = win.querySelector("#music-submit-title")?.value.trim();
+  const artist = win.querySelector("#music-submit-artist")?.value.trim();
+  const directUrl = win.querySelector("#music-submit-url")?.value.trim();
+  const coverUrl = win.querySelector("#music-submit-cover")?.value.trim() || "";
+  const file = state.musicUpload.file || win.querySelector("#music-submit-file")?.files?.[0];
+  if (!title || (!directUrl && !file)) {
+    setMusicUploadStatus(win, "");
+    alert("Pone titulo y un MP3 por URL o archivo.");
+    return;
+  }
+  let streamUrl = directUrl;
+  if (file) {
+    try {
+      setMusicUploadStatus(win, `Subiendo ${state.musicUpload.fileName || file.name || "track.mp3"}...`);
+      streamUrl = await uploadMusicFile(file);
+    } catch (error) {
+      setMusicUploadStatus(win, "");
+      alert(error.message || "No pude subir el MP3.");
+      return;
+    }
+  }
+  const payload = {
+    title,
+    artist,
+    stream_url: streamUrl,
+    cover_url: coverUrl,
+    created_by: state.user.id,
+    status: isEffectiveAdmin() ? "approved" : "pending",
+  };
+  const { error } = await state.supabase.from("music_tracks").insert(payload);
+  if (error) {
+    setMusicUploadStatus(win, "");
+    alert(error.message);
+    return;
+  }
+  setMusicUploadStatus(win, isEffectiveAdmin() ? "Track publicado." : "Track enviado a revision.");
+  alert(isEffectiveAdmin() ? "Track publicado." : "Track enviado para aprobacion.");
+  ["#music-submit-title", "#music-submit-artist", "#music-submit-url", "#music-submit-cover"].forEach((selector) => {
+    const input = win.querySelector(selector);
+    if (input) input.value = "";
+  });
+  const fileInput = win.querySelector("#music-submit-file");
+  if (fileInput) fileInput.value = "";
+  state.musicUpload.file = null;
+  state.musicUpload.fileName = "";
   await loadMusicTracks();
   rerenderCoreApps();
 }
@@ -2570,6 +2715,8 @@ const desktopApps = {
                 <input id="music-submit-cover" class="win-input" type="text" placeholder="URL de cover (opcional)" />
                 <input id="music-submit-file" class="win-input" type="file" accept=".mp3,audio/mpeg" />
               </div>
+              <div class="shop-copy" id="music-upload-file">${escapeHtml(state.musicUpload.fileName ? `Archivo listo: ${state.musicUpload.fileName}` : "Sin archivo seleccionado.")}</div>
+              <div class="shop-copy" id="music-upload-status">${escapeHtml(state.musicUpload.status)}</div>
               <div class="session-row">
                 <button class="action-btn" data-action="submit-community-track">${isEffectiveAdmin() ? "Publicar track" : "Enviar a revision"}</button>
               </div>
@@ -2644,6 +2791,19 @@ const desktopApps = {
       win.querySelector('[data-action="reset-credits-ranking"]')?.addEventListener("click", resetCreditsRanking);
       win.querySelector('[data-action="save-game-config"]')?.addEventListener("click", saveGameConfig);
       win.querySelector('[data-action="submit-community-track"]')?.addEventListener("click", () => submitCommunityTrack(win));
+      win.querySelector("#music-submit-file")?.addEventListener("click", () => rememberUserPanelScroll(win));
+      win.querySelector("#music-submit-file")?.addEventListener("change", (event) => {
+        const nextFile = event.target.files?.[0] || null;
+        state.musicUpload.file = nextFile;
+        state.musicUpload.fileName = nextFile?.name || "";
+        const fileLabel = win.querySelector("#music-upload-file");
+        if (fileLabel) {
+          fileLabel.textContent = state.musicUpload.fileName
+            ? `Archivo listo: ${state.musicUpload.fileName}`
+            : "Sin archivo seleccionado.";
+        }
+        restoreUserPanelScroll(win);
+      });
       win.querySelectorAll("[data-approve-track]").forEach((button) => {
         button.addEventListener("click", () => moderateMusicTrack(button.dataset.approveTrack, "approved"));
       });
@@ -3038,9 +3198,9 @@ const desktopApps = {
         button.addEventListener("click", () => toggleMusicLike(button.dataset.likeTrackId));
       });
       win.querySelectorAll(".btn").forEach((node) => {
-        node.addEventListener("mousedown", (event) => {
+        node.addEventListener("click", () => {
           const id = node.dataset.id;
-          if (id === "play") toggleMusicPlayback();
+          if (id === "play") void toggleMusicPlayback();
           if (id === "stop") stopMusicPlayback();
           if (id === "setup") toggleRetroPlayerModal(true);
           if (id === "next") playAdjacentTrack(1);
@@ -3048,18 +3208,19 @@ const desktopApps = {
           if (id === "vol-up") {
             state.player.volume = Math.min(1, state.player.volume + 0.05);
             ensureMusicAudio().volume = state.player.volume;
-            refreshWindow("winamp");
+            updateUnderMusicUi();
           }
           if (id === "vol-down") {
             state.player.volume = Math.max(0, state.player.volume - 0.05);
             ensureMusicAudio().volume = state.player.volume;
-            refreshWindow("winamp");
+            updateUnderMusicUi();
           }
           if (id === "power") {
             state.player.powerOn = !state.player.powerOn;
             if (!state.player.powerOn) {
               stopMusicPlayback();
             } else {
+              void ensureMusicAnalyser();
               updateUnderMusicUi();
             }
           }
