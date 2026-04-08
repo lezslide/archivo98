@@ -1686,11 +1686,21 @@ function renderRetroNowPanel() {
 
 function toggleRetroPlayerModal(forceOpen) {
   state.player.modalOpen = typeof forceOpen === "boolean" ? forceOpen : !state.player.modalOpen;
+  const win = state.windows.get("winamp")?.element;
+  if (win) {
+    refreshPlayerSurface(win);
+    return;
+  }
   refreshWindow("winamp");
 }
 
 function setRetroPlayerTab(tabId) {
   state.player.activeTab = tabId;
+  const win = state.windows.get("winamp")?.element;
+  if (win) {
+    refreshPlayerSurface(win);
+    return;
+  }
   refreshWindow("winamp");
 }
 
@@ -1702,6 +1712,12 @@ function setMusicLibraryView(viewId) {
   if (viewId !== "mine" && state.musicTracks.length && !state.musicTracks.some((track) => track.id === state.player.currentTrackId)) {
     state.player.currentTrackId = state.musicTracks[0].id;
   }
+  const win = state.windows.get("winamp")?.element;
+  if (win) {
+    refreshPlayerSurface(win);
+    updateUnderMusicUi();
+    return;
+  }
   refreshWindow("winamp");
 }
 
@@ -1709,6 +1725,48 @@ function updateRetroPlayerColors({ lcdText, appBg }) {
   if (lcdText) state.player.lcdText = lcdText;
   if (appBg) state.player.appBg = appBg;
   refreshWindow("winamp");
+}
+
+function refreshPlayerSurface(win) {
+  const scope = win instanceof Element ? win : state.windows.get("winamp")?.element;
+  if (!scope) return;
+  const modal = scope.querySelector("#config-modal");
+  if (modal) modal.classList.toggle("open", state.player.modalOpen);
+  const playlistTab = scope.querySelector('[data-retro-tab="playlist"]');
+  const nowTab = scope.querySelector('[data-retro-tab="now"]');
+  playlistTab?.classList.toggle("active", state.player.activeTab === "playlist");
+  nowTab?.classList.toggle("active", state.player.activeTab === "now");
+  const playlistContent = scope.querySelector("#content-playlist");
+  const nowContent = scope.querySelector("#content-now");
+  playlistContent?.classList.toggle("hidden", state.player.activeTab !== "playlist");
+  nowContent?.classList.toggle("hidden", state.player.activeTab !== "now");
+  if (playlistContent) {
+    const listContainer = playlistContent.querySelector("#track-list-container");
+    if (listContainer) listContainer.innerHTML = renderRetroTrackListV2();
+    const copyNode = playlistContent.querySelector(".retro-playlist-copy");
+    if (copyNode) {
+      copyNode.textContent = state.player.libraryView === "mine"
+        ? "Tus tracks privados y personales."
+        : "Tracks aprobados por la comunidad. Likes y plays arman el top.";
+    }
+  }
+  if (nowContent) {
+    nowContent.innerHTML = renderRetroNowPanel();
+    scope.querySelectorAll("[data-now-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.nowAction;
+        if (action === "play") void toggleMusicPlayback();
+        if (action === "prev") playAdjacentTrack(-1);
+        if (action === "next") playAdjacentTrack(1);
+        if (action === "boost-normal") state.player.boost = 1;
+        if (action === "boost-mid") state.player.boost = 1.5;
+        if (action === "boost-max") state.player.boost = 2;
+        syncMusicOutputGain();
+        refreshPlayerSurface(scope);
+        updateUnderMusicUi();
+      });
+    });
+  }
 }
 
 function stopMusicPlayback() {
