@@ -428,6 +428,10 @@ function renderEmojiPicker(targetId, attrName) {
 }
 
 function init() {
+  if (isStandalonePlayerMode()) {
+    initStandalonePlayerMode();
+    return;
+  }
   loadStoredContacts();
   loadModerationStrikes();
   bindDesktop();
@@ -437,6 +441,44 @@ function init() {
   initSupabaseClient();
   applyUserSkin();
   window.addEventListener("orientationchange", adjustWindowsForViewport);
+}
+
+function isStandalonePlayerMode() {
+  return new URLSearchParams(window.location.search).get("player") === "1";
+}
+
+function initStandalonePlayerMode() {
+  document.body.classList.add("standalone-player-mode");
+  loadStoredContacts();
+  loadModerationStrikes();
+  updateClock();
+  setInterval(updateClock, 1000);
+  initSupabaseClient();
+  applyUserSkin();
+  renderStandalonePlayerPage();
+}
+
+function renderStandalonePlayerPage() {
+  document.body.innerHTML = desktopApps.winamp.render();
+  desktopApps.winamp.bind(document.body);
+  updateUnderMusicUi();
+}
+
+function refreshWinampView() {
+  if (isStandalonePlayerMode()) {
+    renderStandalonePlayerPage();
+    return;
+  }
+  refreshWindow("winamp");
+}
+
+function openMusicPlayer() {
+  if (isStandalonePlayerMode()) return;
+  const popupUrl = `${window.location.origin}${window.location.pathname}?player=1`;
+  const popup = window.open(popupUrl, "archivo98-player", "popup=yes,width=520,height=900,left=80,top=40");
+  if (!popup) {
+    openWindow("winamp");
+  }
 }
 
 function isMobileViewport() {
@@ -525,7 +567,13 @@ function rerenderCoreApps() {
 
 function bindDesktop() {
   document.querySelectorAll(".shortcut").forEach((shortcut) => {
-    shortcut.addEventListener("dblclick", () => openWindow(shortcut.dataset.app));
+    shortcut.addEventListener("dblclick", () => {
+      if (shortcut.dataset.app === "winamp") {
+        openMusicPlayer();
+        return;
+      }
+      openWindow(shortcut.dataset.app);
+    });
     shortcut.addEventListener("click", () => {
       document.querySelectorAll(".shortcut").forEach((item) => item.classList.remove("selected"));
       shortcut.classList.add("selected");
@@ -549,7 +597,11 @@ function bindStartMenu() {
 
   document.querySelectorAll(".start-item[data-app]").forEach((item) => {
     item.addEventListener("click", () => {
-      openWindow(item.dataset.app);
+      if (item.dataset.app === "winamp") {
+        openMusicPlayer();
+      } else {
+        openWindow(item.dataset.app);
+      }
       closeStartMenu();
     });
   });
@@ -1495,7 +1547,7 @@ function getRetroClockText() {
 }
 
 function updateUnderMusicUi() {
-  const win = state.windows.get("winamp")?.element;
+  const win = state.windows.get("winamp")?.element || (isStandalonePlayerMode() ? document : null);
   if (!win) return;
   const track = getRetroCurrentTrack();
   const playerNode = win.querySelector("#player-container");
@@ -1643,12 +1695,7 @@ function renderRetroTrackListV2() {
 
 function toggleRetroPlayerModal(forceOpen) {
   state.player.modalOpen = typeof forceOpen === "boolean" ? forceOpen : !state.player.modalOpen;
-  refreshWindow("winamp");
-}
-
-function setRetroPlayerTab(tabId) {
-  state.player.activeTab = tabId;
-  refreshWindow("winamp");
+  refreshWinampView();
 }
 
 function setMusicLibraryView(viewId) {
@@ -1659,13 +1706,13 @@ function setMusicLibraryView(viewId) {
   if (viewId !== "mine" && state.musicTracks.length && !state.musicTracks.some((track) => track.id === state.player.currentTrackId)) {
     state.player.currentTrackId = state.musicTracks[0].id;
   }
-  refreshWindow("winamp");
+  refreshWinampView();
 }
 
 function updateRetroPlayerColors({ lcdText, appBg }) {
   if (lcdText) state.player.lcdText = lcdText;
   if (appBg) state.player.appBg = appBg;
-  refreshWindow("winamp");
+  refreshWinampView();
 }
 
 function stopMusicPlayback() {
@@ -2780,22 +2827,23 @@ const desktopApps = {
           <div class="user-columns bottom">
             <section class="user-card">
               <h3>Under Music Community</h3>
-              <div class="shop-copy">Subi tu MP3 o pega una URL directa. La comunidad vota y el top entra al player.</div>
+              <div class="shop-copy">Modo privado: podes guardar una URL externa o subir tu MP3 para escucharlo vos en cualquier dispositivo. Modo comunidad: solo musica original o con permiso.</div>
               <div class="form-stack">
                 <input id="music-submit-title" class="win-input" type="text" placeholder="Titulo del track" />
                 <input id="music-submit-artist" class="win-input" type="text" placeholder="Artista / alias" />
-                <input id="music-submit-url" class="win-input" type="text" placeholder="URL directa a MP3" />
+                <input id="music-submit-url" class="win-input" type="text" placeholder="URL externa directa a MP3 (solo para biblioteca privada o links autorizados)" />
                 <input id="music-submit-cover" class="win-input" type="text" placeholder="URL de cover (opcional)" />
                 <select id="music-submit-visibility" class="win-input">
-                  <option value="private">Solo para mi</option>
-                  <option value="public">Enviar a comunidad</option>
+                  <option value="private">Privado para mi</option>
+                  <option value="public">Publico con revision</option>
                 </select>
                 <input id="music-submit-file" class="win-input" type="file" accept=".mp3,audio/mpeg" />
               </div>
-              <div class="shop-copy" id="music-upload-file">${escapeHtml(state.musicUpload.fileName ? `Archivo listo: ${state.musicUpload.fileName}` : "Sin archivo seleccionado.")}</div>
+              <div class="shop-copy">No subas ni enlaces audio sin derechos o permiso. Las canciones publicas pasan por revision.</div>
+              <div class="shop-copy" id="music-upload-file">${escapeHtml(state.musicUpload.fileName ? `Archivo listo para tu biblioteca o revision: ${state.musicUpload.fileName}` : "Sin archivo seleccionado. Podes pegar una URL externa o subir un MP3 propio.")}</div>
               <div class="shop-copy" id="music-upload-status">${escapeHtml(state.musicUpload.status)}</div>
               <div class="session-row">
-                <button class="action-btn" data-action="submit-community-track">${isEffectiveAdmin() ? "Publicar track" : "Enviar a revision"}</button>
+                <button class="action-btn" data-action="submit-community-track">${isEffectiveAdmin() ? "Guardar / publicar track" : "Guardar track"}</button>
               </div>
             </section>
           </div>
@@ -2876,8 +2924,8 @@ const desktopApps = {
         const fileLabel = win.querySelector("#music-upload-file");
         if (fileLabel) {
           fileLabel.textContent = state.musicUpload.fileName
-            ? `Archivo listo: ${state.musicUpload.fileName}`
-            : "Sin archivo seleccionado.";
+            ? `Archivo listo para subir a tu biblioteca: ${state.musicUpload.fileName}`
+            : "Sin archivo seleccionado. Subi un MP3 para guardarlo en tu biblioteca personal.";
         }
         restoreUserPanelScroll(win);
       });
@@ -3018,7 +3066,7 @@ const desktopApps = {
         localStorage.setItem("win98_text_color", state.user.text_color);
       });
       win.querySelector("[data-open-private]")?.addEventListener("click", () => openWindow("private-chat"));
-      win.querySelector("[data-open-music]")?.addEventListener("click", () => openWindow("winamp"));
+      win.querySelector("[data-open-music]")?.addEventListener("click", () => openMusicPlayer());
       win.querySelector('[data-action="add-global-contact"]')?.addEventListener("click", async () => {
         const input = win.querySelector("#global-contact-input");
         if (await addPrivateContact(input?.value || "")) {
@@ -3133,7 +3181,7 @@ const desktopApps = {
         button.addEventListener("click", () => openPrivateConversation(button.dataset.contact));
       });
       win.querySelector("[data-open-global]")?.addEventListener("click", () => openWindow("chat-global"));
-      win.querySelector("[data-open-music]")?.addEventListener("click", () => openWindow("winamp"));
+      win.querySelector("[data-open-music]")?.addEventListener("click", () => openMusicPlayer());
       win.querySelector('[data-action="add-msn-contact"]')?.addEventListener("click", async () => {
         const input = win.querySelector("#msn-contact-input");
         if (await addPrivateContact(input?.value || "")) {
@@ -3227,45 +3275,33 @@ const desktopApps = {
           </div>
 
           <div id="config-modal" class="${state.player.modalOpen ? "open" : ""}">
-            <div class="retro-modal-tabs">
-              <button type="button" class="${state.player.activeTab === "playlist" ? "active" : ""}" data-retro-tab="playlist">PLAYLIST</button>
-              <button type="button" class="${state.player.activeTab === "design" ? "active" : ""}" data-retro-tab="design">DISENO</button>
+            <div class="retro-modal-title">PLAYLIST</div>
+            <div class="retro-library-filters">
+              <button type="button" class="retro-filter-btn ${state.player.libraryView === "top" ? "active" : ""}" data-library-view="top">TOP</button>
+              <button type="button" class="retro-filter-btn ${state.player.libraryView === "new" ? "active" : ""}" data-library-view="new">NUEVAS</button>
+              <button type="button" class="retro-filter-btn ${state.player.libraryView === "plays" ? "active" : ""}" data-library-view="plays">MAS ESCUCHADAS</button>
+              <button type="button" class="retro-filter-btn ${state.player.libraryView === "likes" ? "active" : ""}" data-library-view="likes">MAS LIKES</button>
+              <button type="button" class="retro-filter-btn ${state.player.libraryView === "mine" ? "active" : ""}" data-library-view="mine">MIS TRACKS</button>
             </div>
-            <div id="content-playlist" class="${state.player.activeTab === "playlist" ? "" : "hidden"}">
-              <div class="retro-library-filters">
-                <button type="button" class="retro-filter-btn ${state.player.libraryView === "top" ? "active" : ""}" data-library-view="top">TOP</button>
-                <button type="button" class="retro-filter-btn ${state.player.libraryView === "new" ? "active" : ""}" data-library-view="new">NUEVAS</button>
-                <button type="button" class="retro-filter-btn ${state.player.libraryView === "plays" ? "active" : ""}" data-library-view="plays">MAS ESCUCHADAS</button>
-                <button type="button" class="retro-filter-btn ${state.player.libraryView === "likes" ? "active" : ""}" data-library-view="likes">MAS LIKES</button>
-                <button type="button" class="retro-filter-btn ${state.player.libraryView === "mine" ? "active" : ""}" data-library-view="mine">MIS TRACKS</button>
-              </div>
-              <div class="retro-playlist-copy">Tracks aprobados por la comunidad. Likes y plays arman el top.</div>
-              <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
-            </div>
-            <div id="content-design" class="${state.player.activeTab === "design" ? "" : "hidden"} retro-design-list">
-              <div class="retro-design-row"><span>Color Texto</span><input type="color" id="input-lcd-text" value="${escapeHtml(state.player.lcdText)}"></div>
-              <div class="retro-design-row"><span>Fondo App</span><input type="color" id="input-app-bg" value="${escapeHtml(state.player.appBg)}"></div>
-            </div>
+            <div class="retro-playlist-copy">${state.player.libraryView === "mine" ? "Tus tracks privados y personales." : "Tracks aprobados por la comunidad. Likes y plays arman el top."}</div>
+            <div id="track-list-container" class="retro-track-list">${renderRetroTrackListV2()}</div>
             <button type="button" class="retro-close-btn" data-close-modal="1">CERRAR</button>
           </div>
         </div>
       `;
     },
     bind(win) {
-      win.querySelector("[data-close-player]")?.addEventListener("click", () => closeWindow("winamp"));
-      win.querySelectorAll("[data-retro-tab]").forEach((button) => {
-        button.addEventListener("click", () => setRetroPlayerTab(button.dataset.retroTab));
+      win.querySelector("[data-close-player]")?.addEventListener("click", () => {
+        if (isStandalonePlayerMode()) {
+          window.close();
+          return;
+        }
+        closeWindow("winamp");
       });
       win.querySelectorAll("[data-library-view]").forEach((button) => {
         button.addEventListener("click", () => setMusicLibraryView(button.dataset.libraryView));
       });
       win.querySelector("[data-close-modal]")?.addEventListener("click", () => toggleRetroPlayerModal(false));
-      win.querySelector("#input-lcd-text")?.addEventListener("input", (event) => {
-        updateRetroPlayerColors({ lcdText: event.target.value });
-      });
-      win.querySelector("#input-app-bg")?.addEventListener("input", (event) => {
-        updateRetroPlayerColors({ appBg: event.target.value });
-      });
       win.querySelectorAll("[data-play-track-id]").forEach((button) => {
         button.addEventListener("click", () => {
           playMusicTrack(button.dataset.playTrackId);

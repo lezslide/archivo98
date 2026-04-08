@@ -2058,20 +2058,12 @@ textarea {
   display: block;
 }
 
-.retro-modal-tabs {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #374151;
-  padding-bottom: 8px;
-}
-
-.retro-modal-tabs button {
-  color: white;
-}
-
-.retro-modal-tabs button.active {
+.retro-modal-title {
+  margin-bottom: 14px;
   color: var(--neon);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 
 .retro-playlist-copy {
@@ -2108,12 +2100,12 @@ textarea {
 
 .retro-track-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
   background: #27272a;
-  padding: 8px;
-  margin-bottom: 4px;
+  padding: 10px;
+  margin-bottom: 6px;
   border-radius: 8px;
   font-size: 13px;
 }
@@ -2126,13 +2118,15 @@ textarea {
   display: grid;
   gap: 3px;
   min-width: 0;
+  flex: 1;
 }
 
 .retro-track-meta strong,
 .retro-track-meta span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+  line-height: 1.35;
 }
 
 .retro-track-meta span {
@@ -2144,6 +2138,27 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
+}
+
+body.standalone-player-mode {
+  background:
+    radial-gradient(circle at top, rgba(48, 143, 255, 0.18), transparent 36%),
+    linear-gradient(180deg, #020617, #08111f 55%, #030712);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+body.standalone-player-mode #desktop,
+body.standalone-player-mode .taskbar,
+body.standalone-player-mode #start-menu {
+  display: none;
+}
+
+body.standalone-player-mode .retro-mp3-shell {
+  width: min(100%, 520px);
 }
 
 .retro-track-play,
