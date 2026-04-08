@@ -56,7 +56,7 @@ async function insertPromoCode({ campaignKey, creditsAmount, igUserId, serviceRo
     const payload = {
       code: makeCodeValue(),
       credits_amount: creditsAmount,
-      source: `manychat_${campaignKey}_${igUserId}`,
+      source: `manychat_link_${campaignKey}_${igUserId}`,
     };
 
     try {
@@ -98,22 +98,16 @@ export default async function handler(request) {
 
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
   const supabaseUrl = process.env.SUPABASE_URL || "";
-  const manychatToken = process.env.MANYCHAT_ENDPOINT_TOKEN || "";
 
-  if (!serviceRoleKey || !supabaseUrl || !manychatToken) {
+  if (!serviceRoleKey || !supabaseUrl) {
     return json({ error: "Missing server environment variables" }, 500);
-  }
-
-  const providedToken = request.headers.get("x-manychat-token") || "";
-  if (providedToken !== manychatToken) {
-    return json({ error: "Unauthorized" }, 401);
   }
 
   try {
     const payload = await request.json();
     const igUserId = String(payload.ig_user_id || payload.user_id || "").trim();
     const igUsername = String(payload.ig_username || payload.username || "").trim();
-    const campaignKey = String(payload.campaign_key || "default").trim().toLowerCase();
+    const campaignKey = String(payload.campaign_key || "recarga-creditos").trim().toLowerCase();
     const creditsAmount = Math.max(1, Number(payload.credits_amount || 10));
 
     if (!igUserId) {
@@ -134,6 +128,7 @@ export default async function handler(request) {
         credits_amount: existing.code.credits_amount || creditsAmount,
         is_existing: true,
         campaign_key: campaignKey,
+        ig_username: igUsername,
         message: `Tu codigo de user98 es ${existing.code.code}`,
       });
     }
@@ -165,11 +160,12 @@ export default async function handler(request) {
       credits_amount: promoCode.credits_amount || creditsAmount,
       is_existing: false,
       campaign_key: campaignKey,
+      ig_username: igUsername,
       message: `Tu codigo de user98 es ${promoCode.code}`,
     });
   } catch (error) {
     return json({
-      error: "ManyChat code generation failed",
+      error: "ManyChat link code generation failed",
       detail: String(error.message || error),
     }, 500);
   }
