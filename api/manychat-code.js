@@ -1,11 +1,7 @@
-function json(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store",
-    },
-  });
+function sendJson(response, body, status = 200) {
+  response.status(status).setHeader("Cache-Control", "no-store");
+  response.setHeader("Content-Type", "application/json; charset=utf-8");
+  response.send(JSON.stringify(body));
 }
 
 function makeCodeValue() {
@@ -91,9 +87,9 @@ async function insertDelivery({ campaignKey, igUserId, igUsername, promoCodeId, 
   return rows?.[0] || null;
 }
 
-export default async function handler(request) {
+export default async function handler(request, response) {
   if (request.method !== "POST") {
-    return json({ error: "Method not allowed" }, 405);
+    return sendJson(response, { error: "Method not allowed" }, 405);
   }
 
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
@@ -101,23 +97,23 @@ export default async function handler(request) {
   const manychatToken = process.env.MANYCHAT_ENDPOINT_TOKEN || "";
 
   if (!serviceRoleKey || !supabaseUrl || !manychatToken) {
-    return json({ error: "Missing server environment variables" }, 500);
+    return sendJson(response, { error: "Missing server environment variables" }, 500);
   }
 
-  const providedToken = request.headers.get("x-manychat-token") || "";
+  const providedToken = request.headers["x-manychat-token"] || "";
   if (providedToken !== manychatToken) {
-    return json({ error: "Unauthorized" }, 401);
+    return sendJson(response, { error: "Unauthorized" }, 401);
   }
 
   try {
-    const payload = await request.json();
+    const payload = request.body || {};
     const igUserId = String(payload.ig_user_id || payload.user_id || "").trim();
     const igUsername = String(payload.ig_username || payload.username || "").trim();
     const campaignKey = String(payload.campaign_key || "default").trim().toLowerCase();
     const creditsAmount = Math.max(1, Number(payload.credits_amount || 10));
 
     if (!igUserId) {
-      return json({ error: "Missing ig_user_id" }, 400);
+      return sendJson(response, { error: "Missing ig_user_id" }, 400);
     }
 
     const existing = await findExistingDelivery({
@@ -128,7 +124,7 @@ export default async function handler(request) {
     });
 
     if (existing?.code?.code) {
-      return json({
+      return sendJson(response, {
         ok: true,
         code: existing.code.code,
         credits_amount: existing.code.credits_amount || creditsAmount,
@@ -159,7 +155,7 @@ export default async function handler(request) {
       supabaseUrl,
     });
 
-    return json({
+    return sendJson(response, {
       ok: true,
       code: promoCode.code,
       credits_amount: promoCode.credits_amount || creditsAmount,
@@ -168,7 +164,7 @@ export default async function handler(request) {
       message: `Tu codigo de user98 es ${promoCode.code}`,
     });
   } catch (error) {
-    return json({
+    return sendJson(response, {
       error: "ManyChat code generation failed",
       detail: String(error.message || error),
     }, 500);
