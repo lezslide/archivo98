@@ -1039,6 +1039,44 @@ async function saveProfileData() {
   rerenderCoreApps();
 }
 
+async function updateUserPassword(win) {
+  if (!state.supabase || !state.user.loggedIn) return;
+
+  const nextPassword = win.querySelector("#new-password-input")?.value.trim() || "";
+  const confirmPassword = win.querySelector("#confirm-password-input")?.value.trim() || "";
+
+  if (!nextPassword || !confirmPassword) {
+    setUserActionStatus(win, "");
+    alert("Completá la nueva contraseña y su confirmación.");
+    return;
+  }
+
+  if (nextPassword.length < 6) {
+    setUserActionStatus(win, "");
+    alert("La nueva contraseña debe tener al menos 6 caracteres.");
+    return;
+  }
+
+  if (nextPassword !== confirmPassword) {
+    setUserActionStatus(win, "");
+    alert("Las contraseñas no coinciden.");
+    return;
+  }
+
+  setUserActionStatus(win, "Actualizando contraseña...");
+  const { error } = await state.supabase.auth.updateUser({ password: nextPassword });
+
+  if (error) {
+    setUserActionStatus(win, "");
+    alert(error.message);
+    return;
+  }
+
+  win.querySelector("#new-password-input").value = "";
+  win.querySelector("#confirm-password-input").value = "";
+  setUserActionStatus(win, "Contraseña actualizada.");
+}
+
 async function signOutUser() {
   if (!state.supabase) return;
   const usersWindow = state.windows.get("users")?.element || document;
@@ -2850,10 +2888,13 @@ const desktopApps = {
                 <input id="username-input" class="win-input" type="text" maxlength="24" value="${escapeHtml(getUsername())}" placeholder="Nombre visible" />
                 <input id="avatar-input" class="win-input" type="text" value="${escapeHtml(state.user.avatar_url)}" placeholder="URL de tu foto/avatar" />
                 <input id="redeem-code-input" class="win-input" type="text" placeholder="Canjear codigo RX-XXXX..." />
+                <input id="new-password-input" class="win-input" type="password" minlength="6" placeholder="Nueva contraseña" />
+                <input id="confirm-password-input" class="win-input" type="password" minlength="6" placeholder="Confirmar nueva contraseña" />
               </div>
               <div class="session-row">
                 <button class="action-btn" data-action="save-profile">Guardar perfil</button>
                 <button class="action-btn" data-action="redeem-code">Canjear 10 credits</button>
+                <button class="action-btn" data-action="change-password">Cambiar contraseña</button>
                 <button class="action-btn" data-action="sign-out">Salir</button>
               </div>
               <div id="user-action-status" class="shop-copy"></div>
@@ -2946,6 +2987,7 @@ const desktopApps = {
       win.querySelector('[data-action="sign-up"]')?.addEventListener("click", () => submitAuth("sign-up", win));
       win.querySelector('[data-action="save-profile"]')?.addEventListener("click", saveProfileData);
       win.querySelector('[data-action="redeem-code"]')?.addEventListener("click", () => redeemPromoCode(win.querySelector("#redeem-code-input")?.value || ""));
+      win.querySelector('[data-action="change-password"]')?.addEventListener("click", () => updateUserPassword(win));
       win.querySelector('[data-action="sign-out"]')?.addEventListener("click", signOutUser);
       win.querySelector('[data-action="generate-codes"]')?.addEventListener("click", () => generatePromoCodes(5));
       win.querySelector('[data-action="copy-generated-codes"]')?.addEventListener("click", async () => {
@@ -3689,3 +3731,137 @@ setInterval(() => {
 }, 1000);
 
 init();
+const backgroundAudioState = {
+  activeAudio: null,
+  shouldResume: false,
+  lastSrc: "",
+  lastTime: 0,
+};
+
+function getTrackedAudio() {
+  if (backgroundAudioState.activeAudio && document.contains(backgroundAudioState.activeAudio)) {
+    return backgroundAudioState.activeAudio;
+  }
+
+  const candidates = Array.from(document.querySelectorAll("audio"));
+  const active = candidates.find((audio) => !audio.paused && !audio.ended) || candidates[0] || null;
+  backgroundAudioState.activeAudio = active;
+  return active;
+}
+
+function syncTrackedAudio(audio) {
+  if (!(audio instanceof HTMLAudioElement)) return;
+  backgroundAudioState.activeAudio = audio;
+  backgroundAudioState.lastSrc = audio.currentSrc || audio.src || "";
+  backgroundAudioState.lastTime = Number(audio.currentTime || 0);
+}
+
+async function resumeTrackedAudio() {
+  const audio = getTrackedAudio();
+  if (!audio) return;
+
+  if (backgroundAudioState.lastSrc) {
+    const currentSrc = audio.currentSrc || audio.src || "";
+    if (!currentSrc && backgroundAudioState.lastSrc) {
+      audio.src = backgroundAudioState.lastSrc;
+    }
+  }
+
+  if (Number.isFinite(backgroundAudioState.lastTime) && backgroundAudioState.lastTime > 0) {
+    const drift = Math.abs((audio.currentTime || 0) - backgroundAudioState.lastTime);
+    if (drift > 1) {
+      try {
+        audio.currentTime = backgroundAudioState.lastTime;
+      } catch (_error) {
+      }
+    }
+  }
+
+  try {
+    await audio.play();
+  } catch (_error) {
+  }
+}
+
+function setupBackgroundAudioGuards() {
+  if (window.__backgroundAudioGuardsInstalled) return;
+  window.__backgroundAudioGuardsInstalled = true;
+
+  document.addEventListener("play", (event) => {
+    if (!(event.target instanceof HTMLAudioElement)) return;
+    const audio = event.target;
+    audio.playsInline = true;
+    audio.setAttribute("playsinline", "true");
+    audio.preload = "auto";
+    syncTrackedAudio(audio);
+    backgroundAudioState.shouldResume = true;
+  }, true);
+
+  document.addEventListener("pause", (event) => {
+    if (!(event.target instanceof HTMLAudioElement)) return;
+    syncTrackedAudio(event.target);
+  }, true);
+
+  document.addEventListener("timeupdate", (event) => {
+    if (!(event.target instanceof HTMLAudioElement)) return;
+    syncTrackedAudio(event.target);
+  }, true);
+
+  document.addEventListener("visibilitychange", () => {
+    const audio = getTrackedAudio();
+    if (!audio) return;
+
+    if (document.hidden) {
+      backgroundAudioState.shouldResume = !audio.paused && !audio.ended;
+      syncTrackedAudio(audio);
+      return;
+    }
+
+    if (backgroundAudioState.shouldResume) {
+      resumeTrackedAudio();
+    }
+  });
+
+  window.addEventListener("pageshow", () => {
+    if (backgroundAudioState.shouldResume) {
+      resumeTrackedAudio();
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    if (backgroundAudioState.shouldResume) {
+      resumeTrackedAudio();
+    }
+  });
+
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setActionHandler("play", async () => {
+      backgroundAudioState.shouldResume = true;
+      await resumeTrackedAudio();
+    });
+
+    navigator.mediaSession.setActionHandler("pause", () => {
+      const audio = getTrackedAudio();
+      if (!audio) return;
+      syncTrackedAudio(audio);
+      backgroundAudioState.shouldResume = true;
+      audio.pause();
+    });
+
+    navigator.mediaSession.setActionHandler("seekbackward", () => {
+      const audio = getTrackedAudio();
+      if (!audio) return;
+      audio.currentTime = Math.max(0, (audio.currentTime || 0) - 10);
+      syncTrackedAudio(audio);
+    });
+
+    navigator.mediaSession.setActionHandler("seekforward", () => {
+      const audio = getTrackedAudio();
+      if (!audio) return;
+      audio.currentTime = Math.min(audio.duration || Number.MAX_SAFE_INTEGER, (audio.currentTime || 0) + 10);
+      syncTrackedAudio(audio);
+    });
+  }
+}
+
+setupBackgroundAudioGuards();
