@@ -76,6 +76,36 @@ const GLOBAL_CHAT_PROHIBITED_KEYWORDS = [
   "pornografia", "pornografía", "xxx", "nudes", "nude", "desnuda", "desnudo", "sexual",
 ];
 
+const CREATIVE_STYLE_SEEDS = [
+  "cyber cumbia rota",
+  "under nocturno de periferia",
+  "glam mugriento de after",
+  "romance de autopista",
+  "futurismo barrial",
+  "pop trash elegante",
+  "uniforme de culto digital",
+  "streetwear melancolico",
+];
+const CREATIVE_MUSIC_SEEDS = [
+  "sintes rotos y bajos densos",
+  "dem bow lento con aire fantasmal",
+  "guitarras crudas con eco largo",
+  "club latino industrial",
+  "balada digital de madrugada",
+  "percusiones secas y hook de mantra",
+  "voz hablada con coros de vidrio",
+  "beats de pasarela underground",
+];
+const CREATIVE_VISUAL_SEEDS = [
+  "flash quemado, cuero y neblina",
+  "fierros cromados y rimel corrido",
+  "verde monitor, latex y humo",
+  "blanco de probador con sombra azul",
+  "polaroid sucia y espejo roto",
+  "asfalto mojado con delineado corrido",
+  "lycra, denim y luz de kiosco",
+  "habitacion vacia con aura pop",
+];
 const FORCED_ADMIN_EMAILS = ["jeremiastumber1@gmail.com"];
 
 const state = {
@@ -94,11 +124,28 @@ const state = {
   musicTracks: [],
   privateMusicTracks: [],
   musicPending: [],
+  publishedProjects: [],
   musicUpload: {
     file: null,
     fileName: "",
     status: "",
     scrollTop: 0,
+  },
+  creativeStudio: {
+    focus: localStorage.getItem("user98_creative_focus") || "music",
+    mode: localStorage.getItem("user98_creative_mode") || "artist",
+    manifesto: localStorage.getItem("user98_creative_manifesto") || "",
+    musicNotes: localStorage.getItem("user98_creative_music_notes") || "",
+    lookNotes: localStorage.getItem("user98_creative_look_notes") || "",
+    releasePlan: localStorage.getItem("user98_creative_release_plan") || "",
+    alterEgo: localStorage.getItem("user98_creative_alter_ego") || "user98",
+    moodline: localStorage.getItem("user98_creative_moodline") || "Oscuro, sensual, callejero y futurista.",
+    palette: localStorage.getItem("user98_creative_palette") || "Negro humo / Plata / Rojo quemado / Verde monitor",
+    problem: localStorage.getItem("user98_creative_problem") || "",
+    impact: localStorage.getItem("user98_creative_impact") || "",
+    aiReply: localStorage.getItem("user98_creative_ai_reply") || "",
+    projectTitle: localStorage.getItem("user98_creative_project_title") || "",
+    projectTagline: localStorage.getItem("user98_creative_project_tagline") || "",
   },
   player: {
     audio: null,
@@ -166,6 +213,12 @@ const state = {
     chat_skin: localStorage.getItem("win98_chat_skin") || "classic",
     nick_color: localStorage.getItem("win98_nick_color") || "#7dd3fc",
     text_color: localStorage.getItem("win98_text_color") || "#f3f4f6",
+    bio: localStorage.getItem("win98_bio") || "",
+    instagram_handle: localStorage.getItem("win98_instagram_handle") || "",
+    tiktok_handle: localStorage.getItem("win98_tiktok_handle") || "",
+    website_url: localStorage.getItem("win98_website_url") || "",
+    role_label: localStorage.getItem("win98_role_label") || "",
+    brand_name: localStorage.getItem("win98_brand_name") || "",
     lecoins: 0,
     credits: 0,
     loggedIn: false,
@@ -861,6 +914,310 @@ function getAvatarMarkup(size = "small") {
   return `<div class="${avatarClass} fallback">${label}</div>`;
 }
 
+function persistCreativeStudio() {
+  localStorage.setItem("user98_creative_focus", state.creativeStudio.focus || "music");
+  localStorage.setItem("user98_creative_mode", state.creativeStudio.mode || "artist");
+  localStorage.setItem("user98_creative_manifesto", state.creativeStudio.manifesto || "");
+  localStorage.setItem("user98_creative_music_notes", state.creativeStudio.musicNotes || "");
+  localStorage.setItem("user98_creative_look_notes", state.creativeStudio.lookNotes || "");
+  localStorage.setItem("user98_creative_release_plan", state.creativeStudio.releasePlan || "");
+  localStorage.setItem("user98_creative_alter_ego", state.creativeStudio.alterEgo || "");
+  localStorage.setItem("user98_creative_moodline", state.creativeStudio.moodline || "");
+  localStorage.setItem("user98_creative_palette", state.creativeStudio.palette || "");
+  localStorage.setItem("user98_creative_problem", state.creativeStudio.problem || "");
+  localStorage.setItem("user98_creative_impact", state.creativeStudio.impact || "");
+  localStorage.setItem("user98_creative_ai_reply", state.creativeStudio.aiReply || "");
+  localStorage.setItem("user98_creative_project_title", state.creativeStudio.projectTitle || "");
+  localStorage.setItem("user98_creative_project_tagline", state.creativeStudio.projectTagline || "");
+}
+
+function pickCreativeSeed(pool) {
+  return pool[Math.floor(Math.random() * pool.length)] || "";
+}
+
+function buildCreativeManifesto() {
+  return `user98 mezcla ${pickCreativeSeed(CREATIVE_STYLE_SEEDS)} con ${pickCreativeSeed(CREATIVE_MUSIC_SEEDS)}. La imagen pide ${pickCreativeSeed(CREATIVE_VISUAL_SEEDS)} y una actitud de icono under que no pide permiso.`;
+}
+
+function buildCreativeReleasePlan() {
+  return [
+    "1. Reel teaser con frase corta y look protagonista.",
+    `2. Hook musical: ${pickCreativeSeed(CREATIVE_MUSIC_SEEDS)}.`,
+    `3. Visual principal: ${pickCreativeSeed(CREATIVE_VISUAL_SEEDS)}.`,
+    "4. CTA: comenta user98 y entra al universo completo por DM.",
+  ].join("\n");
+}
+
+function buildCreativeLookNotes() {
+  return [
+    `Base: ${pickCreativeSeed(CREATIVE_STYLE_SEEDS)}.`,
+    "Prenda hero: top ajustado, campera statement o conjunto de silueta fuerte.",
+    "Accesorios: lentes finos, anillos, metal, sporty o glam sucio.",
+    `Escena: ${pickCreativeSeed(CREATIVE_VISUAL_SEEDS)}.`,
+  ].join("\n");
+}
+
+function buildCreativeAlias() {
+  const prefix = ["USER", "CTRL", "NENA", "NEON", "ANTI", "LUX", "RUIDO", "ZERO"][Math.floor(Math.random() * 8)];
+  const suffix = ["98", "CORE", "VOID", "STAR", "MALA", "MODE", "WAVE", "NITE"][Math.floor(Math.random() * 8)];
+  return `${prefix}${suffix}`;
+}
+
+function getCreativeModeOptions() {
+  if (state.creativeStudio.focus === "fashion") {
+    return [
+      { value: "brand", label: "Empezar una marca" },
+      { value: "image", label: "Reforzar mi imagen" },
+    ];
+  }
+  if (state.creativeStudio.focus === "startup") {
+    return [
+      { value: "product", label: "Lanzar producto" },
+      { value: "service", label: "Resolver una necesidad" },
+    ];
+  }
+  return [
+    { value: "artist", label: "Desarrollar artista" },
+    { value: "release", label: "Preparar lanzamiento" },
+  ];
+}
+
+function getCreativeQuestionLabels() {
+  if (state.creativeStudio.focus === "fashion") {
+    return {
+      problem: state.creativeStudio.mode === "brand" ? "Que hueco queres ocupar en moda?" : "Que version de vos queres reforzar?",
+      impact: state.creativeStudio.mode === "brand" ? "Que queres que sienta la gente al ver tu marca?" : "Como queres impactar visualmente?",
+    };
+  }
+  if (state.creativeStudio.focus === "startup") {
+    return {
+      problem: "Que problema real queres resolver?",
+      impact: "Que cambio queres provocar en la gente o el mercado?",
+    };
+  }
+  return {
+    problem: state.creativeStudio.mode === "release" ? "Que queres que pase con este lanzamiento?" : "Que identidad musical queres construir?",
+    impact: "Como queres impactar emocionalmente y visualmente?",
+  };
+}
+
+function buildCreativeAiReply() {
+  const focus = state.creativeStudio.focus;
+  const mode = state.creativeStudio.mode;
+  const problem = state.creativeStudio.problem || "todavia no definido";
+  const impact = state.creativeStudio.impact || "todavia no definido";
+  const alias = state.creativeStudio.alterEgo || "user98";
+
+  if (focus === "startup") {
+    return [
+      `Vision: ${alias} tiene que atacar ${problem} con una propuesta simple, visible y deseable.`,
+      `Impacto buscado: ${impact}.`,
+      "Direccion AI: defini una promesa en una frase, un publico obsesivo inicial y una prueba minima que se pueda mostrar en un reel o landing.",
+      "Siguiente movimiento: arma una demo clara, una frase de valor y una estetica que haga parecer al proyecto inevitable.",
+    ].join("\n");
+  }
+
+  if (focus === "fashion") {
+    return [
+      `Direccion de moda: ${alias} tiene que convertir ${problem} en una firma visible.`,
+      `Impacto buscado: ${impact}.`,
+      `Modo activo: ${mode === "brand" ? "marca" : "imagen personal"}.`,
+      "Sugerencia AI: elegi una silueta hero, una textura dominante y un gesto visual repetible para que tu universo se reconozca aunque cambie el outfit.",
+    ].join("\n");
+  }
+
+  return [
+    `Direccion musical: ${alias} tiene que sonar a ${problem}.`,
+    `Impacto buscado: ${impact}.`,
+    `Modo activo: ${mode === "release" ? "lanzamiento" : "desarrollo artistico"}.`,
+    "Sugerencia AI: construi un hook corto, una frase de personaje y un look de portada que se puedan repetir en cada reel hasta volverse identidad.",
+  ].join("\n");
+}
+
+function getCreativeProjectLabels() {
+  if (state.creativeStudio.focus === "fashion") {
+    return {
+      title: state.creativeStudio.mode === "brand" ? "Nombre de la marca" : "Nombre del proyecto de imagen",
+      tagline: state.creativeStudio.mode === "brand" ? "Que vende o representa tu marca?" : "Como queres que te lean visualmente?",
+      notesTitle: "Panel de moda",
+      notesPlaceholder: "Coleccion, siluetas, materiales, accesorios, maquillaje, casting, locacion.",
+    };
+  }
+  if (state.creativeStudio.focus === "startup") {
+    return {
+      title: "Nombre del proyecto o startup",
+      tagline: "Promesa corta del proyecto",
+      notesTitle: "Panel de startup",
+      notesPlaceholder: "Problema, solucion, publico, modelo, prueba minima, pitch y rollout.",
+    };
+  }
+  return {
+    title: "Nombre artistico, track o era",
+    tagline: "Frase corta del proyecto musical",
+    notesTitle: "Panel de musica",
+    notesPlaceholder: "Sonido, concepto, identidad, portada, performance, narrativa y hook.",
+  };
+}
+
+function getCreativePublicRoleHint() {
+  if (state.creativeStudio.focus === "fashion") return "Fundador/a, director creativo, modelo, estilista";
+  if (state.creativeStudio.focus === "startup") return "Founder, builder, operador, creador";
+  return "Vocalista, musico, productor, banda, performer";
+}
+
+function renderPublishedProjectCards() {
+  if (!state.publishedProjects.length) {
+    return `<div class="note-box">Todavia no publicaste proyectos desde este estudio.</div>`;
+  }
+  return state.publishedProjects.map((project) => `
+    <div class="creative-project-card">
+      <div class="creative-project-top">
+        <strong>${escapeHtml(project.title || "Proyecto sin titulo")}</strong>
+        <span>${escapeHtml(project.focus || "music")} · ${escapeHtml(project.mode || "artist")}</span>
+      </div>
+      <div class="creative-project-tagline">${escapeHtml(project.tagline || "Sin tagline")}</div>
+      <div class="creative-project-copy">${escapeHtml(project.problem || "")}</div>
+      <div class="creative-project-copy">${escapeHtml(project.impact || "")}</div>
+      <div class="creative-project-links">
+        ${project.instagram_handle ? `<span>@${escapeHtml(project.instagram_handle.replace(/^@+/, ""))}</span>` : ""}
+        ${project.tiktok_handle ? `<span>TikTok: @${escapeHtml(project.tiktok_handle.replace(/^@+/, ""))}</span>` : ""}
+        ${project.website_url ? `<a href="${escapeHtml(project.website_url)}" target="_blank" rel="noopener noreferrer">Abrir link</a>` : ""}
+        <span>${escapeHtml(formatProjectDate(project.created_at))}</span>
+      </div>
+      <div class="creative-project-meta">${escapeHtml(project.role_label || state.user.role_label || "")}${project.brand_name ? ` · ${escapeHtml(project.brand_name)}` : ""}</div>
+    </div>
+  `).join("");
+}
+
+function formatProjectDate(value) {
+  if (!value) return "Sin fecha";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return "Sin fecha";
+  return parsed.toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+function normalizeCreativeWebsite(url) {
+  const trimmed = (url || "").trim();
+  if (!trimmed) return "";
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
+async function loadPublishedProjects() {
+  if (!state.supabase || !state.user.loggedIn) {
+    state.publishedProjects = [];
+    return;
+  }
+  const { data, error } = await state.supabase
+    .from("user_projects")
+    .select("id,title,tagline,focus,mode,problem,impact,role_label,brand_name,instagram_handle,tiktok_handle,website_url,is_published,created_at")
+    .eq("user_id", state.user.id)
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    state.publishedProjects = [];
+    return;
+  }
+  state.publishedProjects = data || [];
+}
+
+async function saveCreativeProject(win) {
+  if (!state.supabase || !state.user.loggedIn) {
+    alert("Necesitas iniciar sesion para publicar un proyecto.");
+    return;
+  }
+
+  const syncFieldsToState = () => {
+    state.creativeStudio.focus = win.querySelector("[data-creative-focus].active")?.dataset.creativeFocus || state.creativeStudio.focus;
+    state.creativeStudio.mode = win.querySelector("[data-creative-mode].active")?.dataset.creativeMode || state.creativeStudio.mode;
+    state.creativeStudio.projectTitle = win.querySelector("#creative-project-title")?.value.trim() || "";
+    state.creativeStudio.projectTagline = win.querySelector("#creative-project-tagline")?.value.trim() || "";
+    state.creativeStudio.problem = win.querySelector("#creative-problem")?.value.trim() || "";
+    state.creativeStudio.impact = win.querySelector("#creative-impact")?.value.trim() || "";
+    state.creativeStudio.manifesto = win.querySelector("#creative-manifesto")?.value || "";
+    state.creativeStudio.lookNotes = win.querySelector("#creative-look-notes")?.value || win.querySelector("#creative-startup-notes")?.value || "";
+    state.creativeStudio.musicNotes = win.querySelector("#creative-music-notes")?.value || "";
+    state.creativeStudio.releasePlan = win.querySelector("#creative-release-plan")?.value || "";
+    state.creativeStudio.aiReply = win.querySelector("#creative-ai-reply")?.value || "";
+    state.user.role_label = win.querySelector("#creative-role-label")?.value.trim() || "";
+    state.user.brand_name = win.querySelector("#creative-brand-name")?.value.trim() || "";
+    state.user.instagram_handle = win.querySelector("#creative-instagram")?.value.trim() || "";
+    state.user.tiktok_handle = win.querySelector("#creative-tiktok")?.value.trim() || "";
+    state.user.website_url = normalizeCreativeWebsite(win.querySelector("#creative-website")?.value.trim() || "");
+    state.user.bio = win.querySelector("#creative-bio")?.value.trim() || "";
+  };
+
+  syncFieldsToState();
+  persistCreativeStudio();
+
+  if (!state.creativeStudio.projectTitle) {
+    alert("Poné un nombre para el proyecto antes de publicarlo.");
+    return;
+  }
+
+  const projectPayload = {
+    user_id: state.user.id,
+    title: state.creativeStudio.projectTitle,
+    tagline: state.creativeStudio.projectTagline,
+    focus: state.creativeStudio.focus,
+    mode: state.creativeStudio.mode,
+    problem: state.creativeStudio.problem,
+    impact: state.creativeStudio.impact,
+    manifesto: state.creativeStudio.manifesto,
+    notes_primary: state.creativeStudio.focus === "music" ? state.creativeStudio.musicNotes : state.creativeStudio.lookNotes,
+    notes_secondary: state.creativeStudio.focus === "startup" ? state.creativeStudio.releasePlan : state.creativeStudio.aiReply,
+    ai_reply: state.creativeStudio.aiReply,
+    role_label: state.user.role_label,
+    brand_name: state.user.brand_name,
+    instagram_handle: state.user.instagram_handle,
+    tiktok_handle: state.user.tiktok_handle,
+    website_url: normalizeCreativeWebsite(state.user.website_url),
+    bio: state.user.bio,
+    is_published: true,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error: userError } = await state.supabase
+    .from("users")
+    .update({
+      bio: state.user.bio,
+      instagram_handle: state.user.instagram_handle,
+      tiktok_handle: state.user.tiktok_handle,
+      website_url: normalizeCreativeWebsite(state.user.website_url),
+      role_label: state.user.role_label,
+      brand_name: state.user.brand_name,
+      last_seen: new Date().toISOString(),
+    })
+    .eq("id", state.user.id);
+  const userColumnsMissing = userError && /column/i.test(userError.message || "");
+
+  const { error: projectError } = await state.supabase
+    .from("user_projects")
+    .insert(projectPayload);
+
+  if ((userError && !userColumnsMissing) || projectError) {
+    console.error(userError || projectError);
+    alert((userError && !userColumnsMissing ? userError : projectError)?.message || "No pude publicar el proyecto.");
+    return;
+  }
+
+  localStorage.setItem("win98_bio", state.user.bio || "");
+  localStorage.setItem("win98_instagram_handle", state.user.instagram_handle || "");
+  localStorage.setItem("win98_tiktok_handle", state.user.tiktok_handle || "");
+  localStorage.setItem("win98_website_url", state.user.website_url || "");
+  localStorage.setItem("win98_role_label", state.user.role_label || "");
+  localStorage.setItem("win98_brand_name", state.user.brand_name || "");
+  await loadPublishedProjects();
+  refreshWindow("proyectos");
+  alert("Proyecto publicado en tu perfil.");
+}
+
 function isEffectiveAdmin() {
   return state.isAdmin || FORCED_ADMIN_EMAILS.includes((state.user.email || "").toLowerCase());
 }
@@ -869,6 +1226,7 @@ async function initSupabase() {
   if (!state.supabase || !state.user.loggedIn) return;
   await fetchRecentMessages();
   await loadSocialGraph();
+  await loadPublishedProjects();
   subscribeToChat();
   startPresenceHeartbeat();
 }
@@ -919,7 +1277,7 @@ async function ensureProfile() {
   const fallbackName = state.user.username || (state.user.email ? state.user.email.split("@")[0] : `user_${state.user.id.slice(0, 6)}`);
   const { data: existingProfile, error } = await state.supabase
     .from("users")
-    .select("id,email,username,avatar_url,chat_skin,lecoins,credits")
+    .select("*")
     .eq("id", state.user.id)
     .maybeSingle();
 
@@ -933,11 +1291,23 @@ async function ensureProfile() {
     state.user.username = existingProfile.username || fallbackName;
     state.user.avatar_url = existingProfile.avatar_url || "";
     state.user.chat_skin = existingProfile.chat_skin || "classic";
+    state.user.bio = existingProfile.bio || "";
+    state.user.instagram_handle = existingProfile.instagram_handle || "";
+    state.user.tiktok_handle = existingProfile.tiktok_handle || "";
+    state.user.website_url = existingProfile.website_url || "";
+    state.user.role_label = existingProfile.role_label || "";
+    state.user.brand_name = existingProfile.brand_name || "";
     state.user.lecoins = Number(existingProfile.lecoins || 0);
     state.user.credits = Number(existingProfile.credits || 0);
     localStorage.setItem("win98_username", state.user.username);
     localStorage.setItem("win98_avatar_url", state.user.avatar_url);
     localStorage.setItem("win98_chat_skin", state.user.chat_skin);
+    localStorage.setItem("win98_bio", state.user.bio);
+    localStorage.setItem("win98_instagram_handle", state.user.instagram_handle);
+    localStorage.setItem("win98_tiktok_handle", state.user.tiktok_handle);
+    localStorage.setItem("win98_website_url", state.user.website_url);
+    localStorage.setItem("win98_role_label", state.user.role_label);
+    localStorage.setItem("win98_brand_name", state.user.brand_name);
     await state.supabase
       .from("users")
       .update({
@@ -951,17 +1321,37 @@ async function ensureProfile() {
 
   state.user.username = fallbackName;
   localStorage.setItem("win98_username", fallbackName);
-  await state.supabase.from("users").insert({
+  const insertPayload = {
     id: state.user.id,
     email: state.user.email,
     username: fallbackName,
     avatar_url: state.user.avatar_url || "",
     chat_skin: state.user.chat_skin || "classic",
+    bio: state.user.bio || "",
+    instagram_handle: state.user.instagram_handle || "",
+    tiktok_handle: state.user.tiktok_handle || "",
+    website_url: state.user.website_url || "",
+    role_label: state.user.role_label || "",
+    brand_name: state.user.brand_name || "",
     status: "online",
     lecoins: state.user.lecoins || 0,
     credits: state.user.credits || 0,
     last_seen: new Date().toISOString(),
-  });
+  };
+  const insertResult = await state.supabase.from("users").insert(insertPayload);
+  if (insertResult.error && /column/i.test(insertResult.error.message || "")) {
+    await state.supabase.from("users").insert({
+      id: state.user.id,
+      email: state.user.email,
+      username: fallbackName,
+      avatar_url: state.user.avatar_url || "",
+      chat_skin: state.user.chat_skin || "classic",
+      status: "online",
+      lecoins: state.user.lecoins || 0,
+      credits: state.user.credits || 0,
+      last_seen: new Date().toISOString(),
+    });
+  }
 }
 
 function syncEconomyViews({ rerenderSlot = false } = {}) {
@@ -983,7 +1373,7 @@ async function refreshProfileFromDb(showAlert = true) {
   if (!state.supabase || !state.user.loggedIn) return;
   const { data, error } = await state.supabase
     .from("users")
-    .select("id,email,username,avatar_url,chat_skin,lecoins,credits,status")
+    .select("*")
     .eq("id", state.user.id)
     .single();
 
@@ -997,12 +1387,24 @@ async function refreshProfileFromDb(showAlert = true) {
   state.user.username = data.username || state.user.username;
   state.user.avatar_url = data.avatar_url || "";
   state.user.chat_skin = data.chat_skin || "classic";
+  state.user.bio = data.bio || "";
+  state.user.instagram_handle = data.instagram_handle || "";
+  state.user.tiktok_handle = data.tiktok_handle || "";
+  state.user.website_url = data.website_url || "";
+  state.user.role_label = data.role_label || "";
+  state.user.brand_name = data.brand_name || "";
   state.user.lecoins = Number(data.lecoins || 0);
   state.user.credits = Number(data.credits || 0);
 
   localStorage.setItem("win98_username", state.user.username);
   localStorage.setItem("win98_avatar_url", state.user.avatar_url);
   localStorage.setItem("win98_chat_skin", state.user.chat_skin);
+  localStorage.setItem("win98_bio", state.user.bio);
+  localStorage.setItem("win98_instagram_handle", state.user.instagram_handle);
+  localStorage.setItem("win98_tiktok_handle", state.user.tiktok_handle);
+  localStorage.setItem("win98_website_url", state.user.website_url);
+  localStorage.setItem("win98_role_label", state.user.role_label);
+  localStorage.setItem("win98_brand_name", state.user.brand_name);
   applyUserSkin();
   updateOnlineIndicator();
   rerenderCoreApps();
@@ -3312,13 +3714,272 @@ const desktopApps = {
     },
   },
   proyectos: {
-    title: "C:\\Proyectos",
-    width: 440,
-    height: 320,
+    title: "C:\\Creative_Studio",
+    width: 760,
+    height: 620,
     x: 240,
     y: 90,
     render() {
-      return `<div class="window-content"><div class="explorer-grid"><div class="folder-item"><svg width="32" height="32" viewBox="0 0 24 24" fill="#444"><path d="M6 2h12l4 4v14H6V2z" fill="#fff" stroke="#000"/></svg><span>App_V1.exe</span></div><div class="folder-item"><svg width="32" height="32" viewBox="0 0 24 24" fill="#ffe066"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg><span>Recursos</span></div><div class="folder-item"><svg width="32" height="32" viewBox="0 0 24 24" fill="#ffe066"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg><span>Fotolog</span></div><div class="folder-item"><svg width="32" height="32" viewBox="0 0 24 24" fill="#444"><path d="M5 4h14v16H5z" fill="#dfe7ff" stroke="#000"/></svg><span>Creditos.sys</span></div></div><br><div class="note-box">LeCoins sera el balance reflejado desde giftcard/donadores. Credits sera la moneda jugable para skins, estilos y perks internos.</div></div><div class="window-statusbar"><div class="status-panel">4 objetos</div></div>`;
+      const modeOptions = getCreativeModeOptions();
+      const labels = getCreativeQuestionLabels();
+      const projectLabels = getCreativeProjectLabels();
+      return `
+        <div class="window-content creative-studio">
+          <div class="creative-hero">
+            <div>
+              <div class="app-section-title">Creative Studio</div>
+              <div class="creative-subtitle">Un espacio para bajarle forma a tu universo visual, musical y de moda dentro de user98.</div>
+            </div>
+            <button class="action-btn" data-open-music="1">Abrir Under Music</button>
+          </div>
+
+          <div class="creative-grid">
+            <section class="creative-card">
+              <h3>Ruta</h3>
+              <div class="creative-pill-row">
+                <button class="action-btn creative-pill ${state.creativeStudio.focus === "music" ? "active" : ""}" data-creative-focus="music">Musica</button>
+                <button class="action-btn creative-pill ${state.creativeStudio.focus === "fashion" ? "active" : ""}" data-creative-focus="fashion">Moda</button>
+                <button class="action-btn creative-pill ${state.creativeStudio.focus === "startup" ? "active" : ""}" data-creative-focus="startup">Startup</button>
+              </div>
+              <div class="creative-pill-row">
+                ${modeOptions.map((option) => `<button class="action-btn creative-pill ${state.creativeStudio.mode === option.value ? "active" : ""}" data-creative-mode="${escapeHtml(option.value)}">${escapeHtml(option.label)}</button>`).join("")}
+              </div>
+              <div class="shop-copy">Elegis el camino y el estudio te cambia las preguntas y sugerencias.</div>
+            </section>
+
+            <section class="creative-card">
+              <h3>Preguntas clave</h3>
+              <div class="form-stack">
+                <input id="creative-problem" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.problem)}" placeholder="${escapeHtml(labels.problem)}" />
+                <input id="creative-impact" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.impact)}" placeholder="${escapeHtml(labels.impact)}" />
+              </div>
+              <div class="session-row">
+                <button class="action-btn" data-creative-action="ai">Preguntarle a la AI</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="creative-grid">
+            <section class="creative-card">
+              <h3>Perfil publico</h3>
+              <div class="form-stack">
+                <input id="creative-role-label" class="win-input" type="text" value="${escapeHtml(state.user.role_label)}" placeholder="${escapeHtml(getCreativePublicRoleHint())}" />
+                <input id="creative-brand-name" class="win-input" type="text" value="${escapeHtml(state.user.brand_name)}" placeholder="Marca, banda o emprendimiento" />
+                <input id="creative-instagram" class="win-input" type="text" value="${escapeHtml(state.user.instagram_handle)}" placeholder="Instagram" />
+                <input id="creative-tiktok" class="win-input" type="text" value="${escapeHtml(state.user.tiktok_handle)}" placeholder="TikTok" />
+                <input id="creative-website" class="win-input" type="text" value="${escapeHtml(state.user.website_url)}" placeholder="Web o link principal" />
+                <textarea id="creative-bio" class="win-input creative-textarea compact" rows="4" placeholder="Quien sos, que haces, que estas construyendo.">${escapeHtml(state.user.bio)}</textarea>
+              </div>
+            </section>
+
+            <section class="creative-card">
+              <h3>Proyecto</h3>
+              <div class="form-stack">
+                <input id="creative-project-title" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.projectTitle)}" placeholder="${escapeHtml(projectLabels.title)}" />
+                <input id="creative-project-tagline" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.projectTagline)}" placeholder="${escapeHtml(projectLabels.tagline)}" />
+              </div>
+              <div class="shop-copy">Publica una version visible del proyecto con tu perfil y links para mostrar tu universo dentro de user98.</div>
+              <div class="session-row">
+                <button class="action-btn" data-creative-action="publish">Crear y publicar proyecto</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="creative-grid">
+            <section class="creative-card">
+              <h3>Identidad</h3>
+              <div class="form-stack">
+                <input id="creative-alter-ego" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.alterEgo)}" placeholder="Alias / alter ego" />
+                <input id="creative-moodline" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.moodline)}" placeholder="Moodline estetica" />
+                <input id="creative-palette" class="win-input" type="text" value="${escapeHtml(state.creativeStudio.palette)}" placeholder="Paleta / materiales / texturas" />
+              </div>
+              <div class="session-row">
+                <button class="action-btn" data-creative-action="alias">Nuevo alias</button>
+                <button class="action-btn" data-creative-action="save">Guardar</button>
+              </div>
+            </section>
+
+            <section class="creative-card">
+              <h3>Manifesto</h3>
+              <textarea id="creative-manifesto" class="win-input creative-textarea" rows="7" placeholder="Que energia tiene user98, que provoca, como se viste, como se mueve.">${escapeHtml(state.creativeStudio.manifesto)}</textarea>
+              <div class="session-row">
+                <button class="action-btn" data-creative-action="manifesto">Generar manifesto</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="creative-grid single">
+            ${state.creativeStudio.focus === "music" ? `
+              <section class="creative-card">
+                <h3>${escapeHtml(projectLabels.notesTitle)}</h3>
+                <textarea id="creative-music-notes" class="win-input creative-textarea" rows="8" placeholder="${escapeHtml(projectLabels.notesPlaceholder)}">${escapeHtml(state.creativeStudio.musicNotes)}</textarea>
+                <div class="session-row">
+                  <button class="action-btn" data-creative-action="music">Bajar idea musical</button>
+                </div>
+              </section>
+            ` : ""}
+
+            ${state.creativeStudio.focus === "fashion" ? `
+              <section class="creative-card">
+                <h3>${escapeHtml(projectLabels.notesTitle)}</h3>
+                <textarea id="creative-look-notes" class="win-input creative-textarea" rows="8" placeholder="${escapeHtml(projectLabels.notesPlaceholder)}">${escapeHtml(state.creativeStudio.lookNotes)}</textarea>
+                <div class="session-row">
+                  <button class="action-btn" data-creative-action="look">Generar look</button>
+                </div>
+              </section>
+            ` : ""}
+
+            ${state.creativeStudio.focus === "startup" ? `
+              <section class="creative-card">
+                <h3>${escapeHtml(projectLabels.notesTitle)}</h3>
+                <textarea id="creative-startup-notes" class="win-input creative-textarea" rows="8" placeholder="${escapeHtml(projectLabels.notesPlaceholder)}">${escapeHtml(state.creativeStudio.lookNotes)}</textarea>
+                <div class="session-row">
+                  <button class="action-btn" data-creative-action="startup">Bajar idea startup</button>
+                </div>
+              </section>
+            ` : ""}
+          </div>
+
+          <div class="creative-grid single">
+            <section class="creative-card">
+              <h3>Plan de salida</h3>
+              <textarea id="creative-release-plan" class="win-input creative-textarea" rows="6" placeholder="Como vas a presentar el personaje, el track, el look y el reel.">${escapeHtml(state.creativeStudio.releasePlan)}</textarea>
+              <div class="session-row">
+                <button class="action-btn" data-creative-action="release">Generar plan</button>
+                <button class="action-btn" data-creative-action="clear">Limpiar todo</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="creative-grid single">
+            <section class="creative-card">
+              <h3>Respuesta AI</h3>
+              <textarea id="creative-ai-reply" class="win-input creative-textarea" rows="7" placeholder="Aca aparece una devolucion estilo estratega creativo.">${escapeHtml(state.creativeStudio.aiReply)}</textarea>
+            </section>
+          </div>
+
+          <div class="creative-grid single">
+            <section class="creative-card">
+              <h3>Proyectos publicados</h3>
+              <div class="creative-project-list">${renderPublishedProjectCards()}</div>
+            </section>
+          </div>
+
+          <div id="creative-studio-status" class="note-box creative-status">Todo lo que escribas aca queda guardado en este navegador para seguir armando tu mundo creativo.</div>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Creative Studio</div><div class="status-panel">${escapeHtml(state.creativeStudio.alterEgo || "user98")}</div></div>
+      `;
+    },
+    bind(win) {
+      const statusNode = win.querySelector("#creative-studio-status");
+      const syncFieldsToState = () => {
+        state.creativeStudio.alterEgo = win.querySelector("#creative-alter-ego")?.value.trim() || "user98";
+        state.creativeStudio.moodline = win.querySelector("#creative-moodline")?.value.trim() || "";
+        state.creativeStudio.palette = win.querySelector("#creative-palette")?.value.trim() || "";
+        state.user.role_label = win.querySelector("#creative-role-label")?.value.trim() || "";
+        state.user.brand_name = win.querySelector("#creative-brand-name")?.value.trim() || "";
+        state.user.instagram_handle = win.querySelector("#creative-instagram")?.value.trim() || "";
+        state.user.tiktok_handle = win.querySelector("#creative-tiktok")?.value.trim() || "";
+        state.user.website_url = normalizeCreativeWebsite(win.querySelector("#creative-website")?.value.trim() || "");
+        state.user.bio = win.querySelector("#creative-bio")?.value.trim() || "";
+        state.creativeStudio.projectTitle = win.querySelector("#creative-project-title")?.value.trim() || "";
+        state.creativeStudio.projectTagline = win.querySelector("#creative-project-tagline")?.value.trim() || "";
+        state.creativeStudio.problem = win.querySelector("#creative-problem")?.value.trim() || "";
+        state.creativeStudio.impact = win.querySelector("#creative-impact")?.value.trim() || "";
+        state.creativeStudio.manifesto = win.querySelector("#creative-manifesto")?.value || "";
+        state.creativeStudio.lookNotes = win.querySelector("#creative-look-notes")?.value || win.querySelector("#creative-startup-notes")?.value || "";
+        state.creativeStudio.musicNotes = win.querySelector("#creative-music-notes")?.value || "";
+        state.creativeStudio.releasePlan = win.querySelector("#creative-release-plan")?.value || "";
+        state.creativeStudio.aiReply = win.querySelector("#creative-ai-reply")?.value || "";
+      };
+      const saveAndReport = (message) => {
+        syncFieldsToState();
+        persistCreativeStudio();
+        localStorage.setItem("win98_bio", state.user.bio || "");
+        localStorage.setItem("win98_instagram_handle", state.user.instagram_handle || "");
+        localStorage.setItem("win98_tiktok_handle", state.user.tiktok_handle || "");
+        localStorage.setItem("win98_website_url", state.user.website_url || "");
+        localStorage.setItem("win98_role_label", state.user.role_label || "");
+        localStorage.setItem("win98_brand_name", state.user.brand_name || "");
+        if (statusNode) statusNode.textContent = message;
+      };
+
+      win.querySelector("[data-open-music]")?.addEventListener("click", () => openWindow("winamp"));
+      win.querySelectorAll("[data-creative-focus]").forEach((button) => {
+        button.addEventListener("click", () => {
+          syncFieldsToState();
+          state.creativeStudio.focus = button.dataset.creativeFocus || "music";
+          state.creativeStudio.mode = getCreativeModeOptions()[0]?.value || "artist";
+          persistCreativeStudio();
+          refreshWindow("proyectos");
+        });
+      });
+      win.querySelectorAll("[data-creative-mode]").forEach((button) => {
+        button.addEventListener("click", () => {
+          syncFieldsToState();
+          state.creativeStudio.mode = button.dataset.creativeMode || "artist";
+          persistCreativeStudio();
+          refreshWindow("proyectos");
+        });
+      });
+      win.querySelectorAll("input, textarea").forEach((field) => {
+        field.addEventListener("input", () => saveAndReport("Cambios guardados en tu estudio creativo local."));
+      });
+      win.querySelectorAll("[data-creative-action]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const action = button.dataset.creativeAction;
+          if (action === "alias") {
+            win.querySelector("#creative-alter-ego").value = buildCreativeAlias();
+          }
+          if (action === "manifesto") {
+            win.querySelector("#creative-manifesto").value = buildCreativeManifesto();
+          }
+          if (action === "look") {
+            win.querySelector("#creative-look-notes").value = buildCreativeLookNotes();
+          }
+          if (action === "music") {
+            win.querySelector("#creative-music-notes").value = `${pickCreativeSeed(CREATIVE_MUSIC_SEEDS)}.\nHook vocal: frase corta, repetible y con identidad.\nClima general: sensual, nocturno y con actitud propia.`;
+          }
+          if (action === "startup") {
+            const startupNode = win.querySelector("#creative-startup-notes");
+            if (startupNode) {
+              syncFieldsToState();
+              startupNode.value = [
+                `Problema central: ${state.creativeStudio.problem || "Definir una necesidad urgente y concreta."}`,
+                `Promesa: ${state.creativeStudio.impact || "Explicar por que esto mejora la vida de alguien en una frase."}`,
+                "MVP: una demo chica, visible y compartible en una landing o reel.",
+                "Go to market: elegir un nicho inicial y una prueba social facil de mostrar.",
+              ].join("\n");
+            }
+          }
+          if (action === "ai") {
+            syncFieldsToState();
+            win.querySelector("#creative-ai-reply").value = buildCreativeAiReply();
+          }
+          if (action === "release") {
+            win.querySelector("#creative-release-plan").value = buildCreativeReleasePlan();
+          }
+          if (action === "publish") {
+            await saveCreativeProject(win);
+            saveAndReport("Proyecto publicado y guardado en tu perfil.");
+            return;
+          }
+          if (action === "clear") {
+            win.querySelector("#creative-manifesto").value = "";
+            const lookNode = win.querySelector("#creative-look-notes");
+            if (lookNode) lookNode.value = "";
+            const musicNode = win.querySelector("#creative-music-notes");
+            if (musicNode) musicNode.value = "";
+            const startupNode = win.querySelector("#creative-startup-notes");
+            if (startupNode) startupNode.value = "";
+            win.querySelector("#creative-release-plan").value = "";
+            win.querySelector("#creative-ai-reply").value = "";
+            win.querySelector("#creative-project-title").value = "";
+            win.querySelector("#creative-project-tagline").value = "";
+          }
+          saveAndReport(action === "clear" ? "Studio limpiado. Ahora podes reconstruir una direccion nueva." : "Nueva idea aplicada y guardada.");
+        });
+      });
     },
   },
   "explorer-games": {

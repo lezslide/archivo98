@@ -1342,6 +1342,122 @@ textarea {
   margin-top: 8px;
 }
 
+.creative-studio {
+  background: linear-gradient(180deg, #fff8ef 0%, #f6ede0 100%);
+}
+
+.creative-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.creative-subtitle {
+  font-size: 12px;
+  color: #6b5846;
+  max-width: 520px;
+  line-height: 1.4;
+}
+
+.creative-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.creative-grid.single {
+  grid-template-columns: 1fr;
+}
+
+.creative-card {
+  border: 2px inset var(--win-silver);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px;
+}
+
+.creative-card h3 {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+
+.creative-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.creative-pill {
+  min-width: 0;
+}
+
+.creative-pill.active {
+  background: linear-gradient(180deg, #ffe2bf, #ffc178);
+  border-color: var(--win-white) #9c5f18 #9c5f18 var(--win-white);
+}
+
+.creative-textarea {
+  min-height: 126px;
+  resize: vertical;
+  font-family: "Courier New", monospace;
+  line-height: 1.4;
+}
+
+.creative-textarea.compact {
+  min-height: 92px;
+}
+
+.creative-status {
+  background: #fff3de;
+}
+
+.creative-project-list {
+  display: grid;
+  gap: 8px;
+}
+
+.creative-project-card {
+  border: 1px solid #caa785;
+  background: #fffdf8;
+  padding: 8px;
+}
+
+.creative-project-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.creative-project-tagline {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #5e4738;
+}
+
+.creative-project-copy,
+.creative-project-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #755d4a;
+}
+
+.creative-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #7b624d;
+}
+
+.creative-project-links a {
+  color: #8d3e00;
+}
+
 .skin-grid {
   display: grid;
   gap: 8px;
@@ -3362,6 +3478,14 @@ body[data-chat-skin="ice"] .private-messages .chat-row {
 
   .slot98-game-window {
     max-width: 100%;
+  }
+
+  .creative-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .creative-hero {
+    flex-direction: column;
   }
 
   .slot98-stage {
