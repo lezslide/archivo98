@@ -1368,6 +1368,10 @@ function syncMusicOutputGain() {
   }
 }
 
+function shouldUseMusicWebAudio() {
+  return !isMobileViewport();
+}
+
 function rememberUserPanelScroll(container) {
   const panel = (container instanceof Element ? container : document).querySelector(".window-content.user-panel");
   if (!panel) return;
@@ -1438,6 +1442,9 @@ function ensureMusicAudio() {
 
 async function ensureMusicAnalyser() {
   const audio = ensureMusicAudio();
+  if (!shouldUseMusicWebAudio()) {
+    return null;
+  }
   const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
   if (!AudioContextCtor) return null;
   if (!state.player.audioContext) {
@@ -1826,11 +1833,13 @@ function stopMusicPlayback() {
 }
 
 async function playMusicTrack(trackId, { autoplay = true } = {}) {
-  const track = state.musicTracks.find((item) => item.id === trackId) || state.musicTracks[0];
+  const library = [...state.privateMusicTracks, ...state.musicTracks];
+  const track = library.find((item) => item.id === trackId) || library[0];
   if (!track) return;
   const audio = ensureMusicAudio();
   state.player.powerOn = true;
-  const sourceChanged = audio.src !== track.stream_url;
+  const currentSrc = audio.currentSrc || audio.src || "";
+  const sourceChanged = currentSrc !== track.stream_url;
   state.player.currentTrackId = track.id;
   if (sourceChanged) {
     audio.src = track.stream_url;
@@ -1853,7 +1862,7 @@ async function playMusicTrack(trackId, { autoplay = true } = {}) {
 
 function getCurrentTrackIndex() {
   const currentId = getCurrentMusicTrack()?.id;
-  return state.musicTracks.findIndex((track) => track.id === currentId);
+  return getRetroPlayerPlaylist().findIndex((track) => track.id === currentId);
 }
 
 function playAdjacentTrack(step) {
@@ -3800,6 +3809,7 @@ function setupBackgroundAudioGuards() {
   document.addEventListener("pause", (event) => {
     if (!(event.target instanceof HTMLAudioElement)) return;
     syncTrackedAudio(event.target);
+    backgroundAudioState.shouldResume = Boolean(state.player.isPlaying);
   }, true);
 
   document.addEventListener("timeupdate", (event) => {
@@ -3833,35 +3843,6 @@ function setupBackgroundAudioGuards() {
       resumeTrackedAudio();
     }
   });
-
-  if ("mediaSession" in navigator) {
-    navigator.mediaSession.setActionHandler("play", async () => {
-      backgroundAudioState.shouldResume = true;
-      await resumeTrackedAudio();
-    });
-
-    navigator.mediaSession.setActionHandler("pause", () => {
-      const audio = getTrackedAudio();
-      if (!audio) return;
-      syncTrackedAudio(audio);
-      backgroundAudioState.shouldResume = true;
-      audio.pause();
-    });
-
-    navigator.mediaSession.setActionHandler("seekbackward", () => {
-      const audio = getTrackedAudio();
-      if (!audio) return;
-      audio.currentTime = Math.max(0, (audio.currentTime || 0) - 10);
-      syncTrackedAudio(audio);
-    });
-
-    navigator.mediaSession.setActionHandler("seekforward", () => {
-      const audio = getTrackedAudio();
-      if (!audio) return;
-      audio.currentTime = Math.min(audio.duration || Number.MAX_SAFE_INTEGER, (audio.currentTime || 0) + 10);
-      syncTrackedAudio(audio);
-    });
-  }
 }
 
 setupBackgroundAudioGuards();
