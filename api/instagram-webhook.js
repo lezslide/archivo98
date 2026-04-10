@@ -6,6 +6,28 @@ import {
   sendJson,
 } from "./_instagram.js";
 
+function collectChanges(body) {
+  const directField = String(body?.field || "").trim();
+  if (directField) {
+    return [
+      {
+        field: directField,
+        value: body?.value || {},
+      },
+    ];
+  }
+
+  const entries = Array.isArray(body?.entry) ? body.entry : [];
+  const changes = [];
+
+  for (const entry of entries) {
+    const entryChanges = Array.isArray(entry?.changes) ? entry.changes : [];
+    changes.push(...entryChanges);
+  }
+
+  return changes;
+}
+
 async function handleCommentChange(change, config) {
   const value = change?.value || {};
   const commentId = String(value.id || "").trim();
@@ -68,26 +90,33 @@ export default async function handler(request, response) {
   }
 
   try {
-    const entries = Array.isArray(request.body?.entry) ? request.body.entry : [];
+    const changes = collectChanges(request.body);
     const results = [];
     const debug = {
       object: request.body?.object || null,
-      entry_count: entries.length,
+      entry_count: Array.isArray(request.body?.entry) ? request.body.entry.length : 0,
+      change_count: changes.length,
+      direct_field: request.body?.field || null,
     };
 
-    for (const entry of entries) {
-      const changes = Array.isArray(entry?.changes) ? entry.changes : [];
-
-      for (const change of changes) {
-        if (change?.field !== "comments") {
-          results.push({ skipped: true, reason: "unsupported-field", field: change?.field || null });
-          continue;
-        }
-
-        const outcome = await handleCommentChange(change, config);
-        results.push(outcome);
+    for (const change of changes) {
+      if (change?.field !== "comments") {
+        results.push({ skipped: true, reason: "unsupported-field", field: change?.field || null });
+        continue;
       }
+
+      const outcome = await handleCommentChange(change, config);
+      results.push(outcome);
     }
+
+    console.log(
+      JSON.stringify({
+        route: "instagram-webhook",
+        ok: true,
+        debug,
+        processed: results,
+      }),
+    );
 
     return sendJson(response, {
       ok: true,
@@ -104,6 +133,7 @@ export default async function handler(request, response) {
         debug: {
           object: request.body?.object || null,
           entry_count: Array.isArray(request.body?.entry) ? request.body.entry.length : 0,
+          direct_field: request.body?.field || null,
         },
       },
       500,
