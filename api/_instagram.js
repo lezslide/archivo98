@@ -51,6 +51,7 @@ function parseKeywordRules(rawValue) {
 
 function getInstagramConfig() {
   const graphVersion = process.env.INSTAGRAM_GRAPH_VERSION || "v24.0";
+  const graphBaseUrl = process.env.INSTAGRAM_GRAPH_BASE_URL || "https://graph.instagram.com";
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN || "";
   const appSecret = process.env.INSTAGRAM_APP_SECRET || "";
   const verifyToken = process.env.INSTAGRAM_VERIFY_TOKEN || "";
@@ -59,6 +60,7 @@ function getInstagramConfig() {
 
   return {
     graphVersion,
+    graphBaseUrl,
     accessToken,
     appSecret,
     verifyToken,
@@ -68,7 +70,8 @@ function getInstagramConfig() {
 }
 
 async function instagramRequest(path, { method = "GET", body, query } = {}, config = getInstagramConfig()) {
-  const url = new URL(`https://graph.facebook.com/${config.graphVersion}/${path}`);
+  const normalizedPath = String(path || "").replace(/^\/+/, "");
+  const url = new URL(`${config.graphBaseUrl}/${config.graphVersion}/${normalizedPath}`);
 
   if (query) {
     for (const [key, value] of Object.entries(query)) {
