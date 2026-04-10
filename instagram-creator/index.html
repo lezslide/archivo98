@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instagram Creator Autoreply</title>
+    <link rel="stylesheet" href="/instagram-creator/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Instagram Creator App</p>
+        <h1>Tu mini ManyChat propio, pero sin ManyChat.</h1>
+        <p class="lede">
+          Esta base escucha comentarios con webhook y dispara respuestas privadas usando la API oficial de
+          Instagram para cuentas profesionales tipo creador.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Endpoints incluidos</h2>
+        <ul>
+          <li><code>GET /api/instagram-config-test</code> prueba token y account ID.</li>
+          <li><code>GET /api/instagram-webhook</code> verifica el webhook con Meta.</li>
+          <li><code>POST /api/instagram-webhook</code> procesa eventos de comentarios.</li>
+          <li><code>POST /api/instagram-private-reply</code> manda una respuesta privada manual.</li>
+        </ul>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Variables de entorno</h2>
+          <pre><code>INSTAGRAM_ACCESS_TOKEN=
+INSTAGRAM_ACCOUNT_ID=
+INSTAGRAM_VERIFY_TOKEN=
+INSTAGRAM_APP_SECRET=
+INSTAGRAM_GRAPH_VERSION=v24.0
+INSTAGRAM_KEYWORD_RULES=[{"keyword":"precio","reply":"Te escribo por privado ahora."}]</code></pre>
+        </article>
+
+        <article class="card">
+          <h2>Alta en Meta</h2>
+          <ol>
+            <li>Crea una app en Meta for Developers.</li>
+            <li>Activa Instagram API con Instagram Login.</li>
+            <li>Genera token para tu cuenta de creador.</li>
+            <li>Configura el webhook apuntando a <code>/api/instagram-webhook</code>.</li>
+            <li>Suscribe el campo <code>comments</code>.</li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="card">
+        <h2>Chequeo rápido</h2>
+        <button id="test-button" type="button">Probar configuración</button>
+        <pre id="output">Presiona el botón cuando ya hayas cargado las variables de entorno.</pre>
+      </section>
+    </main>
+
+    <script src="/instagram-creator/app.js" defer></script>
+  </body>
+  </html>

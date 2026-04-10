@@ -1,0 +1,102 @@
+import {
+  findMatchingRule,
+  getInstagramConfig,
+  instagramRequest,
+  rememberComment,
+  sendJson,
+} from "./_instagram.js";
+
+async function handleCommentChange(change, config) {
+  const value = change?.value || {};
+  const commentId = String(value.id || "").trim();
+  const text = String(value.text || "").trim();
+
+  if (!commentId || !text) {
+    return { skipped: true, reason: "missing-comment-data" };
+  }
+
+  if (rememberComment(commentId)) {
+    return { skipped: true, reason: "duplicate-event", comment_id: commentId };
+  }
+
+  const rule = findMatchingRule(text, config.rules);
+  if (!rule) {
+    return { skipped: true, reason: "no-keyword-match", comment_id: commentId };
+  }
+
+  const reply = await instagramRequest(
+    `${commentId}/private_replies`,
+    {
+      method: "POST",
+      body: { message: rule.reply },
+    },
+    config,
+  );
+
+  return {
+    ok: true,
+    comment_id: commentId,
+    keyword: rule.keyword,
+    reply_id: reply?.id || null,
+  };
+}
+
+export default async function handler(request, response) {
+  const config = getInstagramConfig();
+
+  if (request.method === "GET") {
+    const mode = request.query["hub.mode"];
+    const token = request.query["hub.verify_token"];
+    const challenge = request.query["hub.challenge"];
+
+    if (mode === "subscribe" && token && token === config.verifyToken) {
+      response.status(200).send(challenge);
+      return;
+    }
+
+    response.status(403).send("Webhook verification failed");
+    return;
+  }
+
+  if (request.method !== "POST") {
+    return sendJson(response, { error: "Method not allowed" }, 405);
+  }
+
+  if (!config.accessToken) {
+    return sendJson(response, { error: "Missing INSTAGRAM_ACCESS_TOKEN" }, 500);
+  }
+
+  try {
+    const entries = Array.isArray(request.body?.entry) ? request.body.entry : [];
+    const results = [];
+
+    for (const entry of entries) {
+      const changes = Array.isArray(entry?.changes) ? entry.changes : [];
+
+      for (const change of changes) {
+        if (change?.field !== "comments") {
+          results.push({ skipped: true, reason: "unsupported-field", field: change?.field || null });
+          continue;
+        }
+
+        const outcome = await handleCommentChange(change, config);
+        results.push(outcome);
+      }
+    }
+
+    return sendJson(response, {
+      ok: true,
+      processed: results,
+    });
+  } catch (error) {
+    return sendJson(
+      response,
+      {
+        ok: false,
+        error: "Webhook processing failed",
+        detail: String(error.message || error),
+      },
+      500,
+    );
+  }
+}

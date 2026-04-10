@@ -1,0 +1,135 @@
+:root {
+  --bg: #f4efe4;
+  --ink: #1d1f24;
+  --muted: #5f5a52;
+  --panel: rgba(255, 251, 245, 0.92);
+  --line: rgba(29, 31, 36, 0.14);
+  --accent: #d6542a;
+  --accent-strong: #9e2e10;
+  --shadow: 0 24px 70px rgba(58, 35, 22, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(214, 84, 42, 0.24), transparent 30%),
+    radial-gradient(circle at right center, rgba(221, 176, 92, 0.3), transparent 26%),
+    linear-gradient(180deg, #efe5d3 0%, var(--bg) 100%);
+}
+
+.shell {
+  width: min(1040px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0 72px;
+}
+
+.hero {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  color: var(--accent-strong);
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 1.05;
+}
+
+h1 {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+}
+
+h2 {
+  margin-bottom: 14px;
+  font-size: 1.4rem;
+}
+
+.lede,
+li,
+ol,
+ul,
+pre,
+code,
+button {
+  font-size: 1rem;
+}
+
+.lede {
+  max-width: 58ch;
+  margin-top: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card {
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+pre {
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  border-radius: 16px;
+  background: #201d1b;
+  color: #f6e6d2;
+  line-height: 1.5;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: #fff8f0;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100% - 20px, 1040px);
+    padding-top: 36px;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 18px;
+  }
+}
