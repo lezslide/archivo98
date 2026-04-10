@@ -38,6 +38,11 @@ export default async function handler(request, response) {
       account,
       graph_version: config.graphVersion,
       rules_loaded: config.rules.length,
+      token_diagnostic: {
+        prefix: config.accessToken.slice(0, 8),
+        suffix: config.accessToken.slice(-6),
+        length: config.accessToken.length,
+      },
     });
   } catch (error) {
     return sendJson(
@@ -46,6 +51,11 @@ export default async function handler(request, response) {
         ok: false,
         error: "Instagram config test failed",
         detail: String(error.message || error),
+        token_diagnostic: {
+          prefix: config.accessToken.slice(0, 8),
+          suffix: config.accessToken.slice(-6),
+          length: config.accessToken.length,
+        },
       },
       500,
     );
