@@ -124,6 +124,20 @@ export default async function handler(request, response) {
       processed: results,
     });
   } catch (error) {
+    console.error(
+      JSON.stringify({
+        route: "instagram-webhook",
+        ok: false,
+        error: "Webhook processing failed",
+        detail: String(error.message || error),
+        debug: {
+          object: request.body?.object || null,
+          entry_count: Array.isArray(request.body?.entry) ? request.body.entry.length : 0,
+          direct_field: request.body?.field || null,
+        },
+      }),
+    );
+
     return sendJson(
       response,
       {
