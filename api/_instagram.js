@@ -51,7 +51,7 @@ function parseKeywordRules(rawValue) {
 
 function getInstagramConfig() {
   const graphVersion = process.env.INSTAGRAM_GRAPH_VERSION || "v24.0";
-  const graphBaseUrl = process.env.INSTAGRAM_GRAPH_BASE_URL || "https://graph.instagram.com";
+  const graphBaseUrl = process.env.INSTAGRAM_GRAPH_BASE_URL || "https://graph.facebook.com";
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN || "";
   const appSecret = process.env.INSTAGRAM_APP_SECRET || "";
   const verifyToken = process.env.INSTAGRAM_VERIFY_TOKEN || "";
