@@ -38,6 +38,7 @@ async function handleCommentChange(change, config) {
     comment_id: commentId,
     keyword: rule.keyword,
     reply_id: reply?.id || null,
+    text,
   };
 }
 
@@ -69,6 +70,10 @@ export default async function handler(request, response) {
   try {
     const entries = Array.isArray(request.body?.entry) ? request.body.entry : [];
     const results = [];
+    const debug = {
+      object: request.body?.object || null,
+      entry_count: entries.length,
+    };
 
     for (const entry of entries) {
       const changes = Array.isArray(entry?.changes) ? entry.changes : [];
@@ -86,6 +91,7 @@ export default async function handler(request, response) {
 
     return sendJson(response, {
       ok: true,
+      debug,
       processed: results,
     });
   } catch (error) {
@@ -95,6 +101,10 @@ export default async function handler(request, response) {
         ok: false,
         error: "Webhook processing failed",
         detail: String(error.message || error),
+        debug: {
+          object: request.body?.object || null,
+          entry_count: Array.isArray(request.body?.entry) ? request.body.entry.length : 0,
+        },
       },
       500,
     );
