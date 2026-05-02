@@ -740,8 +740,7 @@ textarea {
 }
 
 .window[data-app-id="explorer-games"],
-.window[data-app-id="proyectos"],
-.window[data-app-id="recording-studio"] {
+.window[data-app-id="proyectos"] {
   background:
     linear-gradient(180deg, #a97b4f 0%, #7b5736 100%);
   border: 4px solid #4c331f;
@@ -756,17 +755,14 @@ textarea {
 .window[data-app-id="explorer-games"].active .window-header,
 .window[data-app-id="explorer-games"].inactive .window-header,
 .window[data-app-id="proyectos"].active .window-header,
-.window[data-app-id="proyectos"].inactive .window-header,
-.window[data-app-id="recording-studio"].active .window-header,
-.window[data-app-id="recording-studio"].inactive .window-header {
+.window[data-app-id="proyectos"].inactive .window-header {
   background:
     linear-gradient(180deg, #7bcf41 0%, #4f9d25 100%);
   color: #132106;
 }
 
 .window[data-app-id="explorer-games"] .window-header,
-.window[data-app-id="proyectos"] .window-header,
-.window[data-app-id="recording-studio"] .window-header {
+.window[data-app-id="proyectos"] .window-header {
   height: 34px;
   padding: 5px 8px;
   border-bottom: 4px solid #375f1d;
@@ -774,8 +770,7 @@ textarea {
 }
 
 .window[data-app-id="explorer-games"] .header-title,
-.window[data-app-id="proyectos"] .header-title,
-.window[data-app-id="recording-studio"] .header-title {
+.window[data-app-id="proyectos"] .header-title {
   font-size: 13px;
   font-weight: 700;
   color: #112007;
@@ -783,8 +778,7 @@ textarea {
 }
 
 .window[data-app-id="explorer-games"] .win-btn,
-.window[data-app-id="proyectos"] .win-btn,
-.window[data-app-id="recording-studio"] .win-btn {
+.window[data-app-id="proyectos"] .win-btn {
   width: 22px;
   height: 22px;
   border: 2px solid #355319;
@@ -795,28 +789,24 @@ textarea {
 }
 
 .window[data-app-id="explorer-games"] .window-body,
-.window[data-app-id="proyectos"] .window-body,
-.window[data-app-id="recording-studio"] .window-body {
+.window[data-app-id="proyectos"] .window-body {
   background: linear-gradient(180deg, #c6a16d, #8c6138);
 }
 
 .window[data-app-id="explorer-games"] .window-statusbar,
-.window[data-app-id="proyectos"] .window-statusbar,
-.window[data-app-id="recording-studio"] .window-statusbar {
+.window[data-app-id="proyectos"] .window-statusbar {
   padding: 0 10px 10px;
 }
 
 .window[data-app-id="explorer-games"] .status-panel,
-.window[data-app-id="proyectos"] .status-panel,
-.window[data-app-id="recording-studio"] .status-panel {
+.window[data-app-id="proyectos"] .status-panel {
   border: 2px solid #4c331f;
   background: linear-gradient(180deg, #d9c08a, #b68f57);
   color: #2f1a0d;
 }
 
 .window[data-app-id="explorer-games"] .window-resizer,
-.window[data-app-id="proyectos"] .window-resizer,
-.window[data-app-id="recording-studio"] .window-resizer {
+.window[data-app-id="proyectos"] .window-resizer {
   width: 16px;
   height: 16px;
   right: 3px;
@@ -824,73 +814,6 @@ textarea {
   background:
     linear-gradient(135deg, transparent 0 40%, #2f1d0d 40% 55%, transparent 55%),
     linear-gradient(135deg, transparent 0 62%, #d7be8b 62% 72%, transparent 72%);
-}
-
-.window[data-app-id="recording-studio"] {
-  background:
-    radial-gradient(circle at top left, rgba(255,218,145,0.18), transparent 22%),
-    linear-gradient(180deg, #321a0d 0%, #1a0f0a 100%);
-  border-color: #6d3b19;
-}
-
-.window[data-app-id="recording-studio"].active .window-header,
-.window[data-app-id="recording-studio"].inactive .window-header {
-  background:
-    linear-gradient(180deg, #ff9e41 0%, #db5a1f 100%);
-  color: #2e1204;
-}
-
-.window[data-app-id="recording-studio"] .window-header {
-  border-bottom-color: #8a3f16;
-  box-shadow: inset 0 2px 0 rgba(255, 211, 140, 0.45);
-}
-
-.window[data-app-id="recording-studio"] .header-title {
-  color: #2b1207;
-  text-shadow: 1px 1px 0 rgba(255,244,223,0.28);
-}
-
-.window[data-app-id="recording-studio"] .win-btn {
-  border-color: #8b4819;
-  background: linear-gradient(180deg, #ffcb77, #de8631);
-  color: #391a09;
-}
-
-.window[data-app-id="recording-studio"] .window-body {
-  background: linear-gradient(180deg, #4b2b15, #22130d);
-}
-
-.window[data-app-id="recording-studio"] .status-panel {
-  border-color: #673718;
-  background: linear-gradient(180deg, #deb57b, #b57639);
-}
-
-.recording-studio-shell {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 100%;
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-.studio-window-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  color: #f6e4ca;
-}
-
-.recording-studio-frame {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  flex: 1 1 auto;
-  border: 2px solid rgba(255,213,153,0.25);
-  border-radius: 18px;
-  background: #050505;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
 }
 
 .window[data-app-id="chat-global"] {

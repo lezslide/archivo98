@@ -1,0 +1,22 @@
+{
+  "name": "archivo98",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Archivo98 listo para web, PWA y empaquetado movil con Capacitor.",
+  "scripts": {
+    "prepare:mobile": "node ./scripts/prepare-mobile.mjs",
+    "serve": "npx serve .",
+    "cap:sync": "npm run prepare:mobile && npx cap sync",
+    "cap:android": "npx cap open android",
+    "cap:ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "serve": "^14.2.4"
+  }
+}

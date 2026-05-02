@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>user98 | Codigo de recarga</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f0e8;
+      --panel: #fffaf3;
+      --text: #171717;
+      --muted: #625f5a;
+      --border: #1f1f1f;
+      --accent: #ff6a00;
+      --accent-dark: #ca5200;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top, rgba(255, 106, 0, 0.2), transparent 32%),
+        linear-gradient(180deg, #f8f3ec 0%, #efe5d5 100%);
+      color: var(--text);
+      font-family: "Trebuchet MS", Tahoma, sans-serif;
+    }
+
+    .panel {
+      width: min(100%, 560px);
+      background: var(--panel);
+      border: 2px solid var(--border);
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.18);
+      padding: 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      background: #ffe3cc;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 6vw, 40px);
+      line-height: 1;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .code-box {
+      margin: 20px 0 14px;
+      padding: 18px;
+      border: 2px dashed var(--border);
+      background: #fff;
+      text-align: center;
+    }
+
+    .code-label {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .code-value {
+      font-size: clamp(28px, 7vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status.error {
+      color: #a12600;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    a {
+      appearance: none;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 12px 16px;
+      text-decoration: none;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    button.primary:hover {
+      background: var(--accent-dark);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.7;
+    }
+
+    .hint {
+      margin-top: 18px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <div class="eyebrow">user98 recarga</div>
+    <h1>Tu codigo de credits</h1>
+    <p id="welcome-copy">Estamos preparando tu codigo para usar dentro de user98.</p>
+    <div class="code-box">
+      <div class="code-label">Codigo de recarga</div>
+      <div id="code-value" class="code-value">Cargando...</div>
+    </div>
+    <div id="status" class="status">Generando tu codigo...</div>
+    <div class="actions">
+      <button id="copy-button" class="primary" disabled>Copiar codigo</button>
+      <a href="/" target="_blank" rel="noreferrer">Abrir user98</a>
+    </div>
+    <p class="hint">Despues pegalo en la ventana de recarga dentro de la app para sumar tus credits.</p>
+  </main>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const igUserId = (params.get("ig_user_id") || "").trim();
+    const igUsername = (params.get("ig_username") || "").trim();
+    const campaignKey = (params.get("campaign_key") || "recarga-creditos").trim();
+    const creditsAmount = Number(params.get("credits_amount") || "10");
+
+    const codeNode = document.getElementById("code-value");
+    const statusNode = document.getElementById("status");
+    const copyButton = document.getElementById("copy-button");
+    const welcomeCopy = document.getElementById("welcome-copy");
+
+    if (igUsername) {
+      welcomeCopy.textContent = `Hola @${igUsername}, estamos preparando tu codigo para usar dentro de user98.`;
+    }
+
+    function setStatus(message, isError) {
+      statusNode.textContent = message;
+      statusNode.classList.toggle("error", Boolean(isError));
+    }
+
+    async function loadCode() {
+      if (!igUserId) {
+        codeNode.textContent = "Sin ID";
+        setStatus("Falta el identificador de Instagram en el enlace de ManyChat.", true);
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/manychat-link-code", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ig_user_id: igUserId,
+            ig_username: igUsername,
+            campaign_key: campaignKey,
+            credits_amount: Number.isFinite(creditsAmount) ? creditsAmount : 10,
+          }),
+        });
+
+        const payload = await response.json();
+        if (!response.ok || !payload.code) {
+          throw new Error(payload.detail || payload.error || "No pude generar tu codigo.");
+        }
+
+        codeNode.textContent = payload.code;
+        setStatus(payload.is_existing ? "Ya tenias un codigo activo. Te mostramos ese mismo." : "Codigo listo. Copialo y volve a user98.");
+        copyButton.disabled = false;
+        copyButton.dataset.code = payload.code;
+      } catch (error) {
+        codeNode.textContent = "Error";
+        setStatus(String(error.message || error), true);
+      }
+    }
+
+    copyButton.addEventListener("click", async () => {
+      const code = copyButton.dataset.code || "";
+      if (!code) return;
+
+      try {
+        await navigator.clipboard.writeText(code);
+        setStatus("Codigo copiado. Ahora podes volver a user98 y pegarlo.", false);
+      } catch (error) {
+        setStatus(`No pude copiarlo automaticamente. Copialo manualmente: ${code}`, true);
+      }
+    });
+
+    loadCode();
+  </script>
+</body>
+</html>

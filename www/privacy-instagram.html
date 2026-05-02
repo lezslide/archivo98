@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Politica de Privacidad | Creator Autoreply</title>
+    <style>
+      :root {
+        --bg: #f4efe7;
+        --panel: #fffaf3;
+        --ink: #1d1f24;
+        --muted: #5e5a55;
+        --line: rgba(29, 31, 36, 0.12);
+        --accent: #b24a2b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(178, 74, 43, 0.18), transparent 28%),
+          linear-gradient(180deg, #efe4d4 0%, var(--bg) 100%);
+      }
+
+      main {
+        width: min(820px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 48px 0 72px;
+      }
+
+      .card {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--panel);
+        box-shadow: 0 24px 60px rgba(46, 29, 18, 0.12);
+      }
+
+      h1,
+      h2 {
+        line-height: 1.1;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.3rem, 6vw, 4.4rem);
+      }
+
+      h2 {
+        margin: 28px 0 10px;
+        font-size: 1.25rem;
+      }
+
+      p,
+      li {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 1rem;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+        font-size: 0.8rem;
+      }
+
+      a {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <p class="eyebrow">Creator Autoreply</p>
+        <h1>Politica de Privacidad</h1>
+        <p>
+          Esta aplicacion se utiliza para automatizar respuestas privadas y el manejo de comentarios en una cuenta de
+          Instagram profesional administrada por su titular.
+        </p>
+
+        <h2>Datos que procesa</h2>
+        <ul>
+          <li>identificador de cuenta de Instagram</li>
+          <li>comentarios recibidos en publicaciones de la cuenta conectada</li>
+          <li>mensajes o respuestas privadas generadas por automatizaciones configuradas por el titular</li>
+          <li>tokens de acceso y datos tecnicos necesarios para operar la integracion oficial con Meta</li>
+        </ul>
+
+        <h2>Uso de la informacion</h2>
+        <p>
+          La informacion se usa exclusivamente para autenticar la cuenta conectada, recibir eventos de comentarios,
+          detectar palabras clave configuradas por el titular y enviar respuestas privadas automaticas a traves de la
+          API oficial de Instagram.
+        </p>
+
+        <h2>Compartir informacion</h2>
+        <p>
+          Esta aplicacion no vende informacion personal ni comparte datos con terceros fuera de los servicios
+          necesarios para operar la integracion, como Meta e infraestructura tecnica asociada al despliegue.
+        </p>
+
+        <h2>Seguridad</h2>
+        <p>
+          Los tokens y credenciales se almacenan como variables de entorno del servidor y no se exponen en el
+          frontend publico del sitio.
+        </p>
+
+        <h2>Eliminacion y revocacion</h2>
+        <p>
+          El titular de la cuenta puede revocar el acceso de la aplicacion desde la configuracion de Instagram o Meta.
+          Al revocar el acceso, la automatizacion deja de funcionar hasta que se otorgue autorizacion nuevamente.
+        </p>
+
+        <h2>Contacto</h2>
+        <p>
+          Para consultas sobre esta integracion, podes comunicarte con el administrador del sitio en
+          <a href="mailto:jeremias@lezslide.com">jeremias@lezslide.com</a>.
+        </p>
+      </section>
+    </main>
+  </body>
+  </html>

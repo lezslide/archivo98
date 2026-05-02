@@ -25,10 +25,18 @@ create table if not exists public.user_projects (
   tiktok_handle text default '',
   website_url text default '',
   bio text default '',
+  project_status text not null default 'published' check (project_status in ('draft', 'published', 'archived')),
   is_published boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.user_projects
+  add column if not exists project_status text not null default 'published';
+
+update public.user_projects
+set project_status = case when is_published then 'published' else 'draft' end
+where project_status is null or project_status = '';
 
 alter table public.user_projects enable row level security;
 
@@ -51,4 +59,22 @@ to authenticated
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
 
-alter publication supabase_realtime add table public.user_projects;
+drop policy if exists "user_projects_delete_own" on public.user_projects;
+create policy "user_projects_delete_own"
+on public.user_projects for delete
+to authenticated
+using (auth.uid() = user_id);
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'user_projects'
+  ) then
+    alter publication supabase_realtime add table public.user_projects;
+  end if;
+end
+$$;

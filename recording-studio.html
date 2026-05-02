@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Loop | 40.075 KM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: rgba(255, 255, 255, 0.98);
+      --accent: #ff4b2b;
+      --accent-soft: #ff816a;
+      --text: #111111;
+      --muted: #6b7280;
+      --panel-width: 360px;
+      --mobile-collapsed-width: 210px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(255, 95, 52, 0.14), transparent 22%),
+        var(--bg);
+      font-family: "Inter", sans-serif;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .ryan-font {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    #ui-overlay {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      z-index: 10;
+      touch-action: none;
+      transform-origin: top left;
+    }
+
+    .glass-panel {
+      width: var(--panel-width);
+      padding: 28px;
+      background: var(--panel);
+      border-radius: 28px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      pointer-events: auto;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .glass-panel.dragging {
+      cursor: grabbing;
+    }
+
+    .panel-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .panel-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .panel-chip-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+      color: #111827;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
+    }
+
+    .panel-chip-btn:hover {
+      transform: scale(1.06);
+      background: rgba(255, 75, 43, 0.12);
+      color: var(--accent);
+    }
+
+    .panel-chip-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .badge-challenge {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 14px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .main-counter {
+      color: var(--text);
+      line-height: 0.85;
+      letter-spacing: -3px;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 12px;
+      margin-top: 20px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      background: #f3f4f6;
+    }
+
+    #progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      transition: width 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .micro-copy {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(17, 17, 17, 0.06);
+      color: #111827;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #9ca3af;
+    }
+
+    .status-pill.live::before {
+      background: #10b981;
+    }
+
+    .status-pill.offline::before {
+      background: #f59e0b;
+    }
+
+    .update-feed {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(17, 24, 39, 0.1);
+    }
+
+    .update-feed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: #111827;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .update-list {
+      display: grid;
+      gap: 10px;
+      max-height: 220px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .update-card {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: #f4f4f5;
+    }
+
+    .update-card strong {
+      display: block;
+      color: #111827;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .update-card span {
+      display: block;
+      color: #4b5563;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .update-card small {
+      display: block;
+      margin-top: 6px;
+      color: #9ca3af;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .panel-main {
+      display: block;
+    }
+
+    .glass-panel.is-collapsed {
+      width: var(--mobile-collapsed-width);
+      padding: 16px 18px;
+      border-radius: 22px;
+    }
+
+    .glass-panel.is-collapsed .panel-main {
+      display: none;
+    }
+
+    .glass-panel.is-collapsed .panel-topbar {
+      margin-bottom: 0;
+    }
+
+    .glass-panel.is-collapsed .badge-challenge {
+      margin-bottom: 0;
+    }
+
+    .floating-panel {
+      touch-action: none;
+      transform-origin: top left;
+    }
+
+    .floating-panel.dragging {
+      cursor: grabbing;
+    }
+
+    .panel-drag-handle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .panel-drag-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .panel-drag-label {
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .panel-drag-hint {
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    #km-input-panel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: min(92vw, 520px);
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 28px;
+      background: rgba(17, 17, 17, 0.95);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      pointer-events: auto;
+    }
+
+    #km-input-panel.is-collapsed {
+      width: min(84vw, 280px);
+      border-radius: 999px;
+    }
+
+    #km-input-panel.is-collapsed .km-panel-main {
+      display: none;
+    }
+
+    #km-input-panel.is-collapsed .panel-drag-hint {
+      display: none;
+    }
+
+    .km-panel-main {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .km-panel-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .km-panel-form {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    input {
+      width: 110px;
+      padding: 10px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-action {
+      padding: 12px 24px;
+      border: 0;
+      border-radius: 50px;
+      background: white;
+      color: black;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .btn-action:hover {
+      transform: scale(1.06);
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #666666;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-control:hover {
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-control.active {
+      color: #2bffb2;
+      background: rgba(43, 255, 178, 0.1);
+    }
+
+    #km-input {
+      flex: 0 0 124px;
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --panel-width: calc(100vw - 32px);
+      }
+
+      #ui-overlay {
+        top: 14px;
+        left: 16px;
+      }
+
+      .glass-panel {
+        padding: 18px;
+      }
+
+      .main-counter {
+        letter-spacing: -2px;
+      }
+
+      #km-input-panel {
+        width: min(calc(100vw - 24px), 520px);
+        padding: 14px 16px;
+      }
+
+      .km-panel-actions,
+      .km-panel-form {
+        width: 100%;
+      }
+
+      #km-input {
+        flex: 1 1 120px;
+        width: 100%;
+      }
+
+      #btn-register {
+        flex: 1 1 auto;
+      }
+
+      .update-list {
+        max-height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="ui-overlay" class="floating-panel">
+    <div id="glass-panel" class="glass-panel">
+      <div class="panel-topbar">
+        <div class="badge-challenge ryan-font">World Loop</div>
+        <div class="panel-topbar-actions">
+          <button id="btn-toggle-panel" class="panel-chip-btn" type="button" title="Minimizar cartel" aria-expanded="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="panel-main">
+        <h1 style="margin:0 0 8px; font-size:10px; text-transform:uppercase; font-weight:900; color:#9ca3af; letter-spacing:0.2em;">Circunferencia de la Tierra</h1>
+        <div class="main-counter ryan-font" style="font-size:64px; font-weight:900; margin-bottom:12px;">
+          <span id="km-display">0</span><span style="font-size:24px; margin-left:6px; color:#d1d5db;">km</span>
+        </div>
+        <div class="progress-container">
+          <div id="progress-bar"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:14px; font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:0.12em;">
+          <span style="color:#9ca3af;">Inicio</span>
+          <span style="color:#ef4444;">Meta: 40.075 KM</span>
+        </div>
+        <div class="micro-copy">
+          Cada registro suma kilometros reales al manifiesto del viaje. El total se sincroniza con toda la comunidad que entre a esta app.
+        </div>
+        <div id="sync-status" class="status-pill offline">Modo local</div>
+        <div class="update-feed">
+          <div class="update-feed-header">
+            <span>Registro global</span>
+            <span id="update-count">0 updates</span>
+          </div>
+          <div id="update-list" class="update-list">
+            <div class="update-card">
+              <strong>Esperando primer tramo</strong>
+              <span>Cuando registres kilometros, este historial se comparte con todos los usuarios autenticados.</span>
+              <small>World Loop</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="km-input-panel" class="floating-panel">
+    <div id="km-input-handle" class="panel-drag-handle">
+      <div class="panel-drag-copy">
+        <div class="panel-drag-label">Registrar tramo</div>
+        <div class="panel-drag-hint">Arrastra para mover. Pellizca con dos dedos para achicar.</div>
+      </div>
+      <div class="panel-topbar-actions">
+        <button id="btn-center-km-panel" class="btn-control" type="button" title="Centrar registro">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11 3v2.06A7.002 7.002 0 005.06 11H3v2h2.06A7.002 7.002 0 0011 18.94V21h2v-2.06A7.002 7.002 0 0018.94 13H21v-2h-2.06A7.002 7.002 0 0013 5.06V3h-2zm1 4a5 5 0 110 10 5 5 0 010-10z"/></svg>
+        </button>
+        <button id="btn-toggle-km-panel" class="btn-control" type="button" title="Minimizar registro" aria-expanded="true">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="km-panel-main">
+      <div class="km-panel-actions">
+        <button id="btn-4k" class="btn-control" type="button" title="Modo 4K">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>
+        </button>
+        <button id="btn-center-panel" class="btn-control" type="button" title="Centrar cartel de km">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M11 3v2.06A7.002 7.002 0 005.06 11H3v2h2.06A7.002 7.002 0 0011 18.94V21h2v-2.06A7.002 7.002 0 0018.94 13H21v-2h-2.06A7.002 7.002 0 0013 5.06V3h-2zm1 4a5 5 0 110 10 5 5 0 010-10z"/></svg>
+        </button>
+        <button id="btn-reset" class="btn-control" type="button" title="Reiniciar progreso">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+        </button>
+      </div>
+      <div class="km-panel-form">
+        <input type="number" id="km-input" placeholder="0" min="1" step="0.1" />
+        <button class="btn-action ryan-font" id="btn-register" type="button">Registrar KM</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    const SUPABASE_URL = "https://simmltkpoqfrbkianyza.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_PnA09ddT1Jz_hWAS0TRCbw_lG_Jd3pE";
+    const PROGRESS_ROOM = "world-progress";
+    const MAX_KM = 40075;
+    const EARTH_RADIUS = 1;
+    const TRAIL_RADIUS = 1.015;
+    const PANEL_POSITION_KEY = "archivo98_world_loop_panel_position";
+    const PANEL_COLLAPSED_KEY = "archivo98_world_loop_panel_collapsed";
+    const PANEL_SCALE_KEY = "archivo98_world_loop_panel_scale";
+    const KM_PANEL_POSITION_KEY = "archivo98_world_loop_km_panel_position";
+    const KM_PANEL_COLLAPSED_KEY = "archivo98_world_loop_km_panel_collapsed";
+    const KM_PANEL_SCALE_KEY = "archivo98_world_loop_km_panel_scale";
+
+    let scene;
+    let camera;
+    let renderer;
+    let controls;
+    let earth;
+    let trailLine;
+    let clouds;
+    let totalKm = 0;
+    let currentTargetRotation = 0;
+    let currentEarthRotation = 0;
+    let currentTrailAngle = 0;
+    let targetTrailAngle = 0;
+    let is4K = false;
+    let supabaseClient = null;
+    let currentUser = null;
+    let progressMessages = [];
+    let realtimeChannel = null;
+    let mainPanelController = null;
+    let inputPanelController = null;
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function formatCompactDate(value) {
+      if (!value) return "Ahora";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Ahora";
+      return new Intl.DateTimeFormat("es-AR", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(date);
+    }
+
+    function setSyncStatus(mode, label) {
+      const node = document.getElementById("sync-status");
+      node.textContent = label;
+      node.classList.remove("live", "offline");
+      node.classList.add(mode);
+    }
+
+    function init() {
+      scene = new THREE.Scene();
+
+      camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 0.6, 3.2);
+
+      renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+      document.body.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.enablePan = false;
+      controls.minDistance = 1.8;
+      controls.maxDistance = 6;
+      controls.rotateSpeed = 0.75;
+      controls.zoomSpeed = 0.85;
+      controls.minPolarAngle = 0.65;
+      controls.maxPolarAngle = 2.35;
+
+      scene.add(new THREE.AmbientLight(0xffffff, 1));
+      const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+      sun.position.set(5, 3, 5);
+      scene.add(sun);
+
+      createEarth();
+      createTrail();
+      createStarfield();
+      bindUi();
+      updateUI();
+      renderUpdates();
+      initSupabase();
+
+      window.addEventListener("resize", onWindowResize);
+      animate();
+    }
+
+    function bindUi() {
+      document.getElementById("btn-4k").addEventListener("click", toggle4K);
+      document.getElementById("btn-center-panel").addEventListener("click", centerPanel);
+      document.getElementById("btn-center-km-panel").addEventListener("click", centerKmInputPanel);
+      document.getElementById("btn-reset").addEventListener("click", resetProgress);
+      document.getElementById("btn-register").addEventListener("click", registerKilometers);
+      document.getElementById("btn-toggle-panel").addEventListener("click", togglePanelCollapsed);
+      document.getElementById("btn-toggle-km-panel").addEventListener("click", toggleKmPanelCollapsed);
+      document.getElementById("km-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") registerKilometers();
+      });
+      setupFloatingPanels();
+    }
+
+    function toggle4K() {
+      is4K = !is4K;
+      document.getElementById("btn-4k").classList.toggle("active", is4K);
+      renderer.setPixelRatio(is4K ? 2 : Math.min(window.devicePixelRatio, 1.25));
+      onWindowResize();
+    }
+
+    function centerPanel() {
+      if (!mainPanelController) return;
+      setFloatingPanelPosition(mainPanelController, {
+        left: 22,
+        top: window.innerWidth <= 720 ? 14 : 22,
+      });
+      saveFloatingPanelPosition(mainPanelController);
+    }
+
+    function setPanelCollapsed(collapsed) {
+      const panel = document.getElementById("glass-panel");
+      const button = document.getElementById("btn-toggle-panel");
+      panel.classList.toggle("is-collapsed", collapsed);
+      button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      button.title = collapsed ? "Expandir cartel" : "Minimizar cartel";
+      button.innerHTML = collapsed
+        ? '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>';
+      localStorage.setItem(PANEL_COLLAPSED_KEY, collapsed ? "1" : "0");
+      clampFloatingPanelToViewport(mainPanelController);
+      saveFloatingPanelPosition(mainPanelController);
+    }
+
+    function togglePanelCollapsed() {
+      const panel = document.getElementById("glass-panel");
+      setPanelCollapsed(!panel.classList.contains("is-collapsed"));
+    }
+
+    function restorePanelCollapsedState() {
+      const collapsed = localStorage.getItem(PANEL_COLLAPSED_KEY) === "1";
+      setPanelCollapsed(collapsed);
+    }
+
+    function setKmPanelCollapsed(collapsed) {
+      const panel = document.getElementById("km-input-panel");
+      const button = document.getElementById("btn-toggle-km-panel");
+      panel.classList.toggle("is-collapsed", collapsed);
+      button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      button.title = collapsed ? "Expandir registro" : "Minimizar registro";
+      button.innerHTML = collapsed
+        ? '<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z"/></svg>'
+        : '<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>';
+      localStorage.setItem(KM_PANEL_COLLAPSED_KEY, collapsed ? "1" : "0");
+      clampFloatingPanelToViewport(inputPanelController);
+      saveFloatingPanelPosition(inputPanelController);
+    }
+
+    function toggleKmPanelCollapsed() {
+      const panel = document.getElementById("km-input-panel");
+      setKmPanelCollapsed(!panel.classList.contains("is-collapsed"));
+    }
+
+    function restoreKmPanelCollapsedState() {
+      const collapsed = localStorage.getItem(KM_PANEL_COLLAPSED_KEY) === "1";
+      setKmPanelCollapsed(collapsed);
+    }
+
+    function setupFloatingPanels() {
+      mainPanelController = createFloatingPanelController({
+        root: document.getElementById("ui-overlay"),
+        handle: document.querySelector("#glass-panel .panel-topbar"),
+        positionKey: PANEL_POSITION_KEY,
+        scaleKey: PANEL_SCALE_KEY,
+        defaultPosition: () => ({
+          left: 22,
+          top: window.innerWidth <= 720 ? 14 : 22,
+        }),
+        minScale: 0.58,
+        maxScale: 1.25,
+      });
+
+      inputPanelController = createFloatingPanelController({
+        root: document.getElementById("km-input-panel"),
+        handle: document.getElementById("km-input-handle"),
+        positionKey: KM_PANEL_POSITION_KEY,
+        scaleKey: KM_PANEL_SCALE_KEY,
+        defaultPosition: () => {
+          const panel = document.getElementById("km-input-panel");
+          const rect = panel.getBoundingClientRect();
+          return {
+            left: Math.max(12, (window.innerWidth - rect.width) / 2),
+            top: Math.max(12, window.innerHeight - rect.height - (window.innerWidth <= 720 ? 16 : 32)),
+          };
+        },
+        minScale: 0.55,
+        maxScale: 1.35,
+      });
+
+      restorePanelCollapsedState();
+      restoreKmPanelCollapsedState();
+    }
+
+    function createFloatingPanelController(config) {
+      const controller = {
+        ...config,
+        scale: 1,
+      };
+      restoreFloatingPanelScale(controller);
+      restoreFloatingPanelPosition(controller);
+      enableFloatingPanelDrag(controller);
+      enableFloatingPanelPinch(controller);
+      clampFloatingPanelToViewport(controller);
+      return controller;
+    }
+
+    function centerKmInputPanel() {
+      if (!inputPanelController) return;
+      const panel = document.getElementById("km-input-panel");
+      const rect = panel.getBoundingClientRect();
+      setFloatingPanelPosition(inputPanelController, {
+        left: Math.max(12, (window.innerWidth - rect.width) / 2),
+        top: Math.max(12, window.innerHeight - rect.height - (window.innerWidth <= 720 ? 16 : 32)),
+      });
+      saveFloatingPanelPosition(inputPanelController);
+    }
+
+    function enableFloatingPanelDrag(controller) {
+      let pointerId = null;
+      let startX = 0;
+      let startY = 0;
+      let originLeft = 0;
+      let originTop = 0;
+
+      controller.handle.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        if (event.target.closest("button, input, textarea, a")) return;
+        pointerId = event.pointerId;
+        startX = event.clientX;
+        startY = event.clientY;
+        originLeft = getPanelLeft(controller.root);
+        originTop = getPanelTop(controller.root);
+        controller.root.classList.add("dragging");
+        controller.handle.setPointerCapture(pointerId);
+      });
+
+      controller.handle.addEventListener("pointermove", (event) => {
+        if (pointerId !== event.pointerId) return;
+        const nextLeft = originLeft + (event.clientX - startX);
+        const nextTop = originTop + (event.clientY - startY);
+        setFloatingPanelPosition(controller, { left: nextLeft, top: nextTop });
+      });
+
+      function release(event) {
+        if (pointerId !== event.pointerId) return;
+        controller.root.classList.remove("dragging");
+        if (controller.handle.hasPointerCapture(pointerId)) {
+          controller.handle.releasePointerCapture(pointerId);
+        }
+        pointerId = null;
+        saveFloatingPanelPosition(controller);
+      }
+
+      controller.handle.addEventListener("pointerup", release);
+      controller.handle.addEventListener("pointercancel", release);
+    }
+
+    function enableFloatingPanelPinch(controller) {
+      const activeTouches = new Map();
+      let pinchDistance = 0;
+      let pinchScale = controller.scale;
+
+      function storeTouch(event) {
+        activeTouches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      }
+
+      function clearTouch(event) {
+        activeTouches.delete(event.pointerId);
+        if (activeTouches.size < 2) {
+          pinchDistance = 0;
+          saveFloatingPanelScale(controller);
+          clampFloatingPanelToViewport(controller);
+          saveFloatingPanelPosition(controller);
+        }
+      }
+
+      controller.root.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "touch") return;
+        storeTouch(event);
+        controller.root.setPointerCapture(event.pointerId);
+        if (activeTouches.size === 2) {
+          const [first, second] = [...activeTouches.values()];
+          pinchDistance = Math.hypot(second.x - first.x, second.y - first.y);
+          pinchScale = controller.scale;
+        }
+      });
+
+      controller.root.addEventListener("pointermove", (event) => {
+        if (event.pointerType !== "touch" || !activeTouches.has(event.pointerId)) return;
+        storeTouch(event);
+        if (activeTouches.size !== 2 || !pinchDistance) return;
+        const [first, second] = [...activeTouches.values()];
+        const nextDistance = Math.hypot(second.x - first.x, second.y - first.y);
+        if (!nextDistance) return;
+        setFloatingPanelScale(controller, pinchScale * (nextDistance / pinchDistance), false);
+      });
+
+      function releaseTouch(event) {
+        if (event.pointerType !== "touch") return;
+        if (controller.root.hasPointerCapture(event.pointerId)) {
+          controller.root.releasePointerCapture(event.pointerId);
+        }
+        clearTouch(event);
+      }
+
+      controller.root.addEventListener("pointerup", releaseTouch);
+      controller.root.addEventListener("pointercancel", releaseTouch);
+    }
+
+    function setFloatingPanelScale(controller, nextScale, persist = true) {
+      if (!controller) return;
+      controller.scale = Math.min(controller.maxScale, Math.max(controller.minScale, nextScale));
+      controller.root.style.transform = `scale(${controller.scale})`;
+      clampFloatingPanelToViewport(controller);
+      if (persist) {
+        saveFloatingPanelScale(controller);
+      }
+    }
+
+    function saveFloatingPanelScale(controller) {
+      if (!controller) return;
+      localStorage.setItem(controller.scaleKey, String(controller.scale));
+    }
+
+    function restoreFloatingPanelScale(controller) {
+      const storedScale = parseFloat(localStorage.getItem(controller.scaleKey) || "1");
+      controller.scale = Number.isFinite(storedScale) ? storedScale : 1;
+      setFloatingPanelScale(controller, controller.scale, false);
+    }
+
+    function saveFloatingPanelPosition(controller) {
+      if (!controller) return;
+      localStorage.setItem(controller.positionKey, JSON.stringify({
+        left: controller.root.style.left || `${controller.root.offsetLeft}px`,
+        top: controller.root.style.top || `${controller.root.offsetTop}px`,
+      }));
+    }
+
+    function restoreFloatingPanelPosition(controller) {
+      try {
+        const raw = localStorage.getItem(controller.positionKey);
+        if (!raw) {
+          const position = controller.defaultPosition();
+          setFloatingPanelPosition(controller, position);
+          saveFloatingPanelPosition(controller);
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") throw new Error("invalid panel position");
+        controller.root.style.left = parsed.left || "0px";
+        controller.root.style.top = parsed.top || "0px";
+      } catch (_error) {
+        const position = controller.defaultPosition();
+        setFloatingPanelPosition(controller, position);
+      }
+    }
+
+    function setFloatingPanelPosition(controller, position) {
+      if (!controller) return;
+      controller.root.style.left = `${Math.round(position.left)}px`;
+      controller.root.style.top = `${Math.round(position.top)}px`;
+      clampFloatingPanelToViewport(controller);
+    }
+
+    function getPanelLeft(node) {
+      return parseFloat(node.style.left || `${node.offsetLeft || 0}`);
+    }
+
+    function getPanelTop(node) {
+      return parseFloat(node.style.top || `${node.offsetTop || 0}`);
+    }
+
+    function clampFloatingPanelToViewport(controller) {
+      if (!controller) return;
+      const rect = controller.root.getBoundingClientRect();
+      const maxLeft = Math.max(8, window.innerWidth - rect.width - 8);
+      const maxTop = Math.max(8, window.innerHeight - rect.height - 8);
+      const nextLeft = Math.min(Math.max(8, getPanelLeft(controller.root)), maxLeft);
+      const nextTop = Math.min(Math.max(8, getPanelTop(controller.root)), maxTop);
+      controller.root.style.left = `${Math.round(nextLeft)}px`;
+      controller.root.style.top = `${Math.round(nextTop)}px`;
+    }
+
+    function createEarth() {
+      const loader = new THREE.TextureLoader();
+
+      earth = new THREE.Mesh(
+        new THREE.SphereGeometry(EARTH_RADIUS, 64, 64),
+        new THREE.MeshPhongMaterial({
+          map: loader.load("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"),
+          shininess: 15,
+        })
+      );
+      scene.add(earth);
+
+      clouds = new THREE.Mesh(
+        new THREE.SphereGeometry(EARTH_RADIUS + 0.015, 32, 32),
+        new THREE.MeshPhongMaterial({
+          map: loader.load("https://unpkg.com/three-globe/example/img/earth-clouds.png"),
+          transparent: true,
+          opacity: 0.25,
+        })
+      );
+      earth.add(clouds);
+    }
+
+    function createTrail() {
+      trailLine = new THREE.Line(
+        new THREE.BufferGeometry(),
+        new THREE.LineBasicMaterial({ color: 0xff1100 })
+      );
+      scene.add(trailLine);
+    }
+
+    function createStarfield() {
+      const geo = new THREE.BufferGeometry();
+      const verts = [];
+      for (let i = 0; i < 1800; i += 1) {
+        verts.push(
+          (Math.random() - 0.5) * 1600,
+          (Math.random() - 0.5) * 1600,
+          (Math.random() - 0.5) * 1600
+        );
+      }
+      geo.setAttribute("position", new THREE.Float32BufferAttribute(verts, 3));
+      scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0x555555, size: 0.7 })));
+    }
+
+    async function initSupabase() {
+      try {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const { data } = await supabaseClient.auth.getSession();
+        currentUser = data.session?.user || null;
+        if (!currentUser) {
+          setSyncStatus("offline", "Inicia sesion en Archivo98 para sincronizar");
+          return;
+        }
+        setSyncStatus("live", "Sincronizando con la comunidad");
+        await loadProgressMessages();
+        subscribeToProgress();
+      } catch (error) {
+        console.error(error);
+        setSyncStatus("offline", "Supabase no disponible");
+      }
+    }
+
+    async function loadProgressMessages() {
+      if (!supabaseClient || !currentUser) return;
+      const { data, error } = await supabaseClient
+        .from("messages")
+        .select("id,username,content,created_at,user_id")
+        .eq("room", PROGRESS_ROOM)
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        setSyncStatus("offline", "No pude cargar el registro global");
+        return;
+      }
+
+      progressMessages = (data || []).filter(isProgressMessage);
+      recalculateProgressFromMessages();
+      renderUpdates();
+    }
+
+    function isProgressMessage(message) {
+      try {
+        const payload = JSON.parse(message.content);
+        return payload && payload.type === "km-update" && Number(payload.deltaKm) > 0;
+      } catch (_error) {
+        return false;
+      }
+    }
+
+    function parseProgressMessage(message) {
+      try {
+        const payload = JSON.parse(message.content);
+        return {
+          deltaKm: Number(payload.deltaKm) || 0,
+          displayName: String(payload.displayName || message.username || "Archivo98"),
+          note: String(payload.note || ""),
+        };
+      } catch (_error) {
+        return {
+          deltaKm: 0,
+          displayName: message.username || "Archivo98",
+          note: "",
+        };
+      }
+    }
+
+    function recalculateProgressFromMessages() {
+      const total = progressMessages.reduce((sum, message) => {
+        const payload = parseProgressMessage(message);
+        return sum + Math.max(0, payload.deltaKm);
+      }, 0);
+      totalKm = Math.min(MAX_KM, total);
+      syncOrbitToKm(totalKm);
+      updateUI();
+    }
+
+    function syncOrbitToKm(kmValue) {
+      const ratio = Math.max(0, Math.min(1, kmValue / MAX_KM));
+      currentTargetRotation = -(Math.PI * 2 * ratio);
+      targetTrailAngle = Math.PI * 2 * ratio;
+    }
+
+    async function registerKilometers() {
+      const input = document.getElementById("km-input");
+      const value = parseFloat(input.value);
+      if (Number.isNaN(value) || value <= 0) return;
+
+      if (!supabaseClient || !currentUser) {
+        const nextKm = Math.min(MAX_KM, totalKm + value);
+        totalKm = nextKm;
+        syncOrbitToKm(totalKm);
+        updateUI();
+        progressMessages.push({
+          id: crypto.randomUUID(),
+          username: "Modo local",
+          content: JSON.stringify({ type: "km-update", deltaKm: value, displayName: "Modo local" }),
+          created_at: new Date().toISOString(),
+          user_id: null,
+        });
+        renderUpdates();
+        setSyncStatus("offline", "Guardado local. Inicia sesion para compartirlo.");
+        input.value = "";
+        return;
+      }
+
+      const payload = {
+        type: "km-update",
+        deltaKm: value,
+        displayName: currentUser.user_metadata?.username || currentUser.email?.split("@")[0] || "Archivo98",
+        note: `${value} km agregados al manifiesto.`,
+      };
+
+      const { error } = await supabaseClient.from("messages").insert({
+        room: PROGRESS_ROOM,
+        user_id: currentUser.id,
+        username: payload.displayName,
+        content: JSON.stringify(payload),
+      });
+
+      if (error) {
+        console.error(error);
+        setSyncStatus("offline", "No pude registrar el tramo");
+        return;
+      }
+
+      input.value = "";
+    }
+
+    async function resetProgress() {
+      if (!supabaseClient || !currentUser) {
+        progressMessages = [];
+        totalKm = 0;
+        currentTargetRotation = 0;
+        targetTrailAngle = 0;
+        currentTrailAngle = 0;
+        currentEarthRotation = 0;
+        if (earth) earth.rotation.y = 0;
+        updateUI();
+        updateTrailPoints();
+        renderUpdates();
+        return;
+      }
+
+      setSyncStatus("offline", "El reinicio global se hace borrando registros en Supabase.");
+      alert("El reset automatico no borra el historial global. Si queres reiniciarlo de verdad, te conviene limpiar los mensajes del room world-progress desde Supabase.");
+    }
+
+    function subscribeToProgress() {
+      if (!supabaseClient || realtimeChannel) return;
+      realtimeChannel = supabaseClient
+        .channel("world-progress-room")
+        .on("postgres_changes", {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: `room=eq.${PROGRESS_ROOM}`,
+        }, (payload) => {
+          if (!isProgressMessage(payload.new)) return;
+          progressMessages.push(payload.new);
+          recalculateProgressFromMessages();
+          renderUpdates();
+        })
+        .subscribe((status) => {
+          if (status === "SUBSCRIBED") {
+            setSyncStatus("live", "Registro global en vivo");
+          }
+        });
+    }
+
+    function updateUI() {
+      document.getElementById("km-display").innerText = Math.round(totalKm).toLocaleString("es-AR");
+      document.getElementById("progress-bar").style.width = `${Math.min(100, (totalKm / MAX_KM) * 100)}%`;
+    }
+
+    function renderUpdates() {
+      const list = document.getElementById("update-list");
+      const count = document.getElementById("update-count");
+      count.textContent = `${progressMessages.length} updates`;
+
+      if (!progressMessages.length) {
+        list.innerHTML = `
+          <div class="update-card">
+            <strong>Esperando primer tramo</strong>
+            <span>Cuando registres kilometros, este historial se comparte con todos los usuarios autenticados.</span>
+            <small>World Loop</small>
+          </div>
+        `;
+        return;
+      }
+
+      const recent = progressMessages.slice(-6).reverse();
+      list.innerHTML = recent.map((message) => {
+        const payload = parseProgressMessage(message);
+        return `
+          <div class="update-card">
+            <strong>${escapeHtml(payload.displayName)} sumo ${escapeHtml(payload.deltaKm.toLocaleString("es-AR"))} km</strong>
+            <span>${escapeHtml(payload.note || "Nuevo tramo registrado para la vuelta al mundo.")}</span>
+            <small>${escapeHtml(formatCompactDate(message.created_at))}</small>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function updateTrailPoints() {
+      if (currentTrailAngle < 0.001) {
+        trailLine.geometry.setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)]);
+        return;
+      }
+
+      const points = [];
+      const segments = 240;
+      for (let i = 0; i <= segments; i += 1) {
+        const angle = (i / segments) * currentTrailAngle;
+        points.push(
+          new THREE.Vector3(
+            -Math.sin(angle) * TRAIL_RADIUS,
+            0,
+            Math.cos(angle) * TRAIL_RADIUS
+          )
+        );
+      }
+      trailLine.geometry.setFromPoints(points);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      currentEarthRotation += (currentTargetRotation - currentEarthRotation) * 0.05;
+      currentTrailAngle += (targetTrailAngle - currentTrailAngle) * 0.05;
+
+      if (earth) {
+        earth.rotation.y = currentEarthRotation;
+      }
+
+      if (clouds) {
+        clouds.rotation.y += 0.0006;
+      }
+
+      updateTrailPoints();
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      clampFloatingPanelToViewport(mainPanelController);
+      clampFloatingPanelToViewport(inputPanelController);
+    }
+
+    window.addEventListener("load", init);
+  </script>
+</body>
+</html>

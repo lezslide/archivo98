@@ -4553,39 +4553,6 @@ const desktopApps = {
       });
     },
   },
-  "recording-studio": {
-    title: "C:\\World_Loop",
-    width: 1280,
-    height: 860,
-    x: 150,
-    y: 60,
-    render() {
-      return `
-        <div class="window-content recording-studio-shell">
-          <div class="studio-window-topbar">
-            <div>
-              <div class="app-section-title">World Loop</div>
-              <div class="shop-copy">Seguimiento global de la vuelta al mundo: kilometros reales, progreso compartido y una escena viva para la comunidad.</div>
-            </div>
-            <button class="action-btn" data-open-studio-standalone="1">Abrir aparte</button>
-          </div>
-          <iframe
-            class="recording-studio-frame"
-            src="./recording-studio.html"
-            title="World Loop"
-            loading="lazy"
-            allow="autoplay; fullscreen"
-          ></iframe>
-        </div>
-        <div class="window-statusbar"><div class="status-panel">World Loop</div><div class="status-panel">Synced Progress</div></div>
-      `;
-    },
-    bind(win) {
-      win.querySelector("[data-open-studio-standalone]")?.addEventListener("click", () => {
-        window.open("./recording-studio.html", "_blank", "noopener,noreferrer");
-      });
-    },
-  },
   "explorer-games": {
     title: "Juegos",
     width: 420,

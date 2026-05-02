@@ -1,0 +1,30 @@
+{
+  "name": "Archivo98",
+  "short_name": "Archivo98",
+  "description": "Windows 98 web OS con musica, juegos y experiencia instalable.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#1b3f8b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./player-shell-cutout.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./player-shell-cutout.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./retro-player-shell-transparent-fixed.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
