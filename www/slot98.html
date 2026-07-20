@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -77,11 +77,11 @@
               <input id="code-input" class="input" type="text" placeholder="Pega tu codigo RX..." />
               <button class="btn small-btn" id="redeem-btn">Cargar</button>
             </div>
-            <div class="track">ManyChat te puede mandar el codigo por DM y vos lo pegás acá.</div>
+            <div class="track">ManyChat te puede mandar el codigo por DM y vos lo pegÃ¡s acÃ¡.</div>
           </section>
           <section class="panel">
             <h3>Album de stickers</h3>
-            <div class="track">Completá 8 stickers distintos y reclamá el premio total. Cada sticker vendido da 20 credits.</div>
+            <div class="track">CompletÃ¡ 8 stickers distintos y reclamÃ¡ el premio total. Cada sticker vendido da 20 credits.</div>
             <div class="album" id="album-grid"></div>
           </section>
         </aside>
@@ -90,8 +90,8 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://simmltkpoqfrbkianyza.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_PnA09ddT1Jz_hWAS0TRCbw_lG_Jd3pE";
+    const SUPABASE_URL = "https://qttxcfbgyfmvyglzwxct.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const BET = 10;
     const ALBUM_PRIZE = 500;
@@ -124,7 +124,7 @@
     async function loadSession() {
       const { data } = await supabase.auth.getSession();
       if (!data.session?.user) {
-        setStatus("Iniciá sesion en la app principal antes de usar slot98.");
+        setStatus("IniciÃ¡ sesion en la app principal antes de usar slot98.");
         document.getElementById("spin-btn").disabled = true;
         return;
       }
@@ -244,7 +244,7 @@
         await addSticker(SYMBOLS[results[0]]);
         setStatus("Jackpot! +250 credits y sticker nuevo.");
       } else {
-        setStatus("Casi... probá otra vez.");
+        setStatus("Casi... probÃ¡ otra vez.");
       }
 
       isSpinning = false;

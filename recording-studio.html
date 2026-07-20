@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -180,6 +180,142 @@
       background: #f59e0b;
     }
 
+    .objective-board {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(17, 24, 39, 0.1);
+    }
+
+    .objective-row {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: #f4f4f5;
+      color: #111827;
+    }
+
+    .objective-row.is-next {
+      background: rgba(255, 75, 43, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(255, 75, 43, 0.24);
+    }
+
+    .objective-row.is-unlocked {
+      background: rgba(16, 185, 129, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.24);
+    }
+
+    .objective-pin {
+      min-width: 42px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      padding: 0 7px;
+      border-radius: 11px;
+      background: #111827;
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .objective-row.is-next .objective-pin {
+      background: var(--accent);
+    }
+
+    .objective-row.is-unlocked .objective-pin {
+      background: #10b981;
+    }
+
+    .objective-copy {
+      min-width: 0;
+    }
+
+    .objective-copy strong,
+    .objective-copy span,
+    .objective-distance {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .objective-copy strong {
+      color: #111827;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .objective-copy span {
+      margin-top: 2px;
+      color: #6b7280;
+      font-size: 11px;
+      line-height: 1.3;
+    }
+
+    .objective-distance {
+      color: #111827;
+      font-size: 11px;
+      font-weight: 900;
+      text-align: right;
+      text-transform: uppercase;
+    }
+
+    .objective-actions {
+      grid-column: 2 / -1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .objective-logo-stack {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 28px;
+      flex: 1;
+    }
+
+    .objective-logo-thumb {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(17, 24, 39, 0.12);
+      border-radius: 8px;
+      background: #fff;
+      object-fit: contain;
+      padding: 3px;
+    }
+
+    .objective-logo-empty {
+      color: #9ca3af;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .objective-logo-btn {
+      border: 0;
+      border-radius: 999px;
+      background: #111827;
+      color: #fff;
+      cursor: pointer;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .objective-logo-btn.secondary {
+      background: rgba(17, 24, 39, 0.1);
+      color: #111827;
+    }
+
     .update-feed {
       margin-top: 18px;
       padding-top: 18px;
@@ -242,9 +378,12 @@
     }
 
     .glass-panel.is-collapsed {
-      width: var(--mobile-collapsed-width);
-      padding: 16px 18px;
-      border-radius: 22px;
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border-radius: 999px;
     }
 
     .glass-panel.is-collapsed .panel-main {
@@ -253,10 +392,15 @@
 
     .glass-panel.is-collapsed .panel-topbar {
       margin-bottom: 0;
+      justify-content: center;
     }
 
     .glass-panel.is-collapsed .badge-challenge {
-      margin-bottom: 0;
+      display: none;
+    }
+
+    .glass-panel.is-collapsed .panel-topbar-actions {
+      gap: 0;
     }
 
     .floating-panel {
@@ -317,7 +461,11 @@
     }
 
     #km-input-panel.is-collapsed {
-      width: min(84vw, 280px);
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      padding: 0;
       border-radius: 999px;
     }
 
@@ -325,8 +473,13 @@
       display: none;
     }
 
-    #km-input-panel.is-collapsed .panel-drag-hint {
+    #km-input-panel.is-collapsed .panel-drag-copy {
       display: none;
+    }
+
+    #km-input-panel.is-collapsed .panel-drag-handle {
+      justify-content: center;
+      gap: 0;
     }
 
     .km-panel-main {
@@ -417,6 +570,83 @@
       flex: 0 0 124px;
     }
 
+    /* Editorial/minimal pass: label sheet, not cartoon app. */
+    body {
+      background: #030303;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .ryan-font,
+    .main-counter,
+    .panel-drag-label,
+    .badge-challenge,
+    .btn-action {
+      font-family: Impact, "Arial Black", "Arial Narrow", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .glass-panel,
+    #km-input-panel,
+    .update-card,
+    .objective-card,
+    .km-panel-form,
+    .status-pill,
+    .panel-chip-btn,
+    .btn-action,
+    .btn-control,
+    .progress-container,
+    .objective-logo-btn {
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .glass-panel {
+      border: 1px solid #111;
+      background: #f7f4e9;
+    }
+
+    #km-input-panel {
+      border: 1px solid #f5f5f5;
+      background: rgba(8, 8, 8, 0.94);
+    }
+
+    .badge-challenge,
+    .btn-action {
+      background: #fff;
+      color: #050505;
+      border: 1px solid #050505;
+    }
+
+    .btn-action:hover {
+      background: #050505;
+      color: #fff;
+      transform: none;
+    }
+
+    .progress-container,
+    .km-panel-form {
+      border: 1px dashed #111;
+      background: transparent;
+    }
+
+    #progress-bar {
+      background: #111;
+    }
+
+    .status-pill,
+    .objective-card,
+    .update-card {
+      border: 1px solid #111;
+      background: #fff;
+    }
+
+    .panel-drag-hint,
+    .micro-copy,
+    .update-card span,
+    .objective-card span {
+      font-family: "Courier New", Courier, monospace;
+    }
+
     @media (max-width: 720px) {
       :root {
         --panel-width: calc(100vw - 32px);
@@ -457,10 +687,20 @@
       .update-list {
         max-height: 140px;
       }
+
+      .objective-row {
+        grid-template-columns: 48px minmax(0, 1fr);
+      }
+
+      .objective-distance {
+        grid-column: 2;
+        text-align: left;
+      }
     }
   </style>
 </head>
 <body>
+  <input id="objective-logo-input" type="file" accept="image/*" multiple hidden />
   <div id="ui-overlay" class="floating-panel">
     <div id="glass-panel" class="glass-panel">
       <div class="panel-topbar">
@@ -483,6 +723,7 @@
           <span style="color:#9ca3af;">Inicio</span>
           <span style="color:#ef4444;">Meta: 40.075 KM</span>
         </div>
+        <div id="objective-board" class="objective-board"></div>
         <div class="micro-copy">
           Cada registro suma kilometros reales al manifiesto del viaje. El total se sincroniza con toda la comunidad que entre a esta app.
         </div>
@@ -538,22 +779,38 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="./assets/vendor/three-r128.min.js"></script>
+  <script src="./assets/vendor/OrbitControls-r128.js"></script>
   <script>
-    const SUPABASE_URL = "https://simmltkpoqfrbkianyza.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_PnA09ddT1Jz_hWAS0TRCbw_lG_Jd3pE";
+    const SUPABASE_URL = "https://qttxcfbgyfmvyglzwxct.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
+    const SUPABASE_SCRIPT_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+    const WORLD_PROGRESS_API = "/api/world-progress-records";
+    const WORLD_LOOP_BROADCAST = "archivo98_world_loop_live";
+    const WORLD_LOOP_EVENT_KEY = "archivo98_world_loop_last_event";
     const PROGRESS_ROOM = "world-progress";
     const MAX_KM = 40075;
+    const WORLD_TEXTURE_URL = "./assets/world-earth-fast.jpg";
     const EARTH_RADIUS = 1;
-    const TRAIL_RADIUS = 1.015;
+    const EARTH_BASE_ROTATION_Y = Math.PI * 0.1;
+    const TRAIL_RADIUS = 1.065;
+    const OBJECTIVE_RADIUS = 1.035;
     const PANEL_POSITION_KEY = "archivo98_world_loop_panel_position";
     const PANEL_COLLAPSED_KEY = "archivo98_world_loop_panel_collapsed";
     const PANEL_SCALE_KEY = "archivo98_world_loop_panel_scale";
     const KM_PANEL_POSITION_KEY = "archivo98_world_loop_km_panel_position";
     const KM_PANEL_COLLAPSED_KEY = "archivo98_world_loop_km_panel_collapsed";
     const KM_PANEL_SCALE_KEY = "archivo98_world_loop_km_panel_scale";
+    const OBJECTIVE_LOGOS_KEY = "archivo98_world_loop_objective_logos";
+    const OFFICIAL_ACCOUNT_EMAILS = [["tumberjeremy", "gmail.com"], ["tumberjeremy", "gmal.com"]].map((parts) => parts.join("@"));
+    const OBJECTIVES = [
+      { id: "obj-1", km: 1000, label: "Primer objetivo", reward: "Catalogos + Mercado Libre", icon: "ML" },
+      { id: "obj-2", km: 5000, label: "Segundo objetivo", reward: "App User99", icon: "U99" },
+      { id: "obj-3", km: 10000, label: "Tercer objetivo", reward: "Shopify", icon: "SHOP" },
+      { id: "obj-4", km: 20000, label: "Cuarto objetivo", reward: "Ferias pop-up", icon: "POP" },
+      { id: "obj-5", km: 30000, label: "Quinto objetivo", reward: "Local de ropa", icon: "LOCAL" },
+      { id: "obj-6", km: MAX_KM, label: "Vuelta completa", reward: "Final del loop", icon: "LOOP" },
+    ];
 
     let scene;
     let camera;
@@ -561,6 +818,7 @@
     let controls;
     let earth;
     let trailLine;
+    let lastTrailSignature = "";
     let clouds;
     let totalKm = 0;
     let currentTargetRotation = 0;
@@ -574,6 +832,10 @@
     let realtimeChannel = null;
     let mainPanelController = null;
     let inputPanelController = null;
+    let objectiveMarkers = [];
+    let objectiveLogoConfig = {};
+    let selectedObjectiveForLogo = null;
+    const objectiveImageCache = new Map();
 
     function escapeHtml(value) {
       return String(value || "")
@@ -582,6 +844,10 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
+    }
+
+    function isOfficialEmail(value) {
+      return OFFICIAL_ACCOUNT_EMAILS.includes(String(value || "").trim().toLowerCase());
     }
 
     function formatCompactDate(value) {
@@ -634,8 +900,10 @@
       sun.position.set(5, 3, 5);
       scene.add(sun);
 
+      loadObjectiveLogoConfig();
       createEarth();
       createTrail();
+      createObjectiveMarkers();
       createStarfield();
       bindUi();
       updateUI();
@@ -656,6 +924,20 @@
       document.getElementById("btn-toggle-km-panel").addEventListener("click", toggleKmPanelCollapsed);
       document.getElementById("km-input").addEventListener("keydown", (event) => {
         if (event.key === "Enter") registerKilometers();
+      });
+      document.getElementById("objective-logo-input").addEventListener("change", handleObjectiveLogoUpload);
+      document.getElementById("objective-board").addEventListener("click", (event) => {
+        const uploadButton = event.target.closest("[data-upload-objective]");
+        if (uploadButton) {
+          selectedObjectiveForLogo = uploadButton.dataset.uploadObjective;
+          document.getElementById("objective-logo-input").click();
+          return;
+        }
+
+        const clearButton = event.target.closest("[data-clear-objective]");
+        if (clearButton) {
+          clearObjectiveLogos(clearButton.dataset.clearObjective);
+        }
       });
       setupFloatingPanels();
     }
@@ -770,6 +1052,73 @@
       enableFloatingPanelPinch(controller);
       clampFloatingPanelToViewport(controller);
       return controller;
+    }
+
+    function loadObjectiveLogoConfig() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(OBJECTIVE_LOGOS_KEY) || "{}");
+        objectiveLogoConfig = saved && typeof saved === "object" ? saved : {};
+      } catch (_error) {
+        objectiveLogoConfig = {};
+      }
+    }
+
+    function saveObjectiveLogoConfig() {
+      localStorage.setItem(OBJECTIVE_LOGOS_KEY, JSON.stringify(objectiveLogoConfig));
+    }
+
+    function getObjectiveLogos(objectiveId) {
+      const logos = objectiveLogoConfig[objectiveId];
+      return Array.isArray(logos) ? logos.slice(0, 4) : [];
+    }
+
+    function getObjectiveLogoSignature(objectiveId) {
+      return getObjectiveLogos(objectiveId).map((logo) => logo.src).join("|");
+    }
+
+    function handleObjectiveLogoUpload(event) {
+      const files = Array.from(event.target.files || []).filter((file) => file.type.startsWith("image/"));
+      if (!selectedObjectiveForLogo || !files.length) {
+        event.target.value = "";
+        return;
+      }
+
+      const existingLogos = getObjectiveLogos(selectedObjectiveForLogo);
+      const availableSlots = Math.max(0, 4 - existingLogos.length);
+      Promise.all(files.slice(0, availableSlots).map(readLogoFile)).then((logos) => {
+        objectiveLogoConfig[selectedObjectiveForLogo] = [...existingLogos, ...logos].slice(0, 4);
+        saveObjectiveLogoConfig();
+        renderObjectives();
+        forceObjectiveTextureRefresh();
+        event.target.value = "";
+      });
+    }
+
+    function readLogoFile(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (loadEvent) => {
+          resolve({
+            name: file.name.replace(/\.[^.]+$/, "").slice(0, 24),
+            src: loadEvent.target.result,
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function clearObjectiveLogos(objectiveId) {
+      delete objectiveLogoConfig[objectiveId];
+      saveObjectiveLogoConfig();
+      renderObjectives();
+      forceObjectiveTextureRefresh();
+    }
+
+    function forceObjectiveTextureRefresh() {
+      objectiveMarkers.forEach((entry) => {
+        entry.textureKey = "";
+      });
+      updateObjectiveMarkers();
     }
 
     function centerKmInputPanel() {
@@ -951,33 +1300,217 @@
 
     function createEarth() {
       const loader = new THREE.TextureLoader();
+      const earthTexture = loader.load(WORLD_TEXTURE_URL);
+      earthTexture.encoding = THREE.sRGBEncoding;
+      earthTexture.flipY = false;
 
       earth = new THREE.Mesh(
         new THREE.SphereGeometry(EARTH_RADIUS, 64, 64),
         new THREE.MeshPhongMaterial({
-          map: loader.load("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg"),
-          shininess: 15,
+          map: earthTexture,
+          shininess: 8,
         })
       );
+      earth.rotation.y = EARTH_BASE_ROTATION_Y;
       scene.add(earth);
 
-      clouds = new THREE.Mesh(
-        new THREE.SphereGeometry(EARTH_RADIUS + 0.015, 32, 32),
-        new THREE.MeshPhongMaterial({
-          map: loader.load("https://unpkg.com/three-globe/example/img/earth-clouds.png"),
-          transparent: true,
-          opacity: 0.25,
-        })
-      );
-      earth.add(clouds);
+      clouds = null;
     }
 
     function createTrail() {
-      trailLine = new THREE.Line(
+      trailLine = new THREE.Mesh(
         new THREE.BufferGeometry(),
-        new THREE.LineBasicMaterial({ color: 0xff1100 })
+        new THREE.MeshBasicMaterial({
+          color: 0xff1c00,
+          depthTest: false,
+        })
       );
+      trailLine.visible = false;
+      trailLine.renderOrder = 80;
       scene.add(trailLine);
+    }
+
+    function getOrbitPositionFromKm(kmValue, radius) {
+      const ratio = Math.max(0, Math.min(1, kmValue / MAX_KM));
+      const angle = Math.PI * 2 * ratio;
+      return new THREE.Vector3(
+        Math.sin(angle) * radius,
+        0,
+        Math.cos(angle) * radius
+      );
+    }
+
+    function createObjectiveMarkers() {
+      objectiveMarkers = OBJECTIVES.map((objective) => {
+        const texture = createObjectiveTexture(objective, "locked");
+        const marker = new THREE.Sprite(new THREE.SpriteMaterial({
+          map: texture,
+          transparent: true,
+          depthTest: true,
+          depthWrite: false,
+        }));
+        marker.position.copy(getOrbitPositionFromKm(objective.km, OBJECTIVE_RADIUS));
+        marker.scale.set(0.26, 0.13, 1);
+        marker.renderOrder = 12;
+
+        scene.add(marker);
+        return { objective, marker, textureKey: "" };
+      });
+    }
+
+    function updateObjectiveMarkers() {
+      objectiveMarkers.forEach((entry) => {
+        const { objective, marker } = entry;
+        const logos = getObjectiveLogos(objective.id);
+        marker.visible = logos.length > 0;
+        if (!marker.visible) return;
+
+        const isUnlocked = totalKm >= objective.km;
+        const isNext = objective.id === getNextObjective()?.id;
+        const nextState = isUnlocked ? "unlocked" : isNext ? "next" : "locked";
+        const textureKey = `${nextState}:${getObjectiveLogoSignature(objective.id)}`;
+        if (entry.textureKey !== textureKey) {
+          marker.material.map.dispose();
+          marker.material.map = createObjectiveTexture(objective, nextState);
+          marker.material.needsUpdate = true;
+          entry.textureKey = textureKey;
+        }
+        const size = isNext ? 1.08 : isUnlocked ? 1.02 : 1;
+        const baseScale = logos.length > 1 ? 0.19 : 0.14;
+        marker.scale.set(baseScale * size, baseScale * size, 1);
+      });
+    }
+
+    function createObjectiveTexture(objective, state) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 256;
+      canvas.height = 256;
+      const ctx = canvas.getContext("2d");
+      const isUnlocked = state === "unlocked";
+      const isNext = state === "next";
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const logos = getObjectiveLogos(objective.id);
+      const loadedLogos = logos.map((logo) => getLoadedObjectiveImage(logo.src)).filter(Boolean);
+      if (loadedLogos.length) {
+        drawObjectiveLogoGrid(ctx, loadedLogos, { isNext, isUnlocked });
+      } else if (logos.length) {
+        logos.forEach((logo) => loadObjectiveImage(logo.src));
+      }
+
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function getLoadedObjectiveImage(src) {
+      const cached = objectiveImageCache.get(src);
+      return cached && cached.complete ? cached : null;
+    }
+
+    function loadObjectiveImage(src) {
+      const cached = objectiveImageCache.get(src);
+      if (cached) return cached;
+
+      const image = new Image();
+      objectiveImageCache.set(src, image);
+      image.onload = () => forceObjectiveTextureRefresh();
+      image.src = src;
+      return image;
+    }
+
+    function drawObjectiveFallbackText(ctx, text) {
+      ctx.fillStyle = "#ffffff";
+      ctx.font = text.length > 4 ? "900 34px Inter, Arial, sans-serif" : "900 42px Inter, Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, 128, 64);
+    }
+
+    function drawObjectiveLogoGrid(ctx, images) {
+      const count = Math.min(images.length, 4);
+      const slots = count === 1
+        ? [{ x: 70, y: 70, w: 116, h: 116 }]
+        : count === 2
+          ? [{ x: 50, y: 26, w: 156, h: 92 }, { x: 50, y: 138, w: 156, h: 92 }]
+          : count === 3
+            ? [{ x: 24, y: 84, w: 62, h: 88 }, { x: 97, y: 84, w: 62, h: 88 }, { x: 170, y: 84, w: 62, h: 88 }]
+            : [{ x: 54, y: 48, w: 58, h: 70 }, { x: 144, y: 48, w: 58, h: 70 }, { x: 54, y: 138, w: 58, h: 70 }, { x: 144, y: 138, w: 58, h: 70 }];
+
+      images.slice(0, count).forEach((image, index) => {
+        const slot = slots[index];
+        ctx.save();
+        ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetY = 3;
+        const source = getImageContentBounds(image);
+        const fit = getObjectFitRect(source, slot.x, slot.y, slot.w, slot.h);
+        ctx.drawImage(image, source.x, source.y, source.w, source.h, fit.x, fit.y, fit.w, fit.h);
+        ctx.restore();
+      });
+    }
+
+    function getImageContentBounds(image) {
+      const canvas = document.createElement("canvas");
+      const width = image.naturalWidth || image.width;
+      const height = image.naturalHeight || image.height;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(image, 0, 0);
+      const data = ctx.getImageData(0, 0, width, height).data;
+      let minX = width;
+      let minY = height;
+      let maxX = 0;
+      let maxY = 0;
+
+      for (let y = 0; y < height; y += 1) {
+        for (let x = 0; x < width; x += 1) {
+          const alpha = data[((y * width + x) * 4) + 3];
+          if (alpha <= 12) continue;
+          minX = Math.min(minX, x);
+          minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x);
+          maxY = Math.max(maxY, y);
+        }
+      }
+
+      if (minX > maxX || minY > maxY) {
+        return { x: 0, y: 0, w: width, h: height };
+      }
+
+      const padding = 2;
+      return {
+        x: Math.max(0, minX - padding),
+        y: Math.max(0, minY - padding),
+        w: Math.min(width, maxX - minX + 1 + padding * 2),
+        h: Math.min(height, maxY - minY + 1 + padding * 2),
+      };
+    }
+
+    function getObjectFitRect(source, x, y, width, height) {
+      const ratio = Math.min(width / source.w, height / source.h);
+      const w = source.w * ratio;
+      const h = source.h * ratio;
+      return {
+        x: x + (width - w) / 2,
+        y: y + (height - h) / 2,
+        w,
+        h,
+      };
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
     }
 
     function createStarfield() {
@@ -996,6 +1529,9 @@
 
     async function initSupabase() {
       try {
+        if (!window.supabase) {
+          await loadExternalScript(SUPABASE_SCRIPT_URL);
+        }
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const { data } = await supabaseClient.auth.getSession();
         currentUser = data.session?.user || null;
@@ -1010,6 +1546,23 @@
         console.error(error);
         setSyncStatus("offline", "Supabase no disponible");
       }
+    }
+
+    function loadExternalScript(src) {
+      return new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+          existing.addEventListener("load", resolve, { once: true });
+          existing.addEventListener("error", reject, { once: true });
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
     }
 
     async function loadProgressMessages() {
@@ -1057,6 +1610,46 @@
       }
     }
 
+    function getProgressClientId(message) {
+      try {
+        const payload = JSON.parse(message.content);
+        return String(payload.clientId || "");
+      } catch (_error) {
+        return "";
+      }
+    }
+
+    function pushProgressMessage(message) {
+      const clientId = getProgressClientId(message);
+      const exists = progressMessages.some((item) => (
+        item.id === message.id || (clientId && getProgressClientId(item) === clientId)
+      ));
+      if (!exists) progressMessages.push(message);
+    }
+
+    function getWorldLoopSnapshot() {
+      return {
+        type: "world-loop-update",
+        world: {
+          totalKm,
+          goalKm: MAX_KM,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+    }
+
+    function broadcastWorldLoopUpdate() {
+      const payload = getWorldLoopSnapshot();
+      try {
+        localStorage.setItem(WORLD_LOOP_EVENT_KEY, JSON.stringify({ ...payload, nonce: crypto.randomUUID() }));
+      } catch (_error) {}
+      try {
+        if ("BroadcastChannel" in window) {
+          new BroadcastChannel(WORLD_LOOP_BROADCAST).postMessage(payload);
+        }
+      } catch (_error) {}
+    }
+
     function recalculateProgressFromMessages() {
       const total = progressMessages.reduce((sum, message) => {
         const payload = parseProgressMessage(message);
@@ -1069,54 +1662,79 @@
 
     function syncOrbitToKm(kmValue) {
       const ratio = Math.max(0, Math.min(1, kmValue / MAX_KM));
-      currentTargetRotation = -(Math.PI * 2 * ratio);
+      currentTargetRotation = 0;
       targetTrailAngle = Math.PI * 2 * ratio;
     }
 
     async function registerKilometers() {
       const input = document.getElementById("km-input");
       const value = parseFloat(input.value);
-      if (Number.isNaN(value) || value <= 0) return;
-
-      if (!supabaseClient || !currentUser) {
-        const nextKm = Math.min(MAX_KM, totalKm + value);
-        totalKm = nextKm;
-        syncOrbitToKm(totalKm);
-        updateUI();
-        progressMessages.push({
-          id: crypto.randomUUID(),
-          username: "Modo local",
-          content: JSON.stringify({ type: "km-update", deltaKm: value, displayName: "Modo local" }),
-          created_at: new Date().toISOString(),
-          user_id: null,
-        });
-        renderUpdates();
-        setSyncStatus("offline", "Guardado local. Inicia sesion para compartirlo.");
-        input.value = "";
+      if (Number.isNaN(value) || value <= 0) {
+        setSyncStatus("offline", "Pone un tramo mayor a 0 km");
         return;
       }
-
+      const clientId = crypto.randomUUID();
+      const displayName = isOfficialEmail(currentUser?.email)
+        ? "Archivo98 Oficial"
+        : currentUser?.user_metadata?.username || currentUser?.email?.split("@")[0] || "Archivo98";
       const payload = {
         type: "km-update",
         deltaKm: value,
-        displayName: currentUser.user_metadata?.username || currentUser.email?.split("@")[0] || "Archivo98",
+        displayName,
         note: `${value} km agregados al manifiesto.`,
+        clientId,
       };
-
-      const { error } = await supabaseClient.from("messages").insert({
-        room: PROGRESS_ROOM,
-        user_id: currentUser.id,
+      const localMessage = {
+        id: `local-${clientId}`,
         username: payload.displayName,
         content: JSON.stringify(payload),
-      });
+        created_at: new Date().toISOString(),
+        user_id: currentUser?.id || null,
+      };
 
-      if (error) {
-        console.error(error);
-        setSyncStatus("offline", "No pude registrar el tramo");
+      pushProgressMessage(localMessage);
+      recalculateProgressFromMessages();
+      renderUpdates();
+      broadcastWorldLoopUpdate();
+      input.value = "";
+      setSyncStatus(currentUser ? "live" : "offline", currentUser ? "Tramo registrado" : "Guardado local. Inicia sesion para compartirlo.");
+
+      if (!supabaseClient || !currentUser) {
         return;
       }
 
-      input.value = "";
+      const { data: sessionData } = await supabaseClient.auth.getSession();
+      const token = sessionData.session?.access_token || "";
+      const response = await fetch(WORLD_PROGRESS_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          deltaKm: payload.deltaKm,
+          displayName: payload.displayName,
+          note: payload.note,
+          clientId,
+        }),
+      });
+      const body = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        console.error(body);
+        setSyncStatus("offline", body.error || "Tramo local. No pude guardarlo en cuenta.");
+        return;
+      }
+
+      const savedMessage = body.message;
+      if (savedMessage) {
+        const index = progressMessages.findIndex((message) => getProgressClientId(message) === clientId);
+        if (index >= 0) progressMessages[index] = savedMessage;
+      }
+      recalculateProgressFromMessages();
+      renderUpdates();
+      broadcastWorldLoopUpdate();
+      setSyncStatus("live", "Tramo guardado en cuenta");
     }
 
     async function resetProgress() {
@@ -1127,7 +1745,7 @@
         targetTrailAngle = 0;
         currentTrailAngle = 0;
         currentEarthRotation = 0;
-        if (earth) earth.rotation.y = 0;
+        if (earth) earth.rotation.y = EARTH_BASE_ROTATION_Y;
         updateUI();
         updateTrailPoints();
         renderUpdates();
@@ -1149,9 +1767,10 @@
           filter: `room=eq.${PROGRESS_ROOM}`,
         }, (payload) => {
           if (!isProgressMessage(payload.new)) return;
-          progressMessages.push(payload.new);
+          pushProgressMessage(payload.new);
           recalculateProgressFromMessages();
           renderUpdates();
+          broadcastWorldLoopUpdate();
         })
         .subscribe((status) => {
           if (status === "SUBSCRIBED") {
@@ -1163,6 +1782,49 @@
     function updateUI() {
       document.getElementById("km-display").innerText = Math.round(totalKm).toLocaleString("es-AR");
       document.getElementById("progress-bar").style.width = `${Math.min(100, (totalKm / MAX_KM) * 100)}%`;
+      renderObjectives();
+      updateObjectiveMarkers();
+    }
+
+    function getNextObjective() {
+      return OBJECTIVES.find((objective) => totalKm < objective.km) || null;
+    }
+
+    function formatKm(value) {
+      return Math.max(0, value).toLocaleString("es-AR", {
+        maximumFractionDigits: value < 100 ? 1 : 0,
+      });
+    }
+
+    function renderObjectives() {
+      const board = document.getElementById("objective-board");
+      const nextObjective = getNextObjective();
+      board.innerHTML = OBJECTIVES.map((objective) => {
+        const remaining = objective.km - totalKm;
+        const isUnlocked = remaining <= 0;
+        const isNext = nextObjective && nextObjective.id === objective.id;
+        const stateClass = isUnlocked ? "is-unlocked" : isNext ? "is-next" : "";
+        const distance = isUnlocked ? "Desbloqueado" : `Faltan ${formatKm(remaining)} km`;
+        const logos = getObjectiveLogos(objective.id);
+        const logoThumbs = logos.length
+          ? logos.map((logo) => `<img class="objective-logo-thumb" src="${escapeHtml(logo.src)}" alt="${escapeHtml(logo.name || objective.reward)}" />`).join("")
+          : '<span class="objective-logo-empty">Sin logos cargados</span>';
+        return `
+          <div class="objective-row ${stateClass}">
+            <div class="objective-pin">${escapeHtml(objective.icon)}</div>
+            <div class="objective-copy">
+              <strong>${escapeHtml(objective.label)}</strong>
+              <span>${escapeHtml(objective.reward)} &middot; ${escapeHtml(formatKm(objective.km))} km</span>
+            </div>
+            <div class="objective-distance">${escapeHtml(distance)}</div>
+            <div class="objective-actions">
+              <div class="objective-logo-stack">${logoThumbs}</div>
+              <button class="objective-logo-btn" type="button" data-upload-objective="${escapeHtml(objective.id)}">Agregar logos</button>
+              <button class="objective-logo-btn secondary" type="button" data-clear-objective="${escapeHtml(objective.id)}">Limpiar</button>
+            </div>
+          </div>
+        `;
+      }).join("");
     }
 
     function renderUpdates() {
@@ -1196,23 +1858,33 @@
 
     function updateTrailPoints() {
       if (currentTrailAngle < 0.001) {
-        trailLine.geometry.setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)]);
+        trailLine.visible = false;
+        lastTrailSignature = "";
         return;
       }
 
       const points = [];
       const segments = 240;
+      const visibleAngle = Math.max(currentTrailAngle, 0.028);
       for (let i = 0; i <= segments; i += 1) {
-        const angle = (i / segments) * currentTrailAngle;
-        points.push(
-          new THREE.Vector3(
-            -Math.sin(angle) * TRAIL_RADIUS,
-            0,
-            Math.cos(angle) * TRAIL_RADIUS
-          )
-        );
+        const angle = (i / segments) * visibleAngle;
+        points.push(new THREE.Vector3(Math.sin(angle) * TRAIL_RADIUS, 0, Math.cos(angle) * TRAIL_RADIUS));
       }
-      trailLine.geometry.setFromPoints(points);
+      const signature = `${visibleAngle.toFixed(4)}:${TRAIL_RADIUS}`;
+      if (signature === lastTrailSignature) {
+        trailLine.visible = true;
+        return;
+      }
+      trailLine.geometry.dispose();
+      trailLine.geometry = new THREE.TubeGeometry(
+        new THREE.CatmullRomCurve3(points),
+        segments,
+        0.01,
+        8,
+        false
+      );
+      trailLine.visible = true;
+      lastTrailSignature = signature;
     }
 
     function animate() {
@@ -1222,7 +1894,7 @@
       currentTrailAngle += (targetTrailAngle - currentTrailAngle) * 0.05;
 
       if (earth) {
-        earth.rotation.y = currentEarthRotation;
+        earth.rotation.y = EARTH_BASE_ROTATION_Y + currentEarthRotation;
       }
 
       if (clouds) {

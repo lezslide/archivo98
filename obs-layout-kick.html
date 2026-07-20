@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBS Kick Layout</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --chroma:#00ff00;
+  --ink:#050505;
+  --paper:#ffffff;
+  --soft:#f2f2f2;
+  --mid:#d7d7d7;
+  --dark:#101010;
+  --gap:12px;
+}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--chroma);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body.transparent{background:transparent}
+.layout{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1fr) min(22vw,330px);gap:var(--gap);padding:18px;background:var(--chroma)}
+body.transparent .layout{background:transparent}
+.content-safe,.side{min-width:0;min-height:0}
+.content-safe{border:4px dashed rgba(7,16,23,.62);border-radius:28px;background:rgba(0,255,0,.01);position:relative}
+body.transparent .content-safe{background:transparent}
+.content-safe:before{content:"CONTENIDO LIMPIO / CAMARA / GAMEPLAY";position:absolute;left:18px;top:16px;padding:8px 10px;border:3px solid var(--ink);border-radius:999px;background:var(--paper);font-size:12px;font-weight:1000;text-transform:uppercase}
+body.hide-guides .content-safe{border-color:transparent}
+body.hide-guides .content-safe:before{display:none}
+.side{display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:var(--gap)}
+.card{border:4px solid var(--ink);border-radius:10px;background:var(--paper);box-shadow:6px 8px 0 rgba(0,0,0,.85);overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;background:var(--ink);color:#fff;border-bottom:4px solid var(--ink);text-transform:uppercase;font-weight:1000}
+.top span{font-size:11px}.live{display:inline-flex;align-items:center;gap:7px}.live:before{content:"";width:9px;height:9px;border-radius:50%;background:#ef4444;box-shadow:0 0 0 4px rgba(239,68,68,.18)}
+.sales-body{display:grid;gap:8px;padding:10px}
+.label{font-size:11px;text-transform:uppercase;font-weight:1000;color:rgba(7,16,23,.66)}
+.money{font-size:clamp(28px,3vw,42px);line-height:.92;font-weight:1000;letter-spacing:0;overflow-wrap:anywhere}
+.bar-meta{display:flex;justify-content:space-between;font-size:10px;font-weight:1000;text-transform:uppercase}.bar{height:13px;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}.fill{height:100%;width:0;background:var(--ink)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px}.stat{border:3px solid var(--ink);border-radius:8px;background:var(--soft);padding:6px;font-weight:1000}.stat.pink{background:var(--mid)}.stat strong{display:block;font-size:17px}
+.founder{border:3px solid var(--ink);border-radius:10px;background:#fff;padding:9px;font-size:12px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em}
+.world-body{display:grid;gap:8px;padding:10px}
+.world-km{font-size:clamp(22px,2.1vw,31px);line-height:.9;font-weight:1000}
+.chat-box{display:grid;grid-template-rows:auto minmax(0,1fr);background:rgba(255,255,255,.94)}
+.chat-head{padding:9px 11px;border-bottom:4px solid var(--ink);background:#fff;font-size:13px;text-transform:uppercase;font-weight:1000}
+.chat-hole{position:relative;margin:8px;border:3px dashed rgba(7,16,23,.6);border-radius:10px;background:rgba(0,255,0,.01)}
+body.transparent .chat-hole{background:transparent}
+.chat-hole:before{content:"ESPACIO PARA CHAT DE KICK";position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:18px;color:rgba(7,16,23,.72);font-size:15px;font-weight:1000;text-transform:uppercase}
+body.hide-guides .chat-hole{border-color:transparent}
+body.hide-guides .chat-hole:before{display:none}
+.ticker{padding:12px 14px;border:4px solid var(--ink);border-radius:10px;background:#fff;box-shadow:6px 8px 0 rgba(0,0,0,.85);font-size:14px;font-weight:1000;text-transform:uppercase;overflow:hidden;white-space:nowrap}
+.ticker span{display:inline-block;animation:marquee 12s linear infinite}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.updated{font-size:10px;text-transform:uppercase;font-weight:1000;color:rgba(7,16,23,.55)}
+body.no-ticker .ticker{display:none}
+body.no-sales .sales-card{display:none}
+body.no-world .world-card{display:none}
+body.no-sales .side{grid-template-rows:auto minmax(0,1fr) auto}
+body.no-sales.no-world .side{grid-template-rows:minmax(0,1fr) auto}
+/* Editorial/minimal pass: stamped sheet, less app/cartoon. */
+html,body{font-family:"Courier New",Courier,monospace;background:var(--chroma)}
+.top,.money,.world-km,.stat strong,.founder,.ticker,.content-safe:before{
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  letter-spacing:0;
+}
+.layout{gap:10px;padding:16px}
+.content-safe{
+  border:1px dashed rgba(5,5,5,.55);
+  border-radius:2px;
+  background:rgba(255,255,255,.04);
+}
+.content-safe:before{
+  left:14px;
+  top:12px;
+  padding:5px 8px;
+  border:1px solid var(--ink);
+  border-radius:2px;
+  background:#f7f4e9;
+  color:#050505;
+  font-size:11px;
+}
+.card,.ticker{
+  border:2px solid var(--ink);
+  border-radius:2px;
+  box-shadow:none;
+  background:#f7f4e9;
+}
+.top{
+  padding:7px 9px;
+  border-bottom:2px solid var(--ink);
+  background:#050505;
+  color:#f7f4e9;
+}
+.top span{font-size:12px}
+.live:before{
+  width:7px;
+  height:7px;
+  border-radius:1px;
+  box-shadow:none;
+  background:#f7f4e9;
+}
+.sales-body,.world-body{gap:7px;padding:9px}
+.label,.updated,.bar-meta{
+  font-family:"Courier New",Courier,monospace;
+  color:#252525;
+  letter-spacing:0;
+}
+.money{font-size:clamp(30px,3.2vw,44px)}
+.world-km{font-size:clamp(24px,2.4vw,34px)}
+.bar{
+  height:10px;
+  border:1px solid var(--ink);
+  border-radius:1px;
+  background:#fff;
+}
+.fill{background:#050505}
+.stats{gap:6px}
+.stat,.founder{
+  border:1px solid var(--ink);
+  border-radius:2px;
+  background:#fff;
+}
+.stat.pink{background:#e8e4d8}
+.chat-box{background:#f7f4e9}
+.chat-head{
+  border-bottom:2px solid var(--ink);
+  background:#050505;
+  color:#f7f4e9;
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  letter-spacing:0;
+}
+.chat-hole{
+  margin:7px;
+  border:1px dashed rgba(5,5,5,.55);
+  border-radius:2px;
+  background:rgba(255,255,255,.04);
+}
+.chat-hole:before{
+  color:rgba(5,5,5,.55);
+  font-family:"Courier New",Courier,monospace;
+  font-size:13px;
+}
+.ticker{padding:9px 11px}
+/* AWGE/Puma reference pass for Kick overlay. No chroma by default. */
+:root{
+  --awge-blue:#063cff;
+  --awge-blue-dark:#0023b8;
+  --awge-yellow:#fff200;
+  --awge-red:#e91510;
+  --awge-white:#ffffff;
+}
+html,body{
+  background:transparent;
+  color:var(--awge-yellow);
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+}
+body.chroma,body[data-bg="chroma"]{background:var(--chroma)}
+.layout{
+  background:transparent;
+  grid-template-columns:minmax(0,1fr) min(24vw,360px);
+  gap:12px;
+  padding:18px;
+}
+.content-safe{
+  border:2px dashed rgba(255,242,0,.46);
+  border-radius:0;
+  background:transparent;
+}
+.content-safe:before{
+  content:"CONTENT / CAM / GAME";
+  background:var(--awge-blue);
+  border:2px solid var(--awge-white);
+  color:var(--awge-yellow);
+  text-shadow:2px 2px 0 #000;
+}
+.card,.ticker{
+  position:relative;
+  border:3px solid var(--awge-white);
+  border-radius:0;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 1px,transparent 1px 4px),
+    linear-gradient(180deg,var(--awge-blue),var(--awge-blue-dark));
+  color:var(--awge-yellow);
+  box-shadow:5px 5px 0 #000;
+  filter:contrast(1.08) saturate(1.18);
+}
+.card:after,.ticker:after{
+  content:"";
+  pointer-events:none;
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,255,255,.08) 9px 10px);
+  mix-blend-mode:screen;
+}
+.top,.chat-head{
+  background:#001470;
+  color:var(--awge-yellow);
+  border-bottom:3px solid var(--awge-white);
+  text-shadow:2px 2px 0 #000;
+}
+.top span,.chat-head{font-size:13px}
+.live:before{
+  background:var(--awge-red);
+  border:1px solid var(--awge-white);
+}
+.label,.updated,.bar-meta{
+  color:var(--awge-yellow);
+  text-shadow:1px 1px 0 #000;
+}
+.money,.world-km,.stat strong{
+  color:var(--awge-yellow);
+  text-shadow:3px 3px 0 #000, -1px -1px 0 var(--awge-white);
+}
+.bar{
+  height:14px;
+  border:2px solid var(--awge-white);
+  background:#001470;
+}
+.fill{
+  background:var(--awge-yellow);
+  box-shadow:2px 0 0 #000;
+}
+.stat,.founder{
+  border:2px solid var(--awge-white);
+  background:#001470;
+  color:var(--awge-yellow);
+}
+.stat.pink{background:#001470}
+.founder{
+  text-shadow:2px 2px 0 #000;
+}
+.chat-box{background:linear-gradient(180deg,var(--awge-blue),var(--awge-blue-dark))}
+.chat-hole{
+  border:2px dashed rgba(255,255,255,.75);
+  border-radius:0;
+  background:rgba(0,0,0,.12);
+}
+.chat-hole:before{
+  color:rgba(255,242,0,.68);
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  text-shadow:2px 2px 0 #000;
+}
+.ticker{
+  color:var(--awge-yellow);
+  text-shadow:2px 2px 0 #000;
+}
+.reelok-logo{
+  position:fixed;
+  top:10px;
+  right:14px;
+  z-index:20;
+  color:var(--awge-red);
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  font-size:clamp(22px,2.1vw,38px);
+  line-height:.82;
+  font-style:italic;
+  letter-spacing:-1px;
+  transform:skewX(-10deg) rotate(-3deg);
+  -webkit-text-stroke:2px var(--awge-white);
+  text-shadow:3px 3px 0 #000;
+  pointer-events:none;
+}
+body.hide-guides .content-safe{border-color:transparent}
+/* Readability pass: keep the AWGE colors, restore the cleaner first font scale. */
+html,body{
+  font-family:Arial,Helvetica,sans-serif;
+}
+.top,.chat-head,.label,.updated,.bar-meta,.founder,.ticker,.content-safe:before{
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:900;
+  letter-spacing:.02em;
+}
+.money,.world-km,.stat strong{
+  font-family:Arial,Helvetica,sans-serif;
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+.money{
+  font-size:clamp(24px,2.35vw,34px);
+  line-height:1;
+}
+.world-km{
+  font-size:clamp(18px,1.75vw,25px);
+  line-height:1;
+}
+.top span,.chat-head{
+  font-size:11px;
+}
+.label{
+  font-size:10px;
+}
+.bar-meta,.updated{
+  font-size:9px;
+}
+.stat strong{
+  font-size:15px;
+}
+.founder{
+  font-size:11px;
+  padding:7px 8px;
+}
+.ticker{
+  font-size:12px;
+}
+.chat-hole:before{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+}
+.reelok-logo{
+  font-size:clamp(17px,1.45vw,27px);
+  -webkit-text-stroke:1.4px var(--awge-white);
+  text-shadow:2px 2px 0 #000;
+}
+/* Motherland flyer pass: replace the previous blue look. */
+:root{
+  --flyer-black:#050403;
+  --flyer-yellow:#fff200;
+  --flyer-red:#e01612;
+  --flyer-green:#148f2f;
+  --flyer-white:#fffef1;
+  --flyer-fire:#ff7a00;
+}
+html,body{
+  background:transparent;
+  color:var(--flyer-white);
+  font-family:Arial,Helvetica,sans-serif;
+}
+.layout{
+  grid-template-columns:minmax(0,1fr) min(23vw,350px);
+  background:transparent;
+}
+.content-safe{
+  border:2px dashed rgba(255,242,0,.38);
+  background:transparent;
+}
+.content-safe:before{
+  content:"DROP AREA / CONTENT";
+  border:2px solid var(--flyer-white);
+  background:var(--flyer-black);
+  color:var(--flyer-yellow);
+  text-shadow:2px 2px 0 #000;
+}
+.card,.ticker{
+  border:3px solid var(--flyer-white);
+  background:
+    linear-gradient(90deg,transparent 0 68%,var(--flyer-green) 68% 71%,transparent 71%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 5px),
+    var(--flyer-black);
+  color:var(--flyer-white);
+  box-shadow:5px 5px 0 #000;
+  filter:none;
+}
+.card:after,.ticker:after{
+  background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 24%,rgba(255,122,0,.08));
+  mix-blend-mode:normal;
+}
+.top,.chat-head{
+  background:var(--flyer-black);
+  color:var(--flyer-yellow);
+  border-bottom:3px solid var(--flyer-white);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:12px;
+  letter-spacing:.02em;
+  text-shadow:2px 2px 0 #000;
+}
+.top span,.chat-head{font-size:12px}
+.live:before{
+  background:var(--flyer-red);
+  border:1px solid var(--flyer-white);
+}
+.label,.updated,.bar-meta{
+  color:var(--flyer-yellow);
+  text-shadow:1px 1px 0 #000;
+}
+.money,.world-km{
+  color:var(--flyer-white);
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  text-shadow:3px 3px 0 #000, -1px 0 0 var(--flyer-red);
+}
+.money{font-size:clamp(24px,2.25vw,34px)}
+.world-km{font-size:clamp(18px,1.65vw,24px)}
+.bar{
+  height:13px;
+  border:2px solid var(--flyer-white);
+  background:#1b1209;
+}
+.fill{
+  background:linear-gradient(90deg,var(--flyer-red),var(--flyer-yellow));
+}
+.stat,.founder{
+  border:2px solid var(--flyer-white);
+  background:#0b0907;
+  color:var(--flyer-yellow);
+}
+.stat strong{
+  color:var(--flyer-white);
+  font-family:Arial,Helvetica,sans-serif;
+}
+.chat-box{
+  background:
+    linear-gradient(180deg,rgba(255,242,0,.06),rgba(0,0,0,.12)),
+    var(--flyer-black);
+}
+.chat-hole{
+  overflow:hidden;
+  border:2px dashed rgba(255,254,241,.75);
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.18)),
+    #050403;
+}
+.chat-hole:before{
+  content:"ESPACIO PARA CHAT";
+  z-index:1;
+  color:rgba(255,242,0,.7);
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:12px;
+  text-shadow:2px 2px 0 #000;
+}
+.chat-hole:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:30%;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,transparent 0%,rgba(0,0,0,.05) 12%,rgba(0,0,0,.24) 100%),
+    url("./assets/chat-flames.gif") center bottom / 100% 100% no-repeat;
+  filter:saturate(1.12) contrast(1.04);
+  opacity:.96;
+}
+.chat-feed{
+  position:absolute;
+  inset:8px 8px 9%;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  gap:5px;
+  pointer-events:none;
+}
+.chat-msg{
+  max-width:96%;
+  align-self:flex-start;
+  padding:1px 2px;
+  border:0;
+  background:transparent;
+  color:var(--flyer-white);
+  font-size:13px;
+  font-weight:800;
+  line-height:1.16;
+  text-shadow:
+    2px 2px 0 #000,
+    -1px 0 0 #000,
+    0 -1px 0 #000;
+  box-shadow:none;
+  animation:chatRise .26s ease-out both;
+}
+.chat-msg strong{
+  color:var(--chat-color,var(--flyer-yellow));
+  margin-right:4px;
+  font-weight:1000;
+}
+.chat-msg .source{
+  display:inline-block;
+  margin-right:5px;
+  padding:1px 4px;
+  background:var(--chat-source,#53fc18);
+  color:#fffef1;
+  border:0;
+  font-size:8px;
+  font-weight:1000;
+  line-height:1;
+  text-shadow:1px 1px 0 #000;
+}
+body.chat-off .chat-feed{display:none}
+@keyframes chatRise{
+  0%{opacity:0;transform:translateY(12px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+.ticker{
+  color:var(--flyer-yellow);
+  font-family:Arial,Helvetica,sans-serif;
+  text-shadow:2px 2px 0 #000;
+}
+.reelok-logo{display:none}
+/* Street clip overlay: minimal info, no heavy box, chat only as transparent clip texture. */
+body.clip .layout{
+  grid-template-columns:minmax(0,1fr) min(22vw,330px);
+  padding:16px;
+  gap:12px;
+}
+body.clip .content-safe{
+  border-color:transparent;
+}
+body.clip .side{
+  grid-template-rows:auto auto minmax(0,1fr);
+  gap:8px;
+}
+body.clip .ticker{
+  display:none;
+}
+body.clip .card{
+  border:0;
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+body.clip .card:after{
+  display:none;
+}
+body.clip .top,
+body.clip .chat-head{
+  display:none;
+}
+body.clip .sales-body,
+body.clip .world-body{
+  padding:0;
+}
+body.clip .money{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(32px,3.4vw,54px);
+  color:#fffef1;
+  text-shadow:3px 3px 0 #000, 0 0 12px rgba(0,0,0,.65);
+}
+body.clip .world-km{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:clamp(24px,2.6vw,42px);
+  color:#fffef1;
+  text-shadow:3px 3px 0 #000, 0 0 12px rgba(0,0,0,.65);
+}
+body.clip .world-remaining{
+  display:none;
+}
+body.clip .sales-body > div:first-child,
+body.clip .world-body > div:first-child{
+  display:block;
+}
+body.clip .label,
+body.clip .bar-meta,
+body.clip .bar,
+body.clip .stats,
+body.clip .founder,
+body.clip #updated,
+body.clip #worldUpdated{
+  display:none;
+}
+body.clip .chat-box{
+  border:0;
+  background:#050403;
+  grid-template-rows:minmax(0,1fr);
+}
+body.clip .chat-hole{
+  margin:0;
+  border:0;
+  background:#050403;
+  min-height:0;
+  height:100%;
+}
+body.clip .chat-hole:before{
+  display:none;
+}
+body.clip .chat-hole:after{
+  height:30%;
+  opacity:.96;
+}
+body.clip .chat-feed{
+  inset:8px 8px 9%;
+}
+@media(max-width:900px){
+  body.clip .layout{
+    grid-template-columns:1fr;
+    padding:8px;
+  }
+  body.clip .content-safe{
+    display:none;
+  }
+  body.clip .side{
+    height:100%;
+    grid-template-rows:auto auto minmax(0,1fr);
+    gap:8px;
+  }
+}
+/* Street streaming mode: keep the right side free for Kick chat, move key data left. */
+body.street .layout{
+  grid-template-columns:minmax(0,1fr) min(28vw,430px);
+  padding:16px;
+  gap:16px;
+}
+body.street .content-safe{
+  border-color:transparent;
+}
+body.street .content-safe:before{
+  content:"40.075 KM";
+  left:18px;
+  top:14px;
+  padding:8px 14px;
+  border:3px solid var(--flyer-white);
+  background:var(--flyer-black);
+  color:var(--flyer-yellow);
+  font-family:Impact,"Arial Black","Arial Narrow",sans-serif;
+  font-size:clamp(28px,4.2vw,70px);
+  line-height:.86;
+  text-shadow:4px 4px 0 #000, -1px 0 0 var(--flyer-red);
+}
+body.street .side{
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
+}
+body.street .sales-card,
+body.street .world-card{
+  position:fixed;
+  left:24px;
+  z-index:12;
+  width:min(420px,34vw);
+}
+body.street .world-card{
+  top:104px;
+}
+body.street .sales-card{
+  top:260px;
+}
+body.street .sales-body,
+body.street .world-body{
+  padding:10px;
+}
+body.street .money{
+  font-size:clamp(28px,3.3vw,54px);
+}
+body.street .world-km{
+  font-size:clamp(22px,2.6vw,40px);
+}
+body.street .founder{
+  display:none;
+}
+body.street .stats{
+  grid-template-columns:1fr;
+}
+body.street .chat-box{
+  min-height:0;
+}
+body.street .chat-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+body.street .chat-head:after{
+  content:"KICK / TW";
+  color:var(--flyer-white);
+  font-size:10px;
+}
+body.street .chat-hole{
+  margin:8px;
+}
+body.street .ticker{
+  font-size:13px;
+}
+body.street.no-ticker .side{
+  grid-template-rows:minmax(0,1fr);
+}
+@media(max-width:900px){
+  body.street .layout{grid-template-columns:1fr;padding:12px}
+  body.street .side{grid-template-rows:46vh auto}
+  body.street .sales-card,
+  body.street .world-card{
+    position:relative;
+    left:auto;
+    top:auto;
+    width:auto;
+  }
+  body.street .content-safe{min-height:28vh}
+}
+@media(max-width:900px){
+  .layout{
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,1fr);
+    padding:10px;
+    gap:8px;
+  }
+  .content-safe{
+    min-height:18vh;
+  }
+  body.hide-guides .content-safe{
+    display:none;
+  }
+  .side{
+    height:100%;
+    min-height:0;
+    grid-template-rows:auto auto minmax(0,1fr) auto;
+    gap:8px;
+  }
+  .sales-body,.world-body{
+    gap:5px;
+    padding:7px;
+  }
+  .top,.chat-head{
+    padding:6px 8px;
+  }
+  .money{font-size:28px}
+  .world-km{font-size:21px}
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+  .stat{
+    padding:5px;
+  }
+  .founder{
+    display:none;
+  }
+  .chat-box{
+    min-height:0;
+  }
+  .chat-hole{
+    min-height:0;
+    height:auto;
+    margin:6px;
+  }
+  .chat-feed{
+    inset:6px 6px 8%;
+    gap:4px;
+  }
+  .chat-msg{
+    font-size:12px;
+    line-height:1.12;
+  }
+  .ticker{
+    padding:7px 9px;
+    font-size:11px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="reelok-logo" aria-hidden="true">Reel0k</div>
+<main class="layout">
+  <section class="content-safe" aria-label="Area limpia para contenido"></section>
+  <aside class="side">
+    <section class="card sales-card">
+      <div class="top"><span>Ventas del reto</span><span class="live">Kick</span></div>
+      <div class="sales-body">
+        <div>
+          <div class="label">Total actual</div>
+          <div class="money" id="money">$0.00</div>
+        </div>
+        <div>
+          <div class="bar-meta"><span>Meta plata</span><span id="moneyPercent">0%</span></div>
+          <div class="bar"><div class="fill" id="moneyFill"></div></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><span class="label">Unidades</span><strong id="units">0</strong></div>
+          <div class="stat pink"><span class="label">KM</span><strong id="km">0 / 0</strong></div>
+        </div>
+        <div class="founder">Reelok The Founder</div>
+        <div class="updated" id="updated">Conectando...</div>
+      </div>
+    </section>
+    <section class="card world-card">
+      <div class="top"><span>World Loop</span><span class="live">Live</span></div>
+      <div class="world-body">
+        <div>
+          <div class="label">Kilometros globales</div>
+          <div class="world-km" id="worldKm">0 km / 40.075 km</div>
+          <div class="world-remaining" id="worldRemaining">Faltan 40.075 km</div>
+        </div>
+        <div>
+          <div class="bar-meta"><span>Vuelta al mundo</span><span id="worldPercent">0%</span></div>
+          <div class="bar"><div class="fill" id="worldFill"></div></div>
+        </div>
+        <div class="updated" id="worldUpdated">Conectando World Loop...</div>
+      </div>
+    </section>
+    <section class="card chat-box">
+      <div class="chat-head">Chat</div>
+      <div class="chat-hole">
+        <div class="chat-feed" id="chatFeed"></div>
+      </div>
+    </section>
+    <div class="ticker"><span id="tickerText">DE UN STICKER A 40.075 KM / REELOK THE FOUNDER / DE UN STICKER A 40.075 KM / REELOK THE FOUNDER / </span></div>
+  </aside>
+</main>
+<script>
+const params=new URLSearchParams(location.search);
+const WORLD_LOOP_BROADCAST="archivo98_world_loop_live";
+const WORLD_LOOP_EVENT_KEY="archivo98_world_loop_last_event";
+if(["1","true","yes"].includes(String(params.get("chroma")||"").toLowerCase())||params.get("bg")==="chroma")document.body.classList.add("chroma");
+if(["1","true","yes"].includes(String(params.get("transparent")||"").toLowerCase())||params.get("bg")==="transparent")document.body.classList.add("transparent");
+if(params.get("guides")==="0")document.body.classList.add("hide-guides");
+if(params.get("ticker")==="0")document.body.classList.add("no-ticker");
+if(params.get("sales")==="0")document.body.classList.add("no-sales");
+if(params.get("world")==="0")document.body.classList.add("no-world");
+if(params.get("mode")==="street")document.body.classList.add("street","hide-guides");
+if(params.get("mode")==="clip"||params.get("clip")==="1")document.body.classList.add("clip","hide-guides");
+const streamChatEnabled=params.get("streamchat")!=="0"&&params.get("chat")!=="0";
+if(!streamChatEnabled)document.body.classList.add("chat-off");
+if(params.get("text"))document.getElementById("tickerText").textContent=`${params.get("text")} / ${params.get("text")} / `;
+const cashSoundEnabled=params.get("cashsound")!=="0";
+let lastMoneyValue=null;
+let audioContext=null;
+
+function formatMoney(value){
+  return `$${(Number(value)||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+}
+function percent(value,total){
+  const next=total?Math.round((Number(value||0)/Number(total||1))*100):0;
+  return Math.max(0,Math.min(100,next));
+}
+function saleTotal(sale){return Number(sale.total ?? sale.price) || 0}
+function saleQty(sale){return Math.max(1,Number(sale.quantity)||1)}
+function playCashSound(){
+  if(!cashSoundEnabled)return;
+  try{
+    audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();
+    const now=audioContext.currentTime;
+    const master=audioContext.createGain();
+    master.gain.setValueAtTime(0.0001,now);
+    master.gain.exponentialRampToValueAtTime(0.16,now+0.01);
+    master.gain.exponentialRampToValueAtTime(0.0001,now+0.42);
+    master.connect(audioContext.destination);
+    [880,1320,1760].forEach((frequency,index)=>{
+      const osc=audioContext.createOscillator();
+      const gain=audioContext.createGain();
+      osc.type=index===0?"square":"triangle";
+      osc.frequency.setValueAtTime(frequency,now+(index*.075));
+      gain.gain.setValueAtTime(0.0001,now+(index*.075));
+      gain.gain.exponentialRampToValueAtTime(index===0?0.22:0.12,now+(index*.075)+0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+(index*.075)+0.13);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(now+(index*.075));
+      osc.stop(now+(index*.075)+0.15);
+    });
+  }catch(_error){}
+}
+function render(record){
+  if(!record){
+    document.getElementById("updated").textContent="Sin datos cargados";
+    return;
+  }
+  const sales=Array.isArray(record.sales)?record.sales:[];
+  const moneyPercent=percent(record.money,record.moneyGoal);
+  const nextMoney=Number(record.money)||0;
+  if(lastMoneyValue!==null&&nextMoney>lastMoneyValue)playCashSound();
+  lastMoneyValue=nextMoney;
+  document.getElementById("money").textContent=formatMoney(record.money);
+  document.getElementById("moneyPercent").textContent=`${moneyPercent}%`;
+  document.getElementById("moneyFill").style.width=`${moneyPercent}%`;
+  document.getElementById("units").textContent=sales.reduce((sum,sale)=>sum+saleQty(sale),0);
+  document.getElementById("km").textContent=`${Number(record.km||0).toLocaleString("es-AR")} / ${Number(record.kmGoal||0).toLocaleString("es-AR")}`;
+  document.getElementById("updated").textContent=`Actualizado ${new Date(record.updatedAt||Date.now()).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
+}
+function renderWorld(world){
+  if(!world){
+    document.getElementById("worldUpdated").textContent="Sin datos World Loop";
+    return;
+  }
+  const worldPercent=percent(world.totalKm,world.goalKm);
+  const totalKm=Number(world.totalKm)||0;
+  const goalKm=Number(world.goalKm)||40075;
+  const remainingKm=Math.max(0,goalKm-totalKm);
+  document.getElementById("worldKm").textContent=`${totalKm.toLocaleString("es-AR")} km recorridos`;
+  document.getElementById("worldRemaining").textContent=`Faltan ${remainingKm.toLocaleString("es-AR")} km`;
+  document.getElementById("worldPercent").textContent=`${worldPercent}%`;
+  document.getElementById("worldFill").style.width=`${worldPercent}%`;
+  document.getElementById("worldUpdated").textContent=`World Loop ${new Date(world.updatedAt||Date.now()).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
+}
+function handleWorldLoopMessage(message){
+  if(message?.type!=="world-loop-update"||!message.world)return;
+  renderWorld(message.world);
+}
+const streamChatSeed=[
+  {source:"KICK",color:"#53fc18",nameColor:"#53fc18",user:"reelokfan",text:"esa caja esta durisima"},
+  {source:"TW",color:"#9146ff",nameColor:"#bf94ff",user:"mati_under",text:"W progreso"},
+  {source:"KICK",color:"#53fc18",nameColor:"#00e5ff",user:"feria.dark",text:"entra venta entra venta"},
+  {source:"TW",color:"#9146ff",nameColor:"#ff7ad9",user:"vhs_mood",text:"parece comercial viejo"},
+  {source:"KICK",color:"#53fc18",nameColor:"#fff200",user:"nfs_lover",text:"clip eso"},
+  {source:"TW",color:"#9146ff",nameColor:"#ff8a00",user:"nico",text:"cuanto falta para 40.075 km?"},
+  {source:"KICK",color:"#53fc18",nameColor:"#ff4d4d",user:"pau",text:"el fuego atras suma una banda"},
+  {source:"TW",color:"#9146ff",nameColor:"#7cff6b",user:"under_maps",text:"la ruta va creciendo"},
+  {source:"KICK",color:"#53fc18",nameColor:"#f5f5f5",user:"tumberclip",text:"esto va al resumen"},
+  {source:"TW",color:"#9146ff",nameColor:"#6bd6ff",user:"luu",text:"ufff mira ese total"},
+  {source:"KICK",color:"#53fc18",nameColor:"#caa6ff",user:"glitch_monte",text:"chat esta prendido"},
+  {source:"TW",color:"#9146ff",nameColor:"#ffef5a",user:"gonza",text:"se siente stream real"},
+  {source:"KICK",color:"#53fc18",nameColor:"#ff7a00",user:"market98",text:"hoy se vende o se vende"},
+  {source:"TW",color:"#9146ff",nameColor:"#8be9fd",user:"laucha",text:"ese contador tiene que subir"},
+  {source:"KICK",color:"#53fc18",nameColor:"#ff5555",user:"darkkferia",text:"no aflojes ahora"},
+  {source:"TW",color:"#9146ff",nameColor:"#bd93f9",user:"clipsito",text:"esto va para reel"},
+  {source:"KICK",color:"#53fc18",nameColor:"#f1fa8c",user:"under_feria",text:"el chat esta re despierto"},
+  {source:"TW",color:"#9146ff",nameColor:"#50fa7b",user:"bruno",text:"cuantos stickers van?"},
+  {source:"KICK",color:"#53fc18",nameColor:"#ffb86c",user:"km_runner",text:"faltan km pero sobra fe"},
+  {source:"TW",color:"#9146ff",nameColor:"#ff79c6",user:"noche_vhs",text:"la placa queda vieja mal"},
+  {source:"KICK",color:"#53fc18",nameColor:"#53fc18",user:"reelokarmy",text:"vamos por los 40.075"},
+  {source:"TW",color:"#9146ff",nameColor:"#ffffff",user:"tomi",text:"se lee joya"}
+];
+let streamChatCursor=0;
+const maxChatMessages=Number(params.get("chatmax"))||16;
+function addChatMessage({source="YT",user="youtube",text=""}={}){
+  const feed=document.getElementById("chatFeed");
+  if(!feed||!text)return;
+  const row=document.createElement("div");
+  row.className="chat-msg";
+  if(arguments[0]?.nameColor)row.style.setProperty("--chat-color",arguments[0].nameColor);
+  if(arguments[0]?.color)row.style.setProperty("--chat-source",arguments[0].color);
+  row.innerHTML=`<span class="source">${escapeHtml(source)}</span><strong>${escapeHtml(user)}:</strong>${escapeHtml(text)}`;
+  feed.appendChild(row);
+  while(feed.children.length>maxChatMessages)feed.removeChild(feed.firstElementChild);
+}
+function tickStreamChat(){
+  if(!streamChatEnabled)return;
+  const next=streamChatSeed[streamChatCursor%streamChatSeed.length];
+  streamChatCursor+=1;
+  addChatMessage(next);
+}
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g,(char)=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[char]));
+}
+async function loadSales(){
+  try{
+    const query=new URLSearchParams();
+    if(params.get("date"))query.set("date",params.get("date"));
+    query.set("_",String(Date.now()));
+    const response=await fetch(`/api/sales-overlay?${query.toString()}`,{cache:"no-store"});
+    const body=await response.json();
+    if(!response.ok)throw new Error(body.error||"Error");
+    render(body.record);
+  }catch(_error){
+    document.getElementById("updated").textContent="Overlay sin conexion";
+  }
+}
+async function loadWorld(){
+  try{
+    const response=await fetch(`/api/world-loop-overlay?_=${Date.now()}`,{cache:"no-store"});
+    const body=await response.json();
+    if(!response.ok)throw new Error(body.error||"Error");
+    renderWorld(body.world);
+  }catch(_error){
+    document.getElementById("worldUpdated").textContent="World Loop sin conexion";
+  }
+}
+function load(){
+  loadSales();
+  loadWorld();
+}
+try{
+  if("BroadcastChannel" in window){
+    const worldChannel=new BroadcastChannel(WORLD_LOOP_BROADCAST);
+    worldChannel.onmessage=(event)=>handleWorldLoopMessage(event.data);
+  }
+  window.addEventListener("storage",(event)=>{
+    if(event.key!==WORLD_LOOP_EVENT_KEY||!event.newValue)return;
+    try{handleWorldLoopMessage(JSON.parse(event.newValue));}catch(_error){}
+  });
+}catch(_error){}
+load();
+if(streamChatEnabled){
+  const initialMessages=Math.min(maxChatMessages, streamChatSeed.length);
+  for(let index=0;index<initialMessages;index+=1)tickStreamChat();
+  setInterval(tickStreamChat,Number(params.get("chatms"))||4200);
+}
+setInterval(load,Number(params.get("ms"))||2500);
+</script>
+</body>
+</html>

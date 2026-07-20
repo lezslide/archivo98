@@ -1,0 +1,1294 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Direct By</title>
+<script src="./private-access.js?v=private-1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+*{box-sizing:border-box}
+:root{--cream:#ece7db;--paper:#fffdf7;--ink:#111;--muted:#5f5a50;--green:#22c55e;--yellow:#facc15;--blue:#93c5fd;--red:#fecaca}
+body{margin:0;min-height:100vh;background:#171717;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,textarea,select{font:inherit}
+button{touch-action:manipulation}
+.app{min-height:100vh;display:grid;grid-template-columns:320px minmax(0,1fr);background:linear-gradient(90deg,#0b0b0d 0 320px,var(--cream) 320px)}
+.sidebar{padding:18px;background:#0b0b0d;color:#f8fafc;border-right:3px solid #000;display:flex;flex-direction:column;gap:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:52px;height:52px;border:2px solid #f8fafc;border-radius:8px;background:#e5e7eb;display:grid;place-items:center;box-shadow:4px 4px 0 #3b82f6}
+.logo svg{width:36px;height:36px}.brand h1{margin:0;font-size:27px;line-height:.95;letter-spacing:0}.brand span{display:block;margin-top:4px;color:#a3e635;font-size:11px;font-weight:900;text-transform:uppercase}
+.auth{border:1px solid #334155;background:#111827;padding:12px;border-radius:8px;color:#dbeafe;font-size:12px;line-height:1.35}
+.side-actions{display:grid;grid-template-columns:1fr;gap:8px}.side-actions.two{grid-template-columns:1fr 1fr}
+.episode-list{display:flex;flex-direction:column;gap:8px;overflow:auto;padding-right:2px}
+.episode-tab{width:100%;text-align:left;border:2px solid #3f3f46;background:#18181b;color:#fafafa;border-radius:8px;padding:10px;cursor:pointer}
+.episode-tab.active{border-color:#a3e635;background:#21330c}.episode-tab strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.episode-tab span{display:block;margin-top:4px;color:#cbd5e1;font-size:11px}
+.status{min-height:18px;color:#dbeafe;font-size:12px;font-weight:800}
+.btn{border:2px solid #000;background:#fff;color:#111;border-radius:7px;padding:10px 12px;font-weight:900;cursor:pointer;box-shadow:3px 3px 0 #000;min-height:42px}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}.btn.primary{background:#a3e635}.btn.blue{background:var(--blue)}.btn.yellow{background:var(--yellow)}.btn.red{background:var(--red)}.btn.dark{background:#111;color:#fff;border-color:#fff;box-shadow:3px 3px 0 #64748b}.btn.small{padding:7px 9px;font-size:12px;min-height:34px;box-shadow:2px 2px 0 #000}.btn.big{font-size:17px;min-height:56px;width:100%}
+.main{padding:18px;display:grid;grid-template-rows:auto auto minmax(0,1fr);gap:14px;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;border:3px solid #000;background:#fff;padding:12px;border-radius:8px;box-shadow:5px 5px 0 #000}
+.title-wrap{min-width:0;flex:1}.kicker{font-size:11px;font-weight:900;color:#475569;text-transform:uppercase}.title-input{width:100%;border:0;border-bottom:3px solid #111;background:transparent;font-size:30px;font-weight:900;outline:0;letter-spacing:0}
+.meta{display:flex;gap:8px;align-items:end;flex-wrap:wrap}.field{display:grid;gap:4px}.field label{font-size:10px;font-weight:900;color:#57534e;text-transform:uppercase}.field input,.field textarea,.field select{border:2px solid #000;background:#fff;border-radius:7px;padding:9px;font-weight:800;min-width:0}.days{width:78px}
+.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.stat{border:2px solid #000;background:#fff;border-radius:8px;padding:10px;box-shadow:3px 3px 0 #000}.stat span{display:block;font-size:10px;font-weight:900;text-transform:uppercase;color:#64748b}.stat strong{display:block;margin-top:2px;font-size:22px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr);gap:14px;min-height:0}
+.panel{border:3px solid #000;background:#f4f1e8;border-radius:8px;box-shadow:5px 5px 0 #000;min-width:0;overflow:hidden;display:flex;flex-direction:column}.panel-head{padding:11px 12px;border-bottom:3px solid #000;background:#fff;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.panel-head h2{margin:0;font-size:16px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}.filter-btn.active{background:#a3e635}
+.blocks{padding:12px;display:grid;gap:14px;overflow:auto}.day-group{display:grid;gap:10px}.day-title{position:sticky;top:-12px;z-index:2;border:2px solid #000;background:#facc15;border-radius:8px;padding:9px 10px;box-shadow:3px 3px 0 #000;font-weight:900}.day-title span{display:block;margin-top:2px;font-size:11px;color:#3f3f46}
+.block-card{border:3px solid #000;background:#fff;border-radius:8px;padding:12px;box-shadow:4px 4px 0 #000;display:grid;gap:10px}.block-card.done{background:#dcfce7;border-color:#14532d}.block-card.done .block-name{text-decoration:line-through;text-decoration-thickness:3px}.block-card.recording{outline:4px solid #93c5fd}.block-card.editing{outline:4px solid #facc15}
+.block-top{display:grid;grid-template-columns:54px minmax(0,1fr) 140px;gap:9px;align-items:start}.block-num{width:46px;height:46px;border:2px solid #000;border-radius:50%;display:grid;place-items:center;background:#111;color:#fff;font-weight:900}.block-name{font-size:18px;font-weight:900}.block-sub{margin-top:3px;color:#475569;font-size:12px;font-weight:900}.status-select{width:100%;border:2px solid #000;border-radius:7px;padding:8px;background:#fff;font-weight:900}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid-3{display:grid;grid-template-columns:86px 92px 1fr;gap:8px}.music-grid textarea{min-height:92px}.block-card textarea,.block-card input{width:100%;border:2px solid #000;border-radius:7px;padding:9px;background:#fff;font-weight:800;line-height:1.35}.block-card textarea{min-height:74px;resize:vertical}
+.shots{display:grid;gap:7px}.shot-row{display:grid;grid-template-columns:30px minmax(0,1fr) 34px;gap:7px;align-items:center}.shot-check{width:28px;height:28px;border:2px solid #000;border-radius:6px;background:#fff;font-weight:900}.shot-check.done{background:#22c55e}.shot-input{min-width:0}.shot-remove{padding:4px;min-height:28px}
+.shot-section{border:2px solid #000;background:#f8fafc;border-radius:8px;padding:9px;display:grid;gap:7px}.shot-section-title{font-size:11px;font-weight:900;text-transform:uppercase;color:#475569}.resource-row{display:grid;grid-template-columns:minmax(0,1fr) 86px;gap:7px;align-items:center}.resource-row small{display:block;color:#64748b;font-weight:900}.resource-state,.resource-use{font-size:11px;min-height:34px;padding:6px 8px}.resource-library{background:#fff}.resource-ref-list{display:flex;gap:6px;flex-wrap:wrap}.resource-chip{border:2px solid #000;background:#e0f2fe;border-radius:999px;padding:6px 8px;font-size:12px;font-weight:900;display:flex;align-items:center;gap:6px}.resource-chip button{border:0;background:transparent;font-weight:900;cursor:pointer}.resource-picker{display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:8px}.resource-picker select{border:2px solid #000;border-radius:7px;background:#fff;padding:8px;font-weight:900;min-width:0}
+.block-actions{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap}.progress-line{height:12px;border:2px solid #000;background:#fff;border-radius:999px;overflow:hidden}.progress-fill{height:100%;background:#22c55e;width:0}
+.side-panel{padding:12px;display:grid;gap:12px;overflow:auto}.day-card{border:2px solid #000;background:#fff;border-radius:8px;padding:10px}.day-card.done{background:#dcfce7}.day-card strong{display:block;font-size:14px}.day-card span{display:block;margin-top:4px;color:#475569;font-size:12px;font-weight:900}.day-card ul{margin:8px 0 0;padding-left:18px;color:#334155;font-size:12px;line-height:1.35}
+.recording-mode .topbar,.recording-mode .summary,.recording-mode .workspace,.recording-mode .sidebar{display:none}.record-view{display:none}.recording-mode .record-view{display:grid;min-height:100vh;background:var(--cream);padding:14px;gap:12px}.record-card{border:3px solid #000;background:#fff;border-radius:8px;box-shadow:5px 5px 0 #000;padding:14px;display:grid;gap:12px}.record-scene{font-size:26px;font-weight:900;line-height:1.05}.record-dialog{font-size:18px;line-height:1.35}.record-music{border:2px solid #000;background:#eef6ff;border-radius:8px;padding:10px;display:grid;gap:5px;font-size:14px;line-height:1.35}.record-music strong{text-transform:uppercase;font-size:11px}.record-music span{display:block}.record-shots{display:grid;gap:8px}.record-shot{border:2px solid #000;background:#fff;border-radius:8px;padding:12px;font-size:16px;font-weight:900;text-align:left}.record-shot.done{background:#dcfce7;text-decoration:line-through}.record-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none!important}
+@media(max-width:1000px){.app{grid-template-columns:1fr;background:var(--cream)}.sidebar{position:relative;border-right:0;border-bottom:3px solid #000}.workspace{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}.topbar{display:grid}.title-input{font-size:24px}.block-top,.grid-2,.grid-3{grid-template-columns:1fr}.block-num{width:40px;height:40px}.btn{min-height:48px}.panel-head{align-items:stretch}.filters{width:100%}.filter-btn{flex:1 1 44%}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="6" width="18" height="13" rx="2" fill="#f8fafc" stroke="#111827" stroke-width="1.5"/>
+          <path d="M6 6l2.2-3h3L9 6M13 6l2.2-3h3L16 6" stroke="#111827" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M10 10.5l5 2.5-5 2.5v-5z" fill="#111827"/>
+        </svg>
+      </div>
+      <div><h1>Direct<br>By</h1><span>planner de serie</span></div>
+    </div>
+    <div id="authBox" class="auth">Conectando con tu cuenta...</div>
+    <div class="side-actions">
+      <button id="newEpisodeBtn" class="btn primary" type="button">Nuevo episodio</button>
+      <button id="saveBtn" class="btn blue" type="button">Guardar</button>
+      <button id="recordModeBtn" class="btn yellow" type="button">Modo grabacion</button>
+    </div>
+    <div class="side-actions two">
+      <button id="importBtn" class="btn small" type="button">Importar JSON</button>
+      <button id="exportBtn" class="btn small" type="button">Exportar JSON</button>
+    </div>
+    <button id="loadEpisode1Btn" class="btn dark" type="button">Cargar episodio 1</button>
+    <button id="loadEpisode2Btn" class="btn dark" type="button">Cargar episodio 2</button>
+    <button id="loadEpisode3Btn" class="btn dark" type="button">Cargar episodio 3</button>
+    <button id="loadEpisode4Btn" class="btn dark" type="button">Cargar episodio 4</button>
+    <button id="loadEpisode5Btn" class="btn dark" type="button">Cargar episodio 5</button>
+    <button id="loadEpisode6Btn" class="btn dark" type="button">Cargar episodio 6</button>
+    <button id="loadEpisode7Btn" class="btn dark" type="button">Cargar episodio 7</button>
+    <button id="cleanupShotsBtn" class="btn yellow" type="button">Unificar tomas duplicadas</button>
+    <input id="jsonInput" class="hidden" type="file" accept="application/json,.json">
+    <div id="episodeList" class="episode-list"></div>
+    <div id="status" class="status"></div>
+  </aside>
+
+  <main class="main">
+    <section class="topbar">
+      <div class="title-wrap">
+        <div class="kicker">titulo del episodio</div>
+        <input id="titleInput" class="title-input" maxlength="110" placeholder="De un sticker a cien">
+      </div>
+      <div class="meta">
+        <div class="field"><label for="episodeNumberInput">Episodio</label><input id="episodeNumberInput" class="days" type="number" min="1" max="999" value="1"></div>
+        <div class="field"><label for="daysInput">Dias</label><input id="daysInput" class="days" type="number" min="1" max="10" value="3"></div>
+        <button id="duplicateBtn" class="btn small" type="button">Duplicar</button>
+        <button id="deleteBtn" class="btn small red" type="button">Borrar</button>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="stat"><span>bloque</span><strong id="blockProgress">0%</strong></div>
+      <div class="stat"><span>dia</span><strong id="dayProgress">0%</strong></div>
+      <div class="stat"><span>episodio</span><strong id="episodeProgress">0%</strong></div>
+      <div class="stat"><span>terminados</span><strong id="doneBlocks">0/0</strong></div>
+      <div class="stat"><span>tomas faltan</span><strong id="missingShots">0</strong></div>
+    </section>
+
+    <section class="workspace">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Bloques del guion</h2>
+          <div class="filters" id="filters"></div>
+        </div>
+        <div id="blocksBox" class="blocks"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Progreso por dia</h2><button id="addBlockBtn" class="btn small" type="button">Agregar bloque</button></div>
+        <div class="side-panel">
+          <button id="resetTemplateBtn" class="btn yellow" type="button">Reset formato 3 dias</button>
+          <div id="dayGrid" class="day-grid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<section class="record-view">
+  <div class="record-card">
+    <div class="kicker" id="recordMeta">Modo grabacion</div>
+    <div class="record-scene" id="recordScene"></div>
+    <div class="record-dialog" id="recordDialog"></div>
+    <div id="recordMusic" class="record-music"></div>
+    <div class="progress-line"><div id="recordProgressFill" class="progress-fill"></div></div>
+    <div id="recordShots" class="record-shots"></div>
+    <button id="recordDoneBtn" class="btn big primary" type="button">Marcar como hecho</button>
+    <div class="record-nav">
+      <button id="prevBlockBtn" class="btn" type="button">Anterior</button>
+      <button id="nextBlockBtn" class="btn" type="button">Siguiente</button>
+    </div>
+    <button id="exitRecordBtn" class="btn red" type="button">Salir del modo grabacion</button>
+  </div>
+</section>
+
+<script>
+const SUPABASE_URL="https://qttxcfbgyfmvyglzwxct.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
+const STORAGE_KEY="direct_by_local_draft_v6";
+const STATUSES=["Pendiente","Grabando","Grabado","Editando","Terminado"];
+const FILTERS=["Todos","Pendientes","Grabados","Editando","Terminados"];
+const client=window.supabase?.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+let user=null;
+let episodes=[];
+let activeId="";
+let activeDay=1;
+let activeFilter="Todos";
+let activeBlockId="";
+let autoSaveTimer=0;
+let autoSaveInFlight=false;
+let autoSaveQueued=false;
+
+const $=(id)=>document.getElementById(id);
+function uid(){return crypto.randomUUID?crypto.randomUUID():`local-${Date.now()}-${Math.random().toString(16).slice(2)}`}
+function setStatus(text){$("status").textContent=text}
+function slugify(value){
+  return String(value||"toma").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48)||"toma";
+}
+function shotDone(shot){return shot.estado==="grabado"||shot.done===true}
+function makeShot(nombre,nivel="bloque",id=""){
+  return {id:id||`${nivel}-${slugify(nombre)}-${uid().slice(0,6)}`,nombre:nombre||"Nueva toma",nivel,estado:"pendiente"};
+}
+function blankShot(text="",nivel="bloque"){return makeShot(text,nivel)}
+function defaultEpisodeShots(){
+  return [
+    makeShot("Mapa general de 40.075 km","episodio","mapa-40075"),
+    makeShot("Explicacion de las reglas","episodio","reglas-reto"),
+    makeShot("Contador general del reto","episodio","contador-general"),
+    makeShot("Presentacion del objetivo del episodio","episodio","objetivo-episodio")
+  ];
+}
+function defaultDayShots(day){
+  const shots={
+    1:[
+      ["Primer plano del sticker inicial","dia-1-sticker-inicial"],
+      ["Dinero en cero antes de vender","dia-1-dinero-cero"],
+      ["Primer lugar donde intenta vender","dia-1-primer-lugar"],
+      ["Primer rechazo real","dia-1-primer-rechazo"],
+      ["Recuento final del dia 1","dia-1-recuento-final"]
+    ],
+    2:[
+      ["Viaje y llegada a Merlo","dia-2-llegada-merlo"],
+      ["Multitud y ruido de la estacion","dia-2-multitud-estacion"],
+      ["Dinero al comenzar el dia 2","dia-2-dinero-inicio"],
+      ["Fachada o comprobante de imprenta","dia-2-imprenta"],
+      ["Pedido de plancha confirmado","dia-2-pedido-confirmado"]
+    ],
+    3:[
+      ["Retiro del paquete en imprenta","dia-3-retiro-paquete"],
+      ["Apertura de la plancha completa","dia-3-apertura-plancha"],
+      ["Cien stickers ordenados en mesa","dia-3-cien-stickers"],
+      ["Calculo del rollo de tela","dia-3-calculo-rollo"],
+      ["Cierre con pregunta de la prenda","dia-3-cierre-prenda"]
+    ]
+  };
+  return (shots[day]||[
+    [`Llegada al lugar dia ${day}`,`dia-${day}-llegada`],
+    [`Recurso clave dia ${day}`,`dia-${day}-recurso-clave`],
+    [`Recuento final dia ${day}`,`dia-${day}-recuento-final`]
+  ]).map(([name,id])=>makeShot(name,"dia",id));
+}
+function defaultBlockShots(day,orden){
+  const specific={
+    1:{
+      1:["Sticker en mano","Mapa y contador en cero"],
+      3:["Persona que no frena","Reaccion despues del rechazo"],
+      4:["Entrega del sticker","Pago de la primera venta"],
+      7:["Billetes del dia 1","Cara despues de contar"]
+    },
+    2:{
+      1:["Salida hacia Merlo","Reloj o cierre de imprenta"],
+      3:["Speech corto probado","Persona que vuelve a escuchar"],
+      6:["Camino rapido a la imprenta","Comprobante del pedido"],
+      8:["Pantalla o recibo pendiente","Cara de espera"]
+    },
+    3:{
+      1:["Paquete cerrado","Mano antes de abrir"],
+      2:["Plancha completa revelada","Detalle de calidad del sticker"],
+      3:["Cien stickers como problema","Mochila o mesa llena"],
+      9:["Pregunta final a camara","Objeto que apunta al proximo episodio"]
+    }
+  };
+  if(specific[day]?.[orden])return specific[day][orden].map((name)=>makeShot(name,"bloque"));
+  return [makeShot(`Accion principal bloque ${orden}`,"bloque"),makeShot(`Reaccion bloque ${orden}`,"bloque")];
+}
+function musicGuideForBlock(day,orden,emotion=""){
+  const key=`${day}-${orden}`;
+  const specific={
+    "1-1":["Desde el segundo 0, debajo del gancho; bajar volumen cuando entra voz.","Intriga rapida / beat minimal con golpes para sticker, mapa y contador.","Separador flash al final: whoosh corto + corte a primer conflicto."],
+    "1-2":["Entrar despues de la primera frase, muy baja, dejando verguenza y respiracion.","Pad calido o piano simple, tono humano/documental.","Sin separador fuerte; micro silencio antes del primer rechazo."],
+    "1-3":["Entrar justo antes del acercamiento y cortar en cada rechazo.","Percusion seca, tension social, golpes cortos para CapCut.","Separador seco si cambia a primera venta."],
+    "1-4":["Entrar cuando aparece la posibilidad de venta; subir en entrega/pago.","Recompensa suave, beat calido, energia chica pero positiva.","Separador contador: ding/placa de primera venta."],
+    "1-5":["Musica durante montaje completo; sincronizar ventas y contador.","Beat de progreso medio, urbano liviano, cortes al ritmo.","Separador de contador si pasa a oscuridad o riesgo."],
+    "1-6":["Bajar o cortar musica al guardar celular/plata; dejar ambiente.","Drone grave o silencio con textura de calle, sensacion de caida.","Separador a negro breve antes del recuento."],
+    "1-7":["Entrar en recuento final, volumen medio-bajo para escuchar numeros.","Cierre calido con pulso de logro y transicion.","Separador de cierre de dia: placa Dia 2 / viaje a Merlo."],
+    "2-1":["Entrar con llegada/viaje; sostener energia de nuevo intento.","Beat esperanzador con movimiento, sin hacerlo epico.","Separador de reloj/meta antes de empezar a vender."],
+    "2-2":["Musica baja y repetitiva durante rechazos; cortar en frases importantes.","Frustracion seca, loop trabado, percusion minima.","Separador corto para cambio de estrategia."],
+    "2-3":["Entrar cuando prueba speech corto; ritmo mas curioso.","Intriga liviana + groove discreto, sensacion de prueba.","Separador de pregunta antes de progreso."],
+    "2-4":["Musica de montaje sobre ventas/avance, con contador visible.","Beat de avance mas firme, cortes sincronizados con dinero.","Separador contador antes de cuenta regresiva."],
+    "2-5":["Entrar con reloj; subir tension mientras falta poco.","Cuenta regresiva, ticks, percusion rapida y respiracion corta.","Separador tipo reloj antes de correr a imprenta."],
+    "2-6":["Musica de carrera desde que decide ir hasta encargar.","Urgencia / chase urbano, pasos y cortes rapidos.","Separador de llegada: puerta/recibo/encargo confirmado."],
+    "2-7":["Entrar despues del encargo, dejando aire emocional.","Calma, pad suave, guitarra/piano bajo, cierre humano.","Separador suave de noche / Dia 3."],
+    "3-1":["Entrar con paquete cerrado; crecer hasta revelacion.","Build de anticipacion, riser suave, pausa antes de abrir.","Separador de pausa justo antes de mostrar plancha."],
+    "3-2":["Pausa al revelar; despues entra recompensa.","Revelacion satisfactoria, acorde/beat brillante pero limpio.","Separador despues de plancha para presentar problema nuevo."],
+    "3-3":["Entrar cuando la victoria se convierte en carga.","Tension baja, beat lento, textura de duda.","Separador seco hacia plan de nueva mision."],
+    "3-4":["Musica debajo del plan, ritmo constante.","Motivacional sobria, pulso de sistema, energia de trabajo.","Separador con mapa/stock antes del cierre."],
+    "3-5":["Arrancar como cierre y torcer a intriga en la ultima frase.","Orgullo + intriga, golpe final y silencio corto.","Separador final obligatorio hacia episodio 2."]
+  };
+  if(specific[key])return {entradaMusica:specific[key][0],musica:specific[key][1],separadorFinal:specific[key][2]};
+  const normalized=String(emotion||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  if(/caida|riesgo|inquietud/.test(normalized))return {entradaMusica:"Entrar bajo y cortar en la decision dificil.",musica:"Drone grave o silencio con ambiente real.",separadorFinal:"Separador a negro breve."};
+  if(/tension|presion|urgencia|frustracion/.test(normalized))return {entradaMusica:"Entrar antes del intento y subir con el problema.",musica:"Percusion seca / cuenta regresiva / tension urbana.",separadorFinal:"Separador con golpe corto si cambia el plan."};
+  if(/alivio|satisfaccion|orgullo|revelacion/.test(normalized))return {entradaMusica:"Entrar cuando aparece el logro, dejando aire a la voz.",musica:"Recompensa calida, beat limpio y optimista.",separadorFinal:"Separador suave o placa de avance."};
+  return {entradaMusica:"Usar musica baja desde el inicio del bloque y automatizar volumen bajo la voz.",musica:"Base documental suave, sin tapar dialogos.",separadorFinal:"Separador solo si cambia de dia, lugar o emocion."};
+}
+function defaultBlock(day,orden,overrides={}){
+  const arcs={
+    1:{
+      names:["Pregunta inicial","Verguenza","Primer choque","Primer si","Ritmo inicial","Amenaza de cierre","Primer conteo","Caida 1","Puente a Merlo"],
+      objetivos:["Presentar el reto y la meta de pasar de 1 a 100 stickers.","Mostrar que sabe vender, pero le cuesta arrancar.","Mostrar rechazos y esfuerzo real.","Conseguir la primera venta del reto.","Mostrar que empieza a agarrar ritmo.","Mostrar que seguir puede hacerlo perder todo.","Contar dinero y cerrar el dia con avance.","Abrir la necesidad de reinvertir.","Preparar el salto a Merlo."],
+      sensaciones:["Como va a lograrlo?","Es bueno, pero tambien le cuesta.","Que se anime otra vez.","El reto finalmente empezo.","Esta agarrando ritmo.","Tiene que irse.","El primer dia valio la pena.","Falta un salto mas.","Manana puede cambiar todo."],
+      escenas:["Sticker, mapa, ventas, rechazo, oscuridad y adelanto de la plancha.","Dudas antes de acercarse a la primera persona.","Primer intento, rechazo y reaccion.","Speech, entrega, pago y reaccion.","Ventas, conversaciones, contador y distintas aperturas.","Oscurece, guarda el celular y decide retirarse.","Recuento y precio de la plancha.","Mostrar cuanto falta para imprimir.","Cierre con promesa de Merlo."],
+      dialogos:["Este sticker es todo lo que tengo para intentar construir una marca de ropa y recorrer 40.075 kilometros.","Yo se vender; el problema es arrancar.","Bueno. Ya esta. La primera siempre es la peor.","No era la primera venta de mi vida, pero si la primera de esta historia.","La verguenza no desaparecio, pero dejo de mandar.","Frenar era mejor que perder todo.","Cumpli la meta, pero todavia necesitaba llegar a la plancha.","Si no reinvierto, esto muere aca.","Manana voy a Merlo: hay mas gente, pero tambien mas ruido."],
+      preguntas:["Podra llegar a 100 stickers?","Va a superar la verguenza inicial?","La proxima persona frenara?","Podra repetirlo siete veces?","Llegara antes de que oscurezca?","Alcanzo el dinero para dar el primer salto?","Mas personas significaran mas ventas?","La nueva zona ayuda o complica?","Que pasa cuando el reto sale del barrio?"]
+    },
+    2:{
+      names:["Promesa falsa","Ruido","Ajuste de estrategia","Subida","Cuenta regresiva","Carrera","Respiro","Caida 2","Pedido pendiente"],
+      objetivos:["Presentar Merlo y la meta con reloj.","Demostrar que multitud no garantiza ventas.","Cambiar estrategia y acortar speech.","Acercarse a los 9000.","Completar la meta bajo presion.","Llegar a la imprenta antes del cierre.","Respirar y recordar el motor emocional.","Dejar pendiente la entrega.","Preparar el dia de los 100."],
+      sensaciones:["Hoy deberia ser mas facil.","Esta perdido entre el ruido.","Quiere ver si el gancho funciona.","Ahora si puede lograrlo.","Falta poco y se acaba el tiempo.","Que no cierre antes.","Esto significa algo mas grande.","Como se sentira tener cien?","El siguiente dia importa."],
+      escenas:["Viaje, multitud, dinero actual y hora de cierre.","Gente apurada, auriculares y rechazos rapidos.","Comparar speech largo con una apertura corta.","Ventas, contador de dinero y reloj.","Actualizaciones: faltan cuatro, dos y una.","Viaje rapido, fachada y comprobante.","Comida economica y llamada.","Mostrar comprobante y espera.","Cierre con expectativa de retiro."],
+      dialogos:["En Merlo hay miles de personas. En teoria, hoy deberia ser mas facil.","Habia mucha mas gente, pero era mas facil volverse ruido.","Cambie el inicio por una pregunta mas corta.","Cuando escuchaban la historia completa, vender volvia a ser la parte facil.","Necesito vender algunos mas antes de que cierre.","Si llegaba despues del cierre, tenia que esperar hasta manana.","Manana me entregan los cien. Despues tengo que convertirlos en tela.","Hoy compre tiempo, no resolvi todo.","Manana descubro si esto realmente se multiplico."],
+      preguntas:["Llegara antes del cierre?","Que cambiara para llamar la atencion?","Subira el ritmo de ventas?","Cuantas ventas faltan?","Llegara a la imprenta?","Como se sentira tener cien stickers?","Que hara con tanto stock?","El pedido habra salido bien?","Cien oportunidades alcanzan?"]
+    },
+    3:{
+      names:["Espera","Revelacion","Nuevo problema","Sistema","Orgullo contenido","Caida 3","Metodo","Riesgo mayor","Puerta al proximo"],
+      objetivos:["Preparar la revelacion.","Revelar la plancha completa.","Mostrar que cien productos sin vender tambien son problema.","Presentar el plan de vender y reinvertir.","Cerrar la primera transformacion.","Anticipar la caida del episodio 2.","Mostrar sistema posible.","Mostrar que falta tela y escala.","Sembrar el proximo episodio."],
+      sensaciones:["Quiere ver la plancha.","El crecimiento se volvio visible.","La victoria creo un problema mayor.","Parece posible, pero dificil.","Quiere ver si los cien alcanzan.","Algo no cierra del todo.","Hay sistema.","El reto recien empieza.","Necesito ver el proximo."],
+      escenas:["Comprobante, viaje y paquete cerrado.","Abrir paquete y mostrar los 100.","Cien stickers sobre la mesa y precio del rollo.","Calculadora, paquetes y mochila.","Mapa, resumen y adelantos.","Flashes de cansancio y calculadora.","Ordenar stickers por salida.","Costo del rollo y distancia real.","Cierre con pregunta de prenda."],
+      dialogos:["Empece con uno y ahora iba por cien. Al menos en teoria.","Empece con uno. Ahora tenia cien.","Ahora tenia cien cosas que todavia no habia vendido.","Por primera vez parecia que tenia un sistema.","Convirti un sticker en cien oportunidades sin usar dinero propio.","Mi plan no era tan realista como parecia.","Si vendo los cien, puedo imprimir mas y repetir.","El rollo esta lejos, pero ya no estoy en cero.","Cuantos stickers hacen falta para crear una prenda?"],
+      preguntas:["Como quedo el pedido?","Puede venderlos todos?","Este sistema alcanza para el rollo?","El plan es realista?","Cuantos stickers hacen falta para una prenda?","Que falla primero: energia, plata o estrategia?","Puede escalar?","Que pasa si los cien no alcanzan?","Como sigue el reto?"]
+    }
+  };
+  const arc=arcs[day]||arcs[1];
+  const names=arc.names;
+  const timesByDay=[
+    ["0:00-0:45","0:45-1:40","1:40-3:10","3:10-4:25","4:25-5:50","5:50-6:20","6:20-8:20","8:20-9:00","9:00-12:00"],
+    ["0:00-0:55","0:55-2:10","2:10-4:10","4:10-5:30","5:30-7:20","7:20-8:00","8:00-11:20","11:20-12:10","12:10-15:00"],
+    ["0:00-0:40","0:40-1:30","1:30-2:55","2:55-4:00","4:00-5:20","5:20-5:55","5:55-7:30","7:30-8:05","8:05-10:00"]
+  ];
+  const objetivos=arc.objetivos||[
+    "Abrir el loop del dia y plantear una pregunta fuerte.",
+    "Mostrar que se puede ganar si el espectador sigue mirando.",
+    "Instalar el obstaculo que hace dificil el reto.",
+    "Humanizar el proceso y mostrar friccion real.",
+    "Cambiar la energia con un giro visual o informacion nueva.",
+    "Cortar antes de resolver una decision importante.",
+    "Dar una mini victoria para que el dia respire.",
+    "Abrir una pregunta que empuje al siguiente tramo.",
+    "Cerrar el dia con avance visible y promesa del proximo."
+  ];
+  const sensaciones=arc.sensaciones||["Que raro, necesito entender.","Quiero ver si lo logra.","Esto se puede caer.","Me pasa, no es perfecto.","No esperaba eso.","No cortes ahi.","Bien, hay avance.","Falta algo importante.","Valio la pena seguir."];
+  const idx=(orden-1)%9;
+  const musicGuide=musicGuideForBlock(day,orden,names[idx]);
+  return {
+    id:uid(),
+    orden,
+    dia:day,
+    emocion:names[idx],
+    tiempo:timesByDay[(day-1)%timesByDay.length][idx],
+    objetivoNarrativo:objetivos[idx],
+    sensacionEspectador:sensaciones[idx],
+    escena:arc.escenas?.[idx]||`Grabar la escena ${orden} del dia ${day} con accion concreta.`,
+    dialogo:arc.dialogos?.[idx]||`Dia ${day}, bloque ${orden}: decir la idea central sin explicar de mas.`,
+    tomasBloque:defaultBlockShots(day,orden),
+    referenciasTomas:orden===1?["mapa-40075","reglas-reto","contador-general",`dia-${day}-llegada`]:[],
+    entradaMusica:musicGuide.entradaMusica,
+    musica:musicGuide.musica,
+    separadorFinal:musicGuide.separadorFinal,
+    preguntaAbierta:arc.preguntas?.[idx]||"Como sigue esto?",
+    resultadoEsperado:"Que el espectador quiera pasar al siguiente bloque.",
+    notasPersonales:"",
+    estado:"Pendiente",
+    ...overrides
+  };
+}
+function defaultDay(day){
+  const titulo=day===1?"Volver a empezar desde cero":day===2?"Escalar el problema":day===3?"Cerrar el reto":`Dia ${day}`;
+  return {dia:day,titulo,tomasDia:defaultDayShots(day),bloques:Array.from({length:9},(_,i)=>defaultBlock(day,i+1))};
+}
+function freshEpisode(){
+  return normalizeEpisode({id:uid(),episodio:episodes.length+1,titulo:`Episodio ${String(episodes.length+1).padStart(2,"0")}`,tomasEpisodio:defaultEpisodeShots(),dias:[defaultDay(1),defaultDay(2),defaultDay(3)],remote:false,created_at:new Date().toISOString(),updated_at:new Date().toISOString()});
+}
+function normalizeShot(shot,nivel="bloque"){
+  if(typeof shot==="string")return makeShot(shot,nivel);
+  return {
+    id:shot.id||`${nivel}-${slugify(shot.nombre||shot.text)}-${uid().slice(0,6)}`,
+    nombre:shot.nombre||shot.text||"Nueva toma",
+    nivel:shot.nivel||nivel,
+    estado:shot.estado||(shot.done||shot.hecha?"grabado":"pendiente")
+  };
+}
+function legacyBlock(item,index){
+  return defaultBlock(Number(item.day||item.dia||1),index+1,{
+    id:item.id||uid(),
+    orden:Number(item.orden||index+1),
+    emocion:item.emocion||item.name||"Bloque",
+    tiempo:item.tiempo||item.time||"",
+    objetivoNarrativo:item.objetivoNarrativo||item.scene||"",
+    sensacionEspectador:item.sensacionEspectador||"",
+    escena:item.escena||item.scene||"",
+    dialogo:item.dialogo||item.script||"",
+    tomasBloque:Array.isArray(item.tomasBloque)?item.tomasBloque.map((shot)=>normalizeShot(shot,"bloque")):Array.isArray(item.tomas)?item.tomas.map((shot)=>normalizeShot(shot,"bloque")):[],
+    referenciasTomas:Array.isArray(item.referenciasTomas)?item.referenciasTomas:[],
+    entradaMusica:item.entradaMusica||item.dondeMusica||"",
+    musica:item.musica||"",
+    separadorFinal:item.separadorFinal||item.separador_final||"",
+    preguntaAbierta:item.preguntaAbierta||"",
+    resultadoEsperado:item.resultadoEsperado||"",
+    notasPersonales:item.notasPersonales||item.notas||"",
+    estado:item.estado||(item.done?"Terminado":"Pendiente")
+  });
+}
+function normalizeBlock(block,index,day){
+  const base=defaultBlock(day,index+1);
+  const tomasBloque=Array.isArray(block.tomasBloque)&&block.tomasBloque.length
+    ? block.tomasBloque.map((shot)=>normalizeShot(shot,"bloque"))
+    : Array.isArray(block.tomas)&&block.tomas.length
+      ? block.tomas.map((shot)=>normalizeShot(shot,"bloque"))
+      : base.tomasBloque;
+  const merged={...base,...block,id:block.id||uid(),orden:Number(block.orden||index+1),dia:day,tomasBloque,referenciasTomas:Array.isArray(block.referenciasTomas)?block.referenciasTomas:base.referenciasTomas,estado:STATUSES.includes(block.estado)?block.estado:"Pendiente"};
+  const guide=musicGuideForBlock(merged.dia,merged.orden,merged.emocion);
+  merged.entradaMusica=merged.entradaMusica||merged.dondeMusica||guide.entradaMusica;
+  merged.musica=merged.musica||guide.musica;
+  merged.separadorFinal=merged.separadorFinal||merged.separador_final||guide.separadorFinal;
+  return merged;
+}
+function unwrapImportedEpisode(raw){
+  let source=raw;
+  if(Array.isArray(source))source=source[0]||{};
+  if(source?.payload&&typeof source.payload==="object")source=source.payload;
+  if(Array.isArray(source?.data))source=source.data[0]||{};
+  if(Array.isArray(source?.episodes))source=source.episodes[0]||{};
+  if(source?.episode&&typeof source.episode==="object")source=source.episode;
+  return source||{};
+}
+function flatBlocksToEpisodeSource(source){
+  if(!Array.isArray(source?.bloques))return source||{};
+  const lineText=(items,pick)=>(items||[]).map(pick).filter(Boolean).join("\n");
+  const sceneSeconds=(scene)=>Number.isFinite(Number(scene?.duracion_segundos))?`${Number(scene.duracion_segundos).toFixed(Number(scene.duracion_segundos)%1?1:0)}s - `:"";
+  const sceneShotText=(scene)=>{
+    const seconds=Number.isFinite(Number(scene?.duracion_segundos))?`${Number(scene.duracion_segundos).toFixed(Number(scene.duracion_segundos)%1?1:0)}s`:"0s";
+    const text=String(scene?.toma||scene?.accion||scene?.contenido||scene?.descripcion||scene?.plano||"").trim()||"Toma sin definir";
+    return `${seconds} - ${text}`;
+  };
+  const normalizeText=(value)=>String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+  const sceneSubject=(scene)=>{
+    const raw=scene.titulo||scene.nombre||scene.accion||scene.contenido||"";
+    return String(raw)
+      .replace(/^mostrar\s+/i,"")
+      .replace(/\s+con detalle real\.?$/i,"")
+      .replace(/\s+de manera concreta\.?$/i,"")
+      .trim();
+  };
+  const storySceneAction=(scene,block,source)=>{
+    const original=scene.accion||scene.contenido||"";
+    const subject=sceneSubject(scene);
+    const sceneText=normalizeText([subject,original,scene.titulo,scene.funcion_narrativa,scene.emocion].filter(Boolean).join(" "));
+    const contextText=normalizeText([block?.nombre,block?.objetivo_narrativo,source?.titulo_provisional].filter(Boolean).join(" "));
+    const text=[sceneText,contextText].join(" ");
+    const generic=/^mostrar\s+.+\s+(con detalle real|de manera concreta)\.?$/i.test(original)||/^mostrar\s+mostrar\s+/i.test(original);
+    if(!generic&&original)return original;
+    const key=normalizeText(subject);
+    if(key.includes("cinco prendas"))return "Mostrar las cinco prendas juntas en mesa, contando visualmente que el lote casi esta listo para entregar.";
+    if(key.includes("una separada"))return "Separar la prenda que puede fallar y dejar claro que no esta al mismo nivel que las otras cuatro.";
+    if(key.includes("cliente probando"))return "Mostrar al cliente probandose la prenda y buscar una reaccion honesta, no una pose perfecta.";
+    if(key.includes("problema talle"))return "Mostrar el problema de talle comparando lo pedido con como queda realmente puesto.";
+    if(key.includes("comprador ausente"))return "Mostrar intento de contacto con el comprador y el hueco que deja si no aparece.";
+    if(key.includes("pago incompleto"))return "Mostrar el pago incompleto o saldo pendiente y marcar cuanto falta para cerrar esa entrega.";
+    if(key.includes("fotos clientes"))return "Mostrar fotos o reacciones de clientes para convertir la entrega en prueba social.";
+    if(key.includes("costo real"))return "Mostrar el costo real en numeros y conectarlo con cuanto margen queda despues del error.";
+    if(/nombres|lista pedidos|pedidos/.test(sceneText))return "Mostrar la lista real de compradores: nombre, prenda pedida, estado del pago y quÃ© falta entregar.";
+    if(/talles|talle/.test(sceneText))return "Comparar el talle pedido con la etiqueta/prenda en mano para que se entienda si puede fallar la entrega.";
+    if(/saldos|saldo|pago incompleto|pago/.test(sceneText))return "Mostrar pagos recibidos y saldos pendientes, marcando quÃ© pedido todavÃ­a no estÃ¡ cerrado.";
+    if(/mapa|trayecto|llegada/.test(sceneText))return "Marcar en mapa o recorrido el camino de entregas, con el orden de paradas y el tiempo que aprieta.";
+    if(/packaging|paquete|empaque/.test(sceneText))return "Armar los paquetes uno por uno, con nombre/pedido visible y chequeo rÃ¡pido antes de salir.";
+    if(/numerar|numero/.test(sceneText))return "Numerar cada pedido y cruzarlo con la lista para que la editora vea el sistema de control.";
+    if(/mensaje costurero|leer mensaje|costurero/.test(sceneText))return "Abrir el mensaje o audio del costurero y mostrar la parte que cambia el plan de producciÃ³n.";
+    if(/molde/.test(sceneText))return "Poner el molde sobre la prenda y seÃ±alar visualmente por quÃ© no sirve para todos los talles.";
+    if(/prenda deformada|deformacion|defecto|problema talle|mostrar defecto/.test(sceneText))return "Mostrar el defecto exacto de la prenda con una comparaciÃ³n antes/despuÃ©s o contra el pedido correcto.";
+    if(/mensaje compradores|compradores/.test(sceneText))return "Mostrar mensajes de compradores esperando respuesta para que se sienta la presiÃ³n de cumplir.";
+    if(/pedido devolucion|devolucion/.test(sceneText))return "Mostrar el pedido de devoluciÃ³n o reclamo y cortar sobre tu reacciÃ³n antes de resolverlo.";
+    if(/venta extra|transferencia|reserva/.test(sceneText))return "Mostrar la venta o transferencia entrando como posible salvavidas del problema.";
+    if(/muestra corregida|corregida|corregir/.test(sceneText))return "Comparar la versiÃ³n corregida con la fallada y explicar quÃ© cambiÃ³ para salvar la entrega.";
+    if(/foto lote|lote|cinco prendas|prendas mesa/.test(sceneText))return "Mostrar el lote completo ordenado en mesa, contando quÃ© estÃ¡ listo y quÃ© todavÃ­a preocupa.";
+    if(/una separada|separar problema/.test(sceneText))return "Separar la prenda problemÃ¡tica del resto para que se vea cuÃ¡l puede arruinar la entrega.";
+    if(/cliente probando|probando/.test(sceneText))return "Mostrar al cliente probÃ¡ndose la prenda y buscar una reacciÃ³n honesta, no una pose perfecta.";
+    if(/comprador ausente|ausente/.test(sceneText))return "Mostrar intento de contacto con el comprador y el hueco que deja si no aparece.";
+    if(/fotos clientes|fotos/.test(sceneText))return "Mostrar fotos o reacciones de clientes para convertir la entrega en prueba social.";
+    if(/costo real|costo/.test(sceneText))return "Mostrar el costo real en nÃºmeros y conectarlo con cuÃ¡nto margen queda despuÃ©s del error.";
+    if(/opcion seguir|seguir/.test(sceneText))return "Plantear visualmente la opciÃ³n de entregar igual y el riesgo de quedar mal.";
+    if(/opcion corregir|elegir corregir|rehacer/.test(sceneText))return "Plantear la opciÃ³n de corregir aunque cueste tiempo y plata, mostrando la decisiÃ³n.";
+    if(/comparar retraso|retraso/.test(sceneText))return "Mostrar calendario o mensajes para que se entienda cuÃ¡nto retrasa corregir el problema.";
+    if(/talle/.test(contextText)&&/problema talle|defecto|probando/.test(sceneText))return "Mostrar como esta escena afecta la entrega del talle problematico.";
+    if(subject)return `Mostrar ${subject} conectado a la consecuencia del bloque, evitando planos de relleno.`;
+    return original||"Mostrar la acciÃ³n clave del bloque y la consecuencia que deja para la siguiente escena.";
+  };
+  const storyScenePlano=(scene)=>{
+    const text=normalizeText(sceneSubject(scene));
+    if(scene.plano&&scene.plano!=="plano sugerido")return scene.plano;
+    if(/mensaje|pago|saldo|transferencia|mapa|foto/.test(text))return "captura clara / inserto de pantalla";
+    if(/talle|molde|defecto|prenda|costura|estampa|etiqueta/.test(text))return "detalle de prenda con mano seÃ±alando";
+    if(/cliente|comprador|probando|entrega/.test(text))return "plano medio con reaccion visible";
+    if(/lote|packaging|paquete|prendas mesa|cinco prendas/.test(text))return "plano cenital de mesa";
+    return "plano funcional, cerca de la accion";
+  };
+  const sceneMain=(scene,block,source)=>{
+    const action=storySceneAction(scene,block,source);
+    const title=scene.titulo||scene.nombre||sceneSubject(scene);
+    const plano=storyScenePlano(scene);
+    return [title&&action&&!normalizeText(action).includes(normalizeText(title))?`${title}: ${action}`:action||title, plano?`(${plano})`:""].filter(Boolean).join(" ");
+  };
+  const sceneDetail=(scene,block,source)=>{
+    const parts=[
+      scene.titulo?`Titulo: ${scene.titulo}`:"",
+      `Plano: ${storyScenePlano(scene)}`,
+      `Accion: ${storySceneAction(scene,block,source)}`,
+      scene.contenido&&!scene.accion?`Contenido: ${scene.contenido}`:"",
+      scene.dialogo_o_voz_en_off?`Dialogo/VO: ${scene.dialogo_o_voz_en_off}`:"",
+      scene.voz_en_off?`Voz en off: ${scene.voz_en_off}`:"",
+      scene.audio?`Audio: ${scene.audio}`:"",
+      scene.texto_en_pantalla?`Texto pantalla: ${scene.texto_en_pantalla}`:"",
+      scene.emocion?`Emocion: ${scene.emocion}`:"",
+      scene.funcion_narrativa?`Funcion: ${scene.funcion_narrativa}`:"",
+      scene.salida?`Salida: ${scene.salida}`:""
+    ].filter(Boolean).join(" | ");
+    return `${scene.numero?`${scene.numero}. `:""}${sceneSeconds(scene)}${parts||sceneMain(scene,block,source)}`;
+  };
+  const blockFeeling=(block,escenas)=>{
+    const text=[
+      block.tipo,block.emocion_principal,block.objetivo_narrativo,block.cliffhanger,
+      ...escenas.flatMap((scene)=>[scene.titulo,scene.accion,scene.contenido,scene.dialogo_o_voz_en_off,scene.voz_en_off,scene.emocion,scene.funcion_narrativa,scene.salida])
+    ].filter(Boolean).join(" ").toLowerCase();
+    if(/gancho|curiosidad|suspenso|corte|ocultar|sin revelar|pendiente|notificaci[oÃ³]n/.test(text))return "Curiosidad con presiÃ³n: sentir que hay una promesa concreta y necesitar ver quÃ© pasa despuÃ©s.";
+    if(/rechazo|no pag|no cierra|consulta|duda|confusi[oÃ³]n|critica|cr[iÃ­]tica/.test(text))return "Incomodidad Ãºtil: entender que el avance no estÃ¡ asegurado y preguntarse si la estrategia va a aguantar.";
+    if(/problema|mal|deformada|devoluci[oÃ³]n|talle|ausente|incompleto|riesgo/.test(text))return "TensiÃ³n real: sentir que una falla chica puede romper todo el progreso conseguido.";
+    if(/venta|reserva|transferencia|pago|contador|meta|cinco|5\/5|racha/.test(text))return "Impulso de logro: querer que cierre la venta y sentir que cada nÃºmero cambia el futuro del reto.";
+    if(/decidir|decisi[oÃ³]n|elegir|producto|muestra|validaci[oÃ³]n|opini[oÃ³]n/.test(text))return "ParticipaciÃ³n mental: sentir ganas de opinar y comparar si esa decisiÃ³n tiene sentido.";
+    if(/entrega|cliente|probando|fotos|comprador/.test(text))return "Expectativa humana: mirar la reacciÃ³n del cliente como prueba final de si todo valiÃ³ la pena.";
+    if(/costo|dinero|producci[oÃ³]n|costurero|molde|lote/.test(text))return "PresiÃ³n de negocio: sentir que el reto ya no es una idea, sino una decisiÃ³n con plata y consecuencias.";
+    return "AtenciÃ³n activa: sentir que el bloque deja una pregunta clara y empuja a seguir mirando.";
+  };
+  const dayNumbers=Array.isArray(source.dias)
+    ? source.dias.map((day,index)=>Number(typeof day==="object"?day.dia:day)||index+1)
+    : [...new Set(source.bloques.map((block)=>Number(block.dia||1)))];
+  const dias=dayNumbers.map((dayNumber)=>({
+    dia:dayNumber,
+    titulo:source.titulosDias?.[dayNumber]||source.day_titles?.[dayNumber]||`Dia ${dayNumber}`,
+    tomasDia:[],
+    bloques:source.bloques
+      .filter((block)=>Number(block.dia||dayNumber)===dayNumber)
+      .map((block,index)=>{
+        const escenas=Array.isArray(block.escenas)?block.escenas:[];
+        const orden=Number(block.orden||block.numero||block.bloque||index+1);
+        const plantilla=`B${orden} P1`;
+        const escena=lineText(escenas,(scene)=>sceneDetail(scene,block,source))||block.escena||block.contenido||"";
+        const audio=lineText(escenas,(scene)=>{
+          const audioParts=[scene.audio,scene.dialogo_o_voz_en_off,scene.voz_en_off,scene.texto_en_pantalla?`Texto: ${scene.texto_en_pantalla}`:""].filter(Boolean).join(" | ");
+          return audioParts?`${scene.numero?`${scene.numero}. `:""}${audioParts}`:"";
+        });
+        const shotSource=escenas.length
+          ? escenas.map(sceneShotText)
+          : Array.isArray(block.tomasBloque)&&block.tomasBloque.length
+            ? block.tomasBloque
+            : Array.isArray(block.planos)&&block.planos.length
+              ? block.planos
+              : [];
+        return {
+          id:block.id||uid(),
+          orden,
+          dia:dayNumber,
+          emocion:block.emocion||block.emocion_principal||block.nombre||block.tipo||`Bloque ${index+1}`,
+          tiempo:block.tiempo||block.duracion||(block.duracion_segundos?`${Number(block.duracion_segundos).toFixed(1)}s`:""),
+          objetivoNarrativo:block.objetivoNarrativo||block.objetivo_narrativo||block.objetivo||"",
+          sensacionEspectador:block.sensacionEspectador||block.sensacion_espectador||blockFeeling(block,escenas),
+          escena,
+          dialogo:block.dialogo||block.dialogo_o_voz_en_off||block.voz_en_off||"",
+          tomasBloque:shotSource.map((shot,shotIndex)=>typeof shot==="string"?makeShot(shot,"bloque",`d${dayNumber}-b${orden}-t${shotIndex+1}-${slugify(shot)}`):normalizeShot(shot,"bloque")),
+          referenciasTomas:Array.isArray(block.referenciasTomas)?block.referenciasTomas:Array.isArray(block.recursos_usados)?block.recursos_usados:[],
+          entradaMusica:block.entradaMusica||block.dondeMusica||block.entrada_musica||(audio?"Seguir los audios marcados por escena.":""),
+          musica:block.musica||audio||"",
+          separadorFinal:block.separadorFinal||block.separador_final||block.salida||"",
+          preguntaAbierta:block.preguntaAbierta||block.pregunta_abierta||"",
+          resultadoEsperado:block.resultadoEsperado||block.resultado_esperado||block.salida||"",
+          notasPersonales:block.notasPersonales||block.notas||[`Plantilla: ${plantilla}`,block.plantilla&&block.plantilla!==plantilla?`Plantilla original: ${block.plantilla}`:"",block.tipo?`Tipo: ${block.tipo}`:""].filter(Boolean).join("\n"),
+          estado:block.estado||"Pendiente"
+        };
+      })
+  })).filter((day)=>day.bloques.length);
+  return {
+    id:source.id,
+    episodio:source.episodio,
+    titulo:source.titulo||source.title||source.titulo_provisional||"Sin titulo",
+    preguntaPrincipal:source.preguntaPrincipal||source.pregunta_narrativa||"",
+    objetivo:source.objetivo||source.objetivo_principal||source.objetivo_del_episodio||"",
+    tomasEpisodio:Array.isArray(source.tomasEpisodio)?source.tomasEpisodio:Array.isArray(source.recursos_generales)?source.recursos_generales.map((resource)=>({id:String(resource.id||slugify(resource.nombre||resource.tipo||"recurso")),nombre:resource.nombre||resource.id||"Recurso",nivel:"episodio",estado:"pendiente",tipo:resource.tipo||""})):[],
+    dias
+  };
+}
+function coerceImportedEpisode(raw){
+  return flatBlocksToEpisodeSource(unwrapImportedEpisode(raw));
+}
+function normalizeEpisode(raw){
+  raw=coerceImportedEpisode(raw);
+  const importedDias=Array.isArray(raw.dias)&&raw.dias.length?raw.dias:null;
+  let dias;
+  if(importedDias){
+    dias=importedDias.map((day,index)=>({dia:Number(day.dia||index+1),titulo:day.titulo||`Dia ${index+1}`,tomasDia:Array.isArray(day.tomasDia)?day.tomasDia.map((shot)=>normalizeShot(shot,"dia")):defaultDayShots(Number(day.dia||index+1)),bloques:(day.bloques||[]).map((block,bIndex)=>normalizeBlock(block,bIndex,Number(day.dia||index+1)))}));
+  }else{
+    const legacy=Array.isArray(raw.emotions)?raw.emotions:[];
+    dias=[1,2,3].map((day)=>({dia:day,titulo:defaultDay(day).titulo,tomasDia:defaultDayShots(day),bloques:legacy.filter((item)=>Number(item.day||item.dia||1)===day).map(legacyBlock)}));
+    dias.forEach((day)=>{if(!day.bloques.length)day.bloques=defaultDay(day.dia).bloques});
+  }
+  dias=dias.map((day,index)=>({dia:Number(day.dia||index+1),titulo:day.titulo||`Dia ${index+1}`,tomasDia:Array.isArray(day.tomasDia)?day.tomasDia.map((shot)=>normalizeShot(shot,"dia")):defaultDayShots(Number(day.dia||index+1)),bloques:(day.bloques&&day.bloques.length?day.bloques:defaultDay(index+1).bloques).map((block,bIndex)=>normalizeBlock(block,bIndex,Number(day.dia||index+1)))}));
+  return ensureUniqueResourceIds({id:raw.id||uid(),episodio:Number(raw.episodio||1),titulo:raw.titulo||raw.title||"Sin titulo",preguntaPrincipal:raw.preguntaPrincipal||"",objetivo:raw.objetivo||"",tomasEpisodio:Array.isArray(raw.tomasEpisodio)?raw.tomasEpisodio.map((shot)=>normalizeShot(shot,"episodio")):defaultEpisodeShots(),dias,remote:Boolean(raw.remote),created_at:raw.created_at||new Date().toISOString(),updated_at:raw.updated_at||new Date().toISOString()});
+}
+function ensureUniqueResourceIds(episode){
+  const used=new Set();
+  const episodeIdMap=new Map();
+  episode.tomasEpisodio=episode.tomasEpisodio.map((shot,index)=>{
+    const oldId=shot.id;
+    let nextId=oldId||`episodio-${slugify(shot.nombre)}`;
+    if(used.has(nextId))nextId=`episodio-${slugify(shot.nombre)}-${index+1}`;
+    used.add(nextId);
+    shot.id=nextId;
+    episodeIdMap.set(oldId,nextId);
+    return shot;
+  });
+  episode.dias.forEach((day)=>{
+    const dayMap=new Map();
+    day.tomasDia=(day.tomasDia||[]).map((shot,index)=>{
+      const oldId=shot.id;
+      let nextId=oldId||`dia-${day.dia}-${slugify(shot.nombre)}`;
+      if(used.has(nextId)||!String(nextId).startsWith(`d${day.dia}-`)&&!String(nextId).startsWith(`dia-${day.dia}-`)){
+        nextId=`d${day.dia}-${slugify(shot.nombre)}${index?`-${index+1}`:""}`;
+      }
+      while(used.has(nextId))nextId=`${nextId}-${index+1}`;
+      used.add(nextId);
+      shot.id=nextId;
+      dayMap.set(oldId,nextId);
+      return shot;
+    });
+    (day.bloques||[]).forEach((block)=>{
+      block.referenciasTomas=(block.referenciasTomas||[]).map((id)=>dayMap.get(id)||episodeIdMap.get(id)||id);
+    });
+  });
+  return episode;
+}
+function activeEpisode(){return episodes.find((episode)=>episode.id===activeId)||episodes[0]||null}
+function allBlocks(episode=activeEpisode()){return (episode?.dias||[]).flatMap((day)=>day.bloques||[])}
+function episodeDayLabel(episode){return (episode?.dias||[]).map((day)=>day.dia).join(", ")||"-"}
+function isLikelyBrokenEpisodeImport(item,incoming){
+  if(!item||!incoming)return false;
+  return Number(item.episodio)===Number(incoming.episodio);
+}
+async function fetchBundledEpisode2(){
+  return fetchBundledEpisode("./assets/episodio_2.json?v=4","assets/episodio_2.json");
+}
+async function fetchBundledEpisode1(){
+  return fetchBundledEpisode("./assets/episodio_1.json?v=4","assets/episodio_1.json");
+}
+async function fetchBundledEpisodeNumber(number){
+  return fetchBundledEpisode(`./assets/episodio_${number}.json?v=4`,`assets/episodio_${number}.json`);
+}
+async function fetchBundledEpisode(url,label){
+  const response=await fetch(url,{cache:"no-store"});
+  if(!response.ok)throw new Error(`No pude leer ${label}`);
+  const text=(await response.text()).trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/i,"").trim();
+  return JSON.parse(text);
+}
+async function removeEpisodesForImport(incoming){
+  const matches=episodes.filter((item)=>isLikelyBrokenEpisodeImport(item,incoming));
+  episodes=episodes.filter((item)=>!matches.some((match)=>match.id===item.id));
+  return matches.length;
+}
+function isBrokenShotName(value){
+  const text=String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  return text.includes("toma sin definir")||text.includes("desarrollar esta accion");
+}
+function hasUndefinedShots(episode){
+  return allBlocks(episode).some((block)=>blockSpecificShots(block).some((shot)=>isBrokenShotName(shot.nombre)));
+}
+async function repairUndefinedShotsFromBundled(episode){
+  const number=Number(episode?.episodio||0);
+  if(!number||!hasUndefinedShots(episode))return false;
+  let official;
+  try{
+    official=normalizeEpisode(await fetchBundledEpisodeNumber(number));
+  }catch(_error){
+    return false;
+  }
+  const byId=new Map(allBlocks(official).map((block)=>[block.id,block]));
+  const byPosition=new Map(allBlocks(official).map((block)=>[`${block.dia}-${block.orden}`,block]));
+  let repaired=false;
+  allBlocks(episode).forEach((block)=>{
+    if(!blockSpecificShots(block).some((shot)=>isBrokenShotName(shot.nombre)))return;
+    const source=byId.get(block.id)||byPosition.get(`${block.dia}-${block.orden}`);
+    if(!source||!blockSpecificShots(source).length)return;
+    block.tomasBloque=blockSpecificShots(source).map((shot)=>normalizeShot({...shot,id:`${block.id}-${shot.id}`},"bloque"));
+    repaired=true;
+  });
+  if(repaired)episode.updated_at=new Date().toISOString();
+  return repaired;
+}
+async function repairAllUndefinedShots(){
+  let count=0;
+  for(const episode of episodes){
+    if(await repairUndefinedShotsFromBundled(episode))count+=1;
+  }
+  if(count){
+    persistLocal();
+    setStatus(`Repare tomas genericas en ${count} episodio${count===1?"":"s"}. Toca Guardar para subirlo a Supabase.`);
+  }
+}
+function getBlock(id=activeBlockId){return allBlocks().find((block)=>block.id===id)||allBlocks()[0]||null}
+function dayBlocks(day=activeDay){return allBlocks().filter((block)=>Number(block.dia)===Number(day))}
+function isDone(block){return block.estado==="Terminado"}
+function episodeShots(episode=activeEpisode()){return episode?.tomasEpisodio||[]}
+function dayShotList(dayNumber,episode=activeEpisode()){return episode?.dias?.find((day)=>Number(day.dia)===Number(dayNumber))?.tomasDia||[]}
+function findShotById(id,episode=activeEpisode()){
+  return [...episodeShots(episode),...(episode?.dias||[]).flatMap((day)=>day.tomasDia||[])].find((shot)=>shot.id===id)||null;
+}
+function blockReferencedShots(block){return (block.referenciasTomas||[]).map((id)=>findShotById(id)).filter(Boolean)}
+function blockSpecificShots(block){return block.tomasBloque||[]}
+function blockAllNeededShots(block){return [...blockReferencedShots(block),...blockSpecificShots(block)]}
+function uniquePendingShots(episode=activeEpisode()){
+  const map=new Map();
+  [...episodeShots(episode),...(episode?.dias||[]).flatMap((day)=>day.tomasDia||[]),...allBlocks(episode).flatMap((block)=>blockSpecificShots(block))].forEach((shot)=>{
+    if(!shotDone(shot)&&!map.has(shot.id))map.set(shot.id,shot);
+  });
+  return [...map.values()];
+}
+function blockShotProgress(block){const shots=blockAllNeededShots(block);const total=shots.length||0;const done=shots.filter(shotDone).length;return total?Math.round((done/total)*100):(isDone(block)?100:0)}
+function percent(done,total){return total?Math.round((done/total)*100):0}
+function serializeEpisode(episode){
+  return {id:episode.remote?episode.id:undefined,user_id:user.id,title:episode.titulo,days:episode.dias.length,hook:"",notes:JSON.stringify({episodio:episode.episodio,tomasEpisodio:episode.tomasEpisodio}),emotions:episode.dias,day_status:episode.dias.map((day)=>day.bloques.every(isDone)),updated_at:new Date().toISOString()};
+}
+async function getAccessToken(){
+  if(!client)return "";
+  const {data}=await client.auth.getSession();
+  return data?.session?.access_token||"";
+}
+async function directByApi(path,options={}){
+  const token=await getAccessToken();
+  if(!token)throw new Error("No hay sesion activa.");
+  const response=await fetch(path,{
+    ...options,
+    headers:{
+      "Content-Type":"application/json",
+      Authorization:`Bearer ${token}`,
+      ...(options.headers||{})
+    }
+  });
+  const text=await response.text();
+  let body=null;
+  try{body=text?JSON.parse(text):null}catch(_error){body={detail:text}}
+  if(!response.ok){
+    const detail=typeof body?.detail==="string"?body.detail:body?.detail?JSON.stringify(body.detail):"";
+    throw new Error([body?.error,detail].filter(Boolean).join(" - ")||`Error ${response.status}`);
+  }
+  return body;
+}
+function episodeFingerprint(episode){
+  return JSON.stringify((episode?.dias||[]).map((day)=>({
+    dia:day.dia,
+    bloques:(day.bloques||[]).map((block)=>({
+      id:block.id,
+      orden:block.orden,
+      escena:block.escena||"",
+      dialogo:block.dialogo||"",
+      musica:block.musica||"",
+      separadorFinal:block.separadorFinal||"",
+      preguntaAbierta:block.preguntaAbierta||"",
+      resultadoEsperado:block.resultadoEsperado||"",
+      notasPersonales:block.notasPersonales||"",
+      tomas:(block.tomasBloque||[]).map((shot)=>shot.nombre||"")
+    }))
+  })));
+}
+async function verifySavedEpisode(expected){
+  if(!client||!user||!expected?.id)return true;
+  const {data,error}=await client.from("direct_by_episodes").select("*").eq("id",expected.id).eq("user_id",user.id).single();
+  if(error||!data)return false;
+  return episodeFingerprint(normalizeRemote(data))===episodeFingerprint(expected);
+}
+function normalizeRemote(row){
+  let notes={};
+  try{notes=JSON.parse(row.notes||"{}")}catch(_error){}
+  return normalizeEpisode({id:row.id,episodio:notes.episodio||1,titulo:row.title||"Sin titulo",tomasEpisodio:notes.tomasEpisodio||[],dias:Array.isArray(row.emotions)?row.emotions:[],remote:true,created_at:row.created_at,updated_at:row.updated_at});
+}
+function isCorruptEpisode(episode){
+  const blocks=allBlocks(episode).length;
+  const days=(episode?.dias||[]).length;
+  return blocks===0||days===0||blocks>35||days>4;
+}
+function corruptReason(episode){
+  const blocks=allBlocks(episode).length;
+  const days=(episode?.dias||[]).length;
+  if(blocks===0)return "esta vacio, tiene 0 bloques";
+  if(days===0)return "no tiene dias";
+  if(blocks>35)return `tiene ${blocks} bloques`;
+  if(days>4)return `tiene ${days} dias`;
+  return "tiene una estructura invalida";
+}
+function filterCleanEpisodes(list){
+  return (list||[]).filter((episode)=>!isCorruptEpisode(episode));
+}
+function cleanEpisodeList(source=""){
+  const before=episodes.length;
+  episodes=filterCleanEpisodes(episodes);
+  const removed=before-episodes.length;
+  if(!episodes.length)episodes=[freshEpisode()];
+  if(!activeId||!episodes.some((episode)=>episode.id===activeId))activeId=episodes[0].id;
+  if(!activeBlockId||!allBlocks().some((block)=>block.id===activeBlockId))activeBlockId=allBlocks()[0]?.id||"";
+  if(removed){
+    persistLocal();
+    setStatus(`Limpie ${removed} episodio${removed===1?"":"s"} vacio${removed===1?"":"s"} o mezclado${removed===1?"":"s"}${source?` de ${source}`:""}.`);
+  }
+  return removed;
+}
+function persistLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify({episodes,activeId,activeDay,activeFilter,activeBlockId}))}
+function loadLocalStateMeta(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+    return {
+      activeId:parsed.activeId||"",
+      activeDay:Number(parsed.activeDay||1),
+      activeFilter:parsed.activeFilter||"Todos",
+      activeBlockId:parsed.activeBlockId||""
+    };
+  }catch(_error){
+    return {activeId:"",activeDay:1,activeFilter:"Todos",activeBlockId:""};
+  }
+}
+function collect(){
+  const episode=activeEpisode();
+  if(!episode)return;
+  episode.titulo=$("titleInput").value.trim()||"Sin titulo";
+  episode.episodio=Number($("episodeNumberInput").value)||1;
+  const nextDays=Math.max(1,Math.min(10,Number($("daysInput").value)||3));
+  while(episode.dias.length<nextDays)episode.dias.push(defaultDay(episode.dias.length+1));
+  episode.dias=episode.dias.slice(0,nextDays);
+  episode.dias.forEach((day)=>day.bloques.forEach((block)=>block.dia=day.dia));
+  episode.updated_at=new Date().toISOString();
+}
+function collectVisibleBlockFields(){
+  document.querySelectorAll(".block-card").forEach((card)=>{
+    const block=getBlock(card.dataset.blockId);
+    if(!block)return;
+    card.querySelectorAll("[data-field]").forEach((input)=>updateBlockField(block,input.dataset.field,input.value));
+    card.querySelectorAll("[data-shot-text]").forEach((input)=>{
+      const index=Number(input.closest("[data-shot-index]").dataset.shotIndex);
+      const shot=blockSpecificShots(block)[index];
+      if(shot)shot.nombre=input.value;
+    });
+    card.querySelectorAll("[data-resource-name]").forEach((input)=>{
+      const shot=findShotById(input.closest("[data-resource-id]")?.dataset.resourceId);
+      if(shot)shot.nombre=input.value;
+    });
+  });
+}
+function remember(statusText="Guardado en memoria local."){
+  collectVisibleBlockFields();
+  collect();
+  persistLocal();
+  if(statusText)setStatus(statusText);
+  scheduleAutoSave();
+}
+function scheduleAutoSave(){
+  clearTimeout(autoSaveTimer);
+  if(!client||!user)return;
+  autoSaveTimer=setTimeout(()=>saveActive({silent:true}),900);
+}
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw)return false;
+    const parsed=JSON.parse(raw);
+    episodes=Array.isArray(parsed.episodes)?parsed.episodes.map(normalizeEpisode):[];
+    activeId=parsed.activeId||episodes[0]?.id||"";
+    activeDay=Number(parsed.activeDay||1);
+    activeFilter=parsed.activeFilter||"Todos";
+    activeBlockId=parsed.activeBlockId||allBlocks(episodes[0]||{})[0]?.id||"";
+    cleanEpisodeList("local");
+    return episodes.length>0;
+  }catch(_error){return false}
+}
+async function init(){
+  if(!client){
+    $("authBox").textContent="No cargo Supabase. Se guarda borrador local.";
+    if(!loadLocal())episodes=[freshEpisode()];
+    activeId=activeId||episodes[0].id;
+    activeBlockId=activeBlockId||allBlocks()[0]?.id||"";
+    await repairAllUndefinedShots();
+    render();
+    return;
+  }
+  const {data}=await client.auth.getUser();
+  user=data?.user||null;
+  if(!user){
+    $("authBox").textContent="Inicia sesion en User Panel para guardar en tu base personal.";
+    if(!loadLocal())episodes=[freshEpisode()];
+    activeId=activeId||episodes[0].id;
+    activeBlockId=activeBlockId||allBlocks()[0]?.id||"";
+    await repairAllUndefinedShots();
+    render();
+    return;
+  }
+  $("authBox").textContent=`Cuenta conectada: ${user.email}`;
+  await loadEpisodes();
+}
+async function loadEpisodes(){
+  const remembered=loadLocalStateMeta();
+  try{
+    const data=await directByApi("./api/episode-template?directBy=1");
+    episodes=filterCleanEpisodes((data.episodes||[]).map(normalizeRemote));
+    if(!episodes.length){
+      const episode=normalizeEpisode(await fetchBundledEpisode1());
+      episode.remote=false;
+      episodes=[episode];
+      setStatus("No habia episodios validos guardados. Cargue episodio 1 limpio.");
+    }
+  }catch(error){
+    $("authBox").textContent=`No pude cargar Supabase: ${error.message}. Se usa local.`;
+    if(!loadLocal())episodes=[freshEpisode()];
+  }
+  activeId=episodes.some((episode)=>episode.id===remembered.activeId)?remembered.activeId:episodes[0].id;
+  activeDay=remembered.activeDay||activeEpisode()?.dias?.[0]?.dia||1;
+  activeFilter=remembered.activeFilter||activeFilter;
+  activeBlockId=allBlocks().some((block)=>block.id===remembered.activeBlockId)?remembered.activeBlockId:allBlocks()[0]?.id||"";
+  await repairAllUndefinedShots();
+  render();
+}
+async function saveActive(options={}){
+  collectVisibleBlockFields();
+  collect();
+  const episode=activeEpisode();
+  if(!episode)return false;
+  await repairUndefinedShotsFromBundled(episode);
+  if(isCorruptEpisode(episode)){
+    setStatus(`No guardo este episodio: ${corruptReason(episode)}. Cargalo de nuevo con el boton del episodio.`);
+    return false;
+  }
+  persistLocal();
+  if(!options.silent)setStatus("Guardando...");
+  if(autoSaveInFlight){
+    autoSaveQueued=true;
+    if(!options.silent)setStatus("Guardando cambios pendientes...");
+    return false;
+  }
+  if(!client||!user){if(!options.silent)setStatus("Guardado local. Login requerido para Supabase.");return true}
+  autoSaveInFlight=true;
+  let data;
+  let error=null;
+  try{
+    data=await directByApi("./api/episode-template?directBy=1",{method:"POST",body:JSON.stringify({episode,replaceEpisode:Boolean(options.replaceEpisode)})});
+  }catch(apiError){
+    error=apiError;
+  }
+  autoSaveInFlight=false;
+  if(error){setStatus(`No pude guardar: ${error.message}`);return false}
+  const savedRow=data?.episode||null;
+  const savedId=savedRow?.id||episode.id;
+  episode.id=savedId;
+  episode.remote=true;
+  episode.updated_at=savedRow?.updated_at||episode.updated_at;
+  activeId=savedId;
+  episodes=episodes.map((item)=>item===episode||item.id===episode.id?episode:item);
+  persistLocal();
+  if(autoSaveQueued){
+    autoSaveQueued=false;
+    return saveActive({silent:true});
+  }
+  if(!options.silent)render();
+  setStatus(options.silent?"Autoguardado en Supabase.":`Guardado en Supabase.${data?.replaced?` Reemplace ${data.replaced} episodio${data.replaced===1?"":"s"} anterior${data.replaced===1?"":"es"}.`:""}`);
+  return true;
+}
+async function deleteActive(){
+  const episode=activeEpisode();
+  if(!episode||!confirm(`Borrar "${episode.titulo}"?`))return;
+  if(client&&user&&episode.remote)await client.from("direct_by_episodes").delete().eq("id",episode.id).eq("user_id",user.id);
+  episodes=episodes.filter((item)=>item.id!==episode.id);
+  if(!episodes.length)episodes=[freshEpisode()];
+  activeId=episodes[0].id;
+  activeBlockId=allBlocks()[0]?.id||"";
+  persistLocal();
+  render();
+  setStatus("Episodio borrado.");
+}
+function render(){
+  const episode=activeEpisode();
+  if(!episode)return;
+  $("episodeList").innerHTML=episodes.map((item)=>`<button class="episode-tab ${item.id===episode.id?"active":""}" data-open="${item.id}" type="button"><strong>${escapeHtml(item.titulo)}</strong><span>Dias ${escapeHtml(episodeDayLabel(item))} Â· ${allBlocks(item).filter(isDone).length}/${allBlocks(item).length} bloques</span></button>`).join("");
+  document.querySelectorAll("[data-open]").forEach((button)=>button.onclick=()=>{remember("");activeId=button.dataset.open;activeDay=activeEpisode()?.dias?.[0]?.dia||1;activeBlockId=allBlocks(activeEpisode())[0]?.id||"";persistLocal();render()});
+  $("titleInput").value=episode.titulo||"";
+  $("episodeNumberInput").value=episode.episodio||1;
+  $("daysInput").value=episode.dias.length||3;
+  renderFilters();
+  renderBlocks();
+  renderDays();
+  updateStats();
+  renderRecording();
+}
+function renderFilters(){
+  $("filters").innerHTML=FILTERS.map((filter)=>`<button class="btn small filter-btn ${activeFilter===filter?"active":""}" data-filter="${filter}" type="button">${filter}</button>`).join("");
+  document.querySelectorAll("[data-filter]").forEach((button)=>button.onclick=()=>{activeFilter=button.dataset.filter;persistLocal();renderBlocks()});
+}
+function filterBlock(block){
+  if(activeFilter==="Todos")return true;
+  if(activeFilter==="Pendientes")return block.estado==="Pendiente";
+  if(activeFilter==="Grabados")return block.estado==="Grabado";
+  if(activeFilter==="Editando")return block.estado==="Editando";
+  if(activeFilter==="Terminados")return block.estado==="Terminado";
+  return true;
+}
+function renderBlocks(){
+  const episode=activeEpisode();
+  $("blocksBox").innerHTML=`${renderEpisodeResourceLibrary(episode)}${episode.dias.map((day)=>{
+    const blocks=(day.bloques||[]).filter(filterBlock);
+    const body=blocks.length?blocks.map(renderBlockCard).join(""):`<div class="day-card">No hay bloques con este filtro.</div>`;
+    return `<section class="day-group"><div class="day-title">Dia ${day.dia}: ${escapeHtml(day.titulo)}<span>${dayProgress(day)}% terminado Â· ${day.bloques.length} bloques</span></div>${renderDayResourceLibrary(day)}${body}</section>`;
+  }).join("")}`;
+  bindResourceEvents();
+  bindBlockEvents();
+}
+function renderEpisodeResourceLibrary(episode){
+  return `<section class="shot-section resource-library" data-resource-scope="episode">
+    <div class="shot-section-title">Recursos generales del episodio, una sola vez</div>
+    <div class="shots">${episodeShots(episode).map(renderResourceLibraryRow).join("")}</div>
+    <button class="btn small" data-add-resource type="button">Agregar recurso episodio</button>
+  </section>`;
+}
+function renderDayResourceLibrary(day){
+  return `<section class="shot-section resource-library" data-resource-scope="day" data-day="${day.dia}">
+    <div class="shot-section-title">Recursos del dia ${day.dia}, una sola vez</div>
+    <div class="shots">${(day.tomasDia||[]).map(renderResourceLibraryRow).join("")}</div>
+    <button class="btn small" data-add-resource type="button">Agregar recurso dia ${day.dia}</button>
+  </section>`;
+}
+function renderBlockCard(block){
+  const done=isDone(block);
+  return `<article class="block-card ${done?"done":""} ${block.estado==="Grabando"?"recording":""} ${block.estado==="Editando"?"editing":""}" data-block-id="${block.id}">
+    <div class="block-top">
+      <div class="block-num">${block.orden}</div>
+      <div><div class="block-name">${escapeHtml(block.emocion)}</div><div class="block-sub">Dia ${block.dia} Â· ${escapeHtml(block.tiempo||"sin tiempo")} Â· bloque ${block.orden}</div></div>
+      <select class="status-select" data-field="estado">${STATUSES.map((status)=>`<option ${block.estado===status?"selected":""}>${status}</option>`).join("")}</select>
+    </div>
+    <div class="grid-3">
+      <div class="field"><label>Bloque</label><input data-field="orden" type="number" min="1" value="${block.orden}"></div>
+      <div class="field"><label>Dia</label><input data-field="dia" type="number" min="1" max="10" value="${block.dia}"></div>
+      <div class="field"><label>Emocion</label><input data-field="emocion" value="${escapeAttr(block.emocion)}"></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Horario estimado</label><input data-field="tiempo" value="${escapeAttr(block.tiempo)}"></div>
+      <div class="field"><label>Donde entra la musica</label><textarea data-field="entradaMusica">${escapeHtml(block.entradaMusica||"")}</textarea></div>
+    </div>
+    <div class="grid-2 music-grid">
+      <div class="field"><label>Estilo de musica para CapCut</label><textarea data-field="musica">${escapeHtml(block.musica||"")}</textarea></div>
+      <div class="field"><label>Separador al final del bloque</label><textarea data-field="separadorFinal">${escapeHtml(block.separadorFinal||"")}</textarea></div>
+    </div>
+    <div class="grid-2">
+      <div class="field"><label>Objetivo narrativo</label><textarea data-field="objetivoNarrativo">${escapeHtml(block.objetivoNarrativo)}</textarea></div>
+      <div class="field"><label>Que debe sentir</label><textarea data-field="sensacionEspectador">${escapeHtml(block.sensacionEspectador)}</textarea></div>
+    </div>
+    <div class="field"><label>Escena que tengo que grabar</label><textarea data-field="escena">${escapeHtml(block.escena)}</textarea></div>
+    <div class="field"><label>Dialogo o voz en off sugerida</label><textarea data-field="dialogo">${escapeHtml(block.dialogo)}</textarea></div>
+    ${renderBlockResourceRefs(block)}
+    <div class="field"><label>Tomas especificas pendientes de este bloque</label><div class="shots" data-shots>${blockSpecificShots(block).map((shot,index)=>renderShot(shot,index)).join("")}</div><button class="btn small" data-add-shot type="button">Agregar toma especifica</button></div>
+    <div class="grid-2">
+      <div class="field"><label>Pregunta abierta</label><textarea data-field="preguntaAbierta">${escapeHtml(block.preguntaAbierta)}</textarea></div>
+      <div class="field"><label>Resultado esperado</label><textarea data-field="resultadoEsperado">${escapeHtml(block.resultadoEsperado)}</textarea></div>
+    </div>
+    <div class="field"><label>Notas personales</label><textarea data-field="notasPersonales">${escapeHtml(block.notasPersonales)}</textarea></div>
+    <div><div class="block-sub">Progreso del bloque: ${blockShotProgress(block)}%</div><div class="progress-line"><div class="progress-fill" style="width:${blockShotProgress(block)}%"></div></div></div>
+    <div class="block-actions"><button class="btn big primary" data-toggle-done type="button">${done?"Volver a pendiente":"Marcar como hecho"}</button><button class="btn small red" data-remove-block type="button">Borrar bloque</button></div>
+  </article>`;
+}
+function renderShot(shot,index){
+  return `<div class="shot-row" data-shot-index="${index}"><button class="shot-check ${shotDone(shot)?"done":""}" data-toggle-shot type="button">${shotDone(shot)?"âœ“":""}</button><input class="shot-input" value="${escapeAttr(shot.nombre)}" data-shot-text><button class="btn small red shot-remove" data-remove-shot type="button">X</button></div>`;
+}
+function renderResourceLibraryRow(shot){
+  return `<div class="resource-row" data-resource-id="${escapeAttr(shot.id)}"><div><input class="shot-input" value="${escapeAttr(shot.nombre)}" data-resource-name><small>${escapeHtml(shot.id)} Â· ${escapeHtml(shot.nivel)}</small></div><button class="btn small resource-state ${shotDone(shot)?"primary":"red"}" data-toggle-resource-state type="button">${shotDone(shot)?"grabado":"pendiente"}</button></div>`;
+}
+function renderBlockResourceRefs(block){
+  const available=[...episodeShots(),...dayShotList(block.dia)];
+  const used=blockReferencedShots(block);
+  const options=available.filter((shot)=>!(block.referenciasTomas||[]).includes(shot.id));
+  return `<div class="shot-section">
+    <div class="shot-section-title">Recursos usados en este bloque</div>
+    <div class="resource-ref-list">${used.length?used.map((shot)=>`<span class="resource-chip">${shotDone(shot)?"OK ":""}${escapeHtml(shot.nombre)}<button data-remove-resource-ref="${escapeAttr(shot.id)}" type="button">X</button></span>`).join(""):`<span class="block-sub">Sin recursos generales asignados.</span>`}</div>
+    <div class="resource-picker">
+      <select data-resource-select>${options.map((shot)=>`<option value="${escapeAttr(shot.id)}">${escapeHtml(shot.nombre)} (${escapeHtml(shot.nivel)})</option>`).join("")}</select>
+      <button class="btn small" data-add-resource-ref type="button" ${options.length?"":"disabled"}>Usar recurso</button>
+    </div>
+  </div>`;
+}
+function bindResourceEvents(){
+  document.querySelectorAll(".resource-library").forEach((section)=>{
+    const scope=section.dataset.resourceScope;
+    const dayNumber=Number(section.dataset.day||0);
+    section.querySelector("[data-add-resource]").onclick=()=>{
+      if(scope==="episode"){
+        activeEpisode().tomasEpisodio.push(makeShot("Nuevo recurso episodio","episodio"));
+      }else{
+        const day=activeEpisode().dias.find((item)=>item.dia===dayNumber);
+        day?.tomasDia.push(makeShot(`Nuevo recurso dia ${dayNumber}`,"dia",`dia-${dayNumber}-${slugify("Nuevo recurso")}-${uid().slice(0,6)}`));
+      }
+      remember();
+      render();
+    };
+    section.querySelectorAll("[data-toggle-resource-state]").forEach((button)=>button.onclick=()=>{
+      const shot=findShotById(button.closest("[data-resource-id]").dataset.resourceId);
+      if(shot)shot.estado=shotDone(shot)?"pendiente":"grabado";
+      remember();
+      render();
+    });
+    section.querySelectorAll("[data-resource-name]").forEach((input)=>input.oninput=()=>{
+      const shot=findShotById(input.closest("[data-resource-id]").dataset.resourceId);
+      if(shot)shot.nombre=input.value;
+      remember();
+      updateStats();
+    });
+  });
+}
+function bindBlockEvents(){
+  document.querySelectorAll(".block-card").forEach((card)=>{
+    const block=getBlock(card.dataset.blockId);
+    card.addEventListener("click",(event)=>{
+      if(event.target.closest("input,textarea,select,button"))return;
+      activeBlockId=block.id;
+      activeDay=block.dia;
+      persistLocal();
+      updateStats();
+      renderRecording();
+    });
+    card.querySelectorAll("[data-field]").forEach((input)=>input.oninput=()=>{updateBlockField(block,input.dataset.field,input.value);remember();renderDays();updateStats()});
+    card.querySelector(".status-select").onchange=(event)=>{block.estado=event.target.value;if(block.estado==="Terminado")blockSpecificShots(block).forEach((shot)=>shot.estado="grabado");remember();render()};
+    card.querySelector("[data-toggle-done]").onclick=()=>{block.estado=isDone(block)?"Pendiente":"Terminado";if(isDone(block))blockSpecificShots(block).forEach((shot)=>shot.estado="grabado");remember();render()};
+    card.querySelector("[data-remove-block]").onclick=()=>{removeBlock(block.id)};
+    card.querySelector("[data-add-shot]").onclick=()=>{block.tomasBloque.push(blankShot("Nueva toma especifica","bloque"));remember();render()};
+    card.querySelector("[data-add-resource-ref]").onclick=()=>{const select=card.querySelector("[data-resource-select]");if(!select?.value)return;block.referenciasTomas=block.referenciasTomas||[];block.referenciasTomas=[...new Set([...block.referenciasTomas,select.value])];remember();render()};
+    card.querySelectorAll("[data-remove-resource-ref]").forEach((button)=>button.onclick=()=>{block.referenciasTomas=(block.referenciasTomas||[]).filter((id)=>id!==button.dataset.removeResourceRef);remember();render()});
+    card.querySelectorAll("[data-toggle-shot]").forEach((button)=>button.onclick=()=>{const shot=blockSpecificShots(block)[Number(button.closest("[data-shot-index]").dataset.shotIndex)];shot.estado=shotDone(shot)?"pendiente":"grabado";remember();render()});
+    card.querySelectorAll("[data-shot-text]").forEach((input)=>input.oninput=()=>{const index=Number(input.closest("[data-shot-index]").dataset.shotIndex);blockSpecificShots(block)[index].nombre=input.value;remember();updateStats()});
+    card.querySelectorAll("[data-remove-shot]").forEach((button)=>button.onclick=()=>{block.tomasBloque.splice(Number(button.closest("[data-shot-index]").dataset.shotIndex),1);remember();render()});
+  });
+}
+function updateBlockField(block,field,value){
+  if(field==="orden")block.orden=Number(value)||1;
+  else if(field==="dia"){moveBlockToDay(block,Number(value)||1)}
+  else block[field]=value;
+}
+function moveBlockToDay(block,nextDay){
+  const episode=activeEpisode();
+  nextDay=Math.max(1,Math.min(episode.dias.length,nextDay));
+  if(block.dia===nextDay)return;
+  episode.dias.forEach((day)=>day.bloques=day.bloques.filter((item)=>item.id!==block.id));
+  block.dia=nextDay;
+  episode.dias[nextDay-1].bloques.push(block);
+}
+function removeBlock(blockId){
+  const episode=activeEpisode();
+  episode.dias.forEach((day)=>day.bloques=day.bloques.filter((block)=>block.id!==blockId));
+  activeBlockId=allBlocks()[0]?.id||"";
+  remember("Bloque borrado.");
+  render();
+}
+function renderDays(){
+  const episode=activeEpisode();
+  $("dayGrid").innerHTML=episode.dias.map((day)=>{
+    const ids=new Map();
+    [...(day.tomasDia||[]),...day.bloques.flatMap((block)=>[...blockSpecificShots(block),...blockReferencedShots(block).filter((shot)=>shot.nivel==="episodio")])].forEach((shot)=>{if(!shotDone(shot))ids.set(shot.id,shot)});
+    return `<div class="day-card ${day.bloques.every(isDone)?"done":""}"><strong>Dia ${day.dia}: ${escapeHtml(day.titulo)}</strong><span>${dayProgress(day)}% Â· ${day.bloques.filter(isDone).length}/${day.bloques.length} bloques Â· ${ids.size} tomas unicas faltantes</span><ul>${day.bloques.slice(0,5).map((block)=>`<li>${escapeHtml(block.tiempo)} Â· ${escapeHtml(block.emocion)}</li>`).join("")}</ul></div>`;
+  }).join("");
+}
+function dayProgress(day){return percent(day.bloques.filter(isDone).length,day.bloques.length)}
+function updateStats(){
+  const blocks=allBlocks();
+  const current=getBlock();
+  const day=activeEpisode()?.dias?.find((item)=>item.dia===Number(current?.dia||activeDay))||activeEpisode()?.dias?.[0];
+  $("blockProgress").textContent=`${current?blockShotProgress(current):0}%`;
+  $("dayProgress").textContent=`${day?dayProgress(day):0}%`;
+  $("episodeProgress").textContent=`${percent(blocks.filter(isDone).length,blocks.length)}%`;
+  $("doneBlocks").textContent=`${blocks.filter(isDone).length}/${blocks.length}`;
+  $("missingShots").textContent=String(uniquePendingShots().length);
+}
+function renderRecording(){
+  const block=getBlock();
+  if(!block)return;
+  const day=activeEpisode().dias.find((item)=>item.dia===block.dia);
+  $("recordMeta").textContent=`Dia ${block.dia} Â· Bloque ${block.orden} Â· ${block.estado} Â· progreso dia ${dayProgress(day)}%`;
+  $("recordScene").textContent=block.escena||"Sin escena cargada.";
+  $("recordDialog").textContent=block.dialogo||"Sin dialogo cargado.";
+  $("recordMusic").innerHTML=`<strong>Musica CapCut</strong><span>${escapeHtml(block.entradaMusica||"")}</span><span>${escapeHtml(block.musica||"")}</span><span>${escapeHtml(block.separadorFinal||"")}</span>`;
+  $("recordProgressFill").style.width=`${dayProgress(day)}%`;
+  const shots=blockAllNeededShots(block);
+  $("recordShots").innerHTML=shots.map((shot,index)=>`<button class="record-shot ${shotDone(shot)?"done":""}" data-record-shot="${index}" type="button">${shotDone(shot)?"âœ“ ":""}${escapeHtml(shot.nombre)}</button>`).join("");
+  document.querySelectorAll("[data-record-shot]").forEach((button)=>button.onclick=()=>{const shot=shots[Number(button.dataset.recordShot)];shot.estado=shotDone(shot)?"pendiente":"grabado";remember();renderRecording();updateStats()});
+  $("recordDoneBtn").textContent=isDone(block)?"Volver a pendiente":"Marcar como hecho";
+}
+function setRecordingMode(active){document.body.classList.toggle("recording-mode",active);if(active)renderRecording()}
+function adjacentBlock(step){const blocks=allBlocks();const index=Math.max(0,blocks.findIndex((block)=>block.id===activeBlockId));const next=blocks[Math.max(0,Math.min(blocks.length-1,index+step))];if(next){activeBlockId=next.id;activeDay=next.dia;persistLocal();renderRecording();updateStats()}}
+function exportEpisode(){
+  collect();
+  const episode=activeEpisode();
+  const payload={episodio:episode.episodio,titulo:episode.titulo,tomasEpisodio:episode.tomasEpisodio,dias:episode.dias,progreso:{episodio:$("episodeProgress").textContent,bloquesTerminados:$("doneBlocks").textContent,tomasFaltantes:Number($("missingShots").textContent)}};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const link=document.createElement("a");
+  link.href=URL.createObjectURL(blob);
+  link.download=`direct-by-episodio-${episode.episodio}.json`;
+  link.click();
+  setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+}
+async function importParsedEpisode(parsed){
+  const unwrapped=unwrapImportedEpisode(parsed);
+  const source=Array.isArray(unwrapped?.bloques)?flatBlocksToEpisodeSource(unwrapped):unwrapped;
+  const episode=normalizeEpisode(source);
+  if(Array.isArray(unwrapped?.bloques)&&allBlocks(episode).length!==unwrapped.bloques.length){
+    throw new Error(`El archivo tiene ${unwrapped.bloques.length} bloques, pero Direct By preparo ${allBlocks(episode).length}.`);
+  }
+  episode.remote=false;
+  const removed=await removeEpisodesForImport(episode);
+  episodes.unshift(episode);
+  activeId=episode.id;
+  activeDay=episode.dias[0]?.dia||1;
+  activeBlockId=allBlocks(episode)[0]?.id||"";
+  persistLocal();
+  render();
+  setStatus(`Guion importado: episodio ${episode.episodio}, dias ${episodeDayLabel(episode)}, ${allBlocks(episode).length} bloques.${removed?` Reemplace ${removed} version vieja.`:""}`);
+  if(client&&user){
+    const saved=await saveActive({silent:true,replaceEpisode:true});
+    setStatus(saved
+      ? `Guion importado y guardado: episodio ${episode.episodio}, dias ${episodeDayLabel(episode)}, ${allBlocks(episode).length} bloques.${removed?` Reemplace ${removed} version vieja.`:""}`
+      : `Guion importado localmente, pero no se pudo guardar en Supabase. Revisa el error arriba.`
+    );
+  }
+  return episode;
+}
+function importEpisodeFile(file){
+  const reader=new FileReader();
+  reader.onload=async()=>{try{
+    const text=String(reader.result||"").trim().replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/i,"").trim();
+    const parsed=JSON.parse(text);
+    await importParsedEpisode(parsed);
+  }catch(error){alert(`No pude importar el JSON: ${error.message}`)}};
+  reader.readAsText(file);
+}
+async function loadBundledEpisode2(){
+  return loadBundledEpisodeNumber(2);
+}
+async function loadBundledEpisode1(){
+  return loadBundledEpisodeNumber(1);
+}
+async function loadBundledEpisodeNumber(number){
+  try{
+    setStatus(`Cargando episodio ${number}...`);
+    const parsed=number===1?await fetchBundledEpisode1():number===2?await fetchBundledEpisode2():await fetchBundledEpisodeNumber(number);
+    await importParsedEpisode(parsed);
+  }catch(error){
+    alert(`No pude cargar episodio ${number}: ${error.message}`);
+  }
+}
+function cleanupDuplicateShots(){
+  const episode=activeEpisode();
+  if(!episode)return;
+  const groups=new Map();
+  allBlocks(episode).forEach((block)=>{
+    blockSpecificShots(block).forEach((shot)=>{
+      const key=slugify(shot.nombre);
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push({block,shot});
+    });
+  });
+  let unified=0;
+  groups.forEach((items,key)=>{
+    if(items.length<2)return;
+    let resource=episode.tomasEpisodio.find((shot)=>slugify(shot.nombre)===key);
+    if(!resource){
+      resource=makeShot(items[0].shot.nombre,"episodio",key);
+      resource.estado=items.some((item)=>shotDone(item.shot))?"grabado":"pendiente";
+      episode.tomasEpisodio.push(resource);
+    }
+    items.forEach(({block,shot})=>{
+      block.referenciasTomas=Array.from(new Set([...(block.referenciasTomas||[]),resource.id]));
+      block.tomasBloque=blockSpecificShots(block).filter((item)=>item.id!==shot.id);
+      unified+=1;
+    });
+  });
+  episode.tomasEpisodio=dedupeShots(episode.tomasEpisodio);
+  episode.dias.forEach((day)=>day.tomasDia=dedupeShots(day.tomasDia||[]));
+  remember(unified?`Unifique ${unified} tomas duplicadas como recursos reutilizables.`:"No encontre tomas duplicadas por nombre.");
+  render();
+}
+function dedupeShots(shots){
+  const map=new Map();
+  shots.forEach((shot)=>{
+    const key=slugify(shot.nombre);
+    if(!map.has(key)){map.set(key,shot);return}
+    const existing=map.get(key);
+    if(shotDone(shot))existing.estado="grabado";
+  });
+  return [...map.values()];
+}
+function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char]))}
+function escapeAttr(value){return escapeHtml(value).replace(/`/g,"&#096;")}
+$("newEpisodeBtn").onclick=()=>{remember("");const episode=freshEpisode();episodes.unshift(episode);activeId=episode.id;activeBlockId=allBlocks(episode)[0]?.id||"";persistLocal();render();setStatus("Nuevo episodio creado.")};
+$("saveBtn").onclick=()=>saveActive();
+$("deleteBtn").onclick=deleteActive;
+$("duplicateBtn").onclick=()=>{remember("");const source=activeEpisode();const copy=normalizeEpisode({...structuredClone(source),id:uid(),titulo:`${source.titulo} copia`,remote:false,created_at:new Date().toISOString(),updated_at:new Date().toISOString()});episodes.unshift(copy);activeId=copy.id;activeBlockId=allBlocks(copy)[0]?.id||"";persistLocal();render();setStatus("Episodio duplicado.")};
+$("addBlockBtn").onclick=()=>{const episode=activeEpisode();const day=episode.dias[Math.max(0,activeDay-1)]||episode.dias[0];const block=defaultBlock(day.dia,day.bloques.length+1);day.bloques.push(block);activeBlockId=block.id;remember("Bloque agregado.");render()};
+$("resetTemplateBtn").onclick=()=>{if(!confirm("Reemplazar este episodio por el formato base de 3 dias?"))return;const episode=activeEpisode();episode.dias=[defaultDay(1),defaultDay(2),defaultDay(3)];activeBlockId=allBlocks()[0]?.id||"";remember("Formato de 3 dias restaurado.");render()};
+$("recordModeBtn").onclick=()=>setRecordingMode(true);
+$("exitRecordBtn").onclick=()=>setRecordingMode(false);
+$("prevBlockBtn").onclick=()=>adjacentBlock(-1);
+$("nextBlockBtn").onclick=()=>adjacentBlock(1);
+$("recordDoneBtn").onclick=()=>{const block=getBlock();block.estado=isDone(block)?"Pendiente":"Terminado";if(isDone(block))blockSpecificShots(block).forEach((shot)=>shot.estado="grabado");remember();renderRecording();render();setRecordingMode(true)};
+$("importBtn").onclick=()=>$("jsonInput").click();
+$("jsonInput").onchange=(event)=>{const file=event.target.files?.[0];if(file)importEpisodeFile(file);event.target.value=""};
+$("loadEpisode1Btn").onclick=loadBundledEpisode1;
+$("loadEpisode2Btn").onclick=loadBundledEpisode2;
+$("loadEpisode3Btn").onclick=()=>loadBundledEpisodeNumber(3);
+$("loadEpisode4Btn").onclick=()=>loadBundledEpisodeNumber(4);
+$("loadEpisode5Btn").onclick=()=>loadBundledEpisodeNumber(5);
+$("loadEpisode6Btn").onclick=()=>loadBundledEpisodeNumber(6);
+$("loadEpisode7Btn").onclick=()=>loadBundledEpisodeNumber(7);
+$("exportBtn").onclick=exportEpisode;
+$("cleanupShotsBtn").onclick=cleanupDuplicateShots;
+$("titleInput").oninput=()=>remember();
+$("episodeNumberInput").oninput=()=>remember();
+$("daysInput").oninput=()=>{collect();render();remember()};
+window.addEventListener("beforeunload",()=>{collectVisibleBlockFields();collect();persistLocal()});
+init();
+</script>
+</body>
+</html>
+
+
+

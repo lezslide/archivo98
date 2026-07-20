@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alaxd // Overlay</title>
+<script src="./private-access.js?v=private-1"></script>
+<style>
+*{box-sizing:border-box}
+:root{
+  --overlay-font-title:"Courier New",monospace;
+  --overlay-font-body:"Courier New",monospace;
+  --glass:rgba(255,255,255,.16);
+  --line:rgba(255,255,255,.36);
+  --text:#fff;
+  --card-text:#fff;
+}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;color:var(--text);font-family:var(--overlay-font-body)}
+body.public-mode .editor-toggle,body.public-mode .editor{display:none!important}
+button,input,textarea,select{font:inherit}
+.video-background,.vimeo-background{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:#080808}
+.vimeo-background{border:0;display:none;transform:scale(1.08);pointer-events:none}
+.fallback-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(circle at 18% 20%,rgba(255,255,255,.18),transparent 28%),linear-gradient(135deg,#0f172a,#111,#3f1d38)}
+.stage{position:relative;z-index:1;width:100%;height:100%;padding:5vh 5vw;display:grid}
+.glass-overlay{position:relative;width:100%;height:100%;background:var(--glass);backdrop-filter:blur(15px);border:2px solid var(--line);border-radius:4px;padding:2rem;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 25px 90px rgba(0,0,0,.35)}
+.brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.16em;opacity:.72;font-weight:900}
+h1{margin:.35rem 0 0;font-family:var(--overlay-font-title);font-size:clamp(2.2rem,7vw,7.2rem);line-height:.86;letter-spacing:-.06em;text-transform:uppercase;max-width:11ch}
+h2{margin:.8rem 0 1.8rem;font-family:var(--overlay-font-title);font-size:clamp(1rem,2.2vw,2rem);text-transform:uppercase;opacity:.82;letter-spacing:.04em}
+.bio-box{border:1px solid rgba(255,255,255,.9);padding:1.5rem;max-width:720px;background:rgba(0,0,0,.08)}
+.bio-box p{margin:0;font-size:clamp(.92rem,1.35vw,1.18rem);line-height:1.55;text-shadow:0 2px 20px rgba(0,0,0,.38)}
+.icon-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:auto}
+.mini-card{border:1px solid rgba(255,255,255,.9);padding:.8rem;text-align:center;font-size:.72rem;font-weight:900;text-transform:uppercase;min-height:64px;display:grid;place-items:center;background:rgba(0,0,0,.08);color:var(--card-text);cursor:pointer}
+.mini-card:hover{background:rgba(255,255,255,.18)}
+.content-panel{position:fixed;left:50%;bottom:6vh;transform:translateX(-50%);z-index:3;width:min(820px,90vw);max-height:72vh;overflow:auto;border:2px solid rgba(255,255,255,.75);background:rgba(10,10,10,.7);backdrop-filter:blur(18px);color:#fff;padding:18px;display:none}
+.content-panel.open{display:block}
+.panel-top{display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:10px;margin-bottom:12px}
+.panel-top h3{margin:0;font-family:var(--overlay-font-title);font-size:1.4rem;text-transform:uppercase}
+.panel-close{border:1px solid #fff;background:transparent;color:#fff;padding:6px 10px;font-weight:900;cursor:pointer}
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.panel-field{display:grid;gap:5px}.panel-field label{font-size:.72rem;font-weight:900;text-transform:uppercase}.panel-field input,.panel-field textarea{width:100%;border:1px solid #fff;background:rgba(255,255,255,.12);color:#fff;padding:9px}.panel-field textarea{min-height:90px;resize:vertical}
+.panel-action{border:1px solid #fff;background:#fff;color:#111;padding:10px 12px;font-weight:900;text-decoration:none;display:inline-block;cursor:pointer}
+.portfolio-tools{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin:10px 0}.portfolio-tools input{border:1px solid #fff;background:rgba(255,255,255,.12);color:#fff;padding:9px;min-width:0}.portfolio-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}.portfolio-item{border:1px solid rgba(255,255,255,.65);background:rgba(255,255,255,.08);padding:8px;display:grid;gap:6px;min-height:120px}.portfolio-item img,.portfolio-item video{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.45)}.portfolio-item a{color:#fff;font-weight:900;word-break:break-word}.portfolio-item button{border:1px solid #fff;background:transparent;color:#fff;font-weight:900;padding:5px;cursor:pointer}
+.plain-panel-copy{font-size:1rem;line-height:1.5;margin:0}
+.empty-state{border:1px solid rgba(255,255,255,.55);padding:14px;background:rgba(255,255,255,.06);font-weight:900}
+.editor-toggle{position:fixed;right:14px;top:14px;z-index:5;border:2px solid #fff;background:#111;color:#fff;padding:.65rem .8rem;font-weight:900;cursor:pointer}
+.editor{position:fixed;right:14px;top:64px;bottom:14px;width:min(390px,calc(100vw - 28px));z-index:4;background:#f5f1e8;color:#111;border:3px solid #111;box-shadow:8px 8px 0 #111;padding:14px;overflow:auto;display:none}
+.editor.open{display:grid;gap:10px;align-content:start}
+.editor h3{margin:0 0 4px;font:900 1.1rem/1 Arial,sans-serif;text-transform:uppercase}
+.control{display:grid;gap:4px}
+.control label{font:900 .72rem/1 Arial,sans-serif;text-transform:uppercase}
+.control input,.control textarea,.control select{width:100%;border:2px solid #111;background:#fff;border-radius:0;padding:9px;font-weight:800}
+.control textarea{min-height:88px;resize:vertical}
+.editor-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.editor button{border:2px solid #111;background:#fff;padding:10px;font-weight:900;box-shadow:3px 3px 0 #111;cursor:pointer}
+.editor button.primary{background:#c7ff2e}
+@media(max-width:760px){
+  html,body{height:auto;min-height:100%;overflow:auto}
+  .stage{padding:3vh 4vw}
+  .glass-overlay{padding:1rem;min-height:94vh;height:auto;gap:32px}
+  .brand-row{display:grid}
+  .icon-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .mini-card{min-height:58px}
+  .bio-box{padding:1rem}
+  .panel-grid,.portfolio-tools{grid-template-columns:1fr}
+  .content-panel{top:8vh;bottom:auto;max-height:84vh}
+  h1{font-size:clamp(2rem,17vw,4.6rem)}
+}
+</style>
+</head>
+<body>
+<div class="fallback-bg" aria-hidden="true"></div>
+<video id="bgVideo" autoplay muted loop playsinline class="video-background">
+  <source id="bgSource" src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+</video>
+<iframe id="bgVimeo" class="vimeo-background" allow="autoplay; fullscreen; picture-in-picture" title="Vimeo background"></iframe>
+
+<button class="editor-toggle" id="editorToggle" type="button">Editar</button>
+<aside class="editor" id="editorPanel">
+  <h3>Alaxd overlay</h3>
+  <div class="control"><label>Video de fondo URL</label><input id="videoInput" placeholder="Vimeo, YouTube o .mp4 directo"></div>
+  <div class="control"><label>Subir video corto de fondo</label><input id="videoFileInput" type="file" accept="video/*"><small>Ideal: 5 segundos o menos.</small></div>
+  <div class="control"><label>Fuente titulo</label><select id="titleFontInput"></select></div>
+  <div class="control"><label>Fuente texto</label><select id="bodyFontInput"></select></div>
+  <div class="control"><label>Color letra principal</label><input id="textColorInput" type="color"></div>
+  <div class="control"><label>Color botones inferiores</label><input id="cardColorInput" type="color"></div>
+  <div class="control"><label>Nombre</label><input id="nameInput"></div>
+  <div class="control"><label>Rol</label><input id="roleInput"></div>
+  <div class="control"><label>WhatsApp de contacto</label><input id="whatsappInput" placeholder="54911..."></div>
+  <div class="control"><label>Mensaje inicial WhatsApp</label><input id="whatsappMessageInput"></div>
+  <div class="control"><label>Texto seccion seleccion</label><textarea id="categoryInput"></textarea></div>
+  <div class="control"><label>Texto seccion proceso</label><textarea id="careInput"></textarea></div>
+  <div class="control"><label>Bio</label><textarea id="bioInput"></textarea></div>
+  <div class="control"><label>Tarjetas inferiores</label><textarea id="cardsInput"></textarea></div>
+  <div class="editor-actions">
+    <button class="primary" id="saveBtn" type="button">Guardar</button>
+    <button id="resetBtn" type="button">Reset</button>
+  </div>
+</aside>
+
+<main class="stage">
+  <section class="glass-overlay">
+    <header>
+      <div class="brand-row">
+        <div>
+          <div class="kicker" id="kickerText">ALAXD // visual wardrobe</div>
+          <h1 id="nameText">ALACIEL ROMAN</h1>
+          <h2 id="roleText">Fashion Stylist</h2>
+        </div>
+      </div>
+      <section class="bio-box">
+        <p id="bioText">Soy Alaciel. Hago styling como una forma de leer cuerpos, emociones y contextos. Trabajo desde la intuicion, desde lo que vibra en la persona que tengo enfrente. Me interesa encontrar lo que no se ve a simple vista y traducirlo en ropa, en texturas, en contraste, en presencia.</p>
+      </section>
+    </header>
+    <footer class="icon-grid" id="cardGrid"></footer>
+  </section>
+</main>
+
+<section class="content-panel" id="contentPanel" aria-live="polite">
+  <div class="panel-top">
+    <h3 id="panelTitle">Archivo</h3>
+    <button class="panel-close" id="panelClose" type="button">X</button>
+  </div>
+  <div id="panelBody"></div>
+</section>
+
+<script>
+const STORAGE_KEY="alaxd_overlay_v1";
+const fonts=[
+  ['Courier New','Courier New, Courier, monospace'],
+  ['Arial Black','"Arial Black", Arial, sans-serif'],
+  ['Georgia','Georgia, serif'],
+  ['Times New Roman','"Times New Roman", serif'],
+  ['Trebuchet','"Trebuchet MS", Arial, sans-serif'],
+  ['Verdana','Verdana, Geneva, sans-serif']
+];
+const defaults={
+  video:"https://www.w3schools.com/howto/rain.mp4",
+  titleFont:fonts[0][1],
+  bodyFont:fonts[0][1],
+  textColor:"#ffffff",
+  cardColor:"#ffffff",
+  name:"ALACIEL ROMAN",
+  role:"Fashion Stylist",
+  whatsapp:"5491100000000",
+  whatsappMessage:"Hola Alaciel, queria consultarte por styling.",
+  categoryText:"Seleccion de trabajos, editoriales, pruebas de styling y piezas visuales que muestran una forma de mirar.",
+  careText:"Proceso, referencias, armado de looks, detras de escena y decisiones que construyen la imagen final.",
+  bio:"Soy Alaciel. Hago styling como una forma de leer cuerpos, emociones y contextos. Trabajo desde la intuicion, desde lo que vibra en la persona que tengo enfrente. Me interesa encontrar lo que no se ve a simple vista y traducirlo en ropa, en texturas, en contraste, en presencia.",
+  cards:["SELECCION//\nLOOKS","PRODUCCIONES\nFOTO/VIDEO","PROCESO\nREFERENCIAS","CONTACTO\nMAIL"],
+  portfolio:{categoria:[],archivo:[],cuidado:[],contacto:[]}
+};
+let data=load();
+const $=(id)=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+const editMode=params.get("edit")==="1"||params.get("admin")==="1";
+document.body.classList.toggle("public-mode",!editMode);
+function escapeHtml(value){return String(value||"").replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]))}
+function load(){try{return normalizeData(JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"))}catch(_error){return normalizeData({})}}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
+function normalizeData(raw){
+  const next={...defaults,...raw};
+  const cardText=(next.cards||[]).join(" ").toLowerCase();
+  if(cardText.includes("catalogo")||cardText.includes("prendas")){
+    next.cards=defaults.cards;
+  }
+  if(!next.portfolio)next.portfolio={categoria:[],archivo:next.archive||[],cuidado:[],contacto:[]};
+  next.portfolio={categoria:[],archivo:[],cuidado:[],contacto:[],...next.portfolio};
+  return next;
+}
+function fillFontSelect(select,value){
+  select.innerHTML=fonts.map(([label,font])=>`<option value="${escapeHtml(font)}" ${font===value?"selected":""}>${escapeHtml(label)}</option>`).join("");
+}
+function getVimeoId(url){
+  const match=String(url||"").match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+  return match?match[1]:"";
+}
+function getYouTubeId(url){
+  const value=String(url||"");
+  const match=value.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/);
+  return match?match[1]:"";
+}
+function applyBackground(){
+  const url=String(data.video||defaults.video).trim();
+  const vimeoId=getVimeoId(url);
+  const youtubeId=getYouTubeId(url);
+  if(vimeoId||youtubeId){
+    $("bgVideo").style.display="none";
+    $("bgVimeo").style.display="block";
+    $("bgVimeo").src=vimeoId
+      ? `https://player.vimeo.com/video/${vimeoId}?background=1&autoplay=1&muted=1&loop=1&playsinline=1`
+      : `https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&playsinline=1`;
+    return;
+  }
+  $("bgVimeo").style.display="none";
+  $("bgVimeo").src="";
+  $("bgVideo").style.display="block";
+  if($("bgSource").getAttribute("src")!==url){
+    $("bgSource").src=url;
+    $("bgVideo").load();
+    $("bgVideo").play().catch(()=>{});
+  }
+}
+function apply(){
+  document.documentElement.style.setProperty("--overlay-font-title",data.titleFont);
+  document.documentElement.style.setProperty("--overlay-font-body",data.bodyFont);
+  document.documentElement.style.setProperty("--text",data.textColor||defaults.textColor);
+  document.documentElement.style.setProperty("--card-text",data.cardColor||defaults.cardColor);
+  $("nameText").textContent=data.name;
+  $("roleText").textContent=data.role;
+  $("bioText").textContent=data.bio;
+  $("cardGrid").innerHTML=(data.cards||[]).map((card,index)=>`<button class="mini-card" data-panel="${panelKey(index,card)}" type="button">${escapeHtml(card).replace(/\n/g,"<br>")}</button>`).join("");
+  document.querySelectorAll("[data-panel]").forEach((button)=>button.onclick=()=>openPanel(button.dataset.panel));
+  applyBackground();
+  $("videoInput").value=data.video;
+  $("nameInput").value=data.name;
+  $("roleInput").value=data.role;
+  $("textColorInput").value=data.textColor||defaults.textColor;
+  $("cardColorInput").value=data.cardColor||defaults.cardColor;
+  $("whatsappInput").value=data.whatsapp||defaults.whatsapp;
+  $("whatsappMessageInput").value=data.whatsappMessage||defaults.whatsappMessage;
+  $("categoryInput").value=data.categoryText;
+  $("careInput").value=data.careText;
+  $("bioInput").value=data.bio;
+  $("cardsInput").value=(data.cards||[]).join("\n---\n");
+  fillFontSelect($("titleFontInput"),data.titleFont);
+  fillFontSelect($("bodyFontInput"),data.bodyFont);
+}
+function collect(){
+  data={
+    ...data,
+    video:$("videoInput").value.trim()||defaults.video,
+    titleFont:$("titleFontInput").value,
+    bodyFont:$("bodyFontInput").value,
+    textColor:$("textColorInput").value||defaults.textColor,
+    cardColor:$("cardColorInput").value||defaults.cardColor,
+    name:$("nameInput").value.trim()||defaults.name,
+    role:$("roleInput").value.trim()||defaults.role,
+    whatsapp:$("whatsappInput").value.trim()||defaults.whatsapp,
+    whatsappMessage:$("whatsappMessageInput").value.trim()||defaults.whatsappMessage,
+    categoryText:$("categoryInput").value.trim()||defaults.categoryText,
+    careText:$("careInput").value.trim()||defaults.careText,
+    bio:$("bioInput").value.trim()||defaults.bio,
+    cards:$("cardsInput").value.split(/\n---\n/g).map((item)=>item.trim()).filter(Boolean)
+  };
+}
+function panelKey(index,label){
+  const text=String(label||"").toLowerCase();
+  if(text.includes("contact"))return "contacto";
+  if(text.includes("produccion")||text.includes("foto")||text.includes("video")||text.includes("portfolio"))return "archivo";
+  if(text.includes("proceso")||text.includes("referencia"))return "cuidado";
+  if(text.includes("seleccion")||text.includes("look")||text.includes("categoria")||text.includes("eleccion"))return "categoria";
+  return ["categoria","archivo","cuidado","contacto"][index]||"archivo";
+}
+function openPanel(type){
+  $("contentPanel").classList.add("open");
+  if(type==="contacto")renderContactPanel();
+  else if(type==="archivo")renderPortfolioPanel("archivo","Producciones foto / video","Trabajos finales, videos, editoriales y piezas visuales.");
+  else if(type==="cuidado")renderPortfolioPanel("cuidado","Proceso / referencias",data.careText);
+  else renderPortfolioPanel("categoria","Seleccion de looks",data.categoryText);
+}
+function renderContactPanel(){
+  $("panelTitle").textContent="Contacto";
+  const phone=String(data.whatsapp||defaults.whatsapp).replace(/[^\d]/g,"");
+  const whatsappUrl=`https://wa.me/${phone}?text=${encodeURIComponent(data.whatsappMessage||defaults.whatsappMessage)}`;
+  $("panelBody").innerHTML=`
+    <div class="panel-grid">
+      <div class="panel-field"><label>WhatsApp</label><input value="${escapeAttr(phone)}" readonly></div>
+      <div class="panel-field"><label>Mensaje</label><input value="${escapeAttr(data.whatsappMessage||defaults.whatsappMessage)}" readonly></div>
+    </div>
+    <p class="plain-panel-copy">Abre WhatsApp para mandar un mensaje directo.</p>
+    <a class="panel-action" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer">Mandar WhatsApp</a>
+    ${editMode?`<hr>${renderPortfolioTools("contacto")}`:""}
+  `;
+  if(editMode)bindPortfolioTools("contacto");
+}
+function portfolioType(item){
+  if(item.type)return item.type;
+  if(/\.(mp4|webm|mov)(\?|$)/i.test(item.src))return "video";
+  if(/\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(item.src))return "image";
+  return "link";
+}
+function renderPortfolioPanel(section,title,description){
+  $("panelTitle").textContent=title;
+  $("panelBody").innerHTML=`<p class="plain-panel-copy">${escapeHtml(description)}</p>${renderPortfolioTools(section)}`;
+  if(editMode)bindPortfolioTools(section);
+}
+function renderPortfolioTools(section){
+  const items=data.portfolio?.[section]||[];
+  const list=`<div class="portfolio-list">${items.length?items.map((item,index)=>renderPortfolioItem(item,index,section)).join(""):`<div class="empty-state">${editMode?"Todavia no cargaste trabajos en esta seccion.":"Portfolio en construccion."}</div>`}</div>`;
+  if(!editMode)return list;
+  return `
+    <div class="portfolio-tools" data-section="${section}">
+      <input id="${section}UrlInput" placeholder="Link externo del trabajo">
+      <input id="${section}TitleInput" placeholder="Titulo del trabajo">
+      <button class="panel-action" data-add-url="${section}" type="button">Agregar link</button>
+    </div>
+    <div class="portfolio-tools">
+      <input id="${section}FileInput" type="file" accept="image/*,video/*" multiple>
+      <span class="plain-panel-copy">Carga imagenes, videos o links del portfolio.</span>
+    </div>
+    ${list}
+  `;
+}
+function renderPortfolioItem(item,index,section){
+  const type=portfolioType(item);
+  const preview=type==="image"?`<img src="${escapeAttr(item.src)}" alt="${escapeAttr(item.title)}">`:type==="video"?`<video src="${escapeAttr(item.src)}" controls></video>`:`<a href="${escapeAttr(item.src)}" target="_blank" rel="noopener noreferrer">Abrir trabajo</a>`;
+  return `<article class="portfolio-item">${preview}<strong>${escapeHtml(item.title||"Trabajo")}</strong>${editMode?`<button data-remove-portfolio="${section}:${index}" type="button">Sacar</button>`:""}</article>`;
+}
+function bindPortfolioTools(section){
+  document.querySelector(`[data-add-url="${section}"]`)?.addEventListener("click",()=>addPortfolioUrl(section));
+  $(`${section}FileInput`)?.addEventListener("change",(event)=>addPortfolioFiles(section,[...event.target.files]));
+  document.querySelectorAll("[data-remove-portfolio]").forEach((button)=>button.onclick=()=>{
+    const [target,index]=button.dataset.removePortfolio.split(":");
+    data.portfolio[target].splice(Number(index),1);
+    save();
+    openPanel(target);
+  });
+}
+function addPortfolioUrl(section){
+  const src=$(`${section}UrlInput`).value.trim();
+  if(!src)return;
+  data.portfolio[section]=data.portfolio[section]||[];
+  data.portfolio[section].unshift({title:$(`${section}TitleInput`).value.trim()||"Trabajo de portfolio",src,type:portfolioType({src})});
+  save();
+  openPanel(section);
+}
+function addPortfolioFiles(section,files){
+  if(!files.length)return;
+  data.portfolio[section]=data.portfolio[section]||[];
+  files.forEach((file)=>{
+    const reader=new FileReader();
+    reader.onload=()=>{
+      data.portfolio[section].unshift({title:file.name,src:reader.result,type:file.type.startsWith("video/")?"video":"image"});
+      save();
+      openPanel(section);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function setBackgroundVideoFile(file){
+  if(!file)return;
+  if(file.size>12*1024*1024){
+    alert("Ese video es muy pesado para guardarlo en el navegador. Proba con un clip de 5 segundos o menos.");
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    data.video=reader.result;
+    save();
+    apply();
+  };
+  reader.readAsDataURL(file);
+}
+function escapeAttr(value){return escapeHtml(value)}
+if(editMode){
+  ["videoInput","titleFontInput","bodyFontInput","textColorInput","cardColorInput","nameInput","roleInput","whatsappInput","whatsappMessageInput","categoryInput","careInput","bioInput","cardsInput"].forEach((id)=>{
+    $(id).addEventListener("input",()=>{collect();apply();save()});
+    $(id).addEventListener("change",()=>{collect();apply();save()});
+  });
+  $("videoFileInput").addEventListener("change",(event)=>setBackgroundVideoFile(event.target.files?.[0]));
+  $("editorToggle").onclick=()=>$("editorPanel").classList.toggle("open");
+}
+$("panelClose").onclick=()=>$("contentPanel").classList.remove("open");
+if(editMode){
+  $("saveBtn").onclick=()=>{collect();apply();save()};
+  $("resetBtn").onclick=()=>{data={...defaults};save();apply()};
+}
+apply();
+</script>
+</body>
+</html>

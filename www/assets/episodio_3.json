@@ -1,0 +1,2051 @@
+{
+  "episodio": 3,
+  "titulo_provisional": "Busqué una idea que pudiera crecer",
+  "dias": [
+    7,
+    8,
+    9
+  ],
+  "duracion_objetivo_segundos": 2549.8,
+  "duracion_objetivo_formato": "42:29.8",
+  "objetivo_del_episodio": "Conocer nuevos lugares, estudiar cómo se viste la gente y transformar el dinero de los stickers en una idea de producto más escalable.",
+  "pregunta_narrativa": "¿Qué producto debería fabricar primero para que el reto pueda crecer más allá de vender stickers uno por uno?",
+  "continuidad": "El episodio anterior termina después de vender los primeros 100 stickers.",
+  "regla_principal": "Traslados, investigación, materiales y primera muestra deben pagarse con el dinero generado por el reto.",
+  "bloques": [
+    {
+      "id": "ep3_b01",
+      "bloque": 1,
+      "plantilla": "B1 P1",
+      "dia": 7,
+      "nombre": "Gancho de curiosidad",
+      "tipo": "gancho",
+      "emocion_principal": "curiosidad",
+      "duracion_segundos": 19.8,
+      "duracion_tipo": "fija",
+      "objetivo_narrativo": "Anticipar nuevos lugares, mockups, entrevistas y la espera de la primera muestra.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 2,
+          "toma": "Llegando a un lugar nuevo con el bolso de stickers.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 1,
+          "toma": "Detalle rápido de distintos outfits en la calle.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 3,
+          "toma": "Pantalla con varios mockups de productos.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 3.2,
+          "toma": "Montaje de entrevistas sobre ropa, precios y estilos.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 2,
+          "toma": "Llamada con un costurero; texto: ¿Una sola muestra?",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular",
+            "producto"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 1,
+          "toma": "Primer plano de preocupación.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 2.2,
+          "toma": "Tela, boceto y medidas sobre una mesa.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 8,
+          "duracion_segundos": 5.4,
+          "toma": "Plano de una bolsa o mesa vacía donde debería estar la muestra; cierre en espera.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "producto",
+        "personas",
+        "celular"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Anticipar nuevos lugares, mockups, entrevistas y la espera de la primera muestra."
+    },
+    {
+      "id": "ep3_b02",
+      "bloque": 2,
+      "plantilla": "B2 P2",
+      "dia": 7,
+      "nombre": "Los stickers me habían traído hasta acá",
+      "tipo": "continuacion_directa",
+      "emocion_principal": "expansion",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Continuar desde el episodio anterior y plantear la necesidad de escalar.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Mostrar el dinero reunido y registros de ventas.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Los stickers me habían traído hasta acá» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Comparar una venta individual con un producto de mayor valor.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Los stickers me habían traído hasta acá» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Explicar que vender stickers uno por uno tiene un límite.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expansion",
+          "funcion_narrativa": "Avanzar el bloque «Los stickers me habían traído hasta acá» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Mostrar referencias de ropa y accesorios.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expansion",
+          "funcion_narrativa": "Avanzar el bloque «Los stickers me habían traído hasta acá» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Presentar la misión: encontrar algo escalable.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expansion",
+          "funcion_narrativa": "Avanzar el bloque «Los stickers me habían traído hasta acá» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "sticker"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Continuar desde el episodio anterior y plantear la necesidad de escalar."
+    },
+    {
+      "id": "ep3_b03",
+      "bloque": 3,
+      "plantilla": "B3 P3",
+      "dia": 7,
+      "nombre": "Salir de los lugares conocidos",
+      "tipo": "nuevo_viaje",
+      "emocion_principal": "aventura",
+      "duracion_segundos": 150,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Abrir el mundo del reto visitando una zona nueva.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Preparar bolso, cámara, stickers y dinero.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker",
+            "dinero"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 30,
+          "toma": "Trayecto hacia un lugar nuevo.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Llegada y presentación visual del lugar.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Mostrar negocios, plazas y movimiento.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Comparar con Mariano Acosta o Merlo.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Plantear qué se puede aprender del nuevo público.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Avanzar el bloque «Salir de los lugares conocidos» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "dinero",
+        "mapa"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Abrir el mundo del reto visitando una zona nueva."
+    },
+    {
+      "id": "ep3_b04",
+      "bloque": 4,
+      "plantilla": "B4 P4",
+      "dia": 7,
+      "nombre": "Mirar antes de fabricar",
+      "tipo": "observacion",
+      "emocion_principal": "curiosidad",
+      "duracion_segundos": 130,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Observar cómo se viste la gente antes de diseñar.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Planos de zapatillas, pantalones, buzos y accesorios.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Registrar colores y cortes que se repiten.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Entrar a locales para mirar precios y categorías.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Anotar las prendas más comunes.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Reflexión: no fabricar solo por gusto personal.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Crear una lista inicial de productos.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Mirar antes de fabricar» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Observar cómo se viste la gente antes de diseñar."
+    },
+    {
+      "id": "ep3_b05",
+      "bloque": 5,
+      "plantilla": "B5 P5",
+      "dia": 7,
+      "nombre": "Qué podría venderse a escala",
+      "tipo": "comparacion_de_productos",
+      "emocion_principal": "ambicion",
+      "duracion_segundos": 140,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Comparar productos por costo, repetibilidad y marca.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Listar remera, buzo, jogging, gorra y bolso.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Comparar facilidad de producción.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Comparar precio posible y margen.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Comparar identidad de marca.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Descartar opciones demasiado caras o genéricas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Quedar con tres opciones principales.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «Qué podría venderse a escala» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Comparar productos por costo, repetibilidad y marca."
+    },
+    {
+      "id": "ep3_b06",
+      "bloque": 6,
+      "plantilla": "B6 P6",
+      "dia": 7,
+      "nombre": "Una idea no es un producto",
+      "tipo": "primer_choque",
+      "emocion_principal": "duda",
+      "duracion_segundos": 110,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar los obstáculos reales de producción.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Mostrar referencias y decisiones pendientes.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Una idea no es un producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Lista: molde, tela, costura, estampa y etiqueta.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Avanzar el bloque «Una idea no es un producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Buscar precios preliminares.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Avanzar el bloque «Una idea no es un producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Reacción al costo de producir pocas unidades.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Avanzar el bloque «Una idea no es un producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 30,
+          "toma": "Reflexión sobre convertir una idea en algo repetible.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Avanzar el bloque «Una idea no es un producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar los obstáculos reales de producción."
+    },
+    {
+      "id": "ep3_b07",
+      "bloque": 7,
+      "plantilla": "B7 P7",
+      "dia": 7,
+      "nombre": "Mañana tenía que diseñarlo",
+      "tipo": "cierre_de_dia",
+      "emocion_principal": "expectativa",
+      "duracion_segundos": 80,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Cerrar el día con la misión de crear mockups.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Mostrar tres opciones finales.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Mañana tenía que diseñarlo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Ordenar referencias visuales.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Mañana tenía que diseñarlo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Preparar computadora o celular.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Mañana tenía que diseñarlo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Plantear el objetivo del día 8.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Mañana tenía que diseñarlo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Cortar sobre una pantalla lista para crear mockups.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Mañana tenía que diseñarlo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Cerrar el día con la misión de crear mockups."
+    },
+    {
+      "id": "ep3_b08",
+      "bloque": 8,
+      "plantilla": "B8 P8",
+      "dia": 8,
+      "nombre": "Convertir ideas en mockups",
+      "tipo": "apertura_de_dia",
+      "emocion_principal": "creatividad",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Comenzar el día creando propuestas visuales.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Abrir herramientas de diseño.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Avanzar el bloque «Convertir ideas en mockups» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Elegir paleta, logo y estilo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Avanzar el bloque «Convertir ideas en mockups» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Mostrar bocetos iniciales.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Avanzar el bloque «Convertir ideas en mockups» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Explicar que el mockup evita gastar a ciegas.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Avanzar el bloque «Convertir ideas en mockups» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Crear el primer producto visual.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Avanzar el bloque «Convertir ideas en mockups» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Comenzar el día creando propuestas visuales."
+    },
+    {
+      "id": "ep3_b09",
+      "bloque": 9,
+      "plantilla": "B9 P9",
+      "dia": 8,
+      "nombre": "Tres productos posibles",
+      "tipo": "desarrollo_visual",
+      "emocion_principal": "entusiasmo",
+      "duracion_segundos": 170,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Crear tres mockups comparables.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 35,
+          "toma": "Diseñar el primer mockup.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 35,
+          "toma": "Diseñar el segundo mockup.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 35,
+          "toma": "Diseñar el tercer mockup.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Comparar los tres juntos.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Corregir proporciones y estampa.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Exportar versiones para mostrar.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Tres productos posibles» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Crear tres mockups comparables."
+    },
+    {
+      "id": "ep3_b10",
+      "bloque": 10,
+      "plantilla": "B10 P10",
+      "dia": 8,
+      "nombre": "La ropa tenía que poder fabricarse",
+      "tipo": "realidad_de_produccion",
+      "emocion_principal": "presion",
+      "duracion_segundos": 130,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Confrontar los mockups con costos reales.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Buscar telas adecuadas.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Buscar precios por metro o kilo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Consultar estampa y etiquetas.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Comparar qué mockup sería más barato.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Detectar el costo alto de una sola muestra.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Decidir buscar un costurero.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La ropa tenía que poder fabricarse» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Confrontar los mockups con costos reales."
+    },
+    {
+      "id": "ep3_b11",
+      "bloque": 11,
+      "plantilla": "B11 P11",
+      "dia": 8,
+      "nombre": "Llamar a costureros",
+      "tipo": "busqueda_de_proveedor",
+      "emocion_principal": "incertidumbre",
+      "duracion_segundos": 180,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Encontrar un costurero que acepte una sola muestra.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Buscar talleres y contactos.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 30,
+          "toma": "Primera llamada: trabajan por cantidad.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Segunda llamada: precio demasiado alto.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Mensajes sin respuesta.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 30,
+          "toma": "Nueva llamada explicando el proyecto.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 25,
+          "toma": "Una persona acepta evaluar una muestra.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto",
+            "personas"
+          ]
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 20,
+          "toma": "Guardar contacto y condiciones.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «Llamar a costureros» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Encontrar un costurero que acepte una sola muestra."
+    },
+    {
+      "id": "ep3_b12",
+      "bloque": 12,
+      "plantilla": "B12 P12",
+      "dia": 8,
+      "nombre": "Encontré a alguien, pero faltaba elegir",
+      "tipo": "avance_incompleto",
+      "emocion_principal": "alivio",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Dar una pequeña victoria sin resolver el producto.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Repetir la parte clave de la llamada.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Avanzar el bloque «Encontré a alguien, pero faltaba elegir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Mostrar el contacto guardado.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Avanzar el bloque «Encontré a alguien, pero faltaba elegir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Comparar otra vez los tres mockups.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Avanzar el bloque «Encontré a alguien, pero faltaba elegir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Reconocer el riesgo de elegir mal.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Encontré a alguien, pero faltaba elegir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Decidir llevarlos a la calle.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Avanzar el bloque «Encontré a alguien, pero faltaba elegir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Dar una pequeña victoria sin resolver el producto."
+    },
+    {
+      "id": "ep3_b13",
+      "bloque": 13,
+      "plantilla": "B13 P13",
+      "dia": 8,
+      "nombre": "Preparar el estudio de mercado",
+      "tipo": "preparacion",
+      "emocion_principal": "enfoque",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Preparar entrevistas comparables.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Escribir preguntas sobre estilo y precio.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Preparar el estudio de mercado» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Preparar mockups en el celular o impresos.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Preparar el estudio de mercado» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular",
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Definir datos a registrar.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Preparar el estudio de mercado» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Preparar una tabla de resultados.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Preparar el estudio de mercado» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Plantear la misión del día 9.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Preparar el estudio de mercado» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Preparar entrevistas comparables."
+    },
+    {
+      "id": "ep3_b14",
+      "bloque": 14,
+      "plantilla": "B14 P14",
+      "dia": 9,
+      "nombre": "Conocer cómo se viste la gente",
+      "tipo": "apertura_de_dia",
+      "emocion_principal": "curiosidad_social",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Presentar el estudio de mercado.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Llegar a otra zona con estilos variados.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad_social",
+          "funcion_narrativa": "Avanzar el bloque «Conocer cómo se viste la gente» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Mostrar outfits diferentes.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad_social",
+          "funcion_narrativa": "Avanzar el bloque «Conocer cómo se viste la gente» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Explicar qué información se busca.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad_social",
+          "funcion_narrativa": "Avanzar el bloque «Conocer cómo se viste la gente» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Mostrar los tres mockups.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad_social",
+          "funcion_narrativa": "Avanzar el bloque «Conocer cómo se viste la gente» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Acercarse a la primera persona.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad_social",
+          "funcion_narrativa": "Avanzar el bloque «Conocer cómo se viste la gente» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "mapa",
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Presentar el estudio de mercado."
+    },
+    {
+      "id": "ep3_b15",
+      "bloque": 15,
+      "plantilla": "B15 P15",
+      "dia": 9,
+      "nombre": "Entrevistas de estilo",
+      "tipo": "estudio_de_mercado",
+      "emocion_principal": "descubrimiento",
+      "duracion_segundos": 240,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Obtener respuestas reales sobre cómo se viste la gente.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 35,
+          "toma": "Primera entrevista completa.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 30,
+          "toma": "Segunda entrevista sobre calce y colores.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 30,
+          "toma": "Tercera entrevista sobre precio.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 35,
+          "toma": "Entrevista con alguien de estilo under.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 30,
+          "toma": "Comparar respuestas contradictorias.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 30,
+          "toma": "Montaje de respuestas rápidas.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 25,
+          "toma": "Mostrar qué mockup empieza a repetirse.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 8,
+          "duracion_segundos": 25,
+          "toma": "Reflexión posterior.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Avanzar el bloque «Entrevistas de estilo» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Obtener respuestas reales sobre cómo se viste la gente."
+    },
+    {
+      "id": "ep3_b16",
+      "bloque": 16,
+      "plantilla": "B16 P16",
+      "dia": 9,
+      "nombre": "Ordenar las respuestas",
+      "tipo": "analisis",
+      "emocion_principal": "claridad",
+      "duracion_segundos": 130,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Convertir opiniones en una decisión.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Contar votos por producto.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Ordenar preferencias de color.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Comparar precios posibles.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Anotar observaciones sobre calce.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Cruzar demanda con costo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Revelar cuál producto tiene más sentido.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Ordenar las respuestas» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Convertir opiniones en una decisión."
+    },
+    {
+      "id": "ep3_b17",
+      "bloque": 17,
+      "plantilla": "B17 P17",
+      "dia": 9,
+      "nombre": "Elegir el primer producto",
+      "tipo": "decision",
+      "emocion_principal": "determinacion",
+      "duracion_segundos": 120,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Tomar la decisión principal del episodio.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Mostrar los tres mockups finales.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Descartar la primera opción.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Descartar la segunda opción.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Revelar el producto elegido.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Hacer ajustes finales.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Preparar el archivo para el costurero.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «Elegir el primer producto» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Tomar la decisión principal del episodio."
+    },
+    {
+      "id": "ep3_b18",
+      "bloque": 18,
+      "plantilla": "B18 P18",
+      "dia": 9,
+      "nombre": "Volver a llamar al costurero",
+      "tipo": "acuerdo_de_produccion",
+      "emocion_principal": "tension",
+      "duracion_segundos": 150,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Convertir la decisión en un acuerdo real.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Preparar mockup, medidas y referencias.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 30,
+          "toma": "Llamar al costurero del día 8.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 30,
+          "toma": "Explicar producto y detalles.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Acordar precio y tiempo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Confirmar una sola unidad.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Cerrar la forma de entrega.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «Volver a llamar al costurero» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Convertir la decisión en un acuerdo real."
+    },
+    {
+      "id": "ep3_b19",
+      "bloque": 19,
+      "plantilla": "B19 P19",
+      "dia": 9,
+      "nombre": "Encargar la primera muestra",
+      "tipo": "hito",
+      "emocion_principal": "orgullo",
+      "duracion_segundos": 140,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Mostrar el paso real hacia la primera muestra.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Enviar mockup y medidas.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Enviar referencias de tela y calce.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Confirmar presupuesto.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Pagar o dejar una seña.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Mostrar comprobante y dinero restante.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 25,
+          "toma": "Reflexión: el dinero de stickers empieza a crear ropa.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Avanzar el bloque «Encargar la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker",
+            "dinero"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "dinero",
+        "sticker"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar el paso real hacia la primera muestra."
+    },
+    {
+      "id": "ep3_b20",
+      "bloque": 20,
+      "plantilla": "B20 P20",
+      "dia": 9,
+      "nombre": "Lo que aprendí antes de producir",
+      "tipo": "balance",
+      "emocion_principal": "progreso",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Resumir la evolución del episodio.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Mapa de lugares visitados.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Avanzar el bloque «Lo que aprendí antes de producir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Mockups creados.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Avanzar el bloque «Lo que aprendí antes de producir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Fragmentos de entrevistas.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Avanzar el bloque «Lo que aprendí antes de producir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Contacto del costurero y producto elegido.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Avanzar el bloque «Lo que aprendí antes de producir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Reflexión final sobre decidir con información.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Avanzar el bloque «Lo que aprendí antes de producir» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Resumir la evolución del episodio."
+    },
+    {
+      "id": "ep3_b21",
+      "bloque": 21,
+      "plantilla": "B21 P21",
+      "dia": 9,
+      "nombre": "Esperando la primera muestra",
+      "tipo": "cliffhanger",
+      "emocion_principal": "expectativa",
+      "duracion_segundos": 70,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Cerrar sin mostrar la muestra y abrir el próximo episodio.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Mensaje confirmando que comienza el trabajo.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Esperando la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Mockup junto a tela o espacio vacío.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Esperando la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 15,
+          "toma": "Calendario o fecha acordada.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Esperando la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Plano mirando el celular esperando novedades.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Avanzar el bloque «Esperando la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 10,
+          "toma": "Corte a negro: próximo episodio, ir a buscar la muestra.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Esperando la primera muestra» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Cerrar sin mostrar la muestra y abrir el próximo episodio."
+    }
+  ],
+  "schema_version": "2.0-compatible",
+  "nota_para_codex": "Importar este archivo como un episodio independiente. No reemplazar otros episodios. No borrar campos antiguos. Para cada escena usar escena.toma; si falta, usar accion, contenido, descripcion o plano. Nunca guardar 'Toma sin definir' si existe texto en cualquier campo compatible.",
+  "recursos_generales": [
+    {
+      "id": "sticker",
+      "nombre": "Stickers del reto",
+      "tipo": "objeto"
+    },
+    {
+      "id": "dinero",
+      "nombre": "Dinero y comprobantes reales",
+      "tipo": "documento"
+    },
+    {
+      "id": "celular",
+      "nombre": "Mensajes, llamadas y publicaciones",
+      "tipo": "captura"
+    },
+    {
+      "id": "mapa",
+      "nombre": "Mapa y recorridos",
+      "tipo": "mapa"
+    },
+    {
+      "id": "producto",
+      "nombre": "Mockups, muestra, prendas, tela o molde",
+      "tipo": "producto"
+    },
+    {
+      "id": "personas",
+      "nombre": "Entrevistas, compradores y colaboradores",
+      "tipo": "personas"
+    },
+    {
+      "id": "contador",
+      "nombre": "Contadores visuales de progreso",
+      "tipo": "overlay"
+    }
+  ]
+}

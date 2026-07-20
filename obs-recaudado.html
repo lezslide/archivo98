@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OBS Recaudado</title>
+<style>
+*{box-sizing:border-box}
+:root{--green:#00ff00;--ink:#050505;--paper:#ffffff;--lime:#050505;--pink:#f2f2f2;--blue:#d7d7d7}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--green);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body.transparent{background:transparent}
+.overlay{position:absolute;left:32px;bottom:32px;width:min(520px,calc(100vw - 64px));border:5px solid var(--ink);border-radius:26px;background:var(--paper);box-shadow:10px 12px 0 rgba(7,16,23,.85);overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 16px;background:var(--ink);color:#fff;border-bottom:4px solid var(--ink);text-transform:uppercase;font-weight:900}
+.top span{font-size:12px}.live{display:inline-flex;align-items:center;gap:7px}.live:before{content:"";width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 0 4px rgba(239,68,68,.2)}
+.main{display:grid;gap:12px;padding:16px}
+.label{font-size:12px;text-transform:uppercase;font-weight:900;color:rgba(7,16,23,.66)}
+.money{font-size:clamp(42px,8vw,78px);line-height:.92;font-weight:1000;letter-spacing:0;overflow-wrap:anywhere}
+.subgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pill{border:3px solid var(--ink);border-radius:18px;background:var(--blue);padding:10px;font-weight:900}.pill.pink{background:var(--pink)}.pill strong{display:block;margin-top:2px;font-size:25px}
+.bar-wrap{display:grid;gap:7px}.bar-meta{display:flex;justify-content:space-between;font-size:11px;font-weight:900;text-transform:uppercase}.bar{height:18px;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff}.fill{height:100%;width:0;background:var(--ink)}
+.last{border:3px solid var(--ink);border-radius:18px;background:var(--pink);padding:11px;font-weight:900}.last small{display:block;color:rgba(7,16,23,.66);text-transform:uppercase}.last div{margin-top:4px;font-size:18px}
+.updated{font-size:10px;text-transform:uppercase;font-weight:900;color:rgba(7,16,23,.55)}
+.corner-top-right{left:auto;right:32px;bottom:auto;top:32px}.corner-top-left{bottom:auto;top:32px}.corner-bottom-right{left:auto;right:32px}
+.compact{width:390px}.compact .money{font-size:46px}.compact .subgrid{grid-template-columns:1fr}.compact .last{display:none}
+@media(max-width:620px){.overlay{left:14px;right:14px;bottom:14px;width:auto}.subgrid{grid-template-columns:1fr}.money{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="overlay" id="overlay">
+  <div class="top"><span>Ventas del reto</span><span class="live">Kick live</span></div>
+  <section class="main">
+    <div>
+      <div class="label">Total actual</div>
+      <div class="money" id="money">$0.00</div>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar-meta"><span>Meta plata</span><span id="moneyPercent">0%</span></div>
+      <div class="bar"><div class="fill" id="moneyFill"></div></div>
+    </div>
+    <div class="subgrid">
+      <div class="pill"><span class="label">Unidades</span><strong id="units">0</strong></div>
+      <div class="pill pink"><span class="label">KM</span><strong id="km">0 / 0</strong></div>
+    </div>
+    <div class="last"><small>Ultima venta</small><div id="lastSale">Esperando venta</div></div>
+    <div class="updated" id="updated">Conectando...</div>
+  </section>
+</main>
+<script>
+const params=new URLSearchParams(location.search);
+const overlay=document.getElementById("overlay");
+const position=params.get("pos")||"bottom-left";
+if(position==="top-right")overlay.classList.add("corner-top-right");
+if(position==="top-left")overlay.classList.add("corner-top-left");
+if(position==="bottom-right")overlay.classList.add("corner-bottom-right");
+if(params.get("compact")==="1")overlay.classList.add("compact");
+if(params.get("transparent")==="1")document.body.classList.add("transparent");
+
+function formatMoney(value){
+  return `$${(Number(value)||0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}`;
+}
+function percent(value,total){
+  const next=total?Math.round((Number(value||0)/Number(total||1))*100):0;
+  return Math.max(0,Math.min(100,next));
+}
+function saleTotal(sale){return Number(sale.total ?? sale.price) || 0}
+function saleQty(sale){return Math.max(1,Number(sale.quantity)||1)}
+function render(record){
+  if(!record){
+    document.getElementById("updated").textContent="Sin datos cargados";
+    return;
+  }
+  const sales=Array.isArray(record.sales)?record.sales:[];
+  const moneyPercent=percent(record.money,record.moneyGoal);
+  document.getElementById("money").textContent=formatMoney(record.money);
+  document.getElementById("moneyPercent").textContent=`${moneyPercent}%`;
+  document.getElementById("moneyFill").style.width=`${moneyPercent}%`;
+  document.getElementById("units").textContent=sales.reduce((sum,sale)=>sum+saleQty(sale),0);
+  document.getElementById("km").textContent=`${Number(record.km||0).toLocaleString("es-AR")} / ${Number(record.kmGoal||0).toLocaleString("es-AR")}`;
+  const last=sales[0];
+  document.getElementById("lastSale").textContent=last?`${saleQty(last)} ${last.name||"Producto"} + ${formatMoney(saleTotal(last))}`:"Esperando venta";
+  document.getElementById("updated").textContent=`Actualizado ${new Date(record.updatedAt||Date.now()).toLocaleTimeString("es-AR",{hour:"2-digit",minute:"2-digit",second:"2-digit"})}`;
+}
+async function load(){
+  try{
+    const query=new URLSearchParams();
+    if(params.get("date"))query.set("date",params.get("date"));
+    query.set("_",String(Date.now()));
+    const response=await fetch(`/api/sales-overlay?${query.toString()}`,{cache:"no-store"});
+    const body=await response.json();
+    if(!response.ok)throw new Error(body.error||"Error");
+    render(body.record);
+  }catch(error){
+    document.getElementById("updated").textContent="Overlay sin conexion";
+  }
+}
+load();
+setInterval(load,Number(params.get("ms"))||2500);
+</script>
+</body>
+</html>

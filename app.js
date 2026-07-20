@@ -1,11 +1,17 @@
-const SUPABASE_URL = "https://simmltkpoqfrbkianyza.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_PnA09ddT1Jz_hWAS0TRCbw_lG_Jd3pE";
+﻿const SUPABASE_URL = "https://qttxcfbgyfmvyglzwxct.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
 
 const hasSupabaseConfig =
   SUPABASE_URL &&
   SUPABASE_ANON_KEY &&
   !SUPABASE_URL.includes("PONER_TU_SUPABASE_URL") &&
   !SUPABASE_ANON_KEY.includes("PONER_TU_SUPABASE_ANON_KEY");
+
+const PUBLIC_APP_IDS = new Set(["users"]);
+const PRIVATE_APP_IDS = new Set(["alaxd-overlay", "sales-goals", "episode-constructor", "creator-pro"]);
+const PRIVATE_ACCESS_CODES = [
+  [116, 117, 109, 98, 101, 114, 106, 101, 114, 101, 109, 121, 64, 103, 109, 97, 105, 108, 46, 99, 111, 109],
+];
 
 const SKINS = [
   {
@@ -38,14 +44,14 @@ const SKINS = [
   },
 ];
 
-const EMOJIS = ["😀", "😈", "🔥", "💀", "🖤", "⚡", "🎮", "💸"];
+const EMOJIS = ["ðŸ˜€", "ðŸ˜ˆ", "ðŸ”¥", "ðŸ’€", "ðŸ–¤", "âš¡", "ðŸŽ®", "ðŸ’¸"];
 
 const MOBILE_BREAKPOINT = 768;
 const EMOJI_GROUPS = {
-  under: ["🖤","⛓️","🕷️","🌑","🔮","🪦","🩸","🦇","🗡️","🔪","⚰️","🕯️","🌫️","👁️","🧿","🥀","🫀","🐍","🦂","🪬","🩶","🧨","🌧️","🧊","🪩","🕶️","🎱","🪐","🌘","💿"],
-  gamer: ["🎮","🕹️","👾","🏆","💥","⚡","🔥","🎯","🚀","🛡️","🗺️","🎲","⌨️","🖥️","🔫","🪓","⚔️","🏹","🧠","💣","🔋","🧪","🧬","🤖","🚨","🏁","⏳","📡","🪙","💾"],
-  meme: ["😂","🤣","💀","🤡","🗿","😎","🤯","😭","🙃","🫠","🥴","🤨","😏","😳","🤝","🫡","🐸","🍷","🧃","🍌","🫵","🤌","😶‍🌫️","😬","😹","🙈","👀","🤓","😴","🧠"],
-  classic: ["😀","😁","😄","😅","😊","😉","😍","😘","😜","🤔","😴","😡","😱","😇","😎","😈","👻","💖","💔","👍","👎","👏","🙏","💪","🎉","🎵","🌈","☀️","⭐","💸"],
+  under: ["ðŸ–¤","â›“ï¸","ðŸ•·ï¸","ðŸŒ‘","ðŸ”®","ðŸª¦","ðŸ©¸","ðŸ¦‡","ðŸ—¡ï¸","ðŸ”ª","âš°ï¸","ðŸ•¯ï¸","ðŸŒ«ï¸","ðŸ‘ï¸","ðŸ§¿","ðŸ¥€","ðŸ«€","ðŸ","ðŸ¦‚","ðŸª¬","ðŸ©¶","ðŸ§¨","ðŸŒ§ï¸","ðŸ§Š","ðŸª©","ðŸ•¶ï¸","ðŸŽ±","ðŸª","ðŸŒ˜","ðŸ’¿"],
+  gamer: ["ðŸŽ®","ðŸ•¹ï¸","ðŸ‘¾","ðŸ†","ðŸ’¥","âš¡","ðŸ”¥","ðŸŽ¯","ðŸš€","ðŸ›¡ï¸","ðŸ—ºï¸","ðŸŽ²","âŒ¨ï¸","ðŸ–¥ï¸","ðŸ”«","ðŸª“","âš”ï¸","ðŸ¹","ðŸ§ ","ðŸ’£","ðŸ”‹","ðŸ§ª","ðŸ§¬","ðŸ¤–","ðŸš¨","ðŸ","â³","ðŸ“¡","ðŸª™","ðŸ’¾"],
+  meme: ["ðŸ˜‚","ðŸ¤£","ðŸ’€","ðŸ¤¡","ðŸ—¿","ðŸ˜Ž","ðŸ¤¯","ðŸ˜­","ðŸ™ƒ","ðŸ« ","ðŸ¥´","ðŸ¤¨","ðŸ˜","ðŸ˜³","ðŸ¤","ðŸ«¡","ðŸ¸","ðŸ·","ðŸ§ƒ","ðŸŒ","ðŸ«µ","ðŸ¤Œ","ðŸ˜¶â€ðŸŒ«ï¸","ðŸ˜¬","ðŸ˜¹","ðŸ™ˆ","ðŸ‘€","ðŸ¤“","ðŸ˜´","ðŸ§ "],
+  classic: ["ðŸ˜€","ðŸ˜","ðŸ˜„","ðŸ˜…","ðŸ˜Š","ðŸ˜‰","ðŸ˜","ðŸ˜˜","ðŸ˜œ","ðŸ¤”","ðŸ˜´","ðŸ˜¡","ðŸ˜±","ðŸ˜‡","ðŸ˜Ž","ðŸ˜ˆ","ðŸ‘»","ðŸ’–","ðŸ’”","ðŸ‘","ðŸ‘Ž","ðŸ‘","ðŸ™","ðŸ’ª","ðŸŽ‰","ðŸŽµ","ðŸŒˆ","â˜€ï¸","â­","ðŸ’¸"],
 };
 
 const SLOT_SYMBOLS = [
@@ -71,9 +77,9 @@ const SLOT_ALBUM_PRIZE = 500;
 const SLOT_SYMBOL_BASE_WEIGHTS = [2, 26, 22, 18, 15, 12, 8, 1];
 const DEFAULT_MUSIC_COVER = "https://cdn.shopify.com/s/files/1/0995/6432/3185/files/winunder.png?v=1775529015";
 const GLOBAL_CHAT_PROHIBITED_KEYWORDS = [
-  "asesinato", "asesinar", "matar", "muerto", "cadaver", "cadáver", "gore", "sangre",
-  "decapitado", "decapitado", "descuartizado", "violacion", "violación", "porno", "porn",
-  "pornografia", "pornografía", "xxx", "nudes", "nude", "desnuda", "desnudo", "sexual",
+  "asesinato", "asesinar", "matar", "muerto", "cadaver", "cadÃ¡ver", "gore", "sangre",
+  "decapitado", "decapitado", "descuartizado", "violacion", "violaciÃ³n", "porno", "porn",
+  "pornografia", "pornografÃ­a", "xxx", "nudes", "nude", "desnuda", "desnudo", "sexual",
 ];
 
 const CREATIVE_STYLE_SEEDS = [
@@ -106,7 +112,252 @@ const CREATIVE_VISUAL_SEEDS = [
   "lycra, denim y luz de kiosco",
   "habitacion vacia con aura pop",
 ];
-const FORCED_ADMIN_EMAILS = ["jeremiastumber1@gmail.com"];
+const EPISODE_BUILDER_STORAGE_KEY = "archivo98_episode_constructor_v3";
+const EPISODE_BUILDER_SELECTED_KEY = "archivo98_episode_constructor_selected";
+const EPISODE_BUILDER_EPISODES = [1, 2, 3, 4, 5, 6];
+const EPISODE_BUILDER_GUIDE_VERSION = 3;
+const EPISODE_ONE_TEMPLATE_URL = "./assets/episodio_1_codex_corregido.json";
+const EPISODE_BUILDER_DAYS = 3;
+const EPISODE_DEFAULT_BLOCKS_PER_DAY = 7;
+const EPISODE_DAY_EMOTIONS = ["curiosidad", "tension", "resolucion"];
+const EPISODE_FIELDS = [
+  "titulo",
+  "cantidad_bloques",
+  "objetivo",
+  "gancho_1",
+  "gancho_2",
+  "gancho_3",
+  "cliffhanger",
+  "dinero_inicial",
+  "dinero_final",
+  "km_iniciales",
+  "km_finales",
+  "estado",
+];
+const EPISODE_DAY_BLOCKS = [
+  "gancho",
+  "contexto",
+  "objetivo",
+  "preparacion",
+  "conflicto",
+  "avance",
+  "cierre",
+];
+const EPISODE_BLOCK_FIELDS = [
+  "descripcion",
+  "emocion",
+  "plantilla_numero",
+  "duracion",
+  "dialogo",
+  "voz_en_off",
+  "pregunta_camarografo",
+  "musica",
+  "separador_final",
+  "prioridad",
+  "estado",
+  "tomas",
+  "instruccion_editor",
+];
+const EPISODE_TEMPLATE_LIBRARY = {
+  ganchos: [
+    "Hoy el objetivo parece simple, pero cada minuto lo vuelve mas caro.",
+    "Si esto sale mal, el episodio termina antes de empezar.",
+    "Tres dias para convertir una idea chica en una prueba real.",
+    "La camara entra cuando todavia no hay plan B.",
+  ],
+  curiosidad: [
+    "Mostrar una pista incompleta y prometer resolverla en el siguiente bloque.",
+    "Presentar un dato raro antes de explicar por que importa.",
+    "Abrir una pregunta visual: algo se ve, pero todavia no se entiende.",
+    "Usar una frase corta que obligue a esperar la respuesta.",
+  ],
+  tension: [
+    "El recurso clave falta justo cuando el plan parecia acomodado.",
+    "La plata alcanza menos de lo previsto y obliga a recortar una decision.",
+    "La ruta cambia por clima, cansancio o una respuesta inesperada.",
+    "La persona que podia ayudar no aparece y hay que improvisar.",
+  ],
+  caida: [
+    "La meta se cumple, pero aparece un costo que obliga a frenar antes de perderlo todo.",
+    "El bloque cambia de energia: de avance a peligro concreto, con una decision de retirada.",
+    "Mostrar la amenaza sin exagerarla: oscuridad, plata, celular, cansancio o contexto inseguro.",
+    "Cerrar la caida con una pregunta practica: si conviene seguir o proteger lo conseguido.",
+  ],
+  avance: [
+    "Cerrar una mini meta visible: plata, km, contacto, venta o aprendizaje.",
+    "Registrar una mejora pequena pero comprobable frente a camara.",
+    "Comparar el antes y despues del dia con una placa simple.",
+    "Convertir un error en una decision nueva para el siguiente bloque.",
+  ],
+  presion: [
+    "Poner reloj, meta y distancia emocional: falta poco, pero cualquier intento puede fallar.",
+    "Acelerar cortes y contador para que la editora sienta carrera contra el tiempo.",
+    "Usar rechazos rapidos antes del intento que destraba la meta.",
+    "Combinar respiracion corta, mirada al reloj y numero faltante para sostener urgencia.",
+  ],
+  urgencia: [
+    "La meta se logro, pero ahora hay que llegar a tiempo a una accion concreta.",
+    "Transformar el avance en carrera: caminar, consultar horario, cruzar, llamar o apurar compra.",
+    "Usar planos de traslado para que la energia no caiga despues de cumplir la meta.",
+    "Cerrar con entrega o encargo realizado, dejando pendiente ver el resultado.",
+  ],
+  humano: [
+    "Bajar la velocidad y mostrar cansancio, duda o alivio sin explicar de mas.",
+    "Dejar una pregunta del camarografo que saque una respuesta real.",
+    "Mostrar una micro reaccion antes de volver al objetivo.",
+    "Usar silencio, mirada o gesto como puente emocional.",
+  ],
+  revelacion: [
+    "Preparar el objeto final antes de mostrarlo completo: manos, bolsa, papel, espera.",
+    "Revelar con antes/despues claro: de un sticker a una plancha con cien oportunidades.",
+    "Dejar que el plano respire para que la recompensa se entienda sin sobreexplicar.",
+    "Unir satisfaccion con nuevo peso: ya no es promesa, ahora hay producto real.",
+  ],
+  mision: [
+    "Convertir la recompensa en un plan nuevo con pasos concretos: vender, reinvertir, repetir.",
+    "Mostrar que el episodio no termina en premio sino en sistema para seguir creciendo.",
+    "Usar mapa, numeros y stock para abrir una mision mas grande que el bloque anterior.",
+    "Cerrar con decision activa: que se hace manana con lo que ya se consiguio.",
+  ],
+  resolucion: [
+    "Terminar con numeros reales y una emocion honesta, sin maquillar.",
+    "Mostrar lo conseguido y tambien lo que quedo abierto.",
+    "Cerrar con una accion concreta para manana.",
+    "Dejar una imagen final que resuma el costo del intento.",
+  ],
+  cliffhanger: [
+    "La ultima frase abre una duda que no se puede resolver hoy.",
+    "Cerrar con una llamada o mensaje que cambia la ruta.",
+    "Dejar un objeto, ticket o mapa como promesa del proximo dia.",
+    "Apagar la camara justo antes de revelar la decision dificil.",
+  ],
+  final_abierto: [
+    "Cerrar la transformacion lograda y abrir inmediatamente el problema del episodio siguiente.",
+    "La ultima imagen debe sentirse como victoria incompleta: hay cien stickers, pero falta venderlos.",
+    "Anticipar una caida futura sin resolverla, para que la editora conecte con el proximo video.",
+    "Terminar con orgullo e intriga: lo conseguido pesa tanto como el desafio que viene.",
+  ],
+};
+const OFFICIAL_ACCOUNT_EMAILS = [["tumberjeremy", "gmail.com"], ["tumberjeremy", "gmal.com"]].map((parts) => parts.join("@"));
+const FORCED_ADMIN_EMAILS = ["jeremiastumber1@gmail.com", ...OFFICIAL_ACCOUNT_EMAILS];
+const UNDER_BOT_NAMES = [
+  "emo.culture", "under.darkk", "velvet.error", "r0pa.negra", "sadclub.uy", "afterglow.ba", "kiosk.angel", "trash.luxe",
+  "night.archive", "feria.ghost", "lowkey.musa", "bruma.exe", "vhs.mood", "rimmel.fail", "piba.noise", "neo.barrio",
+  "cold.denim", "late.checkout", "microdrop", "glitch.monte", "bunker.fit", "sombra.lila", "club.ansiedad", "darkitos",
+  "cyber.feria", "percha404", "vinilo.sucio", "hoodieangel", "plata.triste", "malla.nocturna", "ruido.fino", "casi.vip",
+  "under.tienda", "mirror.selfie", "lento.wav", "poxi.pop", "blacktag", "mood.bolsita", "calle.pixel", "ojera.club",
+  "soft.knife", "feral.look", "cromado.uy", "drip.mate", "luz.kiosco", "rare.talle", "baja.fidelidad", "playlist.rota",
+  "prenda.unica", "tinta.fria", "morocha.web", "rave.feria", "noir.delivery", "bolsa.negra", "zapas.mojadas", "angel.rar",
+  "subsuelo.pop", "campera.vieja", "limbo.fit", "fake.lujo", "motel.neon", "chomba.dark", "cargo.soul", "noche.zip",
+  "rip.stock", "talle.uno", "flash.crudo", "arco.under", "buzo.fantasma", "feria.latam", "brillo.raro", "gris.mental",
+  "blonda.exe", "club.periferia", "lluvia.denim", "neon.pobre", "mate.noir", "pasto.sintetico", "daga.pop", "sudor.club",
+  "rosa.mugre", "trapera.fina", "altar.fit", "pocket.uy", "pantalon.bug", "santo.drop", "webcam.triste", "aura.barata",
+  "lapiz.negro", "vidriera.404", "gomaespuma", "nube.rancia", "corte.raro", "pichi.glam", "bondi.night", "filtro.azul",
+  "sirena.ba", "llave.pixel", "boliche.vacio", "humo.talle", "cajonera", "tela.mental", "after.office", "raro.pero",
+  "lunar.fake", "musa.terminal", "gris.plateado", "pixel.feria", "eco.barrial", "satin.error", "local.fantasma", "cierre.zip",
+  "sombra.market", "chill.under", "palo.santo", "diorama.pop", "cable.suelto", "nylon.rosa", "club.delirio", "dromo.uy",
+];
+const UNDER_BOT_COLORS = ["#fb7185", "#a3e635", "#c084fc", "#38bdf8", "#facc15", "#f472b6", "#67e8f9", "#d8b4fe", "#fdba74", "#86efac"];
+const UNDER_BOT_ROLES = [
+  "habla de looks",
+  "manda referencias",
+  "vive en feria",
+  "escucha under",
+  "saca fotos con flash",
+  "arma playlist",
+  "comenta drops",
+  "mira la noche",
+  "opina de prendas",
+  "lurker activo",
+];
+const UNDER_BOT_PERSONAS = UNDER_BOT_NAMES.map((username, index) => ({
+  username,
+  initials: getUnderBotInitials(username),
+  nickColor: UNDER_BOT_COLORS[index % UNDER_BOT_COLORS.length],
+  textColor: index % 3 === 0 ? "#f3f4f6" : index % 3 === 1 ? "#eaffb7" : "#f3e8ff",
+  role: UNDER_BOT_ROLES[index % UNDER_BOT_ROLES.length],
+}));
+const UNDER_BOT_THREADS = [
+  [
+    { bot: "Mora Stock", text: "si el primer drop va con catalogo + mercado libre, las fotos tienen que parecer ficha tecnica pero con actitud: frente, detalle de costura, etiqueta y fit real." },
+    { bot: "Tano Percha", text: "total. y en feria lo mismo: si una campera tiene historia, se etiqueta como pieza unica. no es 'usado', es archivo." },
+    { bot: "Montevideo Flash", text: "esa lectura pega con la escena: Dillom, YSY A, Neo Pistea, PekeÃ±o 77, Zeballos... todos venden mundo antes que producto." },
+    { bot: "Nico Booth", text: "para mi el hilo es ropa + musica: playlist del drop, fotos con flash duro, y una mesa donde la gente pueda tocar las prendas." },
+  ],
+  [
+    { bot: "Lila Courier", text: "si user99 se libera en 5.000 km, yo lo haria como herramienta interna: stock, pedidos, talles, quien reservo y quien retiro." },
+    { bot: "Mora Stock", text: "y que marque estado de prenda: encontrada, lavada, fotografiada, publicada, vendida. eso te ordena antes de shopify." },
+    { bot: "Tano Percha", text: "ademas te evita vender dos veces la misma prenda. en feria eso pasa cuando la mesa esta prendida fuego." },
+  ],
+  [
+    { bot: "Montevideo Flash", text: "shopify en 10.000 tiene sentido si ya hay identidad. no abriria tienda vacia; abriria con 20 piezas muy claras." },
+    { bot: "Nico Booth", text: "20 piezas, un visual por drop y referencia musical. algo tipo 'asfalto mojado', no catalogo frio." },
+    { bot: "Mora Stock", text: "igual la descripcion tiene que vender: medidas, estado, textura, como queda. el under tambien necesita datos." },
+  ],
+  [
+    { bot: "Tano Percha", text: "ferias pop-up en 20.000 es perfecto. probas percheros, precios, trato con gente, y que prendas hacen que alguien frene." },
+    { bot: "Lila Courier", text: "yo haria una lista: mesa chica, espejo, bolsas, qr a shopify, playlist, cartel de talles y un formulario para comunidad." },
+    { bot: "Montevideo Flash", text: "si cae alguien por la musica, tiene que entender la ropa. si cae por ropa, tiene que sentir la musica. ahi nace la comunidad." },
+  ],
+  [
+    { bot: "Mora Stock", text: "el local de ropa en 30.000 no deberia ser solo local. deberia ser punto de encuentro: retiro, fotos, custom, mini drops." },
+    { bot: "Nico Booth", text: "y una pared para contenido. cada persona que prueba una pieza puede salir con foto vertical lista para historia." },
+    { bot: "Tano Percha", text: "el local fijo llega cuando la feria ya probo que hay movimiento. no antes." },
+  ],
+];
+
+function getUnderBotInitials(username) {
+  return String(username || "??")
+    .split(/[._-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase() || "??";
+}
+
+const UNDER_BOT_THREADS_V2 = [
+  [
+    { bot: "emo.culture", text: "holaa" },
+    { bot: "under.darkk", text: "esa campera rota vaa *** no pregunten" },
+    { bot: "r0pa.negra", text: "si el cierre esta medio muerto mejor... mas historia" },
+    { bot: "vhs.mood", text: "flash + pared fea = listo x_x" },
+  ],
+  [
+    { bot: "sadclub.uy", text: "q escuchan¿" },
+    { bot: "playlist.rota", text: "puse dillom y desp zeballos... nada q ver pero si" },
+    { bot: "glitch.monte", text: "yo elijo todo gigante cuando suena peke77 xd" },
+    { bot: "afterglow.ba", text: "musica triste = lana negra, no lo invente yo" },
+  ],
+  [
+    { bot: "feria.ghost", text: "feria d noche obvio" },
+    { bot: "luz.kiosco", text: "con luz mala todo queda mas real :P" },
+    { bot: "mirror.selfie", text: "de dia se vende, d noche se mitifica jaja" },
+    { bot: "cyber.feria", text: "empieza feria termina secta" },
+  ],
+  [
+    { bot: "kiosk.angel", text: "una remera rara > 20 prendas correctitas" },
+    { bot: "rare.talle", text: "talle unico pero decilo biennn" },
+    { bot: "blacktag", text: "etiqueta linda y ya parece reliquia" },
+    { bot: "bolsa.negra", text: "bolsa negra + sticker = archivo 2007" },
+  ],
+  [
+    { bot: "neo.barrio", text: "marca q parece fotolog viejo >>>" },
+    { bot: "trash.luxe", text: "fotos feas buenas, eso" },
+    { bot: "club.ansiedad", text: "igual pongan precio xq me pierdo :/" },
+    { bot: "velvet.error", text: "caos prolijamente roto" },
+  ],
+  [
+    { bot: "campera.vieja", text: "guardo ropa para una foto q nunca hago" },
+    { bot: "flash.crudo", text: "flash directo o nadaaaaa" },
+    { bot: "motel.neon", text: "fondo perfecto mata todo, sorry" },
+  ],
+  [
+    { bot: "sombra.market", text: "ml es caja, el mito va aca" },
+    { bot: "under.tienda", text: "catalogo = archivo / chat = quilombo lindo" },
+    { bot: "microdrop", text: "si nadie habla es solo web vacia :s" },
+  ],
+];
 
 const state = {
   zIndex: 20,
@@ -116,9 +367,23 @@ const state = {
   startMenuOpen: false,
   isAdmin: false,
   supabase: null,
+  supabaseLoadError: "",
+  authReady: false,
+  pendingInitialAppId: "",
   realtimeChannel: null,
   onlineInterval: null,
   globalMessages: [],
+  underBotMessages: [],
+  underBotChat: {
+    active: false,
+    timer: 0,
+    reactionTimers: [],
+    threadIndex: 0,
+    messageIndex: 0,
+    lastUserPrompt: "",
+    aiQueue: [],
+    aiLoading: false,
+  },
   generatedCodes: [],
   generatedCodeCursor: 0,
   musicTracks: [],
@@ -150,6 +415,7 @@ const state = {
     projectTitle: localStorage.getItem("user98_creative_project_title") || "",
     projectTagline: localStorage.getItem("user98_creative_project_tagline") || "",
   },
+  episodeBuilder: loadEpisodeBuilderDraft(),
   player: {
     audio: null,
     audioContext: null,
@@ -447,6 +713,8 @@ function serializeGlobalMessagePayload(payload) {
     text: payload.text || "",
     nickColor: payload.nickColor || state.user.nick_color || "#7dd3fc",
     textColor: payload.textColor || state.user.text_color || "#f3f4f6",
+    isBot: Boolean(payload.isBot),
+    botRole: payload.botRole || "",
   });
 }
 
@@ -459,6 +727,8 @@ function parseGlobalMessagePayload(message) {
     imageUrl: message.imageUrl || "",
     blurred: Boolean(message.blurred),
     isLocalOnly: false,
+    isBot: Boolean(message.isBot),
+    botRole: message.botRole || "",
   };
   try {
     const parsed = JSON.parse(message.content);
@@ -471,6 +741,8 @@ function parseGlobalMessagePayload(message) {
         imageUrl: String(parsed.imageUrl || ""),
         blurred: Boolean(parsed.blurred),
         isLocalOnly: Boolean(message.isLocalOnly),
+        isBot: Boolean(parsed.isBot || message.isBot),
+        botRole: String(parsed.botRole || message.botRole || ""),
       };
     }
   } catch (_error) {
@@ -492,13 +764,82 @@ function renderEmojiPicker(targetId, attrName) {
 function init() {
   loadStoredContacts();
   loadModerationStrikes();
+  ensureEpisodeConstructorLauncher();
+  updatePrivateAppVisibility();
   bindDesktop();
   bindStartMenu();
   updateClock();
   setInterval(updateClock, 1000);
   initSupabaseClient();
   applyUserSkin();
+  loadPublishedEpisodeTemplate().then((loaded) => {
+    if (!loaded) loadDefaultEpisodeBuilderScript();
+  });
+  openInitialAppFromUrl();
   window.addEventListener("orientationchange", adjustWindowsForViewport);
+}
+
+function getEpisodeConstructorIconMarkup() {
+  return `
+    <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+      <rect x="4" y="3" width="16" height="18" rx="2" fill="#f8fafc" stroke="#111827" stroke-width="1.4"/>
+      <path d="M8 7h8M8 11h8M8 15h5" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M5.8 7h1M5.8 11h1M5.8 15h1" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M14.2 14.2l2.2 2.2 3.1-4" stroke="#22c55e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Constructor</span>
+  `;
+}
+
+function ensureEpisodeConstructorLauncher() {
+  const shortcuts = document.getElementById("desktop-shortcuts");
+  if (shortcuts) {
+    let shortcut = shortcuts.querySelector('[data-app="episode-constructor"]');
+    if (!shortcut) {
+      shortcut = document.createElement("div");
+      shortcut.className = "shortcut";
+      shortcut.dataset.app = "episode-constructor";
+      shortcut.dataset.privateApp = "1";
+      shortcut.innerHTML = getEpisodeConstructorIconMarkup();
+    }
+    const proyectosShortcut = shortcuts.querySelector('[data-app="proyectos"]');
+    if (proyectosShortcut?.nextElementSibling !== shortcut) {
+      proyectosShortcut?.after(shortcut);
+    }
+  }
+
+  const startContent = document.querySelector("#start-menu .start-content");
+  if (startContent) {
+    let startItem = startContent.querySelector('[data-app="episode-constructor"]');
+    if (!startItem) {
+      startItem = document.createElement("button");
+      startItem.className = "start-item";
+      startItem.dataset.app = "episode-constructor";
+      startItem.dataset.privateApp = "1";
+      startItem.textContent = "Constructor de Episodios";
+    }
+    const proyectosItem = startContent.querySelector('[data-app="proyectos"]');
+    if (proyectosItem?.nextElementSibling !== startItem) {
+      proyectosItem?.after(startItem);
+    }
+  }
+}
+
+function openInitialAppFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("reset") === "episode-constructor" || params.get("resetConstructor") === "1") {
+    localStorage.removeItem(getEpisodeBuilderStorageKey());
+    state.episodeBuilder = createEpisodeBuilderDraft(getSelectedEpisodeNumber());
+    persistEpisodeBuilderDraft("Plantilla reiniciada a 21 bloques.");
+    loadDefaultEpisodeBuilderScript({ force: true });
+  }
+  const appId = params.get("app") || params.get("open");
+  if (!appId || !desktopApps[appId]) return;
+  if (!state.authReady && isProtectedApp(appId)) {
+    state.pendingInitialAppId = appId;
+    return;
+  }
+  requestAnimationFrame(() => openWindow(appId));
 }
 
 function isMobileViewport() {
@@ -530,20 +871,37 @@ function adjustWindowsForViewport() {
 
 function initSupabaseClient() {
   if (!hasSupabaseConfig) {
+    state.authReady = true;
     updateOnlineIndicator();
+    openPendingInitialApp();
+    return;
+  }
+
+  if (!window.supabase?.createClient) {
+    state.supabaseLoadError = "No se cargo la libreria de Supabase. Revisa la conexion a cdn.jsdelivr.net o instala el cliente local.";
+    state.authReady = true;
+    updateOnlineIndicator();
+    rerenderCoreApps();
+    openPendingInitialApp();
     return;
   }
 
   state.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  state.supabase.auth.getSession().then(({ data }) => {
-    handleSessionChange(data.session);
-  });
+  state.supabase.auth.getSession()
+    .then(({ data }) => {
+      handleSessionChange(data.session);
+    })
+    .catch((error) => {
+      console.error("No se pudo conectar con Supabase:", error);
+      updateOnlineIndicator();
+    });
   state.supabase.auth.onAuthStateChange((_event, session) => {
     handleSessionChange(session);
   });
 }
 
 async function handleSessionChange(session) {
+  state.authReady = true;
   if (!session?.user) {
     state.user.loggedIn = false;
     state.user.email = "";
@@ -556,8 +914,11 @@ async function handleSessionChange(session) {
     state.musicPending = [];
     state.rankings.lecoins = [];
     state.rankings.credits = [];
+    await initSupabase();
     updateOnlineIndicator();
+    updatePrivateAppVisibility();
     rerenderCoreApps();
+    openPendingInitialApp();
     return;
   }
 
@@ -575,14 +936,36 @@ async function handleSessionChange(session) {
   await loadSlot98Stickers();
   await initSupabase();
   updateOnlineIndicator();
+  updatePrivateAppVisibility();
   applyUserSkin();
   rerenderCoreApps();
+  openPendingInitialApp();
   const usersWindow = state.windows.get("users")?.element || document;
   setUserActionStatus(usersWindow, "");
 }
 
 function rerenderCoreApps() {
-  ["users", "chat-global", "private-chat", "slot98-game"].forEach(refreshWindow);
+  ["users", "chat-global", "private-chat", "slot98-game", "episode-constructor"].forEach(refreshWindow);
+}
+
+function getPrivateAccessList() {
+  return PRIVATE_ACCESS_CODES.map((codes) => String.fromCharCode(...codes));
+}
+
+function hasPrivateAppAccess() {
+  const current = normalizeEmail(state.user.email || "");
+  return Boolean(current) && getPrivateAccessList().includes(current);
+}
+
+function isPrivateApp(appId) {
+  return PRIVATE_APP_IDS.has(appId);
+}
+
+function updatePrivateAppVisibility() {
+  document.body.classList.toggle("private-apps-unlocked", hasPrivateAppAccess());
+  document.querySelectorAll("[data-app]").forEach((node) => {
+    if (isPrivateApp(node.dataset.app)) node.dataset.privateApp = "1";
+  });
 }
 
 function bindDesktop() {
@@ -591,6 +974,9 @@ function bindDesktop() {
     shortcut.addEventListener("click", () => {
       document.querySelectorAll(".shortcut").forEach((item) => item.classList.remove("selected"));
       shortcut.classList.add("selected");
+      if (isMobileViewport()) {
+        openMobileApp(shortcut.dataset.app);
+      }
     });
   });
 
@@ -604,14 +990,33 @@ function bindDesktop() {
   });
 }
 
+function toggleFullscreen() {
+  const root = document.documentElement;
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+    return;
+  }
+  if (root.requestFullscreen) {
+    root.requestFullscreen().catch(() => alert("En iPhone: Compartir > Agregar a inicio para usar pantalla completa."));
+    return;
+  }
+  alert("En iPhone: Compartir > Agregar a inicio para usar pantalla completa.");
+}
+
 function bindStartMenu() {
   document.getElementById("start-btn").addEventListener("click", () => {
     state.startMenuOpen ? closeStartMenu() : openStartMenu();
   });
 
+  document.getElementById("taskbar-fullscreen")?.addEventListener("click", toggleFullscreen);
+
   document.querySelectorAll(".start-item[data-app]").forEach((item) => {
     item.addEventListener("click", () => {
-      openWindow(item.dataset.app);
+      if (isMobileViewport()) {
+        openMobileApp(item.dataset.app);
+      } else {
+        openWindow(item.dataset.app);
+      }
       closeStartMenu();
     });
   });
@@ -629,7 +1034,37 @@ function closeStartMenu() {
   document.getElementById("start-menu").classList.add("hidden");
 }
 
+function openMobileApp(appId) {
+  if (!canOpenRegisteredApp(appId)) return;
+  if (appId === "creator-pro") {
+    window.location.href = "./creator-pro.html?v=direct-by-ep6-tomas-1";
+    return;
+  }
+  if (appId === "alaxd-overlay") {
+    window.location.href = "./alaxd.html?v=alaxd-5";
+    return;
+  }
+  if (appId === "under-maps") {
+    window.location.href = "./under-maps.html?v=under-maps-1";
+    return;
+  }
+  if (appId === "sales-goals") {
+    window.location.href = "./ventas-metas.html?v=sales-goals-16";
+    return;
+  }
+  if (appId === "sales-registry") {
+    window.location.href = "./ventas-registro.html?v=sales-registry-2";
+    return;
+  }
+  if (appId === "xp-agar-strike") {
+    window.location.href = "./xp-agar-strike.html?v=xp-agar-strike-1";
+    return;
+  }
+  openWindow(appId);
+}
+
 function openWindow(appId) {
+  if (!canOpenRegisteredApp(appId)) return;
   const existing = state.windows.get(appId);
   if (existing) {
     if (existing.minimized) {
@@ -667,6 +1102,37 @@ function openWindow(appId) {
   makeResizable(node);
   if (typeof app.bind === "function") app.bind(node);
   focusWindow(appId);
+}
+
+function isProtectedApp(appId) {
+  return appId && !PUBLIC_APP_IDS.has(appId);
+}
+
+function openPendingInitialApp() {
+  const appId = state.pendingInitialAppId;
+  state.pendingInitialAppId = "";
+  if (!appId) return;
+  requestAnimationFrame(() => openWindow(appId));
+}
+
+function canOpenRegisteredApp(appId) {
+  if (isPrivateApp(appId) && !hasPrivateAppAccess()) {
+    if (!state.authReady) {
+      state.pendingInitialAppId = appId;
+      return false;
+    }
+    alert(state.user.loggedIn ? "Acceso privado." : "Ingresa para continuar.");
+    if (appId !== "users") openWindow("users");
+    return false;
+  }
+  if (!isProtectedApp(appId) || state.user.loggedIn) return true;
+  if (!state.authReady) {
+    state.pendingInitialAppId = appId;
+    return false;
+  }
+  alert("Crea cuenta o ingresa para desbloquear todas las apps de user98.");
+  if (appId !== "users") openWindow("users");
+  return false;
 }
 
 function closeWindow(appId) {
@@ -908,7 +1374,16 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function isOfficialEmail(value) {
+  return OFFICIAL_ACCOUNT_EMAILS.includes(String(value || "").trim().toLowerCase());
+}
+
+function getPublicEmail(value) {
+  return isOfficialEmail(value) ? "" : String(value || "");
+}
+
 function getUsername() {
+  if (isOfficialEmail(state.user.email)) return "Archivo98 Oficial";
   return state.user.username || "Invitado";
 }
 
@@ -923,6 +1398,7 @@ function getAvatarMarkup(size = "small") {
 
 function getUserDisplayName(user) {
   if (!user) return "Anon";
+  if (isOfficialEmail(user.email)) return "Archivo98 Oficial";
   return user.username || (user.email ? user.email.split("@")[0] : "Anon");
 }
 
@@ -931,7 +1407,7 @@ function getKnownUserData(userId, fallbackUsername = "", fallbackAvatarUrl = "")
     return {
       id: state.user.id,
       username: getUsername(),
-      email: state.user.email,
+      email: getPublicEmail(state.user.email),
       avatar_url: state.user.avatar_url,
       bio: state.user.bio,
       role_label: state.user.role_label,
@@ -944,8 +1420,8 @@ function getKnownUserData(userId, fallbackUsername = "", fallbackAvatarUrl = "")
   if (contact) {
     return {
       id: contact.id,
-      username: contact.username,
-      email: contact.email,
+      username: getUserDisplayName(contact),
+      email: getPublicEmail(contact.email),
       avatar_url: contact.avatar_url || "",
       bio: contact.bio || "",
       role_label: contact.role_label || "",
@@ -1159,7 +1635,7 @@ function renderPublishedProjectCards() {
     <div class="creative-project-card">
       <div class="creative-project-top">
         <strong>${escapeHtml(project.title || "Proyecto sin titulo")}</strong>
-        <span>${escapeHtml(project.focus || "music")} · ${escapeHtml(project.mode || "artist")}</span>
+        <span>${escapeHtml(project.focus || "music")} Â· ${escapeHtml(project.mode || "artist")}</span>
       </div>
       <div class="creative-project-tagline">${escapeHtml(project.tagline || "Sin tagline")}</div>
       <div class="creative-project-copy">${escapeHtml(project.problem || "")}</div>
@@ -1170,7 +1646,7 @@ function renderPublishedProjectCards() {
         ${project.website_url ? `<a href="${escapeHtml(project.website_url)}" target="_blank" rel="noopener noreferrer">Abrir link</a>` : ""}
         <span>${escapeHtml(formatProjectDate(project.created_at))}</span>
       </div>
-      <div class="creative-project-meta">${escapeHtml(project.role_label || state.user.role_label || "")}${project.brand_name ? ` · ${escapeHtml(project.brand_name)}` : ""}</div>
+      <div class="creative-project-meta">${escapeHtml(project.role_label || state.user.role_label || "")}${project.brand_name ? ` Â· ${escapeHtml(project.brand_name)}` : ""}</div>
     </div>
   `).join("");
 }
@@ -1200,7 +1676,7 @@ function renderManagedProjectCards() {
         </div>
         <div class="creative-project-tagline">${escapeHtml(project.tagline || "Sin tagline")}</div>
         <div class="creative-project-links">
-          <span>${escapeHtml(project.focus || "music")} · ${escapeHtml(project.mode || "artist")}</span>
+          <span>${escapeHtml(project.focus || "music")} Â· ${escapeHtml(project.mode || "artist")}</span>
           <span>${escapeHtml(formatProjectDate(project.updated_at || project.created_at))}</span>
         </div>
         <div class="creative-project-copy">${escapeHtml(project.problem || "")}</div>
@@ -1223,7 +1699,7 @@ function renderPublicOnlyProjectCards() {
     <div class="creative-project-card">
       <div class="creative-project-top">
         <strong>${escapeHtml(project.title || "Proyecto sin titulo")}</strong>
-        <span>${escapeHtml(project.focus || "music")} · ${escapeHtml(project.mode || "artist")}</span>
+        <span>${escapeHtml(project.focus || "music")} Â· ${escapeHtml(project.mode || "artist")}</span>
       </div>
       <div class="creative-project-tagline">${escapeHtml(project.tagline || "Sin tagline")}</div>
       <div class="creative-project-copy">${escapeHtml(project.problem || "")}</div>
@@ -1337,7 +1813,7 @@ function renderPublicTrackList(tracks, emptyText) {
   }
   return tracks.map((track) => `
     <div class="public-track-row">
-      <div class="public-track-cover">${track.cover_url ? `<img src="${escapeHtml(track.cover_url)}" alt="${escapeHtml(track.title || "Track")}" />` : "<span>♪</span>"}</div>
+      <div class="public-track-cover">${track.cover_url ? `<img src="${escapeHtml(track.cover_url)}" alt="${escapeHtml(track.title || "Track")}" />` : "<span>â™ª</span>"}</div>
       <div class="public-track-meta">
         <strong>${escapeHtml(track.title || "Track sin titulo")}</strong>
         <span>${escapeHtml(track.artist || "Anon")}</span>
@@ -1398,7 +1874,7 @@ function openPublicProfile(userId, fallbackUser = {}) {
               </div>
             </section>
           </div>
-          <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Demo / Login pendiente"}</div></div>
+          <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Solo lectura"}</div></div>
         `;
       }
       return `
@@ -1407,7 +1883,7 @@ function openPublicProfile(userId, fallbackUser = {}) {
             ${renderProfileTrigger(userId, getUserDisplayName(user), user.avatar_url || "", "large", "large")}
             <div class="public-profile-copy">
               <div class="public-profile-name">${escapeHtml(getUserDisplayName(user))}</div>
-              <div class="public-profile-role">${escapeHtml(user.role_label || "Perfil creativo")}${user.brand_name ? ` · ${escapeHtml(user.brand_name)}` : ""}</div>
+              <div class="public-profile-role">${escapeHtml(user.role_label || "Perfil creativo")}${user.brand_name ? ` Â· ${escapeHtml(user.brand_name)}` : ""}</div>
               <div class="public-profile-bio">${escapeHtml(user.bio || "Todavia no cargo una bio publica.")}</div>
               <div class="public-profile-links">
                 ${user.instagram_handle ? `<span>@${escapeHtml(user.instagram_handle.replace(/^@+/, ""))}</span>` : ""}
@@ -1427,7 +1903,7 @@ function openPublicProfile(userId, fallbackUser = {}) {
                   <div class="creative-project-card">
                     <div class="creative-project-top">
                       <strong>${escapeHtml(project.title || "Proyecto")}</strong>
-                      <span>${escapeHtml(project.focus || "")} · ${escapeHtml(project.mode || "")}</span>
+                      <span>${escapeHtml(project.focus || "")} Â· ${escapeHtml(project.mode || "")}</span>
                     </div>
                     <div class="creative-project-tagline">${escapeHtml(project.tagline || "Sin tagline")}</div>
                     <div class="creative-project-copy">${escapeHtml(project.problem || "")}</div>
@@ -1649,15 +2125,16 @@ async function deleteCreativeProject(projectId) {
 }
 
 function isEffectiveAdmin() {
-  return state.isAdmin || FORCED_ADMIN_EMAILS.includes((state.user.email || "").toLowerCase());
+  return state.isAdmin || FORCED_ADMIN_EMAILS.includes((state.user.email || "").toLowerCase()) || isOfficialEmail(state.user.email);
 }
 
 async function initSupabase() {
-  if (!state.supabase || !state.user.loggedIn) return;
+  if (!state.supabase) return;
   await fetchRecentMessages();
+  subscribeToChat();
+  if (!state.user.loggedIn) return;
   await loadSocialGraph();
   await loadUserProjects();
-  subscribeToChat();
   startPresenceHeartbeat();
 }
 
@@ -1665,14 +2142,14 @@ function updateOnlineIndicator() {
   const indicator = document.getElementById("online-indicator");
   if (!indicator) return;
   if (!state.supabase) {
-    indicator.textContent = "Sin Supabase";
+    indicator.textContent = state.supabaseLoadError ? "Supabase no cargo" : "Sin Supabase";
     return;
   }
   if (!state.user.loggedIn) {
     indicator.textContent = "Offline";
     return;
   }
-  indicator.textContent = `Online · ${state.user.credits} cr`;
+  indicator.textContent = `Online Â· ${state.user.credits} cr`;
 }
 
 async function submitAuth(mode, win) {
@@ -1686,9 +2163,18 @@ async function submitAuth(mode, win) {
     return;
   }
 
-  const result = mode === "sign-up"
-    ? await state.supabase.auth.signUp({ email, password })
-    : await state.supabase.auth.signInWithPassword({ email, password });
+  let result;
+  try {
+    result = mode === "sign-up"
+      ? await state.supabase.auth.signUp({ email, password })
+      : await state.supabase.auth.signInWithPassword({ email, password });
+  } catch (error) {
+    console.error("Fallo de conexion con Supabase:", error);
+    const message = "No puedo conectar con Supabase. RevisÃ¡ que el proyecto/base estÃ© activo y que la SUPABASE_URL sea la actual.";
+    setUserActionStatus(win, message);
+    alert(message);
+    return;
+  }
 
   if (result.error) {
     setUserActionStatus(win, "");
@@ -1845,7 +2331,7 @@ async function saveProfileData() {
   const username = document.querySelector("#username-input")?.value.trim();
   const avatarUrl = document.querySelector("#avatar-input")?.value.trim() || "";
   if (!username) {
-    alert("Elegí un nombre visible.");
+    alert("ElegÃ­ un nombre visible.");
     return;
   }
 
@@ -1879,23 +2365,23 @@ async function updateUserPassword(win) {
 
   if (!nextPassword || !confirmPassword) {
     setUserActionStatus(win, "");
-    alert("Completá la nueva contraseña y su confirmación.");
+    alert("CompletÃ¡ la nueva contraseÃ±a y su confirmaciÃ³n.");
     return;
   }
 
   if (nextPassword.length < 6) {
     setUserActionStatus(win, "");
-    alert("La nueva contraseña debe tener al menos 6 caracteres.");
+    alert("La nueva contraseÃ±a debe tener al menos 6 caracteres.");
     return;
   }
 
   if (nextPassword !== confirmPassword) {
     setUserActionStatus(win, "");
-    alert("Las contraseñas no coinciden.");
+    alert("Las contraseÃ±as no coinciden.");
     return;
   }
 
-  setUserActionStatus(win, "Actualizando contraseña...");
+  setUserActionStatus(win, "Actualizando contraseÃ±a...");
   const { error } = await state.supabase.auth.updateUser({ password: nextPassword });
 
   if (error) {
@@ -1906,7 +2392,7 @@ async function updateUserPassword(win) {
 
   win.querySelector("#new-password-input").value = "";
   win.querySelector("#confirm-password-input").value = "";
-  setUserActionStatus(win, "Contraseña actualizada.");
+  setUserActionStatus(win, "ContraseÃ±a actualizada.");
 }
 
 async function signOutUser() {
@@ -2500,7 +2986,7 @@ function renderRetroTrackList() {
     <div class="retro-track-row ${track.id === state.player.currentTrackId ? "active" : ""}">
       <div class="retro-track-meta">
         <strong>${escapeHtml(track.title)}</strong>
-        <span>${escapeHtml(track.artist || "UNDER COMMUNITY")} · ${escapeHtml(String(track.play_count || 0))} plays · ${escapeHtml(String(track.like_count || 0))} likes</span>
+        <span>${escapeHtml(track.artist || "UNDER COMMUNITY")} Â· ${escapeHtml(String(track.play_count || 0))} plays Â· ${escapeHtml(String(track.like_count || 0))} likes</span>
       </div>
       <div class="retro-track-actions">
         <button type="button" class="retro-track-play" data-play-track-id="${escapeHtml(track.id)}">PLAY</button>
@@ -2517,8 +3003,8 @@ function renderRetroTrackListV2() {
   }
   return playlist.map((track) => {
     const metaLine = track.visibility === "private"
-      ? "Solo para vos · URL o upload privado"
-      : `${escapeHtml(track.artist || "UNDER COMMUNITY")} · ${escapeHtml(String(track.play_count || 0))} plays · ${escapeHtml(String(track.like_count || 0))} likes`;
+      ? "Solo para vos Â· URL o upload privado"
+      : `${escapeHtml(track.artist || "UNDER COMMUNITY")} Â· ${escapeHtml(String(track.play_count || 0))} plays Â· ${escapeHtml(String(track.like_count || 0))} likes`;
     return `
       <div class="retro-track-row ${track.id === state.player.currentTrackId ? "active" : ""}">
         <div class="retro-track-meta">
@@ -2781,11 +3267,11 @@ async function redeemPromoCode(code) {
     .maybeSingle();
 
   if (error || !data) {
-    alert("Código invalido.");
+    alert("CÃ³digo invalido.");
     return;
   }
   if (data.claimed_at || data.claimed_by) {
-    alert("Ese código ya fue usado.");
+    alert("Ese cÃ³digo ya fue usado.");
     return;
   }
 
@@ -2837,7 +3323,7 @@ async function addMusicTrack() {
   const streamUrl = document.querySelector("#music-url-input")?.value.trim();
   const coverUrl = document.querySelector("#music-cover-input")?.value.trim() || "";
   if (!title || !streamUrl) {
-    alert("Poné al menos titulo y URL.");
+    alert("PonÃ© al menos titulo y URL.");
     return;
   }
   const { error } = await state.supabase
@@ -2890,7 +3376,7 @@ async function submitCommunityTrack(win = document) {
   const visibility = win.querySelector("#music-submit-visibility")?.value === "public" ? "public" : "private";
   const file = state.musicUpload.file || win.querySelector("#music-submit-file")?.files?.[0];
   if (!title || (!directUrl && !file)) {
-    alert("Poné titulo y un MP3 por URL o archivo.");
+    alert("PonÃ© titulo y un MP3 por URL o archivo.");
     return;
   }
   let streamUrl = directUrl;
@@ -3370,7 +3856,7 @@ async function claimSlotAlbum() {
 }
 
 async function fetchRecentMessages() {
-  if (!state.supabase || !state.user.loggedIn) return;
+  if (!state.supabase) return;
   const { data, error } = await state.supabase
     .from("messages")
     .select("id,user_id,username,content,created_at")
@@ -3380,11 +3866,26 @@ async function fetchRecentMessages() {
 
   if (error) {
     console.error(error);
+    if (!state.user.loggedIn && window.location.protocol !== "file:") {
+      await fetchRecentMessagesFromPublicApi();
+    }
     return;
   }
 
   state.globalMessages = data || [];
   renderGlobalMessages();
+}
+
+async function fetchRecentMessagesFromPublicApi() {
+  try {
+    const response = await fetch("/api/global-messages", { headers: { Accept: "application/json" } });
+    if (!response.ok) return;
+    const data = await response.json();
+    state.globalMessages = Array.isArray(data.messages) ? data.messages : [];
+    renderGlobalMessages();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function subscribeToChat() {
@@ -3401,6 +3902,191 @@ function subscribeToChat() {
       renderGlobalMessages();
     })
     .subscribe();
+}
+
+function getUnderBotPersona(username) {
+  return UNDER_BOT_PERSONAS.find((bot) => bot.username === username) || UNDER_BOT_PERSONAS[0];
+}
+
+function createUnderBotMessage(username, text) {
+  const bot = getUnderBotPersona(username);
+  return {
+    id: `under-bot-${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    user_id: "",
+    username: bot.username,
+    content: serializeGlobalMessagePayload({
+      text,
+      nickColor: bot.nickColor,
+      textColor: bot.textColor,
+      isBot: true,
+      botRole: bot.role,
+    }),
+    isBot: true,
+    botRole: bot.role,
+    created_at: new Date().toISOString(),
+  };
+}
+
+function getFallbackUnderBotMessages(count = 3) {
+  const threads = Array.isArray(UNDER_BOT_THREADS_V2) && UNDER_BOT_THREADS_V2.length
+    ? UNDER_BOT_THREADS_V2
+    : UNDER_BOT_THREADS;
+  const thread = threads[state.underBotChat.threadIndex % threads.length] || [];
+  const messages = [];
+  while (messages.length < count && thread.length) {
+    const item = thread[state.underBotChat.messageIndex % thread.length];
+    state.underBotChat.messageIndex += 1;
+    if (state.underBotChat.messageIndex % thread.length === 0) {
+      state.underBotChat.threadIndex += 1;
+    }
+    messages.push({ username: item.bot, text: item.text });
+  }
+  return messages;
+}
+
+function pushUnderBotMessage(username, text) {
+  state.underBotMessages.push(createUnderBotMessage(username, text));
+  if (state.underBotMessages.length > 48) {
+    state.underBotMessages = state.underBotMessages.slice(-48);
+  }
+  renderGlobalMessages();
+}
+
+function getRecentUnderChatContext() {
+  return [...state.globalMessages, ...state.underBotMessages]
+    .slice(-12)
+    .map((message) => {
+      const parsed = parseGlobalMessagePayload(message);
+      return {
+        username: message.username || "Anon",
+        text: parsed.text || "",
+      };
+    })
+    .filter((message) => message.text);
+}
+
+async function requestGeminiUnderBotMessages(userMessage = "") {
+  if (state.underBotChat.aiLoading) return [];
+  if (window.location.protocol === "file:") return [];
+  state.underBotChat.aiLoading = true;
+  try {
+    const response = await fetch("/api/gemini-under-chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userMessage,
+        recentMessages: getRecentUnderChatContext(),
+        bots: UNDER_BOT_PERSONAS.map((bot) => bot.username),
+      }),
+    });
+    if (!response.ok) return [];
+    const data = await response.json();
+    return Array.isArray(data.messages) ? data.messages : [];
+  } catch (_error) {
+    return [];
+  } finally {
+    state.underBotChat.aiLoading = false;
+  }
+}
+
+function queueGeminiUnderBotBatch(userMessage = "") {
+  requestGeminiUnderBotMessages(userMessage).then((messages) => {
+    const nextMessages = messages.length ? messages : getFallbackUnderBotMessages(userMessage ? 2 : 4);
+    if (!nextMessages.length) return;
+    state.underBotChat.aiQueue.push(...nextMessages);
+    if (state.underBotChat.active && state.underBotChat.aiQueue.length === nextMessages.length) {
+      scheduleNextUnderBotMessage(700 + Math.floor(Math.random() * 1800));
+    }
+  });
+}
+
+function getUnderBotDelay() {
+  const delays = [900, 1700, 3200, 5400, 8800, 13000, 21000];
+  return delays[Math.floor(Math.random() * delays.length)];
+}
+
+function startUnderBotChat() {
+  if (state.underBotChat.active) return;
+  state.underBotChat.active = true;
+  queueGeminiUnderBotBatch();
+  scheduleNextUnderBotMessage(3500);
+}
+
+function scheduleNextUnderBotMessage(delay = getUnderBotDelay()) {
+  clearTimeout(state.underBotChat.timer);
+  state.underBotChat.timer = setTimeout(playNextUnderBotMessage, delay);
+}
+
+function playNextUnderBotMessage() {
+  if (!state.underBotChat.active) return;
+  const aiMessage = state.underBotChat.aiQueue.shift();
+  if (aiMessage) {
+    pushUnderBotMessage(aiMessage.username, aiMessage.text);
+    if (state.underBotChat.aiQueue.length < 1) {
+      queueGeminiUnderBotBatch();
+    }
+    scheduleNextUnderBotMessage(getUnderBotDelay());
+    return;
+  }
+
+  queueGeminiUnderBotBatch();
+  scheduleNextUnderBotMessage(18000 + Math.floor(Math.random() * 26000));
+}
+
+function queueUnderBotUserReaction(content) {
+  state.underBotChat.reactionTimers.forEach((timer) => clearTimeout(timer));
+  state.underBotChat.reactionTimers = [];
+
+  const normalized = normalizeText(content);
+  const fallbackReplies = [];
+  if (/hola|buenas|hey|holi|que onda|q onda/.test(normalized)) {
+    fallbackReplies.push(
+      { username: "emo.culture", text: "holaa" },
+      { username: "under.darkk", text: "q ondaaa *.* recien apareces?" },
+      { username: "vhs.mood", text: "estabamos medio muertos aca jaja" },
+    );
+  } else if (/ropa|prenda|campera|remera|pantalon|pantalÃ³n|drop/.test(normalized)) {
+    fallbackReplies.push(
+      { username: "r0pa.negra", text: "si la silueta mata ya fue... se perdona todo" },
+      { username: "feria.ghost", text: "rota pero linda = joya rara" },
+    );
+  } else if (/feria|popup|pop-up|local|showroom/.test(normalized)) {
+    fallbackReplies.push(
+      { username: "feria.ghost", text: "feria con espejo y musica, sino nooo" },
+      { username: "luz.kiosco", text: "con luz fea queda mejor igual :P" },
+    );
+  } else if (/musica|mÃºsica|under|artista|trap|rap/.test(normalized)) {
+    fallbackReplies.push(
+      { username: "playlist.rota", text: "con ese tema me pongo cualquier cosa negra y salgo" },
+      { username: "glitch.monte", text: "pasen nombre q toy en blanco" },
+    );
+  } else {
+    fallbackReplies.push(...getFallbackUnderBotMessages(2));
+  }
+
+  clearTimeout(state.underBotChat.timer);
+  scheduleUnderBotReactionBatch(fallbackReplies);
+
+  requestGeminiUnderBotMessages(content).then((messages) => {
+    const extraMessages = messages
+      .filter((message) => !fallbackReplies.some((fallback) => fallback.username === message.username && fallback.text === message.text))
+      .slice(0, 1);
+    if (extraMessages.length) scheduleUnderBotReactionBatch(extraMessages, 3300);
+  });
+}
+
+function scheduleUnderBotReactionBatch(messages, baseDelay = 450) {
+  const batch = messages.slice(0, 3);
+  batch.forEach((message, index) => {
+    const timer = setTimeout(() => {
+      pushUnderBotMessage(message.username, message.text);
+      if (index === batch.length - 1) {
+        state.underBotChat.reactionTimers = [];
+        scheduleNextUnderBotMessage(getUnderBotDelay());
+      }
+    }, baseDelay + index * (780 + Math.floor(Math.random() * 520)));
+    state.underBotChat.reactionTimers.push(timer);
+  });
 }
 
 async function sendGlobalMessage() {
@@ -3449,12 +4135,34 @@ async function sendGlobalMessage() {
     if (imageInput) imageInput.value = "";
     state.chatSelectedImageName = "";
     renderGlobalMessages();
+    queueUnderBotUserReaction(content);
     refreshWindow("chat-global");
     return;
   }
 
   if (!state.user.loggedIn) {
-    alert("Primero iniciá sesion desde User.");
+    if (imageFile) {
+      alert("Las fotos por ahora requieren cuenta. Podes mandar texto como invitado.");
+      return;
+    }
+    const guestMessage = {
+      room: "global",
+      user_id: null,
+      username: getUsername(),
+      content: serializeGlobalMessagePayload(payload),
+    };
+    state.globalMessages.push({ ...guestMessage, created_at: new Date().toISOString() });
+    input.value = "";
+    if (imageInput) imageInput.value = "";
+    state.chatSelectedImageName = "";
+    renderGlobalMessages();
+    queueUnderBotUserReaction(content);
+    const { error } = await state.supabase.from("messages").insert(guestMessage);
+    if (error) {
+      console.error(error);
+      alert("No se pudo enviar como invitado. Ejecuta la policy anon insert en Supabase.");
+    }
+    refreshWindow("chat-global");
     return;
   }
 
@@ -3472,6 +4180,7 @@ async function sendGlobalMessage() {
     imageInput.value = "";
     state.chatSelectedImageName = "";
     renderGlobalMessages();
+    queueUnderBotUserReaction(content);
     refreshWindow("chat-global");
     return;
   }
@@ -3494,6 +4203,7 @@ async function sendGlobalMessage() {
     imageInput.value = "";
   }
   state.chatSelectedImageName = "";
+  queueUnderBotUserReaction(content);
 }
 
 function insertEmoji(targetId, emoji) {
@@ -3511,11 +4221,13 @@ function renderGlobalMessages() {
   const box = document.getElementById("chat-messages");
   if (!box) return;
 
-  const messages = state.globalMessages.length
-    ? state.globalMessages
+  const liveMessages = [...state.globalMessages, ...state.underBotMessages]
+    .sort((a, b) => new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime());
+  const messages = liveMessages.length
+    ? liveMessages
     : [
         { username: "MSN Bot", content: serializeGlobalMessagePayload({ text: "Bienvenido al canal global under.", nickColor: "#facc15" }) },
-        { username: "Sistema", content: serializeGlobalMessagePayload({ text: hasSupabaseConfig ? "Inicia sesion para usar el chat real." : "Configura Supabase para activar realtime.", nickColor: "#cbd5e1" }) },
+        { username: "Sistema", content: serializeGlobalMessagePayload({ text: hasSupabaseConfig ? "Podes leer y escribir en el global como invitado." : "Configura Supabase para activar realtime.", nickColor: "#cbd5e1" }) },
       ];
 
   box.innerHTML = messages
@@ -3528,6 +4240,7 @@ function renderGlobalMessages() {
 function renderMessageBubble(message) {
   const parsed = parseGlobalMessagePayload(message);
   const isSystem = message.username === "Sistema" || message.username === "MSN Bot";
+  const isBot = Boolean(parsed.isBot || message.isBot);
   const isSelf = message.username === getUsername();
   const strikeCount = getUserStrikeCount(message.username);
   const user = getKnownUserData(message.user_id, message.username, message.avatar_url || "");
@@ -3535,13 +4248,17 @@ function renderMessageBubble(message) {
     ? `<div class="chat-image-wrap${parsed.blurred ? " blurred" : ""}"><img class="chat-image" src="${escapeHtml(parsed.imageUrl)}" alt="Adjunto"></div>`
     : "";
   const strikeMarkup = !isSystem && strikeCount > 0 ? ` <small class="chat-strike-badge">strike ${escapeHtml(String(strikeCount))}</small>` : "";
-  const avatarMarkup = !isSystem && message.user_id
+  const botPersona = isBot ? getUnderBotPersona(message.username) : null;
+  const avatarMarkup = isBot
+    ? `<div class="bot-avatar" title="${escapeHtml(botPersona.role)}">${escapeHtml(botPersona.initials)}</div>`
+    : !isSystem && message.user_id
     ? renderProfileTrigger(message.user_id, getUserDisplayName(user), user.avatar_url || "", "small", "chat-avatar-button")
     : '<div class="chat-avatar-spacer"></div>';
+  const botRoleMarkup = "";
   const authorMarkup = !isSystem && message.user_id
     ? `<button class="chat-author-button" data-open-profile="${escapeHtml(message.user_id)}" data-profile-name="${escapeHtml(getUserDisplayName(user))}" data-profile-avatar="${escapeHtml(user.avatar_url || "")}" type="button"><strong style="color:${escapeHtml(parsed.nickColor)}">${escapeHtml(message.username)}${strikeMarkup}:</strong></button>`
     : `<strong style="color:${escapeHtml(parsed.nickColor)}">${escapeHtml(message.username)}${strikeMarkup}:</strong>`;
-  return `<div class="chat-row${isSystem ? " system" : isSelf ? " self" : ""}"><div class="chat-row-shell">${avatarMarkup}<div class="chat-message-body">${authorMarkup} <span style="color:${escapeHtml(parsed.textColor)}">${escapeHtml(parsed.text)}</span>${imageMarkup}${parsed.isLocalOnly ? '<small class="chat-local-flag">foto con blur preventivo · solo visible en esta sesion</small>' : ""}</div></div></div>`;
+  return `<div class="chat-row${isSystem ? " system" : isSelf ? " self" : ""}${isBot ? " bot" : ""}"><div class="chat-row-shell">${avatarMarkup}<div class="chat-message-body">${authorMarkup}${botRoleMarkup} <span style="color:${escapeHtml(parsed.textColor)}">${escapeHtml(parsed.text)}</span>${imageMarkup}${parsed.isLocalOnly ? '<small class="chat-local-flag">foto con blur preventivo Â· solo visible en esta sesion</small>' : ""}</div></div></div>`;
 }
 
 function openPrivateConversation(contactId) {
@@ -3686,6 +4403,1169 @@ function renderSkinCards() {
   `).join("");
 }
 
+function labelFromKey(value) {
+  return String(value || "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getEpisodeBuilderBlockCategory(blockName) {
+  const categoryMap = {
+    gancho: "ganchos",
+    contexto: "curiosidad",
+    objetivo: "curiosidad",
+    preparacion: "avance",
+    conflicto: "tension",
+    avance: "avance",
+    cierre: "cliffhanger",
+  };
+  return categoryMap[blockName] || "ganchos";
+}
+
+function createEpisodeBuilderBlock(name, index = 0, dayNumber = 1) {
+  const globalIndex = ((dayNumber - 1) * EPISODE_DEFAULT_BLOCKS_PER_DAY) + index + 1;
+  return {
+    id: `bloque-${globalIndex}`,
+    numero: globalIndex,
+    nombre: name,
+    categoria: getEpisodeBuilderBlockCategory(name),
+    descripcion: "",
+    emocion: EPISODE_DAY_EMOTIONS[dayNumber - 1] || "curiosidad",
+    plantilla_numero: "",
+    duracion: "",
+    dialogo: "",
+    voz_en_off: "",
+    pregunta_camarografo: "",
+    musica: "",
+    separador_final: "",
+    prioridad: index < 3 ? "alta" : "media",
+    estado: "pendiente",
+    tomas: "",
+    instruccion_editor: "",
+  };
+}
+
+function normalizeEpisodeNumber(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return 1;
+  return Math.max(1, Math.min(99, Math.round(number)));
+}
+
+function getStoredEpisodeNumber() {
+  try {
+    return normalizeEpisodeNumber(localStorage.getItem(EPISODE_BUILDER_SELECTED_KEY) || "1");
+  } catch (_error) {
+    return 1;
+  }
+}
+
+function getSelectedEpisodeNumber() {
+  return normalizeEpisodeNumber(state?.episodeBuilder?.episodeNumber || getStoredEpisodeNumber());
+}
+
+function setSelectedEpisodeNumber(episodeNumber) {
+  const normalized = normalizeEpisodeNumber(episodeNumber);
+  localStorage.setItem(EPISODE_BUILDER_SELECTED_KEY, String(normalized));
+  return normalized;
+}
+
+function getEpisodeBuilderStorageKey(episodeNumber = getStoredEpisodeNumber()) {
+  return `${EPISODE_BUILDER_STORAGE_KEY}_episode_${normalizeEpisodeNumber(episodeNumber)}`;
+}
+
+function createEpisodeBuilderDraft(episodeNumber = getStoredEpisodeNumber()) {
+  const normalizedEpisode = normalizeEpisodeNumber(episodeNumber);
+  return {
+    episodeNumber: normalizedEpisode,
+    guideVersion: EPISODE_BUILDER_GUIDE_VERSION,
+    mode: "edicion",
+    activeDay: 1,
+    activeBlockId: "bloque-1",
+    activeTemplateCategory: "ganchos",
+    status: "Borrador local listo.",
+    episode: EPISODE_FIELDS.reduce((fields, field) => {
+      fields[field] = field === "titulo" ? `Episodio ${normalizedEpisode}` : field === "estado" ? "borrador" : field === "cantidad_bloques" ? String(EPISODE_BUILDER_DAYS * EPISODE_DEFAULT_BLOCKS_PER_DAY) : "";
+      return fields;
+    }, {}),
+    templates: Object.fromEntries(Object.entries(EPISODE_TEMPLATE_LIBRARY).map(([key, list]) => [key, [...list]])),
+    usedTemplates: {},
+    days: Array.from({ length: EPISODE_BUILDER_DAYS }, (_item, dayIndex) => ({
+      dia: dayIndex + 1,
+      emocion: EPISODE_DAY_EMOTIONS[dayIndex] || "curiosidad",
+      blocks: EPISODE_DAY_BLOCKS.map((name, blockIndex) => createEpisodeBuilderBlock(name, blockIndex, dayIndex + 1)),
+    })),
+  };
+}
+
+function slugToKey(value, fallback = "bloque") {
+  return String(value || fallback)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "") || fallback;
+}
+
+function inferEpisodeTemplateCategory(block, index = 0) {
+  const haystack = `${block?.categoria || ""} ${block?.funcionNarrativa || ""} ${block?.emocion || ""} ${block?.nombre || ""} ${block?.objetivoNarrativo || ""} ${block?.escena || ""}`
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  if (haystack.includes("gancho") || index === 0) return "ganchos";
+  if (haystack.includes("final abierto") || haystack.includes("cierre del episodio") || haystack.includes("episodio 2") || haystack.includes("anticipar la caida")) return "final_abierto";
+  if (haystack.includes("caida") || haystack.includes("perder todo") || haystack.includes("oscurece")) return "caida";
+  if (haystack.includes("cuenta regresiva") || haystack.includes("presion")) return "presion";
+  if (haystack.includes("carrera") || haystack.includes("urgencia") || haystack.includes("imprenta")) return "urgencia";
+  if (haystack.includes("revelacion") || haystack.includes("gran recompensa") || haystack.includes("plancha completa")) return "revelacion";
+  if (haystack.includes("nueva mision") || haystack.includes("vender, reinvertir") || haystack.includes("repetir")) return "mision";
+  if (haystack.includes("vulnerabilidad") || haystack.includes("verguenza")) return "humano";
+  if (haystack.includes("presentacion") || haystack.includes("presentaci")) return "curiosidad";
+  if (haystack.includes("estrategia")) return "avance";
+  if (haystack.includes("obstaculo") || haystack.includes("obst")) return "tension";
+  if (haystack.includes("recompensa")) return "resolucion";
+  if (haystack.includes("montaje") || haystack.includes("subida")) return "avance";
+  if (haystack.includes("cuenta regresiva") || haystack.includes("carrera") || haystack.includes("caida")) return "tension";
+  if (haystack.includes("respiracion") || haystack.includes("respiraci")) return "humano";
+  if (haystack.includes("mision") || haystack.includes("misi")) return "avance";
+  if (haystack.includes("tension") || haystack.includes("problema") || haystack.includes("conflicto") || haystack.includes("riesgo")) return "tension";
+  if (haystack.includes("humano") || haystack.includes("reaccion") || haystack.includes("sensacion")) return "humano";
+  if (haystack.includes("resultado") || haystack.includes("resolucion") || haystack.includes("cierre")) return "resolucion";
+  if (haystack.includes("avance") || haystack.includes("progreso") || haystack.includes("intento")) return "avance";
+  if (haystack.includes("cliff")) return "cliffhanger";
+  return "curiosidad";
+}
+
+function getImportedBlockTemplateText(block) {
+  const pieces = [
+    block?.funcionNarrativa ? `Funcion: ${block.funcionNarrativa}` : "",
+    block?.objetivoNarrativo ? `Objetivo: ${block.objetivoNarrativo}` : "",
+    block?.sensacionEspectador ? `Sensacion: ${block.sensacionEspectador}` : "",
+    block?.escena ? `Visual: ${block.escena}` : "",
+    block?.preguntaAbierta ? `Pregunta abierta: ${block.preguntaAbierta}` : "",
+  ].filter(Boolean);
+  return pieces.join(" | ") || block?.descripcion || block?.emocion || "Plantilla sin descripcion";
+}
+
+function getEpisodeMusicGuide(block, category) {
+  const emotion = String(block?.emocion || "").toLowerCase();
+  const guides = {
+    ganchos: "Beat rapido con pulso curioso, golpes cortos sincronizados con sticker/mapa/contador. Subir energia sin tapar la voz.",
+    curiosidad: "Base liviana de suspenso suave, textura minima y espacio para explicar. Mantener pregunta abierta.",
+    humano: "Pad calido o piano/guitarra muy bajo, casi documental. Priorizar respiracion, verguenza y silencios reales.",
+    tension: "Percusion seca, bajo discreto o drone leve. Cortes mas duros en rechazos; bajar cuando habla.",
+    caida: "Ambiente grave, menos ritmo y mas silencio. Puede cortar la musica al decidir guardar celular/plata.",
+    avance: "Beat de progreso medio, contador y cortes en ritmo. Sensacion de que el plan empieza a funcionar.",
+    presion: "Percusion tipo reloj/cuenta regresiva, tempo mas rapido y subidas cortas antes de cada intento.",
+    urgencia: "Ritmo de carrera con transiciones rapidas, pasos/ciudad como textura y subida hasta imprenta/encargo.",
+    revelacion: "Build ascendente y pausa antes de mostrar la plancha. Despues entrar con acorde/beat de recompensa.",
+    mision: "Base motivacional sobria, pulso de plan nuevo. Que suene a sistema, no a cierre final.",
+    resolucion: "Musica de balance: calida, simple, con cierre limpio. Dejar aire para numeros y conclusion.",
+    cliffhanger: "Tension baja, nota sostenida o golpe final. Cortar antes de resolver.",
+    final_abierto: "Arrancar como recompensa y torcer a intriga. Golpe final + silencio corto para conectar con episodio 2.",
+  };
+  if (emotion.includes("alivio") || emotion.includes("satisfacci")) return "Musica calida de recompensa, sin exagerar. Dejar claro el logro y preparar el siguiente problema.";
+  if (emotion.includes("frustr")) return "Base seca y repetitiva, con cortes en rechazos. No hacerla epica: tiene que sentirse trabada.";
+  return guides[category] || guides.curiosidad;
+}
+
+function getEpisodeSeparatorGuide(block, category) {
+  const nextType = category;
+  const guides = {
+    ganchos: "Separador rapido de entrada: flash de sticker/mapa/contador antes del bloque 2.",
+    humano: "Sin separador fuerte; usar respiracion o micro silencio si cambia a tension.",
+    tension: "Separador corto con golpe seco si el siguiente bloque destraba o cambia estrategia.",
+    caida: "Separador al final: corte a negro breve o sonido seco antes del recuento/transicion.",
+    avance: "Separador de contador/placa si hay salto de ventas, plata o km.",
+    presion: "Separador tipo reloj o placa de meta antes de urgencia/carrera.",
+    urgencia: "Separador de llegada/puerta/recibo para marcar que se completo la accion.",
+    revelacion: "Separador despues de mostrar la plancha: pausa visual antes de presentar el problema nuevo.",
+    mision: "Separador con mapa/stock/plan para abrir la etapa siguiente.",
+    resolucion: "Separador suave si cierra dia; placa de numeros si pasa al dia siguiente.",
+    cliffhanger: "Separador final con corte abrupto, sin resolver.",
+    final_abierto: "Separador final obligatorio: golpe + silencio + imagen de los 100 stickers o adelanto de la caida.",
+  };
+  return guides[nextType] || "";
+}
+
+function importEpisodeBuilderFromScript(rawScript) {
+  const notes = typeof rawScript?.notes === "string" ? (() => {
+    try { return JSON.parse(rawScript.notes || "{}"); } catch (_error) { return {}; }
+  })() : rawScript?.notes;
+  const script = rawScript?.notes && rawScript?.emotions
+    ? { titulo: rawScript.title, episodio: notes?.episodio, dias: rawScript.emotions }
+    : rawScript;
+  const episodeNumber = normalizeEpisodeNumber(script?.episodio || getSelectedEpisodeNumber());
+  const rawDays = Array.isArray(script?.dias) ? script.dias : Array.isArray(script?.emotions) ? script.emotions : [];
+  if (!rawDays.length) throw new Error("El JSON no tiene dias[].bloques[].");
+  const templates = Object.fromEntries(Object.keys(EPISODE_TEMPLATE_LIBRARY).map((category) => [category, []]));
+  let globalIndex = 0;
+  const days = rawDays.map((day, dayIndex) => {
+    const rawBlocks = Array.isArray(day?.bloques) ? day.bloques : [];
+    const dayEmotion = day?.emocion || day?.titulo || EPISODE_DAY_EMOTIONS[dayIndex] || `dia_${dayIndex + 1}`;
+    return {
+      dia: Number(day?.dia || dayIndex + 1),
+      titulo: day?.titulo || `Dia ${dayIndex + 1}`,
+      emocion: String(dayEmotion),
+      blocks: rawBlocks.map((block, blockIndex) => {
+        globalIndex += 1;
+        const category = inferEpisodeTemplateCategory(block, blockIndex);
+        const templateText = getImportedBlockTemplateText(block);
+        if (!templates[category].includes(templateText)) templates[category].push(templateText);
+        const templateNumber = templates[category].indexOf(templateText) + 1;
+        return {
+          id: `bloque-${globalIndex}`,
+          numero: globalIndex,
+          nombre: slugToKey(block?.emocion || block?.nombre || `bloque_${globalIndex}`),
+          categoria: category,
+          descripcion: templateText,
+          emocion: block?.emocion || dayEmotion,
+          plantilla_numero: String(templateNumber),
+          duracion: block?.tiempo || block?.duracion || "",
+          dialogo: block?.dialogo || "",
+          voz_en_off: block?.voz_en_off || block?.vozEnOff || "",
+          pregunta_camarografo: block?.preguntaAbierta || block?.pregunta_camarografo || "",
+          musica: block?.musica || getEpisodeMusicGuide(block, category),
+          separador_final: block?.separador_final || getEpisodeSeparatorGuide(block, category),
+          prioridad: blockIndex < 3 ? "alta" : "media",
+          estado: block?.estado || "pendiente",
+          tomas: Array.isArray(block?.tomasBloque)
+            ? block.tomasBloque.map((shot) => shot?.nombre || shot?.text || shot).join("\n")
+            : Array.isArray(block?.tomas)
+              ? block.tomas.map((shot) => shot?.nombre || shot?.text || shot).join("\n")
+              : "",
+          instruccion_editor: "",
+        };
+      }),
+    };
+  });
+  Object.keys(EPISODE_TEMPLATE_LIBRARY).forEach((category) => {
+    EPISODE_TEMPLATE_LIBRARY[category].forEach((template) => {
+      if (!templates[category].includes(template)) templates[category].push(template);
+    });
+    if (!templates[category].length) templates[category] = [...EPISODE_TEMPLATE_LIBRARY[category]];
+  });
+  const draft = {
+    episodeNumber,
+    guideVersion: EPISODE_BUILDER_GUIDE_VERSION,
+    importedFromScript: true,
+    mode: "edicion",
+    activeDay: days[0]?.dia || 1,
+    activeBlockId: days[0]?.blocks?.[0]?.id || "bloque-1",
+    activeTemplateCategory: "ganchos",
+    status: `JSON importado: ${globalIndex} bloques exactos del guion.`,
+    episode: EPISODE_FIELDS.reduce((fields, field) => {
+      fields[field] = "";
+      return fields;
+    }, {}),
+    templates,
+    usedTemplates: {},
+    days,
+  };
+  draft.episode.titulo = script?.titulo || script?.title || `Episodio ${episodeNumber}`;
+  draft.episode.cantidad_bloques = String(globalIndex);
+  draft.episode.objetivo = script?.objetivo || script?.preguntaPrincipal || "";
+  draft.episode.estado = "importado";
+  days.flatMap((day) => day.blocks).forEach((block) => {
+    block.instruccion_editor = buildEpisodeEditorInstructionForDraft(draft, block);
+  });
+  return draft;
+}
+
+function importEpisodeBuilderJsonText(rawText) {
+  let text = String(rawText || "").trim();
+  if (!text) throw new Error("Pega el JSON del guion primero.");
+  text = text
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```$/i, "")
+    .trim();
+  let parsed = JSON.parse(text);
+  if (typeof parsed === "string") parsed = JSON.parse(parsed);
+  if (Array.isArray(parsed)) parsed = parsed[0];
+  if (Array.isArray(parsed?.data)) parsed = parsed.data[0];
+  if (Array.isArray(parsed?.episodes)) parsed = parsed.episodes[0];
+  if (parsed?.payload && typeof parsed.payload === "object") parsed = parsed.payload;
+  const draft = importEpisodeBuilderFromScript(parsed);
+  setSelectedEpisodeNumber(draft.episodeNumber || getSelectedEpisodeNumber());
+  state.episodeBuilder = normalizeEpisodeBuilderDraft(draft);
+  persistEpisodeBuilderDraft(state.episodeBuilder.status);
+  return state.episodeBuilder;
+}
+
+async function loadDefaultEpisodeBuilderScript({ force = false } = {}) {
+  const episodeNumber = getSelectedEpisodeNumber();
+  if (episodeNumber !== 1) {
+    if (force) {
+      state.episodeBuilder = normalizeEpisodeBuilderDraft(createEpisodeBuilderDraft(episodeNumber));
+      persistEpisodeBuilderDraft(`Episodio ${episodeNumber} listo para editar.`);
+      refreshWindow("episode-constructor");
+    }
+    return;
+  }
+  if (!force && state.episodeBuilder.importedFromScript) return;
+  try {
+    const response = await fetch(`${EPISODE_ONE_TEMPLATE_URL}?v=1`, { cache: "no-store" });
+    if (!response.ok) return;
+    const script = await response.json();
+    setSelectedEpisodeNumber(1);
+    state.episodeBuilder = normalizeEpisodeBuilderDraft(importEpisodeBuilderFromScript(script));
+    state.episodeBuilder.episodeNumber = 1;
+    persistEpisodeBuilderDraft("Episodio 1 cargado: De un sticker a cien.");
+    refreshWindow("episode-constructor");
+  } catch (error) {
+    console.error("No pude cargar el episodio 1 base:", error);
+  }
+}
+
+async function loadPublishedEpisodeTemplate() {
+  const episodeNumber = getSelectedEpisodeNumber();
+  try {
+    const response = await fetch(`./api/episode-template?episode=${episodeNumber}`, { cache: "no-store" });
+    if (!response.ok) return false;
+    const data = await response.json();
+    if (!data.template?.days?.length) return false;
+    if (episodeNumber === 1 && Number(data.template.guideVersion || 1) < EPISODE_BUILDER_GUIDE_VERSION) return false;
+    state.episodeBuilder = normalizeEpisodeBuilderDraft(data.template);
+    state.episodeBuilder.episodeNumber = episodeNumber;
+    state.episodeBuilder.status = data.publishedAt ? `Vista publicada ${new Date(data.publishedAt).toLocaleString("es-AR")}.` : "Vista publicada.";
+    refreshWindow("episode-constructor");
+    return true;
+  } catch (error) {
+    console.error("No pude cargar la plantilla publicada:", error);
+    return false;
+  }
+}
+
+async function publishEpisodeTemplate() {
+  if (!state.supabase || !state.user.loggedIn) {
+    alert("Inicia sesion con la cuenta oficial para publicar.");
+    return;
+  }
+  if (!isEpisodeTemplateAdmin()) {
+    alert("Solo la cuenta oficial puede publicar esta vista.");
+    return;
+  }
+  const { data } = await state.supabase.auth.getSession();
+  const token = data?.session?.access_token || "";
+  if (!token) {
+    alert("Sesion invalida. Volve a ingresar.");
+    return;
+  }
+  const episodeNumber = getSelectedEpisodeNumber();
+  state.episodeBuilder.episodeNumber = episodeNumber;
+  const response = await fetch(`./api/episode-template?episode=${episodeNumber}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ template: state.episodeBuilder, episode: episodeNumber }),
+  });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    alert(body.error || "No pude publicar la vista.");
+    return;
+  }
+  persistEpisodeBuilderDraft("Vista publicada para lectura.");
+  refreshWindow("episode-constructor");
+}
+
+function normalizeEpisodeBuilderDraft(rawDraft) {
+  const episodeNumber = normalizeEpisodeNumber(rawDraft?.episodeNumber || getStoredEpisodeNumber());
+  const fallback = createEpisodeBuilderDraft(episodeNumber);
+  if (!rawDraft || typeof rawDraft !== "object") return fallback;
+  const episode = { ...fallback.episode };
+  EPISODE_FIELDS.forEach((field) => {
+    episode[field] = String(rawDraft.episode?.[field] ?? episode[field] ?? "");
+  });
+  const templates = { ...fallback.templates };
+  Object.keys(EPISODE_TEMPLATE_LIBRARY).forEach((category) => {
+    const values = Array.isArray(rawDraft.templates?.[category]) ? rawDraft.templates[category] : templates[category];
+    templates[category] = values.map((item) => String(item || "").trim()).filter(Boolean);
+    if (!templates[category].length) templates[category] = [...EPISODE_TEMPLATE_LIBRARY[category]];
+  });
+  if (rawDraft.importedFromScript && Array.isArray(rawDraft.days) && rawDraft.days.length) {
+    const days = rawDraft.days.map((day, dayIndex) => ({
+      dia: Number(day?.dia || dayIndex + 1),
+      titulo: day?.titulo || `Dia ${dayIndex + 1}`,
+      emocion: String(day?.emocion || EPISODE_DAY_EMOTIONS[dayIndex] || `dia_${dayIndex + 1}`),
+      blocks: Array.isArray(day?.blocks) ? day.blocks.map((block, blockIndex) => {
+        const numero = Number(block?.numero || blockIndex + 1);
+        return {
+          ...createEpisodeBuilderBlock(block?.nombre || `bloque_${numero}`, blockIndex, Number(day?.dia || dayIndex + 1)),
+          ...EPISODE_BLOCK_FIELDS.reduce((fields, field) => {
+            fields[field] = String(block?.[field] ?? "");
+            return fields;
+          }, {}),
+          id: block?.id || `bloque-${numero}`,
+          numero,
+          nombre: block?.nombre || `bloque_${numero}`,
+          categoria: block?.categoria && templates[block.categoria] ? block.categoria : inferEpisodeTemplateCategory(block, blockIndex),
+          emocion: block?.emocion || day?.emocion || EPISODE_DAY_EMOTIONS[dayIndex] || "",
+          prioridad: block?.prioridad || (blockIndex < 3 ? "alta" : "media"),
+          estado: block?.estado || "pendiente",
+        };
+      }) : [],
+    }));
+    const totalBlocks = days.reduce((sum, day) => sum + day.blocks.length, 0);
+    return refreshEpisodeBuilderInstructionsForDraft({
+      ...fallback,
+      episodeNumber,
+      guideVersion: Number(rawDraft.guideVersion || 1),
+      importedFromScript: true,
+      mode: ["admin", "rodaje"].includes(rawDraft.mode) ? rawDraft.mode : "edicion",
+      activeDay: Number(rawDraft.activeDay || days[0]?.dia || 1),
+      activeBlockId: String(rawDraft.activeBlockId || days[0]?.blocks?.[0]?.id || "bloque-1"),
+      activeTemplateCategory: templates[rawDraft.activeTemplateCategory] ? rawDraft.activeTemplateCategory : "ganchos",
+      status: String(rawDraft.status || `JSON importado: ${totalBlocks} bloques exactos del guion.`),
+      episode: { ...episode, cantidad_bloques: String(totalBlocks) },
+      templates,
+      usedTemplates: rawDraft.usedTemplates && typeof rawDraft.usedTemplates === "object" ? rawDraft.usedTemplates : {},
+      days,
+    });
+  }
+  const days = fallback.days.map((day, dayIndex) => {
+    const incomingDay = Array.isArray(rawDraft.days) ? rawDraft.days.find((item) => Number(item?.dia) === dayIndex + 1) : null;
+    const incomingBlocks = Array.isArray(incomingDay?.blocks) ? incomingDay.blocks : [];
+    const normalizedBlocks = EPISODE_DAY_BLOCKS.map((name, blockIndex) => {
+      const globalIndex = (dayIndex * EPISODE_DEFAULT_BLOCKS_PER_DAY) + blockIndex + 1;
+      const existing = incomingBlocks.find((block) => block?.numero === globalIndex || block?.nombre === name || block?.id === `bloque-${globalIndex}` || block?.id === `${name}-${blockIndex + 1}`);
+      return {
+        ...createEpisodeBuilderBlock(name, blockIndex, dayIndex + 1),
+        ...EPISODE_BLOCK_FIELDS.reduce((fields, field) => {
+          fields[field] = String(existing?.[field] ?? "");
+          return fields;
+        }, {}),
+        id: `bloque-${globalIndex}`,
+        numero: globalIndex,
+        nombre: name,
+        categoria: existing?.categoria && templates[existing.categoria] ? existing.categoria : getEpisodeBuilderBlockCategory(name),
+        prioridad: existing?.prioridad || (blockIndex < 3 ? "alta" : "media"),
+        estado: existing?.estado || "pendiente",
+        emocion: existing?.emocion || incomingDay?.emocion || EPISODE_DAY_EMOTIONS[dayIndex] || "curiosidad",
+      };
+    });
+    const order = incomingBlocks.map((block) => block?.nombre).filter((name) => EPISODE_DAY_BLOCKS.includes(name));
+    return {
+      dia: dayIndex + 1,
+      emocion: incomingDay?.emocion || EPISODE_DAY_EMOTIONS[dayIndex] || "curiosidad",
+      blocks: [
+        ...order.map((name) => normalizedBlocks.find((block) => block.nombre === name)).filter(Boolean),
+        ...normalizedBlocks.filter((block) => !order.includes(block.nombre)),
+      ],
+    };
+  });
+  return refreshEpisodeBuilderInstructionsForDraft({
+    ...fallback,
+    episodeNumber,
+    guideVersion: Number(rawDraft.guideVersion || 1),
+    mode: ["admin", "rodaje"].includes(rawDraft.mode) ? rawDraft.mode : "edicion",
+    activeDay: clamp(Number(rawDraft.activeDay) || 1, 1, EPISODE_BUILDER_DAYS),
+    activeBlockId: String(rawDraft.activeBlockId || fallback.activeBlockId),
+    activeTemplateCategory: templates[rawDraft.activeTemplateCategory] ? rawDraft.activeTemplateCategory : "ganchos",
+    status: String(rawDraft.status || fallback.status),
+    episode: { ...episode, cantidad_bloques: String(EPISODE_BUILDER_DAYS * EPISODE_DEFAULT_BLOCKS_PER_DAY) },
+    templates,
+    usedTemplates: rawDraft.usedTemplates && typeof rawDraft.usedTemplates === "object" ? rawDraft.usedTemplates : {},
+    days,
+  });
+}
+
+function loadEpisodeBuilderDraft() {
+  try {
+    const episodeNumber = getStoredEpisodeNumber();
+    const stored = localStorage.getItem(getEpisodeBuilderStorageKey(episodeNumber));
+    const legacy = episodeNumber === 1 ? localStorage.getItem(EPISODE_BUILDER_STORAGE_KEY) : null;
+    return normalizeEpisodeBuilderDraft(JSON.parse(stored || legacy || "null"));
+  } catch (_error) {
+    return createEpisodeBuilderDraft(getStoredEpisodeNumber());
+  }
+}
+
+function persistEpisodeBuilderDraft(message = "Cambios guardados en este navegador.") {
+  state.episodeBuilder.episodeNumber = getSelectedEpisodeNumber();
+  state.episodeBuilder.guideVersion = EPISODE_BUILDER_GUIDE_VERSION;
+  state.episodeBuilder.status = message;
+  localStorage.setItem(getEpisodeBuilderStorageKey(state.episodeBuilder.episodeNumber), JSON.stringify(state.episodeBuilder));
+}
+
+async function selectEpisodeBuilderEpisode(episodeNumber) {
+  const previousMode = isEpisodeTemplateAdmin() && ["admin", "rodaje"].includes(state.episodeBuilder.mode)
+    ? state.episodeBuilder.mode
+    : "edicion";
+  setSelectedEpisodeNumber(episodeNumber);
+  state.episodeBuilder = loadEpisodeBuilderDraft();
+  state.episodeBuilder.episodeNumber = getSelectedEpisodeNumber();
+  const loaded = await loadPublishedEpisodeTemplate();
+  if (!loaded && getSelectedEpisodeNumber() === 1) {
+    await loadDefaultEpisodeBuilderScript({ force: true });
+  } else if (!loaded) {
+    state.episodeBuilder = normalizeEpisodeBuilderDraft(createEpisodeBuilderDraft(getSelectedEpisodeNumber()));
+    persistEpisodeBuilderDraft(`Episodio ${getSelectedEpisodeNumber()} sin publicar todavia.`);
+  }
+  if (isEpisodeTemplateAdmin() && previousMode !== "edicion") {
+    state.episodeBuilder.mode = previousMode;
+    persistEpisodeBuilderDraft(`Episodio ${getSelectedEpisodeNumber()} activo.`);
+  }
+  refreshWindow("episode-constructor");
+}
+
+function getEpisodeBuilderDay(dayNumber = state.episodeBuilder.activeDay) {
+  return state.episodeBuilder.days.find((day) => Number(day.dia) === Number(dayNumber)) || state.episodeBuilder.days[0];
+}
+
+function getEpisodeBuilderBlock(blockId = state.episodeBuilder.activeBlockId) {
+  const activeDay = getEpisodeBuilderDay();
+  return activeDay.blocks.find((block) => block.id === blockId) || activeDay.blocks[0];
+}
+
+function getNextEpisodeTemplate(category) {
+  const templates = state.episodeBuilder.templates[category] || [];
+  const used = new Set(state.episodeBuilder.usedTemplates[category] || []);
+  const next = templates.find((template) => !used.has(template)) || templates[0] || "";
+  if (!next) return { text: "", number: "" };
+  state.episodeBuilder.usedTemplates[category] = [...used, next].slice(-templates.length);
+  return { text: next, number: String(templates.indexOf(next) + 1) };
+}
+
+function applyTemplateToEpisodeBlock(block, templateEntry) {
+  const templateText = typeof templateEntry === "string" ? templateEntry : templateEntry?.text || "";
+  if (!block || !templateText) return;
+  block.descripcion = templateText;
+  block.plantilla_numero = typeof templateEntry === "object" ? templateEntry.number || block.plantilla_numero || "1" : block.plantilla_numero || "1";
+  if (!block.voz_en_off) block.voz_en_off = templateText;
+  if (!block.tomas) block.tomas = `Plano detalle de ${labelFromKey(block.nombre).toLowerCase()}\nPlano recurso del contexto\nReaccion frente a camara`;
+  block.instruccion_editor = buildEpisodeEditorInstruction(block);
+}
+
+function getAllEpisodeBuilderBlocks() {
+  return state.episodeBuilder.days.flatMap((day) => day.blocks.map((block) => ({ ...block, dia: day.dia })));
+}
+
+function getAllBlocksFromEpisodeBuilderDraft(draft) {
+  return (draft?.days || []).flatMap((day) => (day.blocks || []).map((block) => ({ ...block, dia: day.dia })));
+}
+
+function getNextEpisodeBuilderBlock(blockId) {
+  const blocks = getAllEpisodeBuilderBlocks();
+  const index = blocks.findIndex((block) => block.id === blockId);
+  return index >= 0 ? blocks[index + 1] || null : null;
+}
+
+function episodeBlockCode(block) {
+  return `B${block?.numero || "?"}`;
+}
+
+function episodeTemplateCode(block) {
+  return `P${block?.plantilla_numero || "?"}`;
+}
+
+function episodeComboCode(block) {
+  return `${episodeBlockCode(block)} + ${episodeTemplateCode(block)}`;
+}
+
+function buildEpisodeEditorInstructionForDraft(draft, block) {
+  const blocks = getAllBlocksFromEpisodeBuilderDraft(draft);
+  const index = blocks.findIndex((item) => item.id === block.id);
+  const next = index >= 0 ? blocks[index + 1] || null : null;
+  const current = episodeComboCode(block);
+  const music = block.musica ? ` Musica: ${block.musica}` : "";
+  const separator = block.separador_final ? ` Separador final: ${block.separador_final}` : "";
+  if (!next) return `Cerrar con ${current}. No hay bloque siguiente.${music}${separator}`;
+  return `Combinar ${current} con ${episodeComboCode(next)}. ${episodeBlockCode(next)} es ${labelFromKey(next.emocion)} y usa plantilla ${labelFromKey(next.categoria)}.${music}${separator}`;
+}
+
+function refreshEpisodeBuilderInstructionsForDraft(draft) {
+  (draft?.days || []).forEach((day) => {
+    (day.blocks || []).forEach((block) => {
+      block.plantilla_numero = String(block.plantilla_numero || "1");
+      block.instruccion_editor = buildEpisodeEditorInstructionForDraft(draft, block);
+    });
+  });
+  return draft;
+}
+
+function buildEpisodeEditorInstruction(block) {
+  const next = getNextEpisodeBuilderBlock(block.id);
+  const current = episodeComboCode(block);
+  const music = block.musica ? ` Musica: ${block.musica}` : "";
+  const separator = block.separador_final ? ` Separador final: ${block.separador_final}` : "";
+  if (!next) return `Cerrar con ${current}. No hay bloque siguiente.${music}${separator}`;
+  return `Combinar ${current} con ${episodeComboCode(next)}. ${episodeBlockCode(next)} es ${labelFromKey(next.emocion)} y usa plantilla ${labelFromKey(next.categoria)}.${music}${separator}`;
+}
+
+function getEpisodeTemplateByNumber(category, templateNumber) {
+  const templates = state.episodeBuilder.templates[category] || [];
+  const index = Math.max(0, Number(templateNumber || 1) - 1);
+  return templates[index] || "";
+}
+
+function isEpisodeTemplateAdmin() {
+  return isOfficialEmail(state.user.email);
+}
+
+function syncEpisodeBlockTemplateText(block) {
+  if (!block?.categoria || !block?.plantilla_numero) return;
+  const templateText = getEpisodeTemplateByNumber(block.categoria, block.plantilla_numero);
+  if (templateText) block.descripcion = templateText;
+  block.instruccion_editor = buildEpisodeEditorInstruction(block);
+}
+
+function renderEpisodeTemplateNumberOptions(category, selectedNumber) {
+  const templates = state.episodeBuilder.templates[category] || [];
+  const total = Math.max(templates.length, Number(selectedNumber || 0), 1);
+  return Array.from({ length: total }, (_item, index) => {
+    const number = String(index + 1);
+    return `<option value="${number}" ${String(selectedNumber || "") === number ? "selected" : ""}>P${number}</option>`;
+  }).join("");
+}
+
+function renderEpisodeNumberedTemplates(category) {
+  const templates = state.episodeBuilder.templates[category] || [];
+  return templates.map((template, index) => `
+    <div class="episode-template-number-row">
+      <strong>P${index + 1}</strong>
+      <span>${escapeHtml(template)}</span>
+      <button class="action-btn episode-template-delete" data-eb-delete-template="${escapeHtml(category)}" data-eb-delete-template-index="${index}" type="button">Borrar</button>
+    </div>
+  `).join("");
+}
+
+function renderEpisodeCreatorTemplatePanel(templateCategory) {
+  return `
+    <section class="episode-builder-panel episode-creator-panel">
+      <div class="episode-panel-head">
+        <div>
+          <h3>Creador de plantillas P</h3>
+          <div class="shop-copy">Cada linea queda numerada como P1, P2, P3. Ese codigo es el que despues ve la editora junto al bloque B.</div>
+        </div>
+        <select class="win-input" data-eb-template-select>${renderEpisodeBuilderTemplateOptions(templateCategory)}</select>
+      </div>
+      <div class="episode-creator-add">
+        <input class="win-input" data-eb-new-template-text placeholder="Nueva plantilla para ${escapeHtml(labelFromKey(templateCategory))}">
+        <button class="action-btn" data-eb-add-template="1" type="button">Agregar</button>
+      </div>
+      <div class="episode-template-number-list">${renderEpisodeNumberedTemplates(templateCategory)}</div>
+      <textarea class="win-input episode-template-editor" data-eb-template-category="${escapeHtml(templateCategory)}" rows="8">${escapeHtml((state.episodeBuilder.templates[templateCategory] || []).join("\n"))}</textarea>
+    </section>
+  `;
+}
+
+function renderEpisodeCombinationMap() {
+  return getAllEpisodeBuilderBlocks().map((block) => {
+    const next = getNextEpisodeBuilderBlock(block.id);
+    return `
+      <div class="episode-combo-row">
+        <strong>${escapeHtml(episodeBlockCode(block))}</strong>
+        <span>${escapeHtml(labelFromKey(block.emocion))}</span>
+        <span><b>${escapeHtml(episodeTemplateCode(block))}</b> ${escapeHtml(labelFromKey(block.categoria))}</span>
+        <span>${next ? `sigue ${escapeHtml(episodeComboCode(next))}: ${escapeHtml(labelFromKey(next.emocion))}` : "cierre final"}</span>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderEpisodeCombinationMatrix() {
+  return state.episodeBuilder.days.map((day) => `
+    <section class="episode-builder-panel episode-combination-day">
+      <div class="episode-panel-head">
+        <h3>Dia ${day.dia}: ${escapeHtml(labelFromKey(day.emocion))}</h3>
+        <span class="episode-day-count">${day.blocks.length} bloques</span>
+      </div>
+      <div class="episode-combination-table">
+        <div class="episode-combination-head">
+          <span>Bloque</span>
+          <span>Emocion</span>
+          <span>Tipo</span>
+          <span>Plantilla P</span>
+          <span>Musica</span>
+          <span>Separador</span>
+          <span>Sigue</span>
+        </div>
+        ${day.blocks.map((block) => {
+          const next = getNextEpisodeBuilderBlock(block.id);
+          return `
+            <div class="episode-combination-row ${block.id === state.episodeBuilder.activeBlockId ? "active" : ""}">
+              <button class="episode-combination-block" data-eb-open-block="${escapeHtml(block.id)}" type="button">${escapeHtml(episodeBlockCode(block))}</button>
+              <input class="win-input" data-eb-day="${day.dia}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="emocion" value="${escapeHtml(block.emocion || "")}">
+              <select class="win-input" data-eb-day="${day.dia}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="categoria">
+                ${renderEpisodeBuilderTemplateOptions(block.categoria)}
+              </select>
+              <select class="win-input template-number-select" data-eb-day="${day.dia}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="plantilla_numero">
+                ${renderEpisodeTemplateNumberOptions(block.categoria, block.plantilla_numero)}
+              </select>
+              <textarea class="win-input compact-cell" rows="2" data-eb-day="${day.dia}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="musica">${escapeHtml(block.musica || "")}</textarea>
+              <textarea class="win-input compact-cell" rows="2" data-eb-day="${day.dia}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="separador_final">${escapeHtml(block.separador_final || "")}</textarea>
+              <span class="episode-next-code">${next ? `${escapeHtml(episodeComboCode(next))}<small>${escapeHtml(labelFromKey(next.emocion))} / ${escapeHtml(labelFromKey(next.categoria))}</small>` : "Cierre final"}</span>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `).join("");
+}
+
+function renderEpisodePublicCombinationMatrix() {
+  return state.episodeBuilder.days.map((day) => `
+    <section class="episode-public-day">
+      <div class="episode-public-day-head">
+        <h3>Dia ${day.dia}: ${escapeHtml(day.titulo || labelFromKey(day.emocion))}</h3>
+        <span>${day.blocks.length} bloques</span>
+      </div>
+      <div class="episode-public-list">
+        ${day.blocks.map((block) => {
+          const next = getNextEpisodeBuilderBlock(block.id);
+          return `
+            <article class="episode-public-row">
+              <div class="episode-public-block">${escapeHtml(episodeBlockCode(block))}</div>
+              <div>
+                <strong>${escapeHtml(block.emocion || labelFromKey(block.nombre))}</strong>
+                <span>${escapeHtml(block.descripcion || "")}</span>
+              </div>
+              <div class="episode-public-template">
+                <small>Plantilla</small>
+                <b>${escapeHtml(episodeTemplateCode(block))}</b>
+                <span>${escapeHtml(labelFromKey(block.categoria))}</span>
+              </div>
+              <div class="episode-public-music">
+                <small>Musica</small>
+                <b>${escapeHtml(block.musica || "-")}</b>
+              </div>
+              <div class="episode-public-separator">
+                <small>Separador final</small>
+                <b>${escapeHtml(block.separador_final || "Sin separador")}</b>
+              </div>
+              <div class="episode-public-next">
+                <small>Sigue</small>
+                <b>${next ? escapeHtml(episodeComboCode(next)) : "Cierre final"}</b>
+                ${next ? `<span>${escapeHtml(next.emocion || "")} / ${escapeHtml(labelFromKey(next.categoria))}</span>` : ""}
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `).join("");
+}
+
+function renderEpisodeSelector() {
+  const selected = getSelectedEpisodeNumber();
+  return `
+    <div class="episode-selector" aria-label="Seleccionar episodio">
+      ${EPISODE_BUILDER_EPISODES.map((episodeNumber) => `
+        <button class="action-btn ${episodeNumber === selected ? "active-tab" : ""}" data-eb-select-episode="${episodeNumber}" type="button">E${episodeNumber}</button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderEpisodeTemplateViewer() {
+  const builder = state.episodeBuilder;
+  const totalBlocks = builder.days.flatMap((day) => day.blocks).length;
+  return `
+    <div class="window-content episode-constructor episode-public-view">
+      <div class="episode-public-top">
+        <div>
+          <div class="app-section-title">Episodio ${getSelectedEpisodeNumber()}: ${escapeHtml(builder.episode.titulo || "Combinacion de plantillas")}</div>
+          <div class="shop-copy">Vista de lectura: cada fila muestra que bloque B usa que plantilla P y con cual B/P sigue.</div>
+        </div>
+        <div class="episode-public-actions">
+          ${renderEpisodeSelector()}
+          ${isEpisodeTemplateAdmin() ? `<button class="action-btn" data-eb-admin-mode="1">Creador</button>` : ""}
+        </div>
+      </div>
+      <div class="episode-builder-stats">
+        <div><span>Dias</span><strong>${builder.days.length}</strong></div>
+        <div><span>Bloques</span><strong>${totalBlocks}</strong></div>
+        <div><span>Estado</span><strong>${builder.status.includes("public") ? "Publicado" : "Base"}</strong></div>
+      </div>
+      ${renderEpisodePublicCombinationMatrix()}
+    </div>
+    <div class="window-statusbar"><div class="status-panel">Solo lectura</div><div class="status-panel">${escapeHtml(builder.episode.titulo || "Episodio")}</div></div>
+  `;
+}
+
+function updateEpisodeBuilderFromWindow(win) {
+  const builder = state.episodeBuilder;
+  win.querySelectorAll("[data-eb-episode-field]").forEach((field) => {
+    builder.episode[field.dataset.ebEpisodeField] = field.value;
+  });
+  win.querySelectorAll("[data-eb-template-category]").forEach((field) => {
+    const category = field.dataset.ebTemplateCategory;
+    builder.templates[category] = field.value.split("\n").map((item) => item.trim()).filter(Boolean);
+  });
+  win.querySelectorAll("[data-eb-block-field]").forEach((field) => {
+    const day = builder.days.find((item) => Number(item.dia) === Number(field.dataset.ebDay));
+    const block = day?.blocks.find((item) => item.id === field.dataset.ebBlock);
+    if (!block) return;
+    block[field.dataset.ebBlockField] = field.value;
+    if (field.dataset.ebBlockField === "categoria" && !block.plantilla_numero) block.plantilla_numero = "1";
+    if (field.dataset.ebBlockField === "categoria" || field.dataset.ebBlockField === "plantilla_numero") {
+      syncEpisodeBlockTemplateText(block);
+    }
+  });
+  getAllEpisodeBuilderBlocks().forEach((block) => {
+    const day = builder.days.find((item) => Number(item.dia) === Number(block.dia));
+    const sourceBlock = day?.blocks.find((item) => item.id === block.id);
+    if (sourceBlock && sourceBlock.categoria && sourceBlock.plantilla_numero) {
+      sourceBlock.instruccion_editor = buildEpisodeEditorInstruction(sourceBlock);
+    }
+  });
+}
+
+function moveEpisodeBuilderBlock(blockId, direction) {
+  const day = getEpisodeBuilderDay();
+  const index = day.blocks.findIndex((block) => block.id === blockId);
+  const nextIndex = index + direction;
+  if (index < 0 || nextIndex < 0 || nextIndex >= day.blocks.length) return;
+  const [block] = day.blocks.splice(index, 1);
+  day.blocks.splice(nextIndex, 0, block);
+  state.episodeBuilder.activeBlockId = block.id;
+  persistEpisodeBuilderDraft("Bloque reordenado.");
+  refreshWindow("episode-constructor");
+}
+
+function renderEpisodeBuilderTemplateOptions(selectedCategory) {
+  return Object.keys(EPISODE_TEMPLATE_LIBRARY).map((category) => (
+    `<option value="${escapeHtml(category)}" ${category === selectedCategory ? "selected" : ""}>${escapeHtml(labelFromKey(category))}</option>`
+  )).join("");
+}
+
+function renderEpisodeBuilder() {
+  const builder = state.episodeBuilder;
+  if (!isEpisodeTemplateAdmin() && ["admin", "rodaje"].includes(builder.mode)) {
+    builder.mode = "edicion";
+  }
+  if (isEpisodeTemplateAdmin() && (builder.mode === "edicion" || builder.mode === "publico")) {
+    builder.mode = "admin";
+  }
+  if (!isEpisodeTemplateAdmin() || (builder.mode !== "admin" && builder.mode !== "rodaje")) {
+    return renderEpisodeTemplateViewer();
+  }
+  const activeDay = getEpisodeBuilderDay();
+  const activeBlock = getEpisodeBuilderBlock();
+  const doneBlocks = builder.days.flatMap((day) => day.blocks).filter((block) => block.estado === "listo").length;
+  const totalBlocks = builder.days.flatMap((day) => day.blocks).length;
+  const templateCategory = builder.activeTemplateCategory;
+  if (builder.mode === "rodaje") {
+    return renderEpisodeBuilderShootingMode(activeDay, activeBlock, doneBlocks, totalBlocks);
+  }
+  return `
+    <div class="window-content episode-constructor episode-admin-view">
+      <div class="episode-builder-top">
+        <div>
+          <div class="app-section-title">Combinador B/P - Episodio ${getSelectedEpisodeNumber()}</div>
+          <div class="shop-copy">B es bloque. P es plantilla. A cada bloque B le asignas una plantilla P y la editora ve la combinacion completa.</div>
+        </div>
+        <div class="session-row">
+          ${renderEpisodeSelector()}
+          <button class="action-btn" data-eb-mode="rodaje">Vista editor</button>
+          <button class="action-btn" data-eb-generate-all="1">Generar combinacion</button>
+          <button class="action-btn" data-eb-publish-template="1">Publicar vista</button>
+          <button class="action-btn" data-eb-reset-draft="1">Reiniciar plantilla</button>
+        </div>
+      </div>
+      <div class="episode-builder-stats">
+        <div><span>Dias</span><strong>${builder.days.length}</strong></div>
+        <div><span>Bloques</span><strong>${doneBlocks}/${totalBlocks}</strong></div>
+        <div><span>Plantillas</span><strong>${Object.values(builder.templates).reduce((sum, list) => sum + list.length, 0)}</strong></div>
+      </div>
+      <section class="episode-builder-panel episode-json-importer">
+        <div class="episode-panel-head">
+          <div>
+            <h3>Importar JSON del guion 1</h3>
+            <div class="shop-copy">Pega el JSON exportado de Direct By para que la matriz use exactamente sus dias, bloques y emociones.</div>
+          </div>
+          <div class="session-row">
+            <button class="action-btn" data-eb-load-episode-one="1">Cargar episodio 1</button>
+            <button class="action-btn" data-eb-import-json="1">Importar JSON</button>
+          </div>
+        </div>
+        <textarea class="win-input episode-json-input" data-eb-json-input rows="5" placeholder='{"episodio":1,"titulo":"...","dias":[{"dia":1,"bloques":[...]}]}'></textarea>
+        <div class="shop-copy" data-eb-import-status></div>
+      </section>
+      <section class="episode-combination-matrix">
+        <div class="episode-panel-head">
+          <div>
+            <h3>Matriz B/P para editora</h3>
+            <div class="shop-copy">Aca se decide lo importante: B1 usa P1, B2 usa P3, y asi hasta el cierre.</div>
+          </div>
+        </div>
+        ${renderEpisodeCombinationMatrix()}
+      </section>
+      <div class="episode-builder-layout">
+        <section class="episode-builder-panel">
+          <h3>Episodio</h3>
+          <div class="episode-field-grid">
+            ${EPISODE_FIELDS.map((field) => `
+              <label class="episode-field">
+                <span>${escapeHtml(labelFromKey(field))}</span>
+                <input class="win-input" data-eb-episode-field="${escapeHtml(field)}" value="${escapeHtml(builder.episode[field] || "")}" placeholder="${escapeHtml(labelFromKey(field))}">
+              </label>
+            `).join("")}
+          </div>
+        </section>
+        ${renderEpisodeCreatorTemplatePanel(templateCategory)}
+      </div>
+      <div class="session-row">
+        <button class="action-btn" data-eb-generate-block="1">Aplicar plantilla al bloque activo</button>
+        <button class="action-btn" data-eb-reset-used="1">Liberar repetidas</button>
+      </div>
+      <div class="episode-day-tabs">
+        ${builder.days.map((day) => `<button class="action-btn ${day.dia === builder.activeDay ? "active-tab" : ""}" data-eb-day-tab="${day.dia}">Dia ${day.dia}: ${escapeHtml(labelFromKey(day.emocion))}</button>`).join("")}
+      </div>
+      <div class="episode-block-board">
+        <aside class="episode-block-list">
+          ${activeDay.blocks.map((block, index) => `
+            <button class="episode-block-tab ${block.id === activeBlock.id ? "active" : ""}" data-eb-open-block="${escapeHtml(block.id)}">
+              <strong>B${escapeHtml(String(block.numero || index + 1))}. ${escapeHtml(labelFromKey(block.nombre))}</strong>
+              <span>${escapeHtml(episodeTemplateCode(block))} / ${escapeHtml(labelFromKey(block.emocion))} / ${escapeHtml(labelFromKey(block.categoria))}</span>
+            </button>
+          `).join("")}
+        </aside>
+        <section class="episode-builder-panel episode-block-editor">
+          <div class="episode-panel-head">
+            <div>
+              <h3>${escapeHtml(episodeBlockCode(activeBlock))}: ${escapeHtml(labelFromKey(activeBlock.nombre))}</h3>
+              <div class="shop-copy">Este ${escapeHtml(episodeBlockCode(activeBlock))} usa ${escapeHtml(episodeTemplateCode(activeBlock))}. La emocion ayuda a elegir que P conviene combinar con el siguiente bloque.</div>
+            </div>
+            <div class="session-row">
+              <button class="action-btn" data-eb-move="-1">Subir</button>
+              <button class="action-btn" data-eb-move="1">Bajar</button>
+            </div>
+          </div>
+          ${renderEpisodeBuilderBlockFields(activeDay.dia, activeBlock)}
+        </section>
+      </div>
+      <section class="episode-builder-panel episode-combo-map">
+        <div class="episode-panel-head">
+          <h3>Mapa B/P para edicion</h3>
+          <div class="shop-copy">Cada fila muestra el codigo exacto que debe seguir la editora: B actual + P actual + B/P siguiente.</div>
+        </div>
+        <div class="episode-combo-list">${renderEpisodeCombinationMap()}</div>
+      </section>
+      <div id="episode-builder-status" class="note-box">${escapeHtml(builder.status)}</div>
+    </div>
+    <div class="window-statusbar"><div class="status-panel">Constructor</div><div class="status-panel">${escapeHtml(builder.mode)}</div></div>
+  `;
+}
+
+function renderEpisodeBuilderBlockFields(dayNumber, block) {
+  return `
+    <div class="episode-block-fields">
+      <label class="episode-field">
+        <span>Tipo de plantilla P</span>
+        <select class="win-input" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="categoria">
+          ${renderEpisodeBuilderTemplateOptions(block.categoria)}
+        </select>
+      </label>
+      <label class="episode-field">
+        <span>Prioridad</span>
+        <select class="win-input" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="prioridad">
+          ${["alta", "media", "baja"].map((value) => `<option value="${value}" ${block.prioridad === value ? "selected" : ""}>${labelFromKey(value)}</option>`).join("")}
+        </select>
+      </label>
+      <label class="episode-field">
+        <span>Estado</span>
+        <select class="win-input" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="estado">
+          ${["pendiente", "en_proceso", "listo"].map((value) => `<option value="${value}" ${block.estado === value ? "selected" : ""}>${labelFromKey(value)}</option>`).join("")}
+        </select>
+      </label>
+      <label class="episode-field">
+        <span>Codigo P</span>
+        <input class="win-input" type="number" min="1" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="plantilla_numero" value="${escapeHtml(block.plantilla_numero || "")}">
+      </label>
+      ${["emocion", "descripcion", "duracion", "dialogo", "voz_en_off", "pregunta_camarografo", "musica", "separador_final", "tomas", "instruccion_editor"].map((field) => `
+        <label class="episode-field ${field === "descripcion" || field === "tomas" || field === "instruccion_editor" ? "wide" : ""}">
+          <span>${escapeHtml(labelFromKey(field))}</span>
+          ${field === "descripcion" || field === "dialogo" || field === "voz_en_off" || field === "pregunta_camarografo" || field === "musica" || field === "separador_final" || field === "tomas" || field === "instruccion_editor"
+            ? `<textarea class="win-input" rows="${field === "tomas" ? "4" : "3"}" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="${field}">${escapeHtml(block[field] || "")}</textarea>`
+            : `<input class="win-input" data-eb-day="${dayNumber}" data-eb-block="${escapeHtml(block.id)}" data-eb-block-field="${field}" value="${escapeHtml(block[field] || "")}">`}
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderEpisodeBuilderShootingMode(activeDay, activeBlock, doneBlocks, totalBlocks) {
+  return `
+    <div class="window-content episode-constructor shooting">
+      <div class="episode-builder-top">
+        <div>
+          <div class="app-section-title">Vista Editor</div>
+          <div class="shop-copy">Dia ${activeDay.dia} / ${escapeHtml(episodeBlockCode(activeBlock))} / ${escapeHtml(episodeTemplateCode(activeBlock))} / ${escapeHtml(labelFromKey(activeBlock.emocion))}</div>
+        </div>
+        <button class="action-btn" data-eb-mode="admin">Creador</button>
+      </div>
+      <section class="episode-shooting-card">
+        <span>${doneBlocks}/${totalBlocks} bloques listos</span>
+        <h3>${escapeHtml(episodeComboCode(activeBlock))}</h3>
+        <p>${escapeHtml(activeBlock.instruccion_editor || buildEpisodeEditorInstruction(activeBlock))}</p>
+        <div class="episode-shots">
+          ${renderEpisodeCombinationMap()}
+        </div>
+      </section>
+      <div class="episode-day-tabs">
+        ${state.episodeBuilder.days.map((day) => `<button class="action-btn ${day.dia === activeDay.dia ? "active-tab" : ""}" data-eb-day-tab="${day.dia}">Dia ${day.dia}: ${escapeHtml(labelFromKey(day.emocion))}</button>`).join("")}
+      </div>
+      <div class="episode-block-list horizontal">
+        ${activeDay.blocks.map((block) => `<button class="episode-block-tab ${block.id === activeBlock.id ? "active" : ""}" data-eb-open-block="${escapeHtml(block.id)}"><strong>${escapeHtml(episodeComboCode(block))}</strong><span>${escapeHtml(labelFromKey(block.nombre))} / ${escapeHtml(block.estado)}</span></button>`).join("")}
+      </div>
+    </div>
+    <div class="window-statusbar"><div class="status-panel">Rodaje</div><div class="status-panel">Dia ${activeDay.dia}</div></div>
+  `;
+}
+
+function bindEpisodeBuilder(win) {
+  win.querySelectorAll("[data-eb-select-episode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectEpisodeBuilderEpisode(button.dataset.ebSelectEpisode);
+    });
+  });
+  win.querySelector("[data-eb-admin-mode]")?.addEventListener("click", () => {
+    if (!isEpisodeTemplateAdmin()) {
+      alert("Solo la cuenta oficial puede editar.");
+      return;
+    }
+    state.episodeBuilder.mode = "admin";
+    persistEpisodeBuilderDraft("Modo admin activo.");
+    refreshWindow("episode-constructor");
+  });
+  win.querySelector("[data-eb-publish-template]")?.addEventListener("click", publishEpisodeTemplate);
+  win.querySelector("[data-eb-load-episode-one]")?.addEventListener("click", async () => {
+    const status = win.querySelector("[data-eb-import-status]");
+    if (status) status.textContent = "Cargando episodio 1...";
+    setSelectedEpisodeNumber(1);
+    state.episodeBuilder.episodeNumber = 1;
+    await loadDefaultEpisodeBuilderScript({ force: true });
+  });
+  win.querySelector("[data-eb-import-json]")?.addEventListener("click", () => {
+    const status = win.querySelector("[data-eb-import-status]");
+    try {
+      const draft = importEpisodeBuilderJsonText(win.querySelector("[data-eb-json-input]")?.value || "");
+      if (status) status.textContent = `Importado: ${draft.days.reduce((sum, day) => sum + day.blocks.length, 0)} bloques en ${draft.days.length} dias.`;
+      refreshWindow("episode-constructor");
+    } catch (error) {
+      const message = error.message || "No pude importar ese JSON.";
+      if (status) status.textContent = message;
+      alert(message);
+    }
+  });
+  win.querySelector("[data-eb-add-template]")?.addEventListener("click", () => {
+    updateEpisodeBuilderFromWindow(win);
+    const input = win.querySelector("[data-eb-new-template-text]");
+    const text = String(input?.value || "").trim();
+    if (!text) {
+      alert("Escribi la plantilla nueva primero.");
+      return;
+    }
+    const category = state.episodeBuilder.activeTemplateCategory || "ganchos";
+    state.episodeBuilder.templates[category] = [...(state.episodeBuilder.templates[category] || []), text];
+    state.episodeBuilder.activeTemplateCategory = category;
+    persistEpisodeBuilderDraft(`Plantilla P${state.episodeBuilder.templates[category].length} agregada en ${labelFromKey(category)}.`);
+    refreshWindow("episode-constructor");
+  });
+  win.querySelectorAll("[data-eb-delete-template]").forEach((button) => {
+    button.addEventListener("click", () => {
+      updateEpisodeBuilderFromWindow(win);
+      const category = button.dataset.ebDeleteTemplate;
+      const index = Number(button.dataset.ebDeleteTemplateIndex);
+      const templates = state.episodeBuilder.templates[category] || [];
+      if (!templates[index]) return;
+      if (!confirm(`Borrar plantilla P${index + 1} de ${labelFromKey(category)}?`)) return;
+      templates.splice(index, 1);
+      if (!templates.length) templates.push(...EPISODE_TEMPLATE_LIBRARY[category]);
+      state.episodeBuilder.templates[category] = templates;
+      state.episodeBuilder.days.forEach((day) => {
+        day.blocks.forEach((block) => {
+          if (block.categoria !== category) return;
+          const max = state.episodeBuilder.templates[category].length;
+          block.plantilla_numero = String(Math.min(Number(block.plantilla_numero || 1), max));
+          syncEpisodeBlockTemplateText(block);
+        });
+      });
+      persistEpisodeBuilderDraft(`Plantilla borrada en ${labelFromKey(category)}.`);
+      refreshWindow("episode-constructor");
+    });
+  });
+  win.querySelectorAll("input, textarea, select").forEach((field) => {
+    field.addEventListener("input", () => {
+      updateEpisodeBuilderFromWindow(win);
+      persistEpisodeBuilderDraft();
+      const status = win.querySelector("#episode-builder-status");
+      if (status) status.textContent = state.episodeBuilder.status;
+    });
+    field.addEventListener("change", () => {
+      updateEpisodeBuilderFromWindow(win);
+      if (field.dataset.ebTemplateSelect !== undefined) state.episodeBuilder.activeTemplateCategory = field.value;
+      persistEpisodeBuilderDraft();
+      refreshWindow("episode-constructor");
+    });
+  });
+  win.querySelectorAll("[data-eb-day-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      updateEpisodeBuilderFromWindow(win);
+      state.episodeBuilder.activeDay = Number(button.dataset.ebDayTab) || 1;
+      state.episodeBuilder.activeBlockId = getEpisodeBuilderDay().blocks[0]?.id || "";
+      persistEpisodeBuilderDraft(`Dia ${state.episodeBuilder.activeDay} activo.`);
+      refreshWindow("episode-constructor");
+    });
+  });
+  win.querySelectorAll("[data-eb-open-block]").forEach((button) => {
+    button.addEventListener("click", () => {
+      updateEpisodeBuilderFromWindow(win);
+      state.episodeBuilder.activeBlockId = button.dataset.ebOpenBlock || "";
+      const ownerDay = state.episodeBuilder.days.find((day) => day.blocks.some((block) => block.id === state.episodeBuilder.activeBlockId));
+      if (ownerDay) state.episodeBuilder.activeDay = Number(ownerDay.dia) || state.episodeBuilder.activeDay;
+      persistEpisodeBuilderDraft("Bloque activo actualizado.");
+      refreshWindow("episode-constructor");
+    });
+  });
+  win.querySelectorAll("[data-eb-mode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      updateEpisodeBuilderFromWindow(win);
+      state.episodeBuilder.mode = button.dataset.ebMode || "edicion";
+      if (isEpisodeTemplateAdmin() && state.episodeBuilder.mode === "publico") state.episodeBuilder.mode = "admin";
+      persistEpisodeBuilderDraft(`Modo ${state.episodeBuilder.mode} activo.`);
+      refreshWindow("episode-constructor");
+    });
+  });
+  win.querySelector("[data-eb-generate-block]")?.addEventListener("click", () => {
+    updateEpisodeBuilderFromWindow(win);
+    const block = getEpisodeBuilderBlock();
+    applyTemplateToEpisodeBlock(block, getNextEpisodeTemplate(block.categoria));
+    persistEpisodeBuilderDraft("Plantilla aplicada al bloque activo.");
+    refreshWindow("episode-constructor");
+  });
+  win.querySelector("[data-eb-generate-all]")?.addEventListener("click", () => {
+    updateEpisodeBuilderFromWindow(win);
+    state.episodeBuilder.usedTemplates = {};
+    state.episodeBuilder.days.forEach((day) => {
+      day.blocks.forEach((block) => applyTemplateToEpisodeBlock(block, getNextEpisodeTemplate(block.categoria)));
+    });
+    persistEpisodeBuilderDraft("Combinacion generada sin repetir plantillas hasta agotar cada categoria.");
+    refreshWindow("episode-constructor");
+  });
+  win.querySelector("[data-eb-reset-used]")?.addEventListener("click", () => {
+    state.episodeBuilder.usedTemplates = {};
+    persistEpisodeBuilderDraft("Historial de plantillas usadas liberado.");
+    refreshWindow("episode-constructor");
+  });
+  win.querySelector("[data-eb-reset-draft]")?.addEventListener("click", () => {
+    if (!confirm("Reiniciar el combinador a 21 bloques y borrar este borrador local?")) return;
+    localStorage.removeItem(getEpisodeBuilderStorageKey());
+    state.episodeBuilder = createEpisodeBuilderDraft(getSelectedEpisodeNumber());
+    persistEpisodeBuilderDraft("Plantilla reiniciada a 21 bloques.");
+    refreshWindow("episode-constructor");
+  });
+  win.querySelectorAll("[data-eb-move]").forEach((button) => {
+    button.addEventListener("click", () => {
+      updateEpisodeBuilderFromWindow(win);
+      moveEpisodeBuilderBlock(state.episodeBuilder.activeBlockId, Number(button.dataset.ebMove));
+    });
+  });
+}
+
 const desktopApps = {
   users: {
     title: "C:\\Users\\User",
@@ -3695,7 +5575,31 @@ const desktopApps = {
     y: 35,
     render() {
       if (!hasSupabaseConfig) {
-        return `<div class="window-content"><div class="app-section-title">User Panel</div><div class="note-box">Configurá SUPABASE_URL y SUPABASE_ANON_KEY para activar perfil, rankings y economia real.</div></div><div class="window-statusbar"><div class="status-panel">Sin Supabase</div></div>`;
+        return `<div class="window-content"><div class="app-section-title">User Panel</div><div class="note-box">ConfigurÃ¡ SUPABASE_URL y SUPABASE_ANON_KEY para activar perfil, rankings y economia real.</div></div><div class="window-statusbar"><div class="status-panel">Sin Supabase</div></div>`;
+      }
+
+      if (window.location.protocol === "file:") {
+        return `
+          <div class="window-content">
+            <div class="app-section-title">User Panel</div>
+            <div class="note-box">Abriste Archivo98 como archivo local. Para crear cuenta o ingresar, usalo desde http://localhost:8000/ con el servidor local prendido.</div>
+            <br>
+            <button class="action-btn" data-open-localhost="1">Abrir localhost</button>
+          </div>
+          <div class="window-statusbar"><div class="status-panel">Auth</div><div class="status-panel">Modo archivo</div></div>
+        `;
+      }
+
+      if (state.supabaseLoadError) {
+        return `
+          <div class="window-content">
+            <div class="app-section-title">User Panel</div>
+            <div class="note-box">${escapeHtml(state.supabaseLoadError)}</div>
+            <br>
+            <div class="note-box">La app cargo desde localhost, pero el login necesita que el script de Supabase este disponible antes de ingresar o crear cuenta.</div>
+          </div>
+          <div class="window-statusbar"><div class="status-panel">Auth</div><div class="status-panel">Supabase no cargo</div></div>
+        `;
       }
 
       if (!state.user.loggedIn) {
@@ -3729,7 +5633,7 @@ const desktopApps = {
               ${getAvatarMarkup("large")}
               <div>
                 <div class="user-hero-name">${escapeHtml(getUsername())}</div>
-                <div class="user-hero-mail">${escapeHtml(state.user.email)}</div>
+                <div class="user-hero-mail">${escapeHtml(getPublicEmail(state.user.email) || "Cuenta oficial")}</div>
                 <div class="user-hero-copy">Panel central de perfil, skins, donor balance y rankings.</div>
               </div>
             </div>
@@ -3754,13 +5658,13 @@ const desktopApps = {
                 <input id="username-input" class="win-input" type="text" maxlength="24" value="${escapeHtml(getUsername())}" placeholder="Nombre visible" />
                 <input id="avatar-input" class="win-input" type="text" value="${escapeHtml(state.user.avatar_url)}" placeholder="URL de tu foto/avatar" />
                 <input id="redeem-code-input" class="win-input" type="text" placeholder="Canjear codigo RX-XXXX..." />
-                <input id="new-password-input" class="win-input" type="password" minlength="6" placeholder="Nueva contraseña" />
-                <input id="confirm-password-input" class="win-input" type="password" minlength="6" placeholder="Confirmar nueva contraseña" />
+                <input id="new-password-input" class="win-input" type="password" minlength="6" placeholder="Nueva contraseÃ±a" />
+                <input id="confirm-password-input" class="win-input" type="password" minlength="6" placeholder="Confirmar nueva contraseÃ±a" />
               </div>
               <div class="session-row">
                 <button class="action-btn" data-action="save-profile">Guardar perfil</button>
                 <button class="action-btn" data-action="redeem-code">Canjear 10 credits</button>
-                <button class="action-btn" data-action="change-password">Cambiar contraseña</button>
+                <button class="action-btn" data-action="change-password">Cambiar contraseÃ±a</button>
                 <button class="action-btn" data-action="sign-out">Salir</button>
               </div>
               <div id="user-action-status" class="shop-copy"></div>
@@ -3849,6 +5753,9 @@ const desktopApps = {
       `;
     },
     bind(win) {
+      win.querySelector('[data-open-localhost]')?.addEventListener("click", () => {
+        window.location.href = "http://localhost:8000/";
+      });
       win.querySelector('[data-action="sign-in"]')?.addEventListener("click", () => submitAuth("sign-in", win));
       win.querySelector('[data-action="sign-up"]')?.addEventListener("click", () => submitAuth("sign-up", win));
       win.querySelector('[data-action="save-profile"]')?.addEventListener("click", saveProfileData);
@@ -3960,14 +5867,16 @@ const desktopApps = {
     y: 60,
     render() {
       const isMobile = isMobileViewport();
-      const channelCount = state.globalMessages.length || 1;
+      const readOnlyChatAttrs = "";
+      const chatPlaceholder = "Mandar mensaje a #general-under";
+      const channelCount = (state.globalMessages.length + state.underBotMessages.length) || 1;
       const incomingRequestsMarkup = state.incomingContactRequests.length
         ? state.incomingContactRequests.map((contact) => `
             <div class="discord-member-card">
               ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "mini", "member-avatar-button")}
               <div>
                 <strong>${escapeHtml(contact.username)}</strong>
-                <span>${escapeHtml(contact.email)}</span>
+                <span>${escapeHtml(getPublicEmail(contact.email) || "Cuenta oficial")}</span>
               </div>
               <div class="discord-request-actions">
                 <button class="action-btn discord-send" data-accept-request="${escapeHtml(contact.requestId)}">Aceptar</button>
@@ -3982,7 +5891,7 @@ const desktopApps = {
               ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "mini", "member-avatar-button")}
               <div>
                 <strong>${escapeHtml(contact.username)}</strong>
-                <span>${escapeHtml(contact.email)} · pendiente</span>
+                <span>${escapeHtml(getPublicEmail(contact.email) || "Cuenta oficial")} Â· pendiente</span>
               </div>
             </div>
           `).join("")
@@ -3992,7 +5901,7 @@ const desktopApps = {
           ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "mini", "member-avatar-button")}
           <div>
             <strong>${escapeHtml(contact.username)}</strong>
-            <span>${contact.online ? "Disponible" : "Ausente"}${getUserStrikeCount(contact.username) ? ` · strike ${escapeHtml(String(getUserStrikeCount(contact.username)))}` : ""}</span>
+            <span>${contact.online ? "Disponible" : "Ausente"}${getUserStrikeCount(contact.username) ? ` Â· strike ${escapeHtml(String(getUserStrikeCount(contact.username)))}` : ""}</span>
           </div>
           <button class="action-btn discord-send" data-open-contact="${escapeHtml(contact.id)}">Abrir</button>
         </div>
@@ -4016,17 +5925,17 @@ const desktopApps = {
               <div class="discord-compose mobile">
                 <div class="discord-compose-tools mobile">
                   <label class="discord-upload-label" for="global-image-input">Foto</label>
-                  <input id="global-image-input" class="hidden" type="file" accept="image/*">
-                  <div class="discord-side-note">${channelCount} mensajes · toca la foto de alguien para abrir su perfil.</div>
+                  <input id="global-image-input" class="hidden" type="file" accept="image/*"${readOnlyChatAttrs}>
+                  <div class="discord-side-note">${channelCount} mensajes Â· toca la foto de alguien para abrir su perfil.</div>
                 </div>
                 <div class="discord-message-row">
-                  <input id="chat-input" class="win-input discord-message-input" type="text" maxlength="280" placeholder="Mandar mensaje a #general-under" />
-                  <button class="message-send discord-send" data-action="send-chat-message">Enviar</button>
+                  <input id="chat-input" class="win-input discord-message-input" type="text" maxlength="280" placeholder="${escapeHtml(chatPlaceholder)}"${readOnlyChatAttrs} />
+                  <button class="message-send discord-send" data-action="send-chat-message"${readOnlyChatAttrs}>Enviar</button>
                 </div>
               </div>
             </section>
           </div>
-          <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Demo / Login pendiente"}</div></div>
+          <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Invitado"}</div></div>
         `;
       }
       return `
@@ -4059,13 +5968,13 @@ const desktopApps = {
             <div id="chat-messages" class="discord-messages ${escapeHtml(getSkinClass())}"></div>
             <div class="discord-compose">
               <div class="discord-compose-tools">
-                <button id="chat-image-trigger" class="discord-upload-label" type="button" data-action="pick-chat-image">${escapeHtml(getSelectedChatImageName() || "Foto")}</button>
-                <input id="global-image-input" class="hidden" type="file" accept="image/*">
+                <button id="chat-image-trigger" class="discord-upload-label" type="button" data-action="pick-chat-image"${readOnlyChatAttrs}>${escapeHtml(getSelectedChatImageName() || "Foto")}</button>
+                <input id="global-image-input" class="hidden" type="file" accept="image/*"${readOnlyChatAttrs}>
                 <div id="chat-image-status" class="discord-upload-status">${escapeHtml(getSelectedChatImageName() || "")}</div>
               </div>
               <div class="discord-message-row">
-                <input id="chat-input" class="win-input discord-message-input" type="text" maxlength="280" placeholder="Mandar mensaje a #general-under" />
-                <button class="message-send discord-send" data-action="send-chat-message">Enviar</button>
+                <input id="chat-input" class="win-input discord-message-input" type="text" maxlength="280" placeholder="${escapeHtml(chatPlaceholder)}"${readOnlyChatAttrs} />
+                <button class="message-send discord-send" data-action="send-chat-message"${readOnlyChatAttrs}>Enviar</button>
               </div>
             </div>
           </section>
@@ -4075,7 +5984,7 @@ const desktopApps = {
               ${renderProfileTrigger(state.user.id, getUsername(), state.user.avatar_url || "", "small", "member-avatar-button")}
               <div>
                 <strong>${escapeHtml(getUsername())}</strong>
-                <span>${state.user.loggedIn ? "Online" : "Guest"} · strikes ${escapeHtml(String(getUserStrikeCount(getUsername())))}</span>
+                <span>${state.user.loggedIn ? "Online" : "Guest"} Â· strikes ${escapeHtml(String(getUserStrikeCount(getUsername())))}</span>
               </div>
             </div>
             <div class="discord-side-note">Skin actual: ${escapeHtml(getSkinName())}</div>
@@ -4095,7 +6004,7 @@ const desktopApps = {
             ${state.socialFeatureError ? `<div class="discord-side-note">${escapeHtml(state.socialFeatureError)}</div>` : ""}
           </aside>
         </div>
-        <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Demo / Login pendiente"}</div></div>
+        <div class="window-statusbar"><div class="status-panel">Global Chat</div><div class="status-panel">${state.user.loggedIn ? "Realtime" : "Invitado"}</div></div>
       `;
     },
     bind(win) {
@@ -4130,9 +6039,10 @@ const desktopApps = {
       win.querySelectorAll("[data-deny-request]").forEach((button) => {
         button.addEventListener("click", () => respondToContactRequest(button.dataset.denyRequest, "denied"));
       });
+      startUnderBotChat();
       renderGlobalMessages();
       bindProfileTriggers(win);
-      if (state.user.loggedIn) initSupabase();
+      initSupabase();
     },
   },
   "private-chat": {
@@ -4147,7 +6057,7 @@ const desktopApps = {
           ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "small", "member-avatar-button")}
           <div class="msn-contact-meta">
             <strong>${escapeHtml(contact.username)}</strong>
-            <span>${escapeHtml(contact.email)} · solicitud</span>
+            <span>${escapeHtml(getPublicEmail(contact.email) || "Cuenta oficial")} Â· solicitud</span>
           </div>
           <div class="msn-request-actions">
             <button class="action-btn msn-action msn-contact-action" data-accept-request="${escapeHtml(contact.requestId)}">Aceptar</button>
@@ -4160,7 +6070,7 @@ const desktopApps = {
           ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "small", "member-avatar-button")}
           <div class="msn-contact-meta">
             <strong>${escapeHtml(contact.username)}</strong>
-            <span>${escapeHtml(contact.email)} · esperando respuesta</span>
+            <span>${escapeHtml(getPublicEmail(contact.email) || "Cuenta oficial")} Â· esperando respuesta</span>
           </div>
           <div class="msn-contact-meta">Pendiente</div>
         </div>
@@ -4170,7 +6080,7 @@ const desktopApps = {
           ${renderProfileTrigger(contact.id, contact.username, contact.avatar_url || "", "small", "member-avatar-button")}
           <div class="msn-contact-meta">
             <strong>${escapeHtml(contact.username)}</strong>
-            <span class="contact-status ${contact.online ? "online" : "offline"}">${contact.online ? "Disponible" : "Ausente"} · sin visto</span>
+            <span class="contact-status ${contact.online ? "online" : "offline"}">${contact.online ? "Disponible" : "Ausente"} Â· sin visto</span>
           </div>
           <button class="action-btn msn-action msn-contact-action" data-contact="${escapeHtml(contact.id)}">Abrir</button>
         </div>
@@ -4571,9 +6481,9 @@ const desktopApps = {
           </div>
           <iframe
             class="recording-studio-frame"
-            src="./recording-studio.html"
+            src="./recording-studio.html?v=world-loop-15"
             title="World Loop"
-            loading="lazy"
+            loading="eager"
             allow="autoplay; fullscreen"
           ></iframe>
         </div>
@@ -4582,24 +6492,252 @@ const desktopApps = {
     },
     bind(win) {
       win.querySelector("[data-open-studio-standalone]")?.addEventListener("click", () => {
-        window.open("./recording-studio.html", "_blank", "noopener,noreferrer");
+        window.open("./recording-studio.html?v=world-loop-15", "_blank", "noopener,noreferrer");
+      });
+    },
+  },
+  "under-maps": {
+    title: "C:\\Under_Maps",
+    width: 1280,
+    height: 860,
+    x: 185,
+    y: 80,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell under-maps-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">Under Maps</div>
+              <div class="shop-copy">Mapa creativo para armar rutas, marcar paradas, dejar notas y animar el recorrido sobre el mundo de Archivo98.</div>
+            </div>
+            <div class="session-row">
+              <button class="action-btn" data-open-world-loop="1">World Loop</button>
+              <button class="action-btn" data-open-under-maps-standalone="1">Abrir aparte</button>
+            </div>
+          </div>
+          <iframe
+            class="recording-studio-frame under-maps-frame"
+            src="./under-maps.html?v=under-maps-1"
+            title="Under Maps"
+            loading="lazy"
+            allow="geolocation; fullscreen"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Under Maps</div><div class="status-panel">Routes + Notes</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-under-maps-standalone]")?.addEventListener("click", () => {
+        window.open("./under-maps.html?v=under-maps-1", "_blank", "noopener,noreferrer");
+      });
+      win.querySelector("[data-open-world-loop]")?.addEventListener("click", () => openWindow("recording-studio"));
+    },
+  },
+  "sales-goals": {
+    title: "C:\\Caja_Reto",
+    width: 1020,
+    height: 790,
+    x: 230,
+    y: 98,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell sales-goals-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">Caja del Reto</div>
+              <div class="shop-copy">Ticket de supermercado para mostrar recaudado, meta de plata, km y progreso diario que vive en Under Maps.</div>
+            </div>
+            <div class="session-row">
+              <button class="action-btn" data-open-sales-obs="1">OBS transparente</button>
+              <button class="action-btn" data-open-sales-obs-chroma="1">OBS croma</button>
+              <button class="action-btn" data-open-sales-goals-standalone="1">Abrir aparte</button>
+            </div>
+          </div>
+          <iframe
+            class="recording-studio-frame sales-goals-frame"
+            src="./ventas-metas.html?v=sales-goals-16"
+            title="Caja del Reto"
+            loading="lazy"
+            allow="clipboard-write; fullscreen"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Caja del Reto</div><div class="status-panel">Under Maps</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-sales-goals-standalone]")?.addEventListener("click", () => {
+        window.open("./ventas-metas.html?v=sales-goals-16", "_blank", "noopener,noreferrer");
+      });
+      win.querySelector("[data-open-sales-obs]")?.addEventListener("click", () => {
+        window.open(`./obs-layout-kick.html?v=obs-kick-22&mode=clip&transparent=1&bg=transparent&guides=0&streamchat=1&chatmax=16&cashsound=1&_=${Date.now()}`, "_blank", "noopener,noreferrer");
+      });
+      win.querySelector("[data-open-sales-obs-chroma]")?.addEventListener("click", () => {
+        window.open(`./obs-layout-kick.html?v=obs-kick-22&mode=clip&chroma=1&bg=chroma&guides=0&streamchat=1&chatmax=16&cashsound=1&_=${Date.now()}`, "_blank", "noopener,noreferrer");
+      });
+    },
+  },
+  "sales-registry": {
+    title: "C:\\Tickets_Ventas",
+    width: 1040,
+    height: 820,
+    x: 260,
+    y: 110,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell sales-goals-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">Tickets Ventas</div>
+              <div class="shop-copy">Historial diario con tiras tipo ticket para comparar ventas, kilometros, semana y mes.</div>
+            </div>
+            <button class="action-btn" data-open-sales-registry-standalone="1">Abrir aparte</button>
+          </div>
+          <iframe
+            class="recording-studio-frame sales-goals-frame"
+            src="./ventas-registro.html?v=sales-registry-2"
+            title="Tickets Ventas"
+            loading="lazy"
+            allow="clipboard-write; fullscreen"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Tickets Ventas</div><div class="status-panel">Semana + Mes</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-sales-registry-standalone]")?.addEventListener("click", () => {
+        window.open("./ventas-registro.html?v=sales-registry-2", "_blank", "noopener,noreferrer");
+      });
+    },
+  },
+  "episode-constructor": {
+    title: "C:\\Constructor_Episodios",
+    width: 1160,
+    height: 830,
+    x: 190,
+    y: 72,
+    render: renderEpisodeBuilder,
+    bind: bindEpisodeBuilder,
+  },
+  "creator-pro": {
+    title: "C:\\Direct_By",
+    width: 1380,
+    height: 900,
+    x: 170,
+    y: 70,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell creator-pro-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">Direct By</div>
+              <div class="shop-copy">Organizador de episodios: titulo, dias, emociones obligatorias y escenas realizadas guardadas en tu Supabase personal.</div>
+            </div>
+            <button class="action-btn" data-open-creator-pro-standalone="1">Abrir aparte</button>
+          </div>
+          <iframe
+            class="recording-studio-frame creator-pro-frame"
+            src="./creator-pro.html?v=direct-by-ep6-tomas-1"
+            title="Direct By"
+            loading="lazy"
+            allow="clipboard-write; fullscreen"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Direct By</div><div class="status-panel">Episodios + emociones</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-creator-pro-standalone]")?.addEventListener("click", () => {
+        window.open("./creator-pro.html?v=direct-by-ep6-tomas-1", "_blank", "noopener,noreferrer");
+      });
+    },
+  },
+  "alaxd-overlay": {
+    title: "C:\\Alaxd",
+    width: 1180,
+    height: 790,
+    x: 205,
+    y: 82,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell alaxd-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">Alaxd</div>
+              <div class="shop-copy">Portfolio visual para Alaciel: video de fondo, trabajos, proceso y contacto.</div>
+            </div>
+            <div class="session-row">
+              <button class="action-btn" data-open-alaxd-editor="1">Editar contenido</button>
+              <button class="action-btn" data-open-alaxd-standalone="1">Abrir aparte</button>
+            </div>
+          </div>
+          <iframe
+            class="recording-studio-frame alaxd-frame"
+            src="./alaxd.html?v=alaxd-5"
+            title="Alaxd Overlay"
+            loading="lazy"
+            allow="autoplay; fullscreen"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">Alaxd</div><div class="status-panel">Portfolio privado</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-alaxd-standalone]")?.addEventListener("click", () => {
+        window.open("./alaxd.html?v=alaxd-5", "_blank", "noopener,noreferrer");
+      });
+      win.querySelector("[data-open-alaxd-editor]")?.addEventListener("click", () => {
+        window.open("./alaxd.html?v=alaxd-5&edit=1", "_blank", "noopener,noreferrer");
       });
     },
   },
   "explorer-games": {
     title: "Juegos",
-    width: 420,
-    height: 300,
+    width: 520,
+    height: 390,
     x: 180,
     y: 190,
     render() {
-      return `<div class="window-content"><div class="game-list"><div class="game-item game-item-rich"><div class="game-item-main"><img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/7f9e196be4af453012f1d7f40892da81.jpg?v=1775590952" class="game-thumb" alt="Age of Empire"><div><strong>Age of Empire II</strong><small>Clasicazo RTS para abrir en web.</small></div></div><button class="action-btn" data-url="https://dos.zone/age-of-empires2/">Abrir</button></div><div class="game-item game-item-rich"><div class="game-item-main"><img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/cas.png?v=1775590771" class="game-thumb" alt="slot98"><div><strong>slot98</strong><small>Slot retro con credits y stickers reales.</small></div></div><button class="action-btn" data-open-slot="1">Abrir</button></div></div><br><div class="note-box">slot98 ahora vive dentro del desktop y usa tus credits reales para jugar.</div></div><div class="window-statusbar"><div class="status-panel">2 accesos</div></div>`;
+      return `<div class="window-content"><div class="game-list"><div class="game-item game-item-rich"><div class="game-item-main"><img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/7f9e196be4af453012f1d7f40892da81.jpg?v=1775590952" class="game-thumb" alt="Age of Empire"><div><strong>Age of Empire II</strong><small>Clasicazo RTS para abrir en web.</small></div></div><button class="action-btn" data-url="https://dos.zone/age-of-empires2/">Abrir</button></div><div class="game-item game-item-rich"><div class="game-item-main"><img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/cas.png?v=1775590771" class="game-thumb" alt="slot98"><div><strong>slot98</strong><small>Slot retro con credits y stickers reales.</small></div></div><button class="action-btn" data-open-slot="1">Abrir</button></div><div class="game-item game-item-rich"><div class="game-item-main"><div class="game-thumb xp-agar-thumb" aria-hidden="true"><span></span></div><div><strong>XP Agar Strike</strong><small>Agar.io + construccion + combate FPS con skins blocky.</small></div></div><button class="action-btn" data-open-xp-agar="1">Abrir</button></div></div><br><div class="note-box">XP Agar Strike es el prototipo nuevo: come masa, construye cobertura, dispara y prueba skins estilo mobile blocky.</div></div><div class="window-statusbar"><div class="status-panel">3 accesos</div></div>`;
     },
     bind(win) {
       win.querySelectorAll("[data-url]").forEach((button) => {
         button.addEventListener("click", () => window.open(button.dataset.url, "_blank", "noopener,noreferrer"));
       });
       win.querySelector("[data-open-slot]")?.addEventListener("click", () => openWindow("slot98-game"));
+      win.querySelector("[data-open-xp-agar]")?.addEventListener("click", () => openWindow("xp-agar-strike"));
+    },
+  },
+  "xp-agar-strike": {
+    title: "C:\\XP_AGAR_STRIKE",
+    width: 1280,
+    height: 860,
+    x: 150,
+    y: 70,
+    render() {
+      return `
+        <div class="window-content recording-studio-shell xp-agar-shell">
+          <div class="studio-window-topbar">
+            <div>
+              <div class="app-section-title">XP Agar Strike</div>
+              <div class="shop-copy">Agar.io + bloques + shooter: movimiento con aceleracion, masa para construir, armas, trampas y skins blocky con peinados y payasitos oscuros.</div>
+            </div>
+            <button class="action-btn" data-open-xp-agar-standalone="1">Abrir aparte</button>
+          </div>
+          <iframe
+            class="recording-studio-frame xp-agar-frame"
+            src="./xp-agar-strike.html?v=xp-agar-strike-1"
+            title="XP Agar Strike"
+            loading="lazy"
+            allow="fullscreen; pointer-lock"
+          ></iframe>
+        </div>
+        <div class="window-statusbar"><div class="status-panel">XP Agar Strike</div><div class="status-panel">Build + Strike</div></div>
+      `;
+    },
+    bind(win) {
+      win.querySelector("[data-open-xp-agar-standalone]")?.addEventListener("click", () => {
+        window.open("./xp-agar-strike.html?v=xp-agar-strike-1", "_blank", "noopener,noreferrer");
+      });
     },
   },
   winamp: {
@@ -4833,7 +6971,7 @@ function renderSlot98Window() {
                 </div>
                 <div class="slot98-sidecard">
                   <div class="slot98-side-title">Inventario de stickers</div>
-                  <div class="slot98-album-meta">${uniqueStickers}/${SLOT_ALBUM_TARGET} unicos · ${totalStickers} totales</div>
+                  <div class="slot98-album-meta">${uniqueStickers}/${SLOT_ALBUM_TARGET} unicos Â· ${totalStickers} totales</div>
                   <div class="slot98-inventory-actions">
                     <button class="slot98-ui-btn wide" type="button" data-slot-claim="1">CANJEAR ALBUM</button>
                     <button class="slot98-ui-btn wide slot98-inventory-toggle" type="button" data-slot-inventory-toggle="1">${state.slot98.inventoryOpen ? "OCULTAR INVENTARIO" : "VER INVENTARIO"}</button>
@@ -5111,3 +7249,6 @@ function setupBackgroundAudioGuards() {
 }
 
 setupBackgroundAudioGuards();
+
+
+

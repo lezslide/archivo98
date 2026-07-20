@@ -24,8 +24,11 @@ async function main() {
     ".env.instagram.example",
     ".gitignore",
     "api",
+    "assets",
     "app.js",
     "index.html",
+    "ventas-metas.html",
+    "ventas-registro.html",
     "instagram-creator",
     "instagram-reply-test.html",
     "manychat-code.html",
@@ -35,6 +38,7 @@ async function main() {
     "player-shell-remote.png",
     "player-shell.jfif",
     "privacy-instagram.html",
+    "recording-studio.html",
     "retro-player-shell-buttons.png",
     "retro-player-shell-transparent-fixed.png",
     "retro-player-shell-transparent.png",
@@ -43,6 +47,9 @@ async function main() {
     "site.webmanifest",
     "slot98.html",
     "styles.css",
+    "under-maps.html",
+    "creator-pro.html",
+    "xp-agar-strike.html",
     "mobile-bootstrap.js"
   ];
 

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Registro de Tickets</title>
+  <meta name="theme-color" content="#e63946" />
+  <style>
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f0df;
+      color: #151515;
+    }
+
+    body {
+      padding: max(16px, env(safe-area-inset-top)) 14px max(20px, env(safe-area-inset-bottom));
+      background:
+        linear-gradient(90deg, rgba(47, 128, 237, 0.08) 0 50%, transparent 50%),
+        linear-gradient(#fff8e8, #f1dfb8);
+      background-size: 42px 42px, auto;
+    }
+
+    .shell {
+      width: min(100%, 920px);
+      margin: 0 auto;
+    }
+
+    .board {
+      overflow: hidden;
+      border: 3px solid #101010;
+      border-radius: 8px;
+      background: #d8d8d8;
+      box-shadow: 10px 10px 0 rgba(16, 16, 16, 0.92);
+    }
+
+    .stripe {
+      height: 22px;
+      background: repeating-linear-gradient(90deg, #e63946 0 22px, #fffdf4 22px 36px, #2f80ed 36px 58px, #fffdf4 58px 72px);
+      border-bottom: 3px solid #101010;
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      padding: 16px;
+      background: #20251d;
+      color: #f8f7d8;
+      border-bottom: 3px solid #101010;
+    }
+
+    h1 {
+      margin: 0;
+      color: #fffdf4;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: clamp(30px, 6vw, 54px);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin-top: 7px;
+      color: #caffbf;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .btn {
+      min-height: 42px;
+      border: 2px solid #101010;
+      border-radius: 6px;
+      background: #fffdf4;
+      color: #101010;
+      padding: 10px 13px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 4px 4px 0 #101010;
+      cursor: pointer;
+    }
+
+    .btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #101010;
+    }
+
+    .btn.red { background: #e63946; color: #fffdf4; }
+    .btn.green { background: #2fbf71; color: #fffdf4; }
+    .btn.blue { background: #2f80ed; color: #fffdf4; }
+
+    .content {
+      display: grid;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .input-ticket,
+    .stats,
+    .chart-panel,
+    .history {
+      border: 2px solid #101010;
+      border-radius: 7px;
+      background: #fffef8;
+      box-shadow: 5px 5px 0 rgba(16, 16, 16, 0.88);
+    }
+
+    .input-ticket {
+      display: grid;
+      gap: 11px;
+      padding: 13px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .section-title {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      border-bottom: 2px dashed #101010;
+      padding-bottom: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .field {
+      display: grid;
+      gap: 4px;
+    }
+
+    .field label {
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      min-height: 40px;
+      border: 2px solid #101010;
+      border-radius: 5px;
+      background: #fffdf4;
+      color: #101010;
+      padding: 8px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: hidden;
+    }
+
+    .stat {
+      padding: 12px;
+      border-right: 2px dashed #101010;
+      font-family: Consolas, "Courier New", monospace;
+      text-transform: uppercase;
+    }
+
+    .stat:last-child { border-right: 0; }
+
+    .stat span,
+    .stat strong {
+      display: block;
+      font-weight: 900;
+    }
+
+    .stat span {
+      font-size: 11px;
+      color: #525252;
+    }
+
+    .stat strong {
+      margin-top: 4px;
+      font-size: 22px;
+      color: #101010;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .chart-panel,
+    .history {
+      padding: 12px;
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .chart {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .ticket-row {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr) 78px;
+      gap: 9px;
+      align-items: center;
+      min-height: 28px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .ticket-row span:last-child {
+      text-align: right;
+    }
+
+    .lane {
+      position: relative;
+      height: 15px;
+      overflow: hidden;
+      border: 2px solid #101010;
+      background: #ece1ca;
+    }
+
+    .lane i {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: repeating-linear-gradient(90deg, #e63946 0 12px, #ffd166 12px 20px, #2fbf71 20px 32px);
+    }
+
+    .history {
+      display: grid;
+      gap: 8px;
+      max-height: 260px;
+      overflow: auto;
+    }
+
+    .history .ticket-row {
+      grid-template-columns: 64px minmax(0, 1fr) 96px;
+      border-bottom: 1px dotted #777;
+      padding-bottom: 7px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      border: 2px solid #101010;
+      border-radius: 6px;
+      background: #ffd166;
+      color: #101010;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 4px 4px 0 #101010;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 760px) {
+      .header,
+      .charts {
+        grid-template-columns: 1fr;
+      }
+
+      .grid,
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stat {
+        border-right: 0;
+        border-bottom: 2px dashed #101010;
+      }
+
+      .stat:last-child {
+        grid-column: 1 / -1;
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .grid,
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="board">
+      <div class="stripe"></div>
+      <div class="header">
+        <div>
+          <h1>Registro de tickets</h1>
+          <div class="sub">Ventas, km y mejores dias del reto</div>
+        </div>
+        <a class="btn blue" href="./ventas-metas.html?v=sales-goals-4">Volver a caja</a>
+      </div>
+
+      <div class="content">
+        <div class="input-ticket">
+          <div class="section-title">Cargar dia</div>
+          <div class="grid">
+            <div class="field"><label for="date-input">Fecha</label><input id="date-input" type="date" /></div>
+            <div class="field"><label for="money-input">Recaudado</label><input id="money-input" type="number" min="0" step="1" /></div>
+            <div class="field"><label for="km-input">Km</label><input id="km-input" type="number" min="0" step="0.1" /></div>
+            <div class="field"><label for="sales-input">Ventas</label><input id="sales-input" type="number" min="0" step="1" /></div>
+          </div>
+          <div class="actions">
+            <button class="btn green" id="save-btn" type="button">Guardar ticket</button>
+            <button class="btn red" id="delete-btn" type="button">Borrar fecha</button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Semana</span><strong id="week-total">$0</strong></div>
+          <div class="stat"><span>Mes</span><strong id="month-total">$0</strong></div>
+          <div class="stat"><span>Mejor ticket</span><strong id="best-day">--</strong></div>
+        </div>
+
+        <div class="charts">
+          <div class="chart-panel">
+            <div class="section-title">Tira ultimos 7 dias</div>
+            <div class="chart" id="week-chart"></div>
+          </div>
+          <div class="chart-panel">
+            <div class="section-title">Tickets del mes</div>
+            <div class="chart" id="month-chart"></div>
+          </div>
+        </div>
+
+        <div class="history">
+          <div class="section-title">Historial completo</div>
+          <div id="history"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Listo</div>
+
+  <script>
+    const STORAGE_KEY = "archivo98_sales_daily_records";
+    const dateInput = document.getElementById("date-input");
+    const moneyInput = document.getElementById("money-input");
+    const kmInput = document.getElementById("km-input");
+    const salesInput = document.getElementById("sales-input");
+    const toast = document.getElementById("toast");
+    let records = [];
+
+    function todayKey() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function formatMoney(value) {
+      return Math.round(Number(value) || 0).toLocaleString("es-AR");
+    }
+
+    function formatDay(date) {
+      const parts = String(date).split("-");
+      return `${parts[2]}/${parts[1]}`;
+    }
+
+    function loadRecords() {
+      try {
+        records = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        if (!Array.isArray(records)) records = [];
+      } catch (_error) {
+        records = [];
+      }
+    }
+
+    function saveRecords() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    }
+
+    function recentDays(count) {
+      const days = [];
+      const cursor = new Date();
+      for (let index = count - 1; index >= 0; index -= 1) {
+        const day = new Date(cursor);
+        day.setDate(cursor.getDate() - index);
+        days.push(day.toISOString().slice(0, 10));
+      }
+      return days;
+    }
+
+    function currentRecord() {
+      const saleCount = Math.max(0, Number(salesInput.value) || 0);
+      return {
+        date: dateInput.value || todayKey(),
+        money: Math.max(0, Number(moneyInput.value) || 0),
+        km: Math.max(0, Number(kmInput.value) || 0),
+        sales: Array.from({ length: saleCount }, (_, index) => ({ name: `Venta ${index + 1}`, price: 0 })),
+        updatedAt: new Date().toISOString(),
+      };
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("visible"), 1600);
+    }
+
+    function fillSelectedDate() {
+      const record = records.find((item) => item.date === dateInput.value);
+      moneyInput.value = record ? Number(record.money || 0) : 0;
+      kmInput.value = record ? Number(record.km || 0) : 0;
+      salesInput.value = record ? (record.sales || []).length : 0;
+      render();
+    }
+
+    function upsertRecord() {
+      const record = currentRecord();
+      const index = records.findIndex((item) => item.date === record.date);
+      if (index >= 0) records[index] = { ...records[index], ...record };
+      else records.push(record);
+      records.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      saveRecords();
+      render();
+      showToast("Ticket guardado");
+    }
+
+    function deleteRecord() {
+      records = records.filter((item) => item.date !== dateInput.value);
+      saveRecords();
+      fillSelectedDate();
+      showToast("Fecha borrada");
+    }
+
+    function renderTicketRows(target, chartRecords) {
+      const maxMoney = Math.max(1, ...chartRecords.map((record) => Number(record.money || 0)));
+      target.innerHTML = chartRecords.map((record) => {
+        const width = Math.max(0, Math.min(100, (Number(record.money || 0) / maxMoney) * 100));
+        return `
+          <div class="ticket-row">
+            <span>${formatDay(record.date)}</span>
+            <div class="lane"><i style="width:${width}%"></i></div>
+            <span>$${formatMoney(record.money || 0)}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function render() {
+      const selected = currentRecord();
+      const byDate = new Map(records.map((record) => [record.date, record]));
+      byDate.set(selected.date, selected);
+      const merged = Array.from(byDate.values()).sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      const week = recentDays(7).map((date) => byDate.get(date) || { date, money: 0 });
+      const monthKey = selected.date.slice(0, 7);
+      const month = merged.filter((record) => String(record.date).startsWith(monthKey));
+      const weekTotal = week.reduce((sum, record) => sum + Number(record.money || 0), 0);
+      const monthTotal = month.reduce((sum, record) => sum + Number(record.money || 0), 0);
+      const best = merged.reduce((bestRecord, record) => Number(record.money || 0) > Number(bestRecord?.money || 0) ? record : bestRecord, null);
+
+      document.getElementById("week-total").textContent = `$${formatMoney(weekTotal)}`;
+      document.getElementById("month-total").textContent = `$${formatMoney(monthTotal)}`;
+      document.getElementById("best-day").textContent = best ? `${formatDay(best.date)} $${formatMoney(best.money)}` : "--";
+      renderTicketRows(document.getElementById("week-chart"), week);
+      renderTicketRows(document.getElementById("month-chart"), month.length ? month : [{ date: selected.date, money: selected.money }]);
+      document.getElementById("history").innerHTML = merged.slice().reverse().map((record) => `
+        <div class="ticket-row">
+          <span>${formatDay(record.date)}</span>
+          <span>$${formatMoney(record.money || 0)} / ${(Number(record.km || 0)).toLocaleString("es-AR")} km</span>
+          <span>${(record.sales || []).length} ventas</span>
+        </div>
+      `).join("") || '<div class="ticket-row"><span>--</span><span>Sin fechas guardadas</span><span>$0</span></div>';
+    }
+
+    dateInput.addEventListener("change", fillSelectedDate);
+    [moneyInput, kmInput, salesInput].forEach((input) => input.addEventListener("input", render));
+    document.getElementById("save-btn").addEventListener("click", upsertRecord);
+    document.getElementById("delete-btn").addEventListener("click", deleteRecord);
+
+    loadRecords();
+    dateInput.value = todayKey();
+    fillSelectedDate();
+  </script>
+</body>
+</html>

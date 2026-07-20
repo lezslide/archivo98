@@ -1,0 +1,599 @@
+{
+  "episodio": 1,
+  "titulo": "De un sticker a cien",
+  "preguntaPrincipal": "¿Puedo transformar un sticker en cien oportunidades para construir mi marca y recorrer 40.075 km?",
+  "objetivo": "Empezar con un sticker, vender, reinvertir y terminar con una plancha de 100 stickers.",
+  "tomasEpisodio": [
+    {
+      "id": "sticker-inicial",
+      "nombre": "Primer plano del sticker inicial",
+      "estado": "pendiente"
+    },
+    {
+      "id": "mapa-40075",
+      "nombre": "Mapa de 40.075 km",
+      "estado": "pendiente"
+    },
+    {
+      "id": "reglas-reto",
+      "nombre": "Explicación breve de las reglas",
+      "estado": "pendiente"
+    },
+    {
+      "id": "plancha-100",
+      "nombre": "Plano final de la plancha de 100 stickers",
+      "estado": "pendiente"
+    }
+  ],
+  "dias": [
+    {
+      "dia": 1,
+      "titulo": "La primera persona es la más difícil",
+      "objetivo": "Vender al menos 7 stickers en Mariano Acosta.",
+      "tomasDia": [
+        {
+          "id": "d1-salida",
+          "nombre": "Preparación y salida de casa",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d1-barrio",
+          "nombre": "Calles de Mariano Acosta",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d1-stock",
+          "nombre": "Stock y dinero al comenzar",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d1-oscuridad",
+          "nombre": "Barrio empezando a oscurecer",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d1-recuento",
+          "nombre": "Recuento final del día",
+          "estado": "pendiente"
+        }
+      ],
+      "bloques": [
+        {
+          "orden": 1,
+          "emocion": "Curiosidad",
+          "funcionNarrativa": "Gancho",
+          "tiempo": "0:00-0:25",
+          "objetivoNarrativo": "Presentar el reto y la meta de pasar de 1 a 100 stickers.",
+          "sensacionEspectador": "¿Cómo va a lograrlo?",
+          "escena": "Sticker, mapa, ventas, rechazo, oscuridad y adelanto de la plancha.",
+          "dialogo": "Este sticker es todo lo que tengo para intentar construir una marca de ropa y recorrer 40.075 kilómetros. No puedo usar mi dinero. En tres días voy a intentar convertir uno en cien.",
+          "tomasBloque": [
+            {
+              "id": "d1b1-montaje",
+              "nombre": "Montaje rápido del episodio",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "sticker-inicial",
+            "mapa-40075",
+            "plancha-100"
+          ],
+          "preguntaAbierta": "¿Podrá llegar a 100 stickers?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 2,
+          "emocion": "Vulnerabilidad",
+          "funcionNarrativa": "Presentación del conflicto",
+          "tiempo": "0:25-2:00",
+          "objetivoNarrativo": "Mostrar que sabe vender, pero le da vergüenza empezar.",
+          "sensacionEspectador": "Es bueno, pero también le cuesta.",
+          "escena": "Clips de Mar del Plata y dudas antes de acercarse.",
+          "dialogo": "Ya demostre que puedo vender stickers. Pero antes de hablarle a la primera persona me da una verguenza terrible. Yo se vender; el problema es arrancar.",
+          "tomasBloque": [
+            {
+              "id": "d1b2-reglas",
+              "nombre": "contar las reglas",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b2-sticker-cubo",
+              "nombre": "mostrar sticker inicial dentro de cubo",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b2-mapa-under",
+              "nombre": "mostrar el mapa under y salir a vender",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b2-barrio-oscuro",
+              "nombre": "barrio peligroso, cuidado cuando oscurece",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b2-primer-cliente-verguenza",
+              "nombre": "primer cliente pero me da verguenza",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b2-primer-rechazo",
+              "nombre": "primer rechazo",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "Va a superar la verguenza inicial?",
+          "estado": "pendiente",
+          "resultadoEsperado": "Que el espectador quiera pasar al primer intento y entienda que el obstaculo no es vender, sino animarse a acercarse."
+        },
+        {
+          "orden": 3,
+          "emocion": "Tensión social",
+          "funcionNarrativa": "Primer obstáculo",
+          "tiempo": "2:00-4:00",
+          "objetivoNarrativo": "Mostrar rechazos y el esfuerzo de empezar.",
+          "sensacionEspectador": "Que se anime a intentarlo otra vez.",
+          "escena": "Primer intento, rechazo y reacción.",
+          "dialogo": "Bueno. Ya está. La primera siempre es la peor.",
+          "tomasBloque": [
+            {
+              "id": "d1b3-intento",
+              "nombre": "Primer acercamiento",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b3-rechazo",
+              "nombre": "Primer rechazo",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b3-reaccion",
+              "nombre": "Reacción después del rechazo",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿La próxima persona frenará?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 4,
+          "emocion": "Alivio",
+          "funcionNarrativa": "Primera recompensa",
+          "tiempo": "4:00-6:00",
+          "objetivoNarrativo": "Conseguir la primera venta del reto.",
+          "sensacionEspectador": "El reto finalmente empezó.",
+          "escena": "Speech, entrega, pago y reacción.",
+          "dialogo": "Estoy intentando convertir un sticker en una marca de ropa y usar esa marca para recorrer 40.075 kilómetros. No era la primera venta de mi vida, pero sí la primera de esta historia.",
+          "tomasBloque": [
+            {
+              "id": "d1b4-speech",
+              "nombre": "Fragmento del speech",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b4-entrega",
+              "nombre": "Entrega del sticker y pago",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b4-reaccion",
+              "nombre": "Reacción después de vender",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Podrá repetirlo siete veces?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 5,
+          "emocion": "Confianza",
+          "funcionNarrativa": "Montaje de progreso",
+          "tiempo": "6:00-11:00",
+          "objetivoNarrativo": "Mostrar habilidad para vender y acercarse a la meta.",
+          "sensacionEspectador": "Está agarrando ritmo.",
+          "escena": "Ventas, conversaciones, contador y distintas aperturas.",
+          "dialogo": "Después de la primera venta, la vergüenza no desapareció, pero dejó de mandar. No buscaba un discurso perfecto: buscaba una frase que hiciera que la persona quisiera escuchar la segunda.",
+          "tomasBloque": [
+            {
+              "id": "d1b5-ventas",
+              "nombre": "Montaje de varias ventas",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b5-contador",
+              "nombre": "Contador llegando a 7",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Llegará antes de que oscurezca?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 6,
+          "emocion": "Inquietud",
+          "funcionNarrativa": "Caída del día",
+          "tiempo": "11:00-13:00",
+          "objetivoNarrativo": "Mostrar que seguir vendiendo puede hacerle perder todo.",
+          "sensacionEspectador": "Tiene que irse.",
+          "escena": "Oscurece, guarda el celular y decide retirarse.",
+          "dialogo": "Cumplí la meta, pero dejé de mirar la hora. Conozco el barrio y sabía que no era buena idea seguir mostrando el celular y contando plata. Frenar era mejor que perder todo.",
+          "tomasBloque": [
+            {
+              "id": "d1b6-guardar",
+              "nombre": "Guardar celular y stickers",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d1b6-regreso",
+              "nombre": "Inicio del regreso",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "d1-oscuridad"
+          ],
+          "preguntaAbierta": "¿Alcanzó el dinero para dar el primer salto?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 7,
+          "emocion": "Satisfacción",
+          "funcionNarrativa": "Cierre y transición",
+          "tiempo": "13:00-15:00",
+          "objetivoNarrativo": "Contar el dinero y preparar el viaje a Merlo.",
+          "sensacionEspectador": "El primer día valió la pena.",
+          "escena": "Recuento y precio de la plancha.",
+          "dialogo": "Cumplí la meta, pero todavía necesitaba 9.000 pesos para la plancha. Mañana voy a Merlo: hay más gente, pero también más competencia.",
+          "tomasBloque": [
+            {
+              "id": "d1b7-cuentas",
+              "nombre": "Dinero, stock y anotaciones",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "d1-recuento"
+          ],
+          "preguntaAbierta": "¿Más personas significarán más ventas?",
+          "estado": "pendiente"
+        }
+      ]
+    },
+    {
+      "dia": 2,
+      "titulo": "Más personas no significa más ventas",
+      "objetivo": "Llegar a $9.000 antes de que cierre la imprenta.",
+      "tomasDia": [
+        {
+          "id": "d2-viaje",
+          "nombre": "Viaje y llegada a Merlo",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d2-centro",
+          "nombre": "Centro lleno de gente",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d2-horario",
+          "nombre": "Horario de cierre de la imprenta",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d2-comida",
+          "nombre": "Comida económica al final",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d2-llamada",
+          "nombre": "Llamada con la novia",
+          "estado": "pendiente"
+        }
+      ],
+      "bloques": [
+        {
+          "orden": 1,
+          "emocion": "Esperanza",
+          "funcionNarrativa": "Nueva estrategia",
+          "tiempo": "15:00-17:00",
+          "objetivoNarrativo": "Presentar Merlo y la meta con reloj.",
+          "sensacionEspectador": "Hoy debería vender más rápido.",
+          "escena": "Viaje, multitud, dinero actual y hora de cierre.",
+          "dialogo": "En Mariano Acosta podía pasar mucho tiempo esperando. En Merlo hay miles de personas. En teoría, hoy debería ser más fácil.",
+          "tomasBloque": [
+            {
+              "id": "d2b1-meta",
+              "nombre": "Meta $9.000 y tiempo restante",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "d2-viaje",
+            "d2-centro",
+            "d2-horario"
+          ],
+          "preguntaAbierta": "¿Llegará antes del cierre?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 2,
+          "emocion": "Frustración",
+          "funcionNarrativa": "Obstáculo",
+          "tiempo": "17:00-20:00",
+          "objetivoNarrativo": "Demostrar que la multitud no garantiza ventas.",
+          "sensacionEspectador": "Está quedando perdido entre el ruido.",
+          "escena": "Gente apurada, auriculares y rechazos rápidos.",
+          "dialogo": "Había mucha más gente, pero era mucho más fácil convertirse en parte del ruido. Tenía dos segundos para lograr que alguien frenara.",
+          "tomasBloque": [
+            {
+              "id": "d2b2-rechazos",
+              "nombre": "Montaje de rechazos rápidos",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Qué cambiará para llamar la atención?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 3,
+          "emocion": "Curiosidad",
+          "funcionNarrativa": "Cambio de estrategia",
+          "tiempo": "20:00-23:00",
+          "objetivoNarrativo": "Acortar el speech y abrir una pregunta.",
+          "sensacionEspectador": "Quiere ver si el nuevo gancho funciona.",
+          "escena": "Comparar speech largo con una apertura corta.",
+          "dialogo": "Estaba explicando demasiado antes de conseguir que frenaran. Cambié el inicio por: ¿Sabías que este sticker es parte de una vuelta al mundo?",
+          "tomasBloque": [
+            {
+              "id": "d2b3-largo",
+              "nombre": "Speech largo que falla",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d2b3-corto",
+              "nombre": "Nuevo gancho corto",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Subirá el ritmo de ventas?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 4,
+          "emocion": "Progreso",
+          "funcionNarrativa": "Subida",
+          "tiempo": "23:00-28:00",
+          "objetivoNarrativo": "Acercarse a los $9.000.",
+          "sensacionEspectador": "Ahora sí puede lograrlo.",
+          "escena": "Ventas, contador de dinero y reloj.",
+          "dialogo": "Cuando conseguía que escucharan la historia completa, vender volvía a ser la parte fácil.",
+          "tomasBloque": [
+            {
+              "id": "d2b4-ventas",
+              "nombre": "Montaje de ventas en Merlo",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d2b4-contador",
+              "nombre": "Contador acercándose a $9.000",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Cuántas ventas faltan antes del cierre?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 5,
+          "emocion": "Presión",
+          "funcionNarrativa": "Cuenta regresiva",
+          "tiempo": "28:00-31:00",
+          "objetivoNarrativo": "Completar la meta bajo presión.",
+          "sensacionEspectador": "Falta muy poco y se acaba el tiempo.",
+          "escena": "Actualizaciones: faltan cuatro, dos y una.",
+          "dialogo": "Necesito vender algunos más antes de que cierre. Faltan cuatro. Faltan dos. Falta una.",
+          "tomasBloque": [
+            {
+              "id": "d2b5-reloj",
+              "nombre": "Reloj y dinero faltante",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d2b5-ultima",
+              "nombre": "Venta que completa la meta",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Llegará a la imprenta?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 6,
+          "emocion": "Urgencia",
+          "funcionNarrativa": "Carrera",
+          "tiempo": "31:00-34:00",
+          "objetivoNarrativo": "Llegar a la imprenta y encargar la plancha.",
+          "sensacionEspectador": "Que no cierre antes.",
+          "escena": "Viaje rápido, dirección, fachada y comprobante.",
+          "dialogo": "Había conseguido el dinero. Pero si llegaba después del cierre, tenía que esperar hasta mañana.",
+          "tomasBloque": [
+            {
+              "id": "d2b6-carrera",
+              "nombre": "Carrera hacia la imprenta",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d2b6-pedido",
+              "nombre": "Encargo y comprobante",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿Cómo se sentirá tener cien stickers?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 7,
+          "emocion": "Calma",
+          "funcionNarrativa": "Respiración emocional",
+          "tiempo": "34:00-36:00",
+          "objetivoNarrativo": "Cerrar el día y recordar el motor emocional.",
+          "sensacionEspectador": "Esto significa algo más grande.",
+          "escena": "Comida económica y llamada.",
+          "dialogo": "Mañana me entregan los cien. Después tengo que convertirlos en tela.",
+          "tomasBloque": [],
+          "referenciasTomas": [
+            "d2-comida",
+            "d2-llamada"
+          ],
+          "preguntaAbierta": "¿Qué hará con tanto stock?",
+          "estado": "pendiente"
+        }
+      ]
+    },
+    {
+      "dia": 3,
+      "titulo": "Cien oportunidades",
+      "objetivo": "Retirar la plancha y preparar el salto hacia el rollo de tela.",
+      "tomasDia": [
+        {
+          "id": "d3-viaje",
+          "nombre": "Viaje a la imprenta",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d3-paquete",
+          "nombre": "Paquete cerrado",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d3-organizar",
+          "nombre": "Organización de los diseños",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d3-cuentas",
+          "nombre": "Cálculo hacia el rollo",
+          "estado": "pendiente"
+        },
+        {
+          "id": "d3-mapa",
+          "nombre": "Actualización del mapa",
+          "estado": "pendiente"
+        }
+      ],
+      "bloques": [
+        {
+          "orden": 1,
+          "emocion": "Anticipación",
+          "funcionNarrativa": "Preparar la revelación",
+          "tiempo": "36:00-38:00",
+          "objetivoNarrativo": "Recordar que empezó con uno y ahora va por cien.",
+          "sensacionEspectador": "Quiere ver la plancha.",
+          "escena": "Comprobante, viaje y paquete cerrado.",
+          "dialogo": "Hace dos días empecé con un sticker y cero pesos. Ahora había usado las primeras ventas para comprar cien. Al menos en teoría.",
+          "tomasBloque": [],
+          "referenciasTomas": [
+            "d3-viaje",
+            "d3-paquete",
+            "sticker-inicial"
+          ],
+          "preguntaAbierta": "¿Cómo quedó el pedido?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 2,
+          "emocion": "Satisfacción",
+          "funcionNarrativa": "Gran recompensa",
+          "tiempo": "38:00-40:00",
+          "objetivoNarrativo": "Revelar la plancha completa.",
+          "sensacionEspectador": "El crecimiento se volvió visible.",
+          "escena": "Abrir el paquete y mostrar los 100.",
+          "dialogo": "Esta era la primera vez que el reto multiplicaba algo de forma visible. Empecé con uno. Ahora tenía cien.",
+          "tomasBloque": [
+            {
+              "id": "d3b2-apertura",
+              "nombre": "Apertura del paquete",
+              "estado": "pendiente"
+            },
+            {
+              "id": "d3b2-detalles",
+              "nombre": "Detalles de corte, brillo y diseños",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "plancha-100"
+          ],
+          "preguntaAbierta": "¿Puede venderlos todos?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 3,
+          "emocion": "Incertidumbre",
+          "funcionNarrativa": "Nuevo problema",
+          "tiempo": "40:00-42:00",
+          "objetivoNarrativo": "Mostrar que ahora tiene cien productos sin vender.",
+          "sensacionEspectador": "La victoria creó un problema mayor.",
+          "escena": "Cien stickers sobre la mesa y precio del rollo.",
+          "dialogo": "Ver cien juntos era un gran avance. Pero también significaba que tenía cien cosas que todavía no había vendido. Ahora había que convertir todo esto en el rollo.",
+          "tomasBloque": [],
+          "referenciasTomas": [
+            "d3-organizar",
+            "d3-cuentas"
+          ],
+          "preguntaAbierta": "¿Este sistema alcanza para $220.000?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 4,
+          "emocion": "Ambición",
+          "funcionNarrativa": "Nueva misión",
+          "tiempo": "42:00-44:00",
+          "objetivoNarrativo": "Presentar el plan de vender, reinvertir y repetir.",
+          "sensacionEspectador": "Parece posible, pero difícil.",
+          "escena": "Calculadora, paquetes y mochila.",
+          "dialogo": "Si vendía los cien, podía imprimir más y repetir. Por primera vez parecía que tenía un sistema.",
+          "tomasBloque": [
+            {
+              "id": "d3b4-paquetes",
+              "nombre": "Armar paquetes y preparar mochila",
+              "estado": "pendiente"
+            }
+          ],
+          "preguntaAbierta": "¿El plan es realmente realista?",
+          "estado": "pendiente"
+        },
+        {
+          "orden": 5,
+          "emocion": "Orgullo e intriga",
+          "funcionNarrativa": "Cierre del episodio",
+          "tiempo": "44:00-45:00",
+          "objetivoNarrativo": "Cerrar la primera transformación y anticipar la caída del episodio 2.",
+          "sensacionEspectador": "Quiere ver si los cien alcanzan.",
+          "escena": "Mapa, resumen y adelantos del siguiente episodio.",
+          "dialogo": "En tres días no fabriqué ropa ni compré tela. Pero convertí un sticker en cien oportunidades sin usar dinero propio. Pensé que cien stickers podían llevarme directamente al rollo. Estaba a punto de descubrir que mi plan no era tan realista como parecía.",
+          "tomasBloque": [
+            {
+              "id": "d3b5-avance",
+              "nombre": "Flashes del Episodio 2: ventas, cansancio, calculadora y muestra",
+              "estado": "pendiente"
+            }
+          ],
+          "referenciasTomas": [
+            "d3-mapa",
+            "mapa-40075"
+          ],
+          "preguntaAbierta": "¿Cuántos stickers hacen falta para crear una prenda?",
+          "estado": "pendiente"
+        }
+      ]
+    }
+  ],
+  "reglasImportacion": {
+    "noGenerarTomasAutomaticas": true,
+    "noRepetirTomasCompartidas": true,
+    "noCrearAccionYReaccionPorDefecto": true,
+    "usarSoloTomasIncluidasEnCadaBloque": true,
+    "siUnBloqueNoTieneTomasDejarListaVacia": true
+  }
+}

@@ -3,7 +3,7 @@
   "short_name": "Archivo98",
   "description": "Windows 98 web OS con musica, juegos y experiencia instalable.",
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#0b1020",
   "theme_color": "#1b3f8b",
   "orientation": "portrait",

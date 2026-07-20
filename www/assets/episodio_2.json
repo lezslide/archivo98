@@ -1,0 +1,2051 @@
+{
+  "episodio": 2,
+  "titulo_provisional": "Intenté vender mis primeros 100 stickers",
+  "dias": [
+    4,
+    5,
+    6
+  ],
+  "duracion_objetivo_segundos": 2269.8,
+  "duracion_objetivo_formato": "37:49.8",
+  "objetivo_del_episodio": "Vender los primeros 100 stickers del reto y descubrir qué estrategia permite venderlos con mayor consistencia.",
+  "pregunta_narrativa": "¿Puedo vender los 100 stickers antes de quedarme sin tiempo, energía o compradores?",
+  "continuidad": "El episodio anterior termina cuando el primer sticker se convierte en una plancha de 100 unidades.",
+  "regla_principal": "No se avanza al primer producto de ropa hasta vender los 100 stickers y todo gasto debe seguir saliendo del dinero generado por el reto.",
+  "arco_emocional": [
+    "curiosidad",
+    "entusiasmo",
+    "confianza",
+    "primer_choque",
+    "frustracion",
+    "replanteo",
+    "esperanza",
+    "descubrimiento",
+    "racha",
+    "caida",
+    "presion",
+    "determinacion",
+    "suspenso",
+    "victoria",
+    "nuevo_desafio"
+  ],
+  "bloques": [
+    {
+      "id": "ep2_b01",
+      "bloque": 1,
+      "plantilla": "B1 P1",
+      "dia": 4,
+      "nombre": "Gancho de curiosidad",
+      "tipo": "gancho",
+      "emocion_principal": "curiosidad",
+      "duracion_segundos": 19.8,
+      "duracion_tipo": "fija",
+      "objetivo_narrativo": "Anticipar la dificultad de vender los 100 stickers sin revelar el resultado.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 2,
+          "toma": "Los 100 stickers extendidos sobre una mesa.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "Inicio musical intrigante.",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 1,
+          "toma": "Primer plano del número 100 en pantalla.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "Golpe sonoro.",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 3,
+          "toma": "Plano caminando hacia una zona llena de gente.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "Tenía cien oportunidades para hacer crecer el reto.",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa",
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 3.2,
+          "toma": "Montaje de rechazos y personas pasando de largo.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "Fragmentos de negativas reales.",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 2,
+          "toma": "Contador detenido con muchos stickers todavía disponibles.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker",
+            "contador"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 1,
+          "toma": "Primer plano de preocupación.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "Corte musical.",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 2.2,
+          "toma": "Montaje rápido de una racha de ventas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Hasta que cambié una sola cosa.",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 8,
+          "duracion_segundos": 5.4,
+          "toma": "Último sticker en la mano frente a una persona, cortando antes de la respuesta.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "Pero todavía no sabía si ese cambio alcanzaría para venderlos todos.",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Avanzar el bloque «Gancho de curiosidad» mostrando una acción concreta y verificable.",
+          "continuidad": "Corte al bloque 2.",
+          "recursos_necesarios": [
+            "sticker",
+            "personas"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "mapa",
+        "personas",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Anticipar la dificultad de vender los 100 stickers sin revelar el resultado."
+    },
+    {
+      "id": "ep2_b02",
+      "bloque": 2,
+      "plantilla": "B2 P2",
+      "dia": 4,
+      "nombre": "Ahora tenía cien",
+      "tipo": "continuacion_directa",
+      "emocion_principal": "entusiasmo",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Retomar exactamente desde el cierre del episodio anterior y presentar el nuevo stock.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Abrir la plancha o paquete y mostrar los 100 stickers.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Ahora tenía cien» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Separar los diseños sobre la mesa.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Ahora tenía cien» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Comparar visualmente el sticker inicial con el nuevo stock.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "Hace tres días tenía uno. Ahora tenía cien.",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Ahora tenía cien» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Mostrar el bolso donde se transportará el stock.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Avanzar el bloque «Ahora tenía cien» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Mirar a cámara y presentar el nuevo problema.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Conseguirlos fue difícil. Pero ahora tenía que venderlos.",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Ahora tenía cien» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "sticker"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Retomar exactamente desde el cierre del episodio anterior y presentar el nuevo stock."
+    },
+    {
+      "id": "ep2_b03",
+      "bloque": 3,
+      "plantilla": "B3 P3",
+      "dia": 4,
+      "nombre": "La misión de los 100",
+      "tipo": "planteamiento",
+      "emocion_principal": "presion",
+      "duracion_segundos": 100,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Definir una meta clara, medible y visual para todo el episodio.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Crear un contador de 0 a 100.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La misión de los 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Explicar que no se avanza al primer producto hasta venderlos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La misión de los 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Mostrar diseños y cantidades disponibles.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La misión de los 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Preparar cambio, bolsa y forma de ordenar el dinero.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La misión de los 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Cerrar el bolso y salir.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "La misión era simple: vender los cien.",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Avanzar el bloque «La misión de los 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "contador",
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Definir una meta clara, medible y visual para todo el episodio."
+    },
+    {
+      "id": "ep2_b04",
+      "bloque": 4,
+      "plantilla": "B4 P4",
+      "dia": 4,
+      "nombre": "La primera salida con stock",
+      "tipo": "accion",
+      "emocion_principal": "confianza",
+      "duracion_segundos": 150,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Mostrar la sensación inicial de que tener variedad facilitará las ventas.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Viaje hacia la zona elegida.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Plano general de la cantidad de gente.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Mostrar los diseños y explicar la estrategia inicial.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 35,
+          "toma": "Primeras conversaciones con personas.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Primera venta del episodio.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Actualizar el contador y reaccionar.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La primera salida con stock» mostrando una acción concreta y verificable.",
+          "continuidad": "Iniciar una pequeña racha.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "mapa",
+        "personas",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar la sensación inicial de que tener variedad facilitará las ventas."
+    },
+    {
+      "id": "ep2_b05",
+      "bloque": 5,
+      "plantilla": "B5 P5",
+      "dia": 4,
+      "nombre": "Parecía más fácil",
+      "tipo": "subida_inicial",
+      "emocion_principal": "optimismo",
+      "duracion_segundos": 130,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Crear una falsa sensación de facilidad antes del primer choque.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Montaje de dos o tres ventas rápidas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Personas eligiendo entre distintos diseños.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "optimismo",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Dinero entrando y stock bajando.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "optimismo",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Actualizar el contador.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "optimismo",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Comentario confiado a cámara.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Por un momento pensé que vender cien iba a ser más fácil de lo que imaginaba.",
+          "audio": "",
+          "emocion": "optimismo",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "La racha se corta de forma repentina.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "optimismo",
+          "funcion_narrativa": "Avanzar el bloque «Parecía más fácil» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "dinero",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Crear una falsa sensación de facilidad antes del primer choque."
+    },
+    {
+      "id": "ep2_b06",
+      "bloque": 6,
+      "plantilla": "B6 P6",
+      "dia": 4,
+      "nombre": "Tener stock no alcanza",
+      "tipo": "primer_choque",
+      "emocion_principal": "frustracion",
+      "duracion_segundos": 110,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Demostrar que el stock no resuelve el problema de conseguir compradores.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Montaje de rechazos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Tener stock no alcanza» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Personas mirando pero sin comprar.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Avanzar el bloque «Tener stock no alcanza» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Esperar sin nuevas ventas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Tener stock no alcanza» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Mostrar el contador detenido.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Avanzar el bloque «Tener stock no alcanza» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Reflexión breve.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Tener más stickers no significaba tener más compradores.",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Avanzar el bloque «Tener stock no alcanza» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Demostrar que el stock no resuelve el problema de conseguir compradores."
+    },
+    {
+      "id": "ep2_b07",
+      "bloque": 7,
+      "plantilla": "B7 P7",
+      "dia": 4,
+      "nombre": "El primer resultado real",
+      "tipo": "cierre_de_dia",
+      "emocion_principal": "preocupacion",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Cerrar el primer día mostrando que el ritmo actual no alcanza.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Sacar el stock restante del bolso.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Avanzar el bloque «El primer resultado real» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Contar cuántos stickers se vendieron.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Avanzar el bloque «El primer resultado real» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 15,
+          "toma": "Mostrar el dinero del día.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Avanzar el bloque «El primer resultado real» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Comparar el progreso con los cien.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Avanzar el bloque «El primer resultado real» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Decidir cambiar la forma de vender.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "El problema no era la cantidad. Era mi estrategia.",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Avanzar el bloque «El primer resultado real» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Cerrar el primer día mostrando que el ritmo actual no alcanza."
+    },
+    {
+      "id": "ep2_b08",
+      "bloque": 8,
+      "plantilla": "B8 P8",
+      "dia": 5,
+      "nombre": "Revisar lo que salió mal",
+      "tipo": "apertura_de_dia",
+      "emocion_principal": "analisis",
+      "duracion_segundos": 80,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Convertir el fracaso parcial en información útil.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Revisar clips del día anterior.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Avanzar el bloque «Revisar lo que salió mal» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Anotar momentos donde la gente perdió interés.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Avanzar el bloque «Revisar lo que salió mal» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Separar los diseños más y menos consultados.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Avanzar el bloque «Revisar lo que salió mal» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Detectar que se ofrecía el producto antes de explicar la historia.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Avanzar el bloque «Revisar lo que salió mal» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Preparar una nueva estrategia.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Avanzar el bloque «Revisar lo que salió mal» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Convertir el fracaso parcial en información útil."
+    },
+    {
+      "id": "ep2_b09",
+      "bloque": 9,
+      "plantilla": "B9 P9",
+      "dia": 5,
+      "nombre": "Cambiar el discurso",
+      "tipo": "nuevo_plan",
+      "emocion_principal": "esperanza",
+      "duracion_segundos": 130,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Crear un nuevo speech que venda primero la historia y después el sticker.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Escribir varias frases de apertura.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Probarlas frente a cámara.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Descartar las más largas o confusas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Elegir el speech final.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Estoy intentando convertir estos stickers en una vuelta al mundo de 40.075 kilómetros.",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Preparar una pregunta de cierre.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Salir a probarlo.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Avanzar el bloque «Cambiar el discurso» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Crear un nuevo speech que venda primero la historia y después el sticker."
+    },
+    {
+      "id": "ep2_b10",
+      "bloque": 10,
+      "plantilla": "B10 P10",
+      "dia": 5,
+      "nombre": "La primera prueba del nuevo speech",
+      "tipo": "experimento",
+      "emocion_principal": "incertidumbre",
+      "duracion_segundos": 150,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Probar la nueva estrategia sin garantizar que funcione inmediatamente.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Acercarse a la primera persona.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Usar el speech completo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Primer rechazo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Segundo intento con una pequeña corrección.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 30,
+          "toma": "Una persona se detiene y hace preguntas.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "incertidumbre",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 25,
+          "toma": "Primera venta lograda con el nuevo discurso.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «La primera prueba del nuevo speech» mostrando una acción concreta y verificable.",
+          "continuidad": "Mostrar que la conversación fue diferente.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Probar la nueva estrategia sin garantizar que funcione inmediatamente."
+    },
+    {
+      "id": "ep2_b11",
+      "bloque": 11,
+      "plantilla": "B11 P11",
+      "dia": 5,
+      "nombre": "La historia empieza a vender",
+      "tipo": "descubrimiento",
+      "emocion_principal": "confianza",
+      "duracion_segundos": 120,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Demostrar que las personas compran mejor cuando comprenden el reto.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Comprador preguntando por la vuelta al mundo.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Explicar cómo participa cada venta.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "La persona elige un diseño.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Otra persona se suma a escuchar.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Dos ventas cercanas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Actualizar el contador.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "La diferencia no era solamente el sticker. Era hacer que la gente sintiera que formaba parte del reto.",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Avanzar el bloque «La historia empieza a vender» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Demostrar que las personas compran mejor cuando comprenden el reto."
+    },
+    {
+      "id": "ep2_b12",
+      "bloque": 12,
+      "plantilla": "B12 P12",
+      "dia": 5,
+      "nombre": "La primera gran racha",
+      "tipo": "montaje_de_progreso",
+      "emocion_principal": "euforia",
+      "duracion_segundos": 140,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Entregar una recompensa visual y acelerar el progreso.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Montaje de varias ventas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Diseños diferentes siendo elegidos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Contador avanzando.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Interacciones breves con compradores.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Dinero guardándose.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Stock disminuyendo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 15,
+          "toma": "Reacción emocionada.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Por primera vez, cien dejó de parecer imposible.",
+          "audio": "",
+          "emocion": "euforia",
+          "funcion_narrativa": "Avanzar el bloque «La primera gran racha» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "contador",
+        "personas",
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Entregar una recompensa visual y acelerar el progreso."
+    },
+    {
+      "id": "ep2_b13",
+      "bloque": 13,
+      "plantilla": "B13 P13",
+      "dia": 5,
+      "nombre": "La venta que cambia el día",
+      "tipo": "momento_humano",
+      "emocion_principal": "gratitud",
+      "duracion_segundos": 110,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Crear un momento memorable que tenga valor más allá del número de ventas.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Una persona escucha la historia completa.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "gratitud",
+          "funcion_narrativa": "Avanzar el bloque «La venta que cambia el día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Pregunta por el objetivo o la marca.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "gratitud",
+          "funcion_narrativa": "Avanzar el bloque «La venta que cambia el día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Compra varios stickers o paga más de lo esperado.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "gratitud",
+          "funcion_narrativa": "Avanzar el bloque «La venta que cambia el día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Conversación personal breve.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "gratitud",
+          "funcion_narrativa": "Avanzar el bloque «La venta que cambia el día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Reacción después de despedirse.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "No fue solamente una venta. Fue la primera vez que alguien entendió de verdad lo que estaba intentando construir.",
+          "audio": "",
+          "emocion": "gratitud",
+          "funcion_narrativa": "Avanzar el bloque «La venta que cambia el día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "sticker"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Crear un momento memorable que tenga valor más allá del número de ventas."
+    },
+    {
+      "id": "ep2_b14",
+      "bloque": 14,
+      "plantilla": "B14 P14",
+      "dia": 5,
+      "nombre": "La racha se termina",
+      "tipo": "nueva_complicacion",
+      "emocion_principal": "tension",
+      "duracion_segundos": 80,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Evitar que el progreso resuelva el episodio antes del último día.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "La zona empieza a vaciarse.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «La racha se termina» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Mostrar el cambio de luz o clima.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «La racha se termina» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Últimos intentos sin resultados.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «La racha se termina» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Guardar el stock.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «La racha se termina» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Revelar cuántos quedan.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Había avanzado mucho, pero todavía quedaban demasiados para un solo día.",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Avanzar el bloque «La racha se termina» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "mapa"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Evitar que el progreso resuelva el episodio antes del último día."
+    },
+    {
+      "id": "ep2_b15",
+      "bloque": 15,
+      "plantilla": "B15 P15",
+      "dia": 6,
+      "nombre": "La cuenta del último día",
+      "tipo": "apertura_final",
+      "emocion_principal": "determinacion",
+      "duracion_segundos": 80,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Definir una meta exacta y convertir el final en una contrarreloj.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Extender los stickers restantes sobre la mesa.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «La cuenta del último día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Mostrar el número exacto que falta.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «La cuenta del último día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 15,
+          "toma": "Mostrar la hora de salida.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «La cuenta del último día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Plantear la misión final.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Hoy tenía que venderlos antes de volver a casa.",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «La cuenta del último día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Guardar los stickers y salir.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Avanzar el bloque «La cuenta del último día» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "sticker"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Definir una meta exacta y convertir el final en una contrarreloj."
+    },
+    {
+      "id": "ep2_b16",
+      "bloque": 16,
+      "plantilla": "B16 P16",
+      "dia": 6,
+      "nombre": "Elegir la mejor zona",
+      "tipo": "estrategia_final",
+      "emocion_principal": "enfoque",
+      "duracion_segundos": 140,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Aplicar lo aprendido sobre lugares, horarios y público.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 25,
+          "toma": "Comparar posibles zonas.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Explicar qué público compró más.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Elegir una zona con mayor circulación.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 30,
+          "toma": "Viaje y llegada.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 25,
+          "toma": "Preparar el speech y los diseños principales.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Iniciar la primera conversación.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Avanzar el bloque «Elegir la mejor zona» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "mapa"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Aplicar lo aprendido sobre lugares, horarios y público."
+    },
+    {
+      "id": "ep2_b17",
+      "bloque": 17,
+      "plantilla": "B17 P17",
+      "dia": 6,
+      "nombre": "Contrarreloj",
+      "tipo": "accion_final",
+      "emocion_principal": "presion_alta",
+      "duracion_segundos": 160,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Alternar ventas y rechazos para mantener incierto el resultado.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 30,
+          "toma": "Primeras ventas rápidas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Serie de rechazos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 25,
+          "toma": "Actualizar contador.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion_alta",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Cambiar de punto dentro de la zona.",
+          "plano": "plano general + planos recurso del recorrido",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion_alta",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 30,
+          "toma": "Nueva racha de ventas.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 25,
+          "toma": "Mirar la hora y mostrar cuántos faltan.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Cada vez quedaban menos stickers, pero también menos tiempo.",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Contrarreloj» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "contador",
+        "mapa"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Alternar ventas y rechazos para mantener incierto el resultado."
+    },
+    {
+      "id": "ep2_b18",
+      "bloque": 18,
+      "plantilla": "B18 P18",
+      "dia": 6,
+      "nombre": "Los últimos diez",
+      "tipo": "tension_maxima",
+      "emocion_principal": "suspenso",
+      "duracion_segundos": 130,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Dar peso individual a las últimas ventas.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Mostrar diez stickers restantes.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Venta de dos o tres unidades.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Rechazo que corta el ritmo.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 25,
+          "toma": "Otra venta y actualización del contador.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "avance",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Quedan cinco.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Quedan dos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 10,
+          "toma": "Mostrar el último sticker.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «Los últimos diez» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar antes de la conversación final.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Dar peso individual a las últimas ventas."
+    },
+    {
+      "id": "ep2_b19",
+      "bloque": 19,
+      "plantilla": "B19 P19",
+      "dia": 6,
+      "nombre": "El sticker número 100",
+      "tipo": "resolucion",
+      "emocion_principal": "victoria",
+      "duracion_segundos": 110,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Resolver la pregunta principal del episodio con una última interacción completa.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Acercarse con el último sticker.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 25,
+          "toma": "Contar el reto y explicar que es el último.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "La persona hace una pregunta o duda.",
+          "plano": "plano medio de interacción",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tensión",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Confirmación de la compra.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 10,
+          "toma": "Entrega del sticker y dinero.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "sticker",
+            "dinero"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 15,
+          "toma": "Contador llegando a 100.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "Acababa de vender mis primeros cien stickers.",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Avanzar el bloque «El sticker número 100» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "sticker",
+        "personas",
+        "dinero",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Resolver la pregunta principal del episodio con una última interacción completa."
+    },
+    {
+      "id": "ep2_b20",
+      "bloque": 20,
+      "plantilla": "B20 P20",
+      "dia": 6,
+      "nombre": "Lo que realmente funcionó",
+      "tipo": "balance",
+      "emocion_principal": "claridad",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar que el aprendizaje de venta es tan importante como el dinero.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 15,
+          "toma": "Mostrar los diseños más vendidos.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 15,
+          "toma": "Comparar lugares que funcionaron mejor.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Comparar el speech viejo y el nuevo.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Mostrar el dinero total.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 15,
+          "toma": "Anotar aprendizajes.",
+          "plano": "plano cenital o captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 10,
+          "toma": "Reflexión final.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "Ahora sabía qué decir, dónde vender y qué diseños llamaban más la atención.",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Avanzar el bloque «Lo que realmente funcionó» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar que el aprendizaje de venta es tan importante como el dinero."
+    },
+    {
+      "id": "ep2_b21",
+      "bloque": 21,
+      "plantilla": "B21 P21",
+      "dia": 6,
+      "nombre": "El dinero tenía un destino",
+      "tipo": "cliffhanger",
+      "emocion_principal": "ambicion",
+      "duracion_segundos": 60,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Conectar la venta de los stickers con la creación del primer producto.",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 12,
+          "toma": "Dinero total sobre la mesa.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «El dinero tenía un destino» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 12,
+          "toma": "Referencias de buzos, joggings y telas.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «El dinero tenía un destino» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 12,
+          "toma": "Calculadora mostrando un costo de producción.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «El dinero tenía un destino» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 12,
+          "toma": "Reacción al precio.",
+          "plano": "plano medio principal con plano recurso de apoyo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Avanzar el bloque «El dinero tenía un destino» mostrando una acción concreta y verificable.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 12,
+          "toma": "Corte entre el dinero conseguido y una prenda de referencia.",
+          "plano": "primer plano o plano detalle",
+          "dialogo_o_voz_en_off": "Había vendido los cien. Ahora tenía que descubrir si ese dinero podía convertirse en mi primer producto.",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Avanzar el bloque «El dinero tenía un destino» mostrando una acción concreta y verificable.",
+          "continuidad": "FIN_EPISODIO_2",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Conectar la venta de los stickers con la creación del primer producto."
+    }
+  ],
+  "schema_version": "2.0-compatible",
+  "nota_para_codex": "Importar este archivo como un episodio independiente. No reemplazar otros episodios. No borrar campos antiguos. Para cada escena usar escena.toma; si falta, usar accion, contenido, descripcion o plano. Nunca guardar 'Toma sin definir' si existe texto en cualquier campo compatible.",
+  "recursos_generales": [
+    {
+      "id": "sticker",
+      "nombre": "Stickers del reto",
+      "tipo": "objeto"
+    },
+    {
+      "id": "dinero",
+      "nombre": "Dinero y comprobantes reales",
+      "tipo": "documento"
+    },
+    {
+      "id": "celular",
+      "nombre": "Mensajes, llamadas y publicaciones",
+      "tipo": "captura"
+    },
+    {
+      "id": "mapa",
+      "nombre": "Mapa y recorridos",
+      "tipo": "mapa"
+    },
+    {
+      "id": "producto",
+      "nombre": "Mockups, muestra, prendas, tela o molde",
+      "tipo": "producto"
+    },
+    {
+      "id": "personas",
+      "nombre": "Entrevistas, compradores y colaboradores",
+      "tipo": "personas"
+    },
+    {
+      "id": "contador",
+      "nombre": "Contadores visuales de progreso",
+      "tipo": "overlay"
+    }
+  ]
+}

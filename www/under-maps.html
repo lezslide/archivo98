@@ -1,0 +1,1660 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Under Maps</title>
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Under Maps">
+  <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: Inter, Arial, sans-serif;
+      background: #0f172a;
+      color: #000;
+      touch-action: none;
+    }
+
+    #map-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #aad3df;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background: #e5e7eb;
+      filter: contrast(1.02) saturate(1.08);
+      transform-origin: center center;
+    }
+
+    .leaflet-control-container {
+      display: none;
+    }
+
+    .ui-layer {
+      position: fixed;
+      z-index: 1000;
+    }
+
+    .interactive {
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    .under-card {
+      --card-scale: 1;
+      background: #fff;
+      border: 5px solid #000;
+      border-radius: 20px;
+      box-shadow: 8px 8px 0 #000;
+      transform: scale(var(--card-scale));
+      transform-origin: top left;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      cursor: grab;
+    }
+
+    .under-card:active {
+      cursor: grabbing;
+    }
+
+    .under-btn {
+      min-height: 36px;
+      border: 3px solid #000;
+      border-radius: 10px;
+      background: #fff;
+      color: #000;
+      font-weight: 900;
+      font-size: 11px;
+      text-transform: uppercase;
+      box-shadow: 3px 3px 0 #000;
+      cursor: pointer;
+    }
+
+    .under-btn.primary {
+      background: #000;
+      color: #fff;
+    }
+
+    .under-btn.green {
+      background: #22c55e;
+    }
+
+    .under-btn.red {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .under-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #000;
+    }
+
+    #locate-btn {
+      width: 46px;
+      min-width: 46px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .location-logo {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      display: block;
+      border: 4px solid currentColor;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+    }
+
+    .location-logo::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    #fullscreen-btn {
+      width: 46px;
+      min-width: 46px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .fullscreen-logo {
+      width: 18px;
+      height: 18px;
+      display: block;
+      border: 4px solid currentColor;
+      border-radius: 4px;
+      box-shadow: inset 0 0 0 4px #fff;
+    }
+
+    .panel-title {
+      margin: 0;
+      color: #dc2626;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 900;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+
+    .tiny-label {
+      display: block;
+      margin-bottom: 5px;
+      color: rgba(0, 0, 0, 0.62);
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swatch {
+      width: 26px;
+      height: 26px;
+      border: 3px solid #000;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .win-input {
+      min-width: 0;
+      border: 4px solid #000;
+      border-radius: 12px;
+      background: #fff;
+      padding: 8px 10px;
+      color: #000;
+      font: 900 12px Inter, Arial, sans-serif;
+      text-transform: uppercase;
+      outline: none;
+    }
+
+    select.win-input {
+      padding: 7px 8px;
+      cursor: pointer;
+    }
+
+    .drag-bar {
+      width: 34px;
+      height: 5px;
+      background: #000;
+      border-radius: 999px;
+      opacity: 0.22;
+      cursor: grab;
+    }
+
+    .close-btn {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: #000;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mini-icon {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 13px;
+      font-weight: 900;
+      user-select: none;
+    }
+
+    .minimized {
+      width: 64px !important;
+      height: 64px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 6px 6px 0 #000 !important;
+    }
+
+    .minimized > *:not(.mini-icon) {
+      display: none !important;
+    }
+
+    .minimized .mini-icon {
+      display: flex;
+    }
+
+    #settings-panel {
+      top: 90px;
+      right: 24px;
+      width: min(270px, calc(100vw - 32px));
+    }
+
+    #settings-card {
+      padding: 16px;
+    }
+
+    #stats-panel-wrap {
+      top: 24px;
+      left: 24px;
+      width: min(280px, calc(100vw - 32px));
+    }
+
+    #stats-card {
+      padding: 14px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #stats-card p {
+      margin: 0;
+    }
+
+    #km-total {
+      font-size: 26px;
+      font-style: italic;
+      font-weight: 900;
+    }
+
+    .money-total {
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 900;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .metric-field {
+      min-width: 0;
+    }
+
+    .metric-input {
+      width: 100%;
+      padding: 7px 8px;
+      border-width: 3px;
+      border-radius: 10px;
+      font-size: 11px;
+      text-transform: none;
+    }
+
+    .progress-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 48px 1fr 42px;
+      align-items: center;
+      gap: 8px;
+      color: #000;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .progress-track {
+      height: 14px;
+      overflow: hidden;
+      border: 3px solid #000;
+      border-radius: 999px;
+      background: #fff;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #22c55e;
+      transition: width 0.2s ease;
+    }
+
+    .progress-fill.money {
+      background: #facc15;
+    }
+
+    .metric-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    #search-panel {
+      top: 24px;
+      left: 50%;
+      width: min(360px, calc(100vw - 32px));
+      transform: translateX(-50%);
+    }
+
+    #search-card {
+      padding: 10px;
+    }
+
+    #controls-panel {
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(460px, calc(100vw - 32px));
+    }
+
+    #controls-card {
+      padding: 12px;
+    }
+
+    .route-icon-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .route-icon {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid #000;
+      border-radius: 12px;
+      background: #fff;
+      color: #000;
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1;
+      box-shadow: 4px 4px 0 #000;
+      text-transform: uppercase;
+    }
+
+    .delete-point-btn {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      z-index: 10;
+      width: 23px;
+      height: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: #000;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .text-label {
+      padding: 5px 12px;
+      border: 4px solid #000;
+      border-radius: 8px;
+      background: #fff;
+      color: #000;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      text-transform: uppercase;
+      box-shadow: 5px 5px 0 #000;
+    }
+
+    .traveler-vessel {
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 5px solid #000;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      font-size: 25px;
+      font-weight: 900;
+      box-shadow: 0 7px 18px rgba(0, 0, 0, 0.32);
+    }
+
+    .traveler-vessel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .user-location-dot {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      border: 4px solid #000;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .user-location-dot::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .community-pin {
+      width: 18px;
+      height: 18px;
+      border: 4px solid #000;
+      border-radius: 6px;
+      box-shadow: 3px 3px 0 #000;
+      transform: rotate(45deg);
+    }
+
+    .community-pin.fair {
+      background: #facc15;
+    }
+
+    .community-pin.safe {
+      background: #22c55e;
+    }
+
+    .community-pin.clothes {
+      background: #ec4899;
+    }
+
+    .community-pin.other {
+      background: #38bdf8;
+    }
+
+    #location-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 116px;
+      z-index: 1700;
+      display: none;
+      width: min(380px, calc(100vw - 32px));
+      transform: translateX(-50%);
+      padding: 14px;
+      pointer-events: auto;
+    }
+
+    #location-panel.open {
+      display: block;
+    }
+
+    #location-panel h3 {
+      margin: 0 0 6px;
+      color: #000;
+      font-size: 15px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    #location-panel p {
+      margin: 0 0 12px;
+      color: rgba(0, 0, 0, 0.68);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    #point-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(0, 0, 0, 0.52);
+      backdrop-filter: blur(5px);
+      pointer-events: auto;
+    }
+
+    #point-modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(360px, 100%);
+      padding: 22px;
+      text-align: center;
+    }
+
+    .modal-card h3 {
+      margin: 0 0 12px;
+      color: rgba(0, 0, 0, 0.55);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 116px;
+      z-index: 1600;
+      max-width: min(520px, calc(100vw - 32px));
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      border: 4px solid #000;
+      border-radius: 12px;
+      background: #fff;
+      color: #000;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 5px 5px 0 #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    #toast.visible {
+      opacity: 1;
+    }
+
+    @media (max-width: 760px) {
+      #settings-panel {
+        top: auto;
+        right: 16px;
+        bottom: 114px;
+        width: 230px;
+      }
+
+      #stats-panel-wrap {
+        top: 14px;
+        left: 14px;
+        width: min(268px, calc(100vw - 28px));
+      }
+
+      #search-panel {
+        top: 14px;
+      }
+
+      #controls-panel {
+        bottom: 16px;
+      }
+
+      #controls-card .row {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .under-btn {
+        min-height: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="photo-upload" accept="image/*" hidden>
+
+  <div id="settings-panel" class="ui-layer interactive">
+    <div class="under-card stack" id="settings-card">
+      <div class="mini-icon">MAP</div>
+      <div class="row" style="justify-content: space-between;">
+        <div class="drag-bar"></div>
+        <div class="close-btn" data-minimize="settings-card">X</div>
+      </div>
+      <h3 class="panel-title">Ajustes</h3>
+      <div>
+        <span class="tiny-label">Color cuadro</span>
+        <div class="row">
+          <button class="swatch" style="background:#fff" data-card-color="#ffffff" aria-label="Blanco"></button>
+          <button class="swatch" style="background:#facc15" data-card-color="#facc15" aria-label="Amarillo"></button>
+          <button class="swatch" style="background:#22c55e" data-card-color="#22c55e" aria-label="Verde"></button>
+        </div>
+      </div>
+      <div>
+        <span class="tiny-label">Color ruta</span>
+        <div class="row">
+          <button class="swatch" style="background:#000" data-route-color="#000000" aria-label="Negro"></button>
+          <button class="swatch" style="background:#ef4444" data-route-color="#ef4444" aria-label="Rojo"></button>
+          <button class="swatch" style="background:#22c55e" data-route-color="#22c55e" aria-label="Verde"></button>
+          <button class="swatch" style="background:#2563eb" data-route-color="#2563eb" aria-label="Azul"></button>
+        </div>
+      </div>
+      <select id="map-layer" class="win-input" aria-label="Tipo de mapa">
+        <option value="nature">Mapa topografico</option>
+        <option value="services">Servicios / ciudad</option>
+        <option value="adventure">Aventura</option>
+        <option value="satellite">Satelite</option>
+      </select>
+      <button class="under-btn primary" id="avatar-btn">Cambiar avatar</button>
+      <button class="under-btn" id="save-map-btn">Guardar ruta local</button>
+      <button class="under-btn red" id="clear-map-btn">Limpiar puntos</button>
+    </div>
+  </div>
+
+  <div id="stats-panel-wrap" class="ui-layer interactive">
+    <div class="under-card" id="stats-card">
+      <div class="mini-icon">DIA</div>
+      <div class="row" style="justify-content: space-between; margin-bottom: 6px;">
+        <div class="drag-bar"></div>
+        <div class="close-btn" data-minimize="stats-card">X</div>
+      </div>
+      <p class="tiny-label">World Loop hoy</p>
+      <p><span id="km-total">0.0</span> km</p>
+      <p class="money-total">$<span id="money-total">0</span></p>
+      <div class="metric-grid">
+        <label class="metric-field">
+          <span class="tiny-label">Recaudado</span>
+          <input id="money-earned-input" class="win-input metric-input" type="number" min="0" step="100" inputmode="numeric">
+        </label>
+        <label class="metric-field">
+          <span class="tiny-label">Meta $</span>
+          <input id="money-goal-input" class="win-input metric-input" type="number" min="1" step="100" inputmode="numeric">
+        </label>
+        <label class="metric-field">
+          <span class="tiny-label">Meta km</span>
+          <input id="km-goal-input" class="win-input metric-input" type="number" min="1" step="1" inputmode="decimal">
+        </label>
+        <label class="metric-field">
+          <span class="tiny-label">Dia</span>
+          <input id="loop-day-input" class="win-input metric-input" type="text" maxlength="18" placeholder="Dia 1">
+        </label>
+      </div>
+      <div class="progress-stack">
+        <div class="progress-row">
+          <span>Ruta</span>
+          <div class="progress-track"><div class="progress-fill" id="km-progress-fill"></div></div>
+          <span id="km-progress-label">0%</span>
+        </div>
+        <div class="progress-row">
+          <span>Plata</span>
+          <div class="progress-track"><div class="progress-fill money" id="money-progress-fill"></div></div>
+          <span id="money-progress-label">0%</span>
+        </div>
+      </div>
+      <div class="metric-actions">
+        <button class="under-btn green" id="add-sale-btn">+ Venta</button>
+        <button class="under-btn" id="reset-money-btn">Reset $</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="search-panel" class="ui-layer interactive">
+    <div class="under-card stack" id="search-card">
+      <div class="mini-icon">GO</div>
+      <div class="row" style="justify-content: space-between;">
+        <div class="drag-bar"></div>
+        <div class="close-btn" data-minimize="search-card">X</div>
+      </div>
+      <div class="row">
+        <input id="search-input" class="win-input" type="text" placeholder="A donde?" style="flex: 1;">
+        <button class="under-btn primary" id="search-btn" style="width: 64px;">Ir</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="controls-panel" class="ui-layer interactive">
+    <div class="under-card stack" id="controls-card">
+      <div class="mini-icon">RUN</div>
+      <div class="row" style="justify-content: space-between;">
+        <div class="drag-bar"></div>
+        <div class="close-btn" data-minimize="controls-card">X</div>
+      </div>
+      <div class="row">
+        <button class="under-btn" id="reset-view-btn" title="Volver a la vista inicial">Reset</button>
+        <button class="under-btn primary" id="journey-btn" style="flex:1; min-width: 120px;">Let's go</button>
+        <button class="under-btn" id="locate-btn" title="Mi ubicacion" aria-label="Mi ubicacion"><span class="location-logo"></span></button>
+        <button class="under-btn" id="fullscreen-btn" title="Pantalla completa" aria-label="Pantalla completa"><span class="fullscreen-logo"></span></button>
+        <button class="under-btn green" id="note-mode-btn">Lugar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="point-modal">
+    <div class="under-card modal-card">
+      <h3 id="point-modal-title">Personalizar parada</h3>
+      <select id="point-category" class="win-input" style="width:100%; margin-bottom:10px; display:none;">
+        <option value="fair">Feria americana</option>
+        <option value="safe">Punto seguro</option>
+        <option value="clothes">Prendas / hallazgo</option>
+        <option value="other">Otro dato</option>
+      </select>
+      <div class="row" style="margin-bottom: 14px;">
+        <input id="point-icon" class="win-input" type="text" maxlength="4" placeholder="A" style="width: 78px; text-align: center;">
+        <input id="point-title" class="win-input" type="text" placeholder="Nombre" style="flex: 1;">
+      </div>
+      <input id="point-details" class="win-input" type="text" maxlength="180" placeholder="Detalle corto" style="width:100%; margin-bottom:14px; display:none;">
+      <div class="row">
+        <button class="under-btn" id="cancel-point-btn" style="flex:1;">Cancelar</button>
+        <button class="under-btn primary" id="confirm-point-btn" style="flex:1;">Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="location-panel" class="under-card">
+    <h3 id="location-panel-title">Lugar User98</h3>
+    <p id="location-panel-details">Detalle</p>
+    <div class="row">
+      <button class="under-btn" id="close-location-panel-btn" style="flex:1;">Anular</button>
+      <button class="under-btn red" id="delete-location-btn" style="flex:1; display:none;">Borrar</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <div id="map-container"><div id="map"></div></div>
+
+  <script>
+    const STORAGE_KEY = "archivo98_under_maps_state";
+    const REVIEWS_KEY = "archivo98_under_maps_reviews";
+    const SUPABASE_URL = "https://qttxcfbgyfmvyglzwxct.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
+    const supabaseClient = window.supabase
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAdminParam = urlParams.get("admin") === "user98";
+    if (isAdminParam) localStorage.setItem("archivo98_under_maps_admin", "1");
+    const isMapAdmin = isAdminParam || localStorage.getItem("archivo98_under_maps_admin") === "1";
+    const COMMUNITY_MIN_ZOOM = 12;
+
+    let map;
+    let currentTileLayer;
+    let routeLine = null;
+    let travelerMarker = null;
+    let tempLatLng = null;
+    let currentRouteColor = "#ef4444";
+    let customAvatarUrl = "";
+    let isNoteMode = false;
+    let pointModalMode = "route";
+    let points = [];
+    let communityLocations = [];
+    let activeLocation = null;
+    let userLocationMarker = null;
+    let userAccuracyCircle = null;
+    let toastTimer = 0;
+    let mapRotation = 0;
+    let mapGesture = null;
+    let currentRouteKm = 0;
+    let loopMetrics = {
+      moneyEarned: 0,
+      moneyGoal: 50000,
+      kmGoal: 25,
+      dayLabel: "Dia 1"
+    };
+
+    const tileLayers = {
+      nature: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
+      services: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+      adventure: "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    };
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("visible"), 2600);
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function clampPercent(value) {
+      if (!Number.isFinite(value)) return 0;
+      return Math.max(0, Math.min(100, value));
+    }
+
+    function formatMoney(value) {
+      return Math.round(Number(value) || 0).toLocaleString("es-AR");
+    }
+
+    function readNumberInput(id, fallback = 0) {
+      const value = Number(document.getElementById(id).value);
+      return Number.isFinite(value) ? Math.max(0, value) : fallback;
+    }
+
+    function syncMetricInputs() {
+      document.getElementById("money-earned-input").value = String(loopMetrics.moneyEarned || 0);
+      document.getElementById("money-goal-input").value = String(loopMetrics.moneyGoal || 0);
+      document.getElementById("km-goal-input").value = String(loopMetrics.kmGoal || 0);
+      document.getElementById("loop-day-input").value = loopMetrics.dayLabel || "";
+    }
+
+    function updateLoopProgress() {
+      const kmGoal = Math.max(1, Number(loopMetrics.kmGoal) || 1);
+      const moneyGoal = Math.max(1, Number(loopMetrics.moneyGoal) || 1);
+      const kmPercent = clampPercent((currentRouteKm / kmGoal) * 100);
+      const moneyPercent = clampPercent((Number(loopMetrics.moneyEarned || 0) / moneyGoal) * 100);
+
+      document.getElementById("km-total").textContent = currentRouteKm.toFixed(1);
+      document.getElementById("money-total").textContent = formatMoney(loopMetrics.moneyEarned);
+      document.getElementById("km-progress-fill").style.width = `${kmPercent}%`;
+      document.getElementById("money-progress-fill").style.width = `${moneyPercent}%`;
+      document.getElementById("km-progress-label").textContent = `${Math.round(kmPercent)}%`;
+      document.getElementById("money-progress-label").textContent = `${Math.round(moneyPercent)}%`;
+    }
+
+    function setRouteDistance(kilometers) {
+      currentRouteKm = Math.max(0, Number(kilometers) || 0);
+      updateLoopProgress();
+    }
+
+    function updateLoopMetricsFromInputs() {
+      loopMetrics = {
+        moneyEarned: readNumberInput("money-earned-input", loopMetrics.moneyEarned),
+        moneyGoal: Math.max(1, readNumberInput("money-goal-input", loopMetrics.moneyGoal || 1)),
+        kmGoal: Math.max(1, readNumberInput("km-goal-input", loopMetrics.kmGoal || 1)),
+        dayLabel: document.getElementById("loop-day-input").value.trim() || "Dia 1"
+      };
+      updateLoopProgress();
+    }
+
+    function initMap() {
+      map = L.map("map", {
+        zoomControl: false,
+        attributionControl: false
+      }).setView([20, 0], 3);
+
+      changeMapLayer("nature");
+      loadSavedState();
+      loadNotes();
+      document.getElementById("note-mode-btn").style.display = isMapAdmin ? "" : "none";
+      map.on("zoomend", updateCommunityVisibility);
+
+      map.on("click", (event) => {
+        tempLatLng = event.latlng;
+        if (isNoteMode) {
+          if (!isMapAdmin) return;
+          openPointModal("community");
+          return;
+        }
+        openPointModal("route");
+      });
+    }
+
+    function openPointModal(mode) {
+      pointModalMode = mode;
+      document.getElementById("point-modal-title").textContent = mode === "community" ? "Nuevo lugar User98" : "Personalizar parada";
+      document.getElementById("point-category").style.display = mode === "community" ? "block" : "none";
+      document.getElementById("point-details").style.display = mode === "community" ? "block" : "none";
+      document.getElementById("point-icon").style.display = mode === "community" ? "none" : "block";
+      document.getElementById("point-icon").value = points.length === 0 ? "A" : "B";
+      document.getElementById("point-title").value = "";
+      document.getElementById("point-details").value = "";
+      document.getElementById("point-modal").classList.add("open");
+    }
+
+    function changeMapLayer(type) {
+      if (!map || !tileLayers[type]) return;
+      if (currentTileLayer) map.removeLayer(currentTileLayer);
+      currentTileLayer = L.tileLayer(tileLayers[type], { maxZoom: 19 }).addTo(map);
+    }
+
+    function getPointIconHtml(id, iconSymbol) {
+      return `
+        <div class="route-icon-container" id="point-${id}">
+          <div class="route-icon">${escapeHtml(iconSymbol || "X")}</div>
+          <button class="delete-point-btn" data-remove-point="${id}" type="button">X</button>
+        </div>
+      `;
+    }
+
+    function addPoint(latlng, title, iconSymbol, id = Date.now()) {
+      const icon = L.divIcon({
+        className: "",
+        html: getPointIconHtml(id, iconSymbol),
+        iconSize: [46, 46],
+        iconAnchor: [23, 46]
+      });
+      const marker = L.marker(latlng, { icon }).addTo(map);
+      let labelMarker = null;
+
+      if (title) {
+        const textIcon = L.divIcon({
+          className: "",
+          html: `<div class="text-label">${escapeHtml(title)}</div>`,
+          iconSize: [140, 32],
+          iconAnchor: [70, -14]
+        });
+        labelMarker = L.marker(latlng, { icon: textIcon }).addTo(map);
+      }
+
+      points.push({ id, latlng: L.latLng(latlng.lat, latlng.lng), title, icon: iconSymbol, marker, labelMarker });
+      marker.on("click", () => showToast(title || `Punto ${points.length}`));
+      updateRoute();
+    }
+
+    function removePoint(id) {
+      const index = points.findIndex((point) => point.id === id);
+      if (index === -1) return;
+      map.removeLayer(points[index].marker);
+      if (points[index].labelMarker) map.removeLayer(points[index].labelMarker);
+      points.splice(index, 1);
+      updateRoute();
+    }
+
+    async function updateRoute() {
+      if (points.length < 2) {
+        if (routeLine) map.removeLayer(routeLine);
+        routeLine = null;
+        setRouteDistance(0);
+        return;
+      }
+
+      const coords = points.map((point) => `${point.latlng.lng},${point.latlng.lat}`).join(";");
+      try {
+        const response = await fetch(`https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`);
+        const data = await response.json();
+        if (data.routes && data.routes[0]) {
+          if (routeLine) map.removeLayer(routeLine);
+          routeLine = L.geoJSON(data.routes[0].geometry, {
+            style: { color: currentRouteColor, weight: 8, opacity: 0.92, lineCap: "round" }
+          }).addTo(map);
+          setRouteDistance(data.routes[0].distance / 1000);
+          return;
+        }
+      } catch (_error) {
+        showToast("Sin router online: ruta recta temporal.");
+      }
+
+      if (routeLine) map.removeLayer(routeLine);
+      routeLine = L.polyline(points.map((point) => point.latlng), {
+        color: currentRouteColor,
+        weight: 8,
+        opacity: 0.92
+      }).addTo(map);
+      setRouteDistance(getPolylineDistance(points.map((point) => point.latlng)));
+    }
+
+    function getPolylineDistance(latlngs) {
+      let distance = 0;
+      for (let index = 1; index < latlngs.length; index += 1) {
+        distance += latlngs[index - 1].distanceTo(latlngs[index]);
+      }
+      return distance / 1000;
+    }
+
+    function getRoutePath() {
+      const path = [];
+      if (!routeLine) return path;
+
+      if (routeLine.eachLayer) {
+        routeLine.eachLayer((layer) => {
+          if (!layer.getLatLngs) return;
+          const latlngs = layer.getLatLngs();
+          path.push(...(Array.isArray(latlngs[0]) ? latlngs[0] : latlngs));
+        });
+        return path;
+      }
+
+      return routeLine.getLatLngs ? routeLine.getLatLngs() : path;
+    }
+
+    async function startJourney() {
+      if (!routeLine || points.length < 2) {
+        showToast("Marca al menos dos puntos para animar la ruta.");
+        return;
+      }
+
+      if (travelerMarker) map.removeLayer(travelerMarker);
+      const content = customAvatarUrl
+        ? `<img src="${escapeHtml(customAvatarUrl)}" alt="">`
+        : "<span>GO</span>";
+      const icon = L.divIcon({
+        className: "",
+        html: `<div class="traveler-vessel">${content}</div>`,
+        iconSize: [62, 62],
+        iconAnchor: [31, 31]
+      });
+
+      const fullPath = getRoutePath();
+      if (!fullPath.length) return;
+      travelerMarker = L.marker(fullPath[0], { icon, zIndexOffset: 1000 }).addTo(map);
+
+      for (let index = 0; index < fullPath.length - 1; index += 1) {
+        await animateMarker(fullPath[index], fullPath[index + 1], 9);
+      }
+    }
+
+    function animateMarker(start, end, speed) {
+      return new Promise((resolve) => {
+        const startTime = performance.now();
+        function frame(now) {
+          const progress = Math.min((now - startTime) / speed, 1);
+          const lat = start.lat + (end.lat - start.lat) * progress;
+          const lng = start.lng + (end.lng - start.lng) * progress;
+          travelerMarker.setLatLng([lat, lng]);
+          if (progress < 1) requestAnimationFrame(frame);
+          else resolve();
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+
+    async function searchPlace() {
+      const query = document.getElementById("search-input").value.trim();
+      if (!query) return;
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        if (data[0]) {
+          map.flyTo([Number(data[0].lat), Number(data[0].lon)], 14);
+          return;
+        }
+      } catch (_error) {
+        showToast("No pude buscar ese lugar ahora.");
+      }
+      showToast("Lugar no encontrado.");
+    }
+
+    function showUserLocation(position) {
+      const latlng = L.latLng(position.coords.latitude, position.coords.longitude);
+      const accuracy = position.coords.accuracy || 0;
+      const icon = L.divIcon({
+        className: "",
+        html: '<div class="user-location-dot"></div>',
+        iconSize: [26, 26],
+        iconAnchor: [13, 13]
+      });
+
+      if (userLocationMarker) {
+        userLocationMarker.setLatLng(latlng);
+      } else {
+        userLocationMarker = L.marker(latlng, { icon, zIndexOffset: 1400 }).addTo(map);
+        userLocationMarker.on("click", () => showToast("Estas aca."));
+      }
+
+      if (userAccuracyCircle) {
+        userAccuracyCircle.setLatLng(latlng);
+        userAccuracyCircle.setRadius(accuracy);
+      } else {
+        userAccuracyCircle = L.circle(latlng, {
+          radius: accuracy,
+          color: "#0284c7",
+          weight: 3,
+          fillColor: "#38bdf8",
+          fillOpacity: 0.16
+        }).addTo(map);
+      }
+
+      map.flyTo(latlng, Math.max(map.getZoom(), 15));
+      showToast("Ubicacion encontrada.");
+    }
+
+    function locateUser() {
+      if (!navigator.geolocation) {
+        showToast("Tu navegador no permite geolocalizacion.");
+        return;
+      }
+
+      showToast("Buscando ubicacion...");
+      navigator.geolocation.getCurrentPosition(showUserLocation, () => {
+        showToast("No se pudo obtener la ubicacion.");
+      }, {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 30000
+      });
+    }
+
+    function setNoteMode(enabled) {
+      if (!isMapAdmin) {
+        showToast("Solo admin puede cargar lugares.");
+        return;
+      }
+      isNoteMode = enabled;
+      const button = document.getElementById("note-mode-btn");
+      button.classList.toggle("red", enabled);
+      button.textContent = enabled ? "Cancelar" : "Lugar";
+      showToast(enabled ? "Toca el mapa para sumar feria, prenda o punto seguro." : "Modo lugar apagado.");
+    }
+
+    async function saveNote(text, latlng, category = "other", details = "") {
+      if (!isMapAdmin) {
+        showToast("Solo admin puede cargar lugares.");
+        return;
+      }
+
+      if (!supabaseClient) {
+        const note = { id: Date.now(), text, category, details, lat: latlng.lat, lng: latlng.lng, createdAt: Date.now() };
+        const notes = getStoredNotes();
+        notes.push(note);
+        localStorage.setItem(REVIEWS_KEY, JSON.stringify(notes));
+        renderNote(note, latlng);
+        showToast("Lugar guardado local.");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient
+          .from("under_map_locations")
+          .insert({
+            title: text,
+            category,
+            details,
+            lat: latlng.lat,
+            lng: latlng.lng
+          })
+          .select("id, title, category, details, lat, lng")
+          .single();
+        if (error) throw error;
+        renderNote({
+          id: data.id,
+          text: data.title,
+          category: data.category,
+          details: data.details
+        }, L.latLng(data.lat, data.lng));
+        showToast("Lugar publicado para User98.");
+      } catch (_error) {
+        const note = { id: Date.now(), text, category, details, lat: latlng.lat, lng: latlng.lng, createdAt: Date.now() };
+        const notes = getStoredNotes();
+        notes.push(note);
+        localStorage.setItem(REVIEWS_KEY, JSON.stringify(notes));
+        renderNote(note, latlng);
+        showToast("Guardado local. Falta activar la tabla online.");
+      }
+    }
+
+    function getStoredNotes() {
+      try {
+        return JSON.parse(localStorage.getItem(REVIEWS_KEY) || "[]");
+      } catch (_error) {
+        return [];
+      }
+    }
+
+    async function loadNotes() {
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient
+            .from("under_map_locations")
+            .select("id, title, category, details, lat, lng, created_at")
+            .order("created_at", { ascending: false })
+            .limit(250);
+          if (error) throw error;
+          data.forEach((note) => renderNote({
+            id: note.id,
+            text: note.title,
+            category: note.category,
+            details: note.details
+          }, L.latLng(note.lat, note.lng)));
+          return;
+        } catch (_error) {
+          showToast("Mapa comunitario en modo local.");
+        }
+      }
+
+      getStoredNotes().forEach((note) => renderNote(note, L.latLng(note.lat, note.lng)));
+    }
+
+    function getCategoryLabel(category) {
+      return {
+        fair: "Feria americana",
+        safe: "Punto seguro",
+        clothes: "Prendas",
+        other: "Dato User98"
+      }[category] || "Dato User98";
+    }
+
+    function renderNote(note, latlng) {
+      const normalizedNote = {
+        id: note.id || note.createdAt || Date.now(),
+        text: note.text || "Lugar User98",
+        category: note.category || "other",
+        details: note.details || "",
+        lat: latlng.lat,
+        lng: latlng.lng
+      };
+      const category = note.category || "other";
+      const text = normalizedNote.text;
+      const pin = L.divIcon({
+        className: "",
+        html: `<div class="community-pin ${escapeHtml(category)}"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      const marker = L.marker(latlng, { icon: pin }).addTo(map);
+      const entry = { note: normalizedNote, marker };
+      marker.on("click", () => openLocationPanel(entry));
+      communityLocations.push(entry);
+      updateCommunityVisibility();
+    }
+
+    function updateCommunityVisibility() {
+      if (!map) return;
+      const shouldShow = map.getZoom() >= COMMUNITY_MIN_ZOOM;
+      communityLocations.forEach((entry) => {
+        const isVisible = map.hasLayer(entry.marker);
+        if (shouldShow && !isVisible) entry.marker.addTo(map);
+        if (!shouldShow && isVisible) entry.marker.remove();
+      });
+      if (!shouldShow) closeLocationPanel();
+    }
+
+    function openLocationPanel(entry) {
+      activeLocation = entry;
+      const category = getCategoryLabel(entry.note.category);
+      document.getElementById("location-panel-title").textContent = `${category}: ${entry.note.text}`;
+      document.getElementById("location-panel-details").textContent = entry.note.details || "Sin detalle cargado.";
+      document.getElementById("delete-location-btn").style.display = isMapAdmin ? "" : "none";
+      document.getElementById("location-panel").classList.add("open");
+    }
+
+    function closeLocationPanel() {
+      activeLocation = null;
+      document.getElementById("location-panel").classList.remove("open");
+    }
+
+    async function deleteActiveLocation() {
+      if (!isMapAdmin || !activeLocation) {
+        closeLocationPanel();
+        return;
+      }
+
+      const entry = activeLocation;
+      if (map.hasLayer(entry.marker)) entry.marker.remove();
+      communityLocations = communityLocations.filter((item) => item !== entry);
+
+      const stored = getStoredNotes().filter((note) => String(note.id) !== String(entry.note.id));
+      localStorage.setItem(REVIEWS_KEY, JSON.stringify(stored));
+      closeLocationPanel();
+
+      if (supabaseClient && entry.note.id) {
+        try {
+          const { error } = await supabaseClient.from("under_map_locations").delete().eq("id", entry.note.id);
+          if (error) throw error;
+          showToast("Lugar borrado.");
+          return;
+        } catch (_error) {
+          showToast("Borrado local. Falta permiso online.");
+          return;
+        }
+      }
+
+      showToast("Lugar borrado local.");
+    }
+
+    function saveState(showMessage = true) {
+      const data = {
+        routeColor: currentRouteColor,
+        avatar: customAvatarUrl,
+        loopMetrics,
+        layer: document.getElementById("map-layer").value,
+        center: map.getCenter(),
+        zoom: map.getZoom(),
+        points: points.map((point) => ({
+          id: point.id,
+          lat: point.latlng.lat,
+          lng: point.latlng.lng,
+          title: point.title,
+          icon: point.icon
+        }))
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      if (showMessage) showToast("Ruta guardada en este navegador.");
+    }
+
+    function loadSavedState() {
+      let data = null;
+      try {
+        data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+      } catch (_error) {
+        data = null;
+      }
+      if (!data) return;
+
+      currentRouteColor = data.routeColor || currentRouteColor;
+      customAvatarUrl = data.avatar || "";
+      if (data.loopMetrics) {
+        loopMetrics = {
+          moneyEarned: Number(data.loopMetrics.moneyEarned || 0),
+          moneyGoal: Number(data.loopMetrics.moneyGoal || loopMetrics.moneyGoal),
+          kmGoal: Number(data.loopMetrics.kmGoal || loopMetrics.kmGoal),
+          dayLabel: data.loopMetrics.dayLabel || loopMetrics.dayLabel
+        };
+        syncMetricInputs();
+        updateLoopProgress();
+      }
+      if (data.layer && tileLayers[data.layer]) {
+        document.getElementById("map-layer").value = data.layer;
+        changeMapLayer(data.layer);
+      }
+      if (Array.isArray(data.points)) {
+        data.points.forEach((point) => {
+          addPoint(L.latLng(point.lat, point.lng), point.title || "", point.icon || "X", point.id || Date.now());
+        });
+      }
+      if (data.center && Number.isFinite(data.center.lat) && Number.isFinite(data.center.lng)) {
+        map.setView([data.center.lat, data.center.lng], data.zoom || 3);
+      } else if (points.length) {
+        map.fitBounds(points.map((point) => point.latlng), { padding: [60, 60] });
+      }
+    }
+
+    function clearMap() {
+      points.forEach((point) => {
+        map.removeLayer(point.marker);
+        if (point.labelMarker) map.removeLayer(point.labelMarker);
+      });
+      points = [];
+      if (routeLine) map.removeLayer(routeLine);
+      if (travelerMarker) map.removeLayer(travelerMarker);
+      routeLine = null;
+      travelerMarker = null;
+      setRouteDistance(0);
+      localStorage.removeItem(STORAGE_KEY);
+      showToast("Puntos limpiados.");
+    }
+
+    function keepPanelInViewport(wrap) {
+      if (!wrap) return;
+      const rect = wrap.getBoundingClientRect();
+      const margin = 12;
+      const maxLeft = Math.max(margin, window.innerWidth - rect.width - margin);
+      const maxTop = Math.max(margin, window.innerHeight - rect.height - margin);
+      const left = Math.min(Math.max(rect.left, margin), maxLeft);
+      const top = Math.min(Math.max(rect.top, margin), maxTop);
+      wrap.style.left = `${left}px`;
+      wrap.style.top = `${top}px`;
+      wrap.style.right = "auto";
+      wrap.style.bottom = "auto";
+      wrap.style.transform = "none";
+    }
+
+    function getTouchDistance(touches) {
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    function getTouchAngle(touches) {
+      return Math.atan2(
+        touches[1].clientY - touches[0].clientY,
+        touches[1].clientX - touches[0].clientX
+      ) * 180 / Math.PI;
+    }
+
+    function applyMapRotation() {
+      document.getElementById("map").style.transform = `rotate(${mapRotation}deg) scale(1.45)`;
+    }
+
+    function toggleFullscreen() {
+      const root = document.documentElement;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+        return;
+      }
+      if (root.requestFullscreen) {
+        root.requestFullscreen().catch(() => showToast("Si estas en iPhone, agregalo a inicio para pantalla completa."));
+      } else {
+        showToast("En iPhone: compartir > Agregar a inicio para pantalla completa.");
+      }
+    }
+
+    function setupMapRotationGesture() {
+      const container = document.getElementById("map-container");
+      container.addEventListener("touchstart", (event) => {
+        if (event.touches.length !== 2 || event.target.closest(".ui-layer, #point-modal, #location-panel")) return;
+        mapGesture = {
+          startAngle: getTouchAngle(event.touches),
+          startRotation: mapRotation
+        };
+      }, { passive: false });
+
+      container.addEventListener("touchmove", (event) => {
+        if (!mapGesture || event.touches.length !== 2) return;
+        event.preventDefault();
+        mapRotation = mapGesture.startRotation + getTouchAngle(event.touches) - mapGesture.startAngle;
+        applyMapRotation();
+      }, { passive: false });
+
+      container.addEventListener("touchend", (event) => {
+        if (event.touches && event.touches.length > 1) return;
+        mapGesture = null;
+      });
+    }
+
+    function setupCardPinch(card) {
+      let pinch = null;
+      card.addEventListener("touchstart", (event) => {
+        if (event.touches.length !== 2) return;
+        event.preventDefault();
+        pinch = {
+          startDistance: getTouchDistance(event.touches),
+          startScale: Number(card.dataset.scale || 1)
+        };
+      }, { passive: false });
+
+      card.addEventListener("touchmove", (event) => {
+        if (!pinch || event.touches.length !== 2) return;
+        event.preventDefault();
+        const nextScale = Math.min(1.25, Math.max(0.62, pinch.startScale * (getTouchDistance(event.touches) / pinch.startDistance)));
+        card.dataset.scale = nextScale.toFixed(2);
+        card.style.setProperty("--card-scale", nextScale.toFixed(2));
+        keepPanelInViewport(card.parentElement);
+      }, { passive: false });
+
+      card.addEventListener("touchend", (event) => {
+        if (event.touches.length < 2) pinch = null;
+      });
+    }
+
+    function toggleMinimize(id) {
+      const card = document.getElementById(id);
+      card.classList.toggle("minimized");
+      requestAnimationFrame(() => keepPanelInViewport(card.parentElement));
+    }
+
+    function makeDraggable(card) {
+      let lastX = 0;
+      let lastY = 0;
+      let startX = 0;
+      let startY = 0;
+      let moved = false;
+
+      const startDrag = (event) => {
+        if (event.touches && event.touches.length > 1) return;
+        const isMini = card.classList.contains("minimized");
+        const isHandle = event.target.classList.contains("drag-bar");
+        const isMiniIcon = event.target.classList.contains("mini-icon");
+        if (event.target.closest("button, input, select")) return;
+        if (!isMini && !isHandle && !isMiniIcon) return;
+
+        const pointer = event.touches ? event.touches[0] : event;
+        lastX = pointer.clientX;
+        lastY = pointer.clientY;
+        startX = pointer.clientX;
+        startY = pointer.clientY;
+        moved = false;
+        document.addEventListener("mousemove", drag);
+        document.addEventListener("mouseup", stopDrag);
+        document.addEventListener("touchmove", drag, { passive: false });
+        document.addEventListener("touchend", stopDrag);
+      };
+
+      const drag = (event) => {
+        if (event.cancelable) event.preventDefault();
+        const pointer = event.touches ? event.touches[0] : event;
+        const dx = pointer.clientX - lastX;
+        const dy = pointer.clientY - lastY;
+        if (Math.abs(pointer.clientX - startX) > 5 || Math.abs(pointer.clientY - startY) > 5) moved = true;
+        lastX = pointer.clientX;
+        lastY = pointer.clientY;
+
+        const wrap = card.parentElement;
+        wrap.style.left = `${wrap.offsetLeft + dx}px`;
+        wrap.style.top = `${wrap.offsetTop + dy}px`;
+        wrap.style.right = "auto";
+        wrap.style.bottom = "auto";
+        wrap.style.transform = "none";
+        keepPanelInViewport(wrap);
+      };
+
+      const stopDrag = () => {
+        document.removeEventListener("mousemove", drag);
+        document.removeEventListener("mouseup", stopDrag);
+        document.removeEventListener("touchmove", drag);
+        document.removeEventListener("touchend", stopDrag);
+        if (!moved && card.classList.contains("minimized")) toggleMinimize(card.id);
+      };
+
+      card.addEventListener("mousedown", startDrag);
+      card.addEventListener("touchstart", startDrag, { passive: false });
+    }
+
+    document.addEventListener("click", (event) => {
+      const minimizeButton = event.target.closest("[data-minimize]");
+      if (minimizeButton) toggleMinimize(minimizeButton.dataset.minimize);
+
+      const removeButton = event.target.closest("[data-remove-point]");
+      if (removeButton) {
+        event.stopPropagation();
+        removePoint(Number(removeButton.dataset.removePoint));
+      }
+    });
+    window.addEventListener("resize", () => {
+      ["settings-card", "stats-card", "search-card", "controls-card"].forEach((id) => {
+        keepPanelInViewport(document.getElementById(id).parentElement);
+      });
+    });
+
+    document.getElementById("map-layer").addEventListener("change", (event) => changeMapLayer(event.target.value));
+    document.getElementById("search-btn").addEventListener("click", searchPlace);
+    document.getElementById("search-input").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") searchPlace();
+    });
+    document.getElementById("journey-btn").addEventListener("click", startJourney);
+    document.getElementById("locate-btn").addEventListener("click", locateUser);
+    document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
+    document.getElementById("reset-view-btn").addEventListener("click", () => {
+      if (points.length) map.fitBounds(points.map((point) => point.latlng), { padding: [70, 70] });
+      else map.setView([20, 0], 3);
+    });
+    document.getElementById("note-mode-btn").addEventListener("click", () => setNoteMode(!isNoteMode));
+    document.getElementById("save-map-btn").addEventListener("click", saveState);
+    document.getElementById("clear-map-btn").addEventListener("click", clearMap);
+    ["money-earned-input", "money-goal-input", "km-goal-input", "loop-day-input"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", () => {
+        updateLoopMetricsFromInputs();
+        saveState(false);
+      });
+    });
+    document.getElementById("add-sale-btn").addEventListener("click", () => {
+      const current = readNumberInput("money-earned-input", loopMetrics.moneyEarned);
+      const step = Math.max(100, Math.round((Number(loopMetrics.moneyGoal) || 1000) / 10));
+      loopMetrics.moneyEarned = current + step;
+      syncMetricInputs();
+      updateLoopProgress();
+      saveState(false);
+      showToast(`Venta sumada: +$${formatMoney(step)}.`);
+    });
+    document.getElementById("reset-money-btn").addEventListener("click", () => {
+      loopMetrics.moneyEarned = 0;
+      syncMetricInputs();
+      updateLoopProgress();
+      saveState(false);
+      showToast("Recaudado reiniciado.");
+    });
+    document.getElementById("close-location-panel-btn").addEventListener("click", closeLocationPanel);
+    document.getElementById("delete-location-btn").addEventListener("click", deleteActiveLocation);
+    document.getElementById("avatar-btn").addEventListener("click", () => document.getElementById("photo-upload").click());
+    document.getElementById("photo-upload").addEventListener("change", (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        customAvatarUrl = loadEvent.target.result;
+        showToast("Avatar listo para la proxima animacion.");
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById("confirm-point-btn").addEventListener("click", () => {
+      if (!tempLatLng) return;
+      const title = document.getElementById("point-title").value.trim();
+      if (pointModalMode === "community") {
+        const category = document.getElementById("point-category").value;
+        const details = document.getElementById("point-details").value.trim();
+        saveNote(title || getCategoryLabel(category), tempLatLng, category, details);
+        setNoteMode(false);
+      } else {
+        const iconSymbol = document.getElementById("point-icon").value.trim() || (points.length === 0 ? "A" : "B");
+        addPoint(tempLatLng, title, iconSymbol);
+      }
+      document.getElementById("point-modal").classList.remove("open");
+    });
+    document.getElementById("cancel-point-btn").addEventListener("click", () => {
+      document.getElementById("point-modal").classList.remove("open");
+    });
+    document.querySelectorAll("[data-card-color]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".under-card").forEach((card) => {
+          card.style.backgroundColor = button.dataset.cardColor;
+        });
+      });
+    });
+    document.querySelectorAll("[data-route-color]").forEach((button) => {
+      button.addEventListener("click", () => {
+        currentRouteColor = button.dataset.routeColor;
+        if (routeLine && routeLine.setStyle) routeLine.setStyle({ color: currentRouteColor });
+      });
+    });
+    ["settings-card", "stats-card", "search-card", "controls-card"].forEach((id) => {
+      const card = document.getElementById(id);
+      makeDraggable(card);
+      setupCardPinch(card);
+    });
+    setupMapRotationGesture();
+
+    syncMetricInputs();
+    updateLoopProgress();
+    initMap();
+  </script>
+</body>
+</html>

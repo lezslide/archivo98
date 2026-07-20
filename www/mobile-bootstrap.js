@@ -3,7 +3,9 @@
 
   if ("serviceWorker" in navigator && (window.location.protocol === "https:" || isLocalhost)) {
     window.addEventListener("load", function () {
-      navigator.serviceWorker.register("./service-worker.js").catch(function (error) {
+      navigator.serviceWorker.register("./service-worker.js").then(function (registration) {
+        registration.update();
+      }).catch(function (error) {
         console.warn("No pude registrar el service worker:", error);
       });
     });

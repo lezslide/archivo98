@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archivo98 XP Desktop</title>
+  <meta name="theme-color" content="#0b55c2" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Archivo98" />
+  <base href="../" />
+  <link rel="manifest" href="./site.webmanifest" />
+  <link rel="apple-touch-icon" href="./player-shell-cutout.png" />
+  <link rel="stylesheet" href="./styles.css?v=directby-ep6-tomas-1" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js?v=2"></script>
+</head>
+<body>
+  <div id="desktop">
+    <div class="desktop-shortcuts" id="desktop-shortcuts">
+      <div class="shortcut" data-app="users">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/user_1.png?v=1775528275" class="shortcut-icon icon-large" alt="User" />
+        <span>User</span>
+      </div>
+      <div class="shortcut" data-app="chat-global">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/global_1.png?v=1775528275" class="shortcut-icon" alt="Global Under" />
+        <span>Global Chat</span>
+      </div>
+      <div class="shortcut" data-app="configuracion">
+        <svg class="shortcut-icon" viewBox="0 0 24 24" fill="#d5d9e8">
+          <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54c-.58.23-1.12.54-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.39 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.8a.5.5 0 0 0 .49-.42l.36-2.54c.58-.23 1.12-.54 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/>
+        </svg>
+        <span>Configuracion</span>
+      </div>
+      <div class="shortcut" data-app="proyectos">
+        <svg class="shortcut-icon" viewBox="0 0 24 24" fill="#ffe066">
+          <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+        </svg>
+        <span>Proyectos</span>
+      </div>
+      <div class="shortcut" data-app="episode-constructor" data-private-app="1">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="3" width="16" height="18" rx="2" fill="#f8fafc" stroke="#111827" stroke-width="1.4"/>
+          <path d="M8 7h8M8 11h8M8 15h5" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M5.8 7h1M5.8 11h1M5.8 15h1" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M14.2 14.2l2.2 2.2 3.1-4" stroke="#22c55e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Constructor</span>
+      </div>
+      <div class="shortcut" data-app="recording-studio">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <radialGradient id="earthGlow" cx="50%" cy="42%" r="60%">
+              <stop offset="0%" stop-color="#72f1ff"/>
+              <stop offset="55%" stop-color="#2b7fff"/>
+              <stop offset="100%" stop-color="#0a235a"/>
+            </radialGradient>
+            <linearGradient id="earthBand" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#d8fff5" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#7cf6c8" stop-opacity="0.25"/>
+            </linearGradient>
+          </defs>
+          <circle cx="12" cy="12" r="8.5" fill="url(#earthGlow)"/>
+          <path d="M6.2 12.5c1.8-1.5 3.2-2.2 4.4-2.2 1.5 0 2.3.8 3.4.8 1.2 0 2.3-.8 3.9-2.2-.3 3.9-1.8 6.3-4.2 7.5-2.8 1.4-5.8.6-7.5-3.9z" fill="#38d996" opacity="0.9"/>
+          <path d="M8 7.4c1.3-.9 2.2-1.2 3.2-1.2 1.3 0 2.1.5 3.1.4.9-.1 1.7-.7 2.6-1.3.2 1.8-.3 3-1.3 4-1.1 1-2.2 1.3-3.8 1.3-1.8 0-3.1-.6-3.8-3.2z" fill="#8cffd7" opacity="0.82"/>
+          <ellipse cx="12" cy="12" rx="8.5" ry="3.3" stroke="url(#earthBand)" stroke-width="1.15" opacity="0.8"/>
+          <path d="M12 3.7c2 1.7 3.1 4.5 3.1 8.3s-1.1 6.6-3.1 8.3c-2-1.7-3.1-4.5-3.1-8.3s1.1-6.6 3.1-8.3z" stroke="#c8f7ff" stroke-width="1" opacity="0.65"/>
+          <path d="M17.9 6.4l1.6-.9-.4 1.8 1.5 1.1-1.9.3-.8 1.7-.8-1.6-1.9-.2 1.4-1.2-.3-1.8 1.6.8z" fill="#ffffff" opacity="0.9"/>
+        </svg>
+        <span>World Loop</span>
+      </div>
+      <div class="shortcut" data-app="under-maps">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="2.4" fill="#dff7ff" stroke="#111827" stroke-width="1.4"/>
+          <path d="M7.2 4.4v15.2M13 3.8v16.4M4.3 8.3l15.4-2.6M4.3 16.7l15.4-2.5" stroke="#111827" stroke-width="1" opacity="0.45"/>
+          <path d="M6.8 14.4c1.7-2.7 3.7-3.9 5.7-3.4 2.1.5 2.7 2.8 4.9 3.2" stroke="#ef4444" stroke-width="2.2" stroke-linecap="round"/>
+          <circle cx="6.8" cy="14.4" r="2.1" fill="#22c55e" stroke="#111827" stroke-width="1.2"/>
+          <path d="M17.3 7.5c1.4 0 2.5 1.1 2.5 2.5 0 2.2-2.5 4.9-2.5 4.9s-2.5-2.7-2.5-4.9c0-1.4 1.1-2.5 2.5-2.5z" fill="#facc15" stroke="#111827" stroke-width="1.2"/>
+          <circle cx="17.3" cy="10" r="0.8" fill="#111827"/>
+        </svg>
+        <span>Under Maps</span>
+      </div>
+      <div class="shortcut" data-app="sales-goals" data-private-app="1">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="16" rx="2.2" fill="#f8fafc" stroke="#111827" stroke-width="1.4"/>
+          <path d="M6.2 15.8h11.6" stroke="#111827" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M7.2 14.2V10M11.8 14.2V7.8M16.4 14.2v-5" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M6.5 7.2h4.7" stroke="#111827" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M15.2 6.8c1.5 0 2.6.9 2.6 2.1 0 1.8-2.6 4-2.6 4s-2.6-2.2-2.6-4c0-1.2 1.1-2.1 2.6-2.1z" fill="#facc15" stroke="#111827" stroke-width="1.1"/>
+          <circle cx="15.2" cy="8.9" r="0.6" fill="#111827"/>
+        </svg>
+        <span>Caja del Reto</span>
+      </div>
+      <div class="shortcut" data-app="creator-pro" data-private-app="1">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="5" width="18" height="14" rx="2" fill="#e5e7eb" stroke="#111827" stroke-width="1.4"/>
+          <path d="M6 5l2.1-3h3L9 5M12 5l2.1-3h3L15 5" stroke="#111827" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M10 10.2l5 2.8-5 2.8v-5.6z" fill="#111827"/>
+          <path d="M5.8 8h12.4" stroke="#111827" stroke-width="1.2"/>
+        </svg>
+        <span>Direct By</span>
+      </div>
+      <div class="shortcut" data-app="alaxd-overlay" data-private-app="1">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="4" y="6" width="16" height="13" rx="2" fill="#f8fafc" stroke="#111827" stroke-width="1.4"/>
+          <path d="M5.2 10.5C2.9 8.8 2.2 6.7 3.3 4.4c2.6.2 4.3 1.7 5.2 4.4M18.8 10.5c2.3-1.7 3-3.8 1.9-6.1-2.6.2-4.3 1.7-5.2 4.4" fill="#dbeafe" stroke="#111827" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M8 12.2l2 2.7M10 12.2l-2 2.7M14 12.2l2 2.7M16 12.2l-2 2.7" stroke="#111827" stroke-width="1.35" stroke-linecap="round"/>
+          <path d="M7.3 8.2h9.4" stroke="#ef4444" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M9.1 17.1h5.8" stroke="#111827" stroke-width="1.1" stroke-linecap="round"/>
+        </svg>
+        <span>Alaxd</span>
+      </div>
+      <div class="shortcut" data-app="private-chat">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/msn_367e7189-7738-45ba-baac-fe60233a0a09.png?v=1775529015" class="shortcut-icon" alt="MSN Under" />
+        <span>MSN Under</span>
+      </div>
+      <div class="shortcut" data-app="explorer-games">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/juegos.png?v=1775529104" class="shortcut-icon icon-large" alt="Juegos" />
+        <span>Juegos</span>
+      </div>
+      <div class="shortcut" data-app="xp-agar-strike">
+        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="18" height="18" rx="2.6" fill="#0055e5" stroke="#ffffff" stroke-width="1.4"/>
+          <circle cx="8" cy="14.5" r="3" fill="#22c55e" stroke="#111827" stroke-width="1.2"/>
+          <circle cx="15.4" cy="8.2" r="2.4" fill="#f8fafc" stroke="#111827" stroke-width="1.2"/>
+          <path d="M13.7 8.1h.5M16.4 8.1h.5" stroke="#ef4444" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M14.2 9.7c.9.6 1.8.6 2.6 0" stroke="#ef4444" stroke-width="1.1" stroke-linecap="round"/>
+          <path d="M6.1 6.2h5.4v3.6H6.1zM12.4 13.5h5.5v4H12.4z" fill="#94a3b8" stroke="#111827" stroke-width="1"/>
+          <path d="M10.3 13.3l5.2-2.3" stroke="#facc15" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span>XP Agar Strike</span>
+      </div>
+      <div class="shortcut" data-app="winamp">
+        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/winunder.png?v=1775529015" class="shortcut-icon" alt="Under Music" />
+        <span>Under Music</span>
+      </div>
+    </div>
+
+    <div id="window-layer"></div>
+  </div>
+
+  <div class="taskbar">
+    <button class="start-btn" id="start-btn">
+      <svg viewBox="0 0 20 20" aria-hidden="true">
+        <path d="M2 3.3 8.4 2v7.2H2V3.3z" fill="#f25022"/>
+        <path d="M9.3 1.8 18 0v9.2H9.3V1.8z" fill="#7fba00"/>
+        <path d="M2 10.1h6.4V18L2 16.7v-6.6z" fill="#00a4ef"/>
+        <path d="M9.3 10.1H18V20l-8.7-1.8v-8.1z" fill="#ffb900"/>
+      </svg>
+      Inicio
+    </button>
+    <div id="taskbar-items" class="taskbar-items"></div>
+    <div class="systray">
+      <button class="taskbar-fullscreen" id="taskbar-fullscreen" title="Pantalla completa">⛶</button>
+      <span id="online-indicator">Offline</span>
+      <span class="systray-separator"></span>
+      <span id="clock">--:--</span>
+    </div>
+  </div>
+
+  <div id="start-menu" class="start-menu hidden">
+    <div class="start-menu-layout">
+      <div class="start-sidebar"><span>Archivo98 XP</span></div>
+      <div class="start-content">
+        <button class="start-item" data-app="users">Perfil</button>
+        <button class="start-item" data-app="proyectos">Proyectos</button>
+        <button class="start-item" data-app="episode-constructor" data-private-app="1">Constructor de Episodios</button>
+        <button class="start-item" data-app="recording-studio">World Loop</button>
+        <button class="start-item" data-app="under-maps">Under Maps</button>
+        <button class="start-item" data-app="sales-goals" data-private-app="1">Caja del Reto</button>
+        <button class="start-item" data-app="creator-pro" data-private-app="1">Direct By</button>
+        <button class="start-item" data-app="alaxd-overlay" data-private-app="1">Alaxd</button>
+        <button class="start-item" data-app="private-chat">MSN Under</button>
+        <button class="start-item" data-app="chat-global">Global Chat</button>
+        <button class="start-item" data-app="configuracion">Configuracion</button>
+        <button class="start-item" data-app="explorer-games">Juegos</button>
+        <button class="start-item" data-app="xp-agar-strike">XP Agar Strike</button>
+        <button class="start-item" data-app="winamp">Under Music</button>
+        <hr />
+        <button class="start-item" id="restart-app">Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <template id="window-template">
+    <section class="window">
+      <div class="window-header">
+        <div class="header-title"></div>
+        <div class="header-controls">
+          <button class="win-btn" data-action="minimize">_</button>
+          <button class="win-btn" data-action="maximize">□</button>
+          <button class="win-btn" data-action="close">X</button>
+        </div>
+      </div>
+      <div class="window-body"></div>
+      <div class="window-resizer"></div>
+    </section>
+  </template>
+
+  <script src="./mobile-bootstrap.js?v=sw-refresh-1"></script>
+  <script src="./app.js?v=directby-ep6-tomas-1"></script>
+</body>
+</html>
+
+
+

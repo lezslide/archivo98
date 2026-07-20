@@ -12,3 +12,4 @@ ios
 !.env.example
 
 .vercel
+.env*

@@ -54,8 +54,8 @@ with check (auth.uid() = id);
 drop policy if exists "messages_select_all" on public.messages;
 create policy "messages_select_all"
 on public.messages for select
-to authenticated
-using (true);
+to anon, authenticated
+using (room = 'global');
 
 drop policy if exists "messages_insert_auth" on public.messages;
 create policy "messages_insert_auth"

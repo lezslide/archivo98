@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Caja del Reto | Under Maps</title>
+  <meta name="theme-color" content="#101010" />
+  <script src="./private-access.js?v=private-1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      min-height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f1e8;
+      color: #0b1620;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      padding: max(10px, env(safe-area-inset-top)) 10px max(14px, env(safe-area-inset-bottom));
+      background: #f4f1e8;
+    }
+    body.chroma { background: #00ff00; }
+    body.transparent { background: transparent; }
+    .shell {
+      width: min(100%, 360px);
+      margin: 0 auto;
+    }
+    .topbar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-bottom: 8px;
+      padding: 0 4px;
+    }
+    .btn {
+      min-height: 34px;
+      border: 1.5px solid #101010;
+      border-radius: 999px;
+      background: #fffdf4;
+      color: #101010;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 2px 2px 0 #101010;
+      cursor: pointer;
+    }
+    .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #101010; }
+    .btn.blue { background: #ffffff; }
+    .btn.green { background: #101010; color: #ffffff; }
+    .btn.red { background: #2b2b2b; color: #fffdf4; }
+    .btn.yellow { background: #eeeeee; }
+    .phone {
+      overflow: hidden;
+      border: 4px solid #071017;
+      border-radius: 26px;
+      background: #071017;
+      box-shadow: 7px 8px 0 rgba(7, 16, 23, 0.88);
+    }
+    .phone-screen {
+      min-height: 0;
+      overflow: hidden;
+      border: 2px solid #26323b;
+      border-radius: 22px;
+      background: #f7f7f7;
+    }
+    .hidden { display: none !important; }
+    .status {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 28px;
+      padding: 7px 14px 4px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .notch {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 70px;
+      height: 17px;
+      border-radius: 999px;
+      background: #071017;
+      transform: translateX(-50%);
+    }
+    .signal {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .signal::before {
+      content: "";
+      width: 17px;
+      height: 11px;
+      border-left: 3px solid currentColor;
+      border-right: 3px solid currentColor;
+      border-bottom: 3px solid currentColor;
+      transform: skewX(-12deg);
+    }
+    .signal::after {
+      content: "";
+      width: 19px;
+      height: 10px;
+      border: 2px solid currentColor;
+      border-radius: 4px;
+      background: linear-gradient(90deg, currentColor 74%, transparent 74%);
+    }
+    .app-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px 7px;
+    }
+    .auth-card {
+      margin: 6px 9px 9px;
+      padding: 13px 11px;
+      border: 2px solid #101010;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 3px 0 #101010;
+    }
+    .auth-card h1 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: .95;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .auth-card p {
+      margin: 0 0 12px;
+      color: rgba(11, 22, 32, 0.72);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    .auth-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .auth-message {
+      min-height: 16px;
+      margin-top: 10px;
+      color: #7f1d1d;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .app-title {
+      display: grid;
+      gap: 2px;
+    }
+    .app-title h1 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 0.95;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .app-title span {
+      color: rgba(11, 22, 32, 0.62);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #101010;
+      border-radius: 50%;
+      background: #eeeeee;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .screen {
+      margin: 0 9px;
+      padding: 10px 12px 12px;
+      border: 2px solid #101010;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 3px 0 #101010;
+    }
+    .screen-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: rgba(11, 22, 32, 0.66);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .total-line {
+      margin-top: 5px;
+    }
+    .total-line span {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .total-line strong {
+      display: block;
+      color: #101010;
+      font-size: clamp(28px, 10vw, 40px);
+      line-height: .96;
+      font-weight: 900;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+    .receipt {
+      margin: -7px 9px 0;
+      padding: 12px 9px 9px;
+      border: 2px solid #101010;
+      border-radius: 16px 16px 14px 14px;
+      background: #eeeeee;
+    }
+    .receipt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .receipt-head h2 {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1;
+    }
+    .receipt-head p {
+      margin: 0;
+      color: rgba(11, 22, 32, 0.62);
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .public-note {
+      margin: 0 0 7px;
+      color: rgba(11, 22, 32, 0.72);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .field { display: grid; gap: 4px; }
+    .field label, .block-title {
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    input {
+      width: 100%;
+      min-height: 32px;
+      border: 1.5px solid #101010;
+      border-radius: 8px;
+      background: #fffdf7;
+      color: #101010;
+      padding: 6px 7px;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .scanner {
+      display: grid;
+      gap: 6px;
+      padding: 8px;
+      border: 1.5px solid #101010;
+      border-radius: 12px;
+      background: #fffdf7;
+    }
+    .quick-sale {
+      margin-top: 8px;
+    }
+    .product-row {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr) 76px;
+      gap: 5px;
+    }
+    .receipt-lines {
+      display: grid;
+      gap: 6px;
+      min-height: 38px;
+      max-height: 72px;
+      overflow: auto;
+      margin: 8px 0;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .receipt-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      border-bottom: 1px dotted #777;
+      padding-bottom: 5px;
+    }
+    .progress { display: grid; gap: 6px; margin-top: 6px; }
+    .progress-row {
+      display: grid;
+      grid-template-columns: 54px 1fr 36px;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .track {
+      height: 11px;
+      overflow: hidden;
+      border: 1.5px solid #101010;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+    .fill {
+      width: 0%;
+      height: 100%;
+      background: #101010;
+      transition: width .18s ease;
+    }
+    .fill.money { background: #101010; }
+    .footer-total {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 7px 9px;
+      border: 1.5px solid #101010;
+      border-radius: 10px;
+      background: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .world-loop-total {
+      margin-top: 5px;
+      background: #f6f6f6;
+      font-size: 10px;
+    }
+    .admin-drawer {
+      margin-top: 8px;
+      border: 1.5px solid #101010;
+      border-radius: 10px;
+      background: rgba(255, 253, 247, 0.72);
+      overflow: hidden;
+    }
+    .admin-drawer summary {
+      min-height: 33px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 9px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .admin-drawer summary::after {
+      content: "+";
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border: 1.5px solid #101010;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+    .admin-drawer[open] summary::after {
+      content: "-";
+    }
+    .admin-content {
+      padding: 0 8px 8px;
+    }
+    .sync-state {
+      margin: 8px 0 0;
+      color: rgba(11, 22, 32, 0.66);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .home-indicator {
+      width: 94px;
+      height: 5px;
+      margin: 10px auto 12px;
+      border-radius: 999px;
+      background: #fff;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%) translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      border: 2px solid #101010;
+      border-radius: 6px;
+      background: #101010;
+      color: #ffffff;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 4px 4px 0 #101010;
+    }
+    .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* Editorial/minimal pass inspired by stamped product sheets. */
+    html, body {
+      font-family: "Courier New", Courier, monospace;
+      background: #f5f2e8;
+      color: #080808;
+    }
+
+    .app-title h1,
+    .total-line strong,
+    .btn,
+    .block-title,
+    .receipt-head h2 {
+      font-family: Impact, "Arial Black", "Arial Narrow", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .phone,
+    .phone-screen,
+    .auth-card,
+    .screen,
+    .receipt,
+    .scanner,
+    .footer-total,
+    .admin-drawer,
+    .btn,
+    input,
+    .toast,
+    .avatar,
+    .track,
+    .notch {
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .phone {
+      border-width: 2px;
+      background: #080808;
+    }
+
+    .phone-screen {
+      border: 1px solid #080808;
+      background: #f7f4e9;
+    }
+
+    .auth-card,
+    .screen,
+    .receipt,
+    .scanner,
+    .footer-total,
+    .admin-drawer {
+      border: 1px solid #080808;
+      background: #fffdf4;
+    }
+
+    .receipt,
+    .world-loop-total {
+      background: #f1eee4;
+    }
+
+    .btn {
+      border: 1px solid #080808;
+      background: #fffdf4;
+      color: #080808;
+    }
+
+    .btn.green,
+    .btn.red {
+      background: #080808;
+      color: #fffdf4;
+    }
+
+    input {
+      border: 1px dashed #080808;
+      background: #fffdf4;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .status,
+    .home-indicator {
+      display: none;
+    }
+
+    .screen-top,
+    .field label,
+    .sync-state,
+    .receipt-row,
+    .footer-total {
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    @media (max-width: 420px) {
+      body {
+        align-items: start;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .phone {
+        border-width: 5px;
+        border-radius: 34px;
+        box-shadow: 8px 10px 0 rgba(7, 16, 23, 0.88);
+      }
+      .phone-screen {
+        min-height: auto;
+        border-radius: 28px;
+      }
+      .total-line strong {
+        font-size: clamp(32px, 11vw, 46px);
+      }
+    }
+
+    /* YouTube progress plate: under/VHS, not phone app. */
+    html, body {
+      min-height: 100%;
+      background: #050505;
+      color: #fffef1;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+      background: #050505;
+    }
+
+    .shell {
+      width: min(100%, 980px);
+      margin: 0 auto;
+    }
+
+    .phone {
+      position: relative;
+      overflow: hidden;
+      border: 5px solid #080808;
+      border-radius: 0;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,.12), transparent 24%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, #063cff 0%, #0021bd 52%, #00127d 100%);
+      box-shadow: 0 0 0 2px #fff, 0 22px 60px rgba(0,0,0,.58);
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(0,0,0,.38), transparent 15%, transparent 85%, rgba(0,0,0,.38));
+      mix-blend-mode: multiply;
+      z-index: 0;
+    }
+
+    .phone-screen {
+      position: relative;
+      z-index: 1;
+      min-height: min(84vh, 620px);
+      display: grid;
+      align-content: stretch;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: clamp(18px, 3vw, 44px);
+    }
+
+    .auth-card {
+      max-width: 520px;
+      margin: auto;
+      border: 4px solid #fffef1;
+      border-radius: 0;
+      background: rgba(0,0,0,.66);
+      color: #fffef1;
+      box-shadow: 7px 7px 0 #000;
+    }
+
+    .auth-card h1,
+    .app-title h1,
+    .total-line strong,
+    .footer-total span:last-child,
+    .market-badges span,
+    .btn {
+      font-family: Impact, "Arial Black", "Arial Narrow", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .auth-card p,
+    .auth-message,
+    .field label,
+    .sync-state {
+      color: #fff200;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .status,
+    .home-indicator {
+      display: none;
+    }
+
+    #app-content {
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      gap: 14px;
+      min-height: 100%;
+    }
+
+    #app-content.hidden {
+      display: none !important;
+    }
+
+    .app-head {
+      padding: 0;
+      align-items: start;
+      color: #fffef1;
+      text-align: left;
+      text-shadow: 4px 4px 0 #000;
+    }
+
+    .app-title h1 {
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: .82;
+      color: #fffef1;
+    }
+
+    .app-title span {
+      color: #fff200;
+      font-size: clamp(12px, 1.8vw, 20px);
+      text-shadow: 3px 3px 0 #000;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 42px;
+      border: 3px solid #fffef1;
+      border-radius: 0;
+      background: #e01612;
+      color: #fffef1;
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .market-badges {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(8px, 2vw, 24px);
+      width: min(680px, 100%);
+      margin: 0 auto;
+    }
+
+    .market-badges span {
+      min-height: 62px;
+      display: grid;
+      place-items: center;
+      border: 4px solid #080808;
+      background: #f5f1d5;
+      color: #081366;
+      box-shadow: 7px 7px 0 rgba(0,0,0,.45);
+      font-size: clamp(17px, 2.6vw, 30px);
+      line-height: .9;
+      text-align: center;
+    }
+
+    .market-badges span:nth-child(2) { color: #d85719; }
+    .market-badges span:nth-child(3) { color: #d82020; }
+
+    .screen {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .screen-top {
+      justify-content: center;
+      gap: 12px;
+      color: #fffef1;
+      font-size: clamp(15px, 2.2vw, 27px);
+      text-shadow: 4px 4px 0 #000;
+    }
+
+    .screen-top span:last-child {
+      color: #fff200;
+    }
+
+    .total-line {
+      margin-top: 8px;
+    }
+
+    .total-line span {
+      color: #fffef1;
+      font-size: clamp(18px, 2.8vw, 36px);
+      text-shadow: 5px 5px 0 #000;
+    }
+
+    .total-line strong {
+      color: #fff200;
+      font-size: clamp(58px, 11vw, 148px);
+      line-height: .82;
+      letter-spacing: -5px;
+      text-shadow: 8px 8px 0 #000, 0 0 8px rgba(255,242,0,.28);
+    }
+
+    .receipt {
+      display: grid;
+      grid-template-columns: 1.25fr .9fr;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .progress,
+    .footer-total,
+    .scanner,
+    .admin-drawer {
+      border: 4px solid #fffef1;
+      border-radius: 0;
+      background: rgba(0,0,0,.48);
+      box-shadow: 6px 6px 0 #000;
+    }
+
+    .progress {
+      grid-column: 1 / -1;
+      padding: 10px 12px;
+    }
+
+    .progress-row {
+      grid-template-columns: 92px 1fr 54px;
+      color: #fffef1;
+      font-size: clamp(11px, 1.5vw, 18px);
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .track {
+      height: 17px;
+      border: 3px solid #fffef1;
+      border-radius: 0;
+      background: #080808;
+    }
+
+    .fill,
+    .fill.money {
+      background: linear-gradient(90deg, #e01612, #fff200);
+    }
+
+    .footer-total {
+      min-height: 76px;
+      align-items: center;
+      margin: 0;
+      padding: 12px;
+      color: #fffef1;
+      text-shadow: 3px 3px 0 #000;
+      font-size: clamp(13px, 1.8vw, 20px);
+    }
+
+    .footer-total span:last-child {
+      color: #fff200;
+      font-size: clamp(24px, 3.8vw, 48px);
+      letter-spacing: -2px;
+    }
+
+    .world-loop-total {
+      background: rgba(0,0,0,.48);
+    }
+
+    .scanner {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr repeat(3, auto);
+      align-items: end;
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .scanner .block-title:first-child {
+      grid-column: 1;
+    }
+
+    .scanner .block-title:nth-of-type(2) {
+      grid-column: 2;
+    }
+
+    .block-title {
+      color: #fff200;
+      font-size: 10px;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .product-row {
+      grid-column: 2;
+      grid-template-columns: 58px minmax(120px,1fr) 82px;
+      gap: 6px;
+    }
+
+    input {
+      min-height: 38px;
+      border: 3px solid #fffef1;
+      border-radius: 0;
+      background: #f5f1d5;
+      color: #080808;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .btn {
+      min-height: 40px;
+      border: 3px solid #fffef1;
+      border-radius: 0;
+      background: #fff200;
+      color: #080808;
+      box-shadow: 4px 4px 0 #000;
+      font-size: 13px;
+    }
+
+    .btn.green,
+    .btn.red {
+      background: #e01612;
+      color: #fffef1;
+    }
+
+    .btn.blue {
+      background: #f5f1d5;
+      color: #080808;
+    }
+
+    .btn:active {
+      transform: translate(2px,2px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .admin-drawer {
+      grid-column: 1 / -1;
+      color: #fffef1;
+    }
+
+    .admin-drawer summary {
+      color: #fff200;
+      font-size: 12px;
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    .admin-drawer summary::after {
+      border: 2px solid #fffef1;
+      border-radius: 0;
+      background: #e01612;
+      color: #fffef1;
+    }
+
+    .receipt-lines {
+      color: #fffef1;
+    }
+
+    .receipt-row {
+      border-bottom: 1px dashed rgba(255,254,241,.55);
+    }
+
+    .toast {
+      border: 3px solid #fffef1;
+      border-radius: 0;
+      background: #080808;
+      color: #fff200;
+      box-shadow: 5px 5px 0 #000;
+    }
+
+    @media (max-width: 760px) {
+      body { place-items: start center; }
+      .phone-screen { padding: 16px; min-height: auto; }
+      #app-content { gap: 10px; }
+      .market-badges { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+      .market-badges span { min-height: 46px; font-size: 14px; border-width: 3px; }
+      .app-title h1 { font-size: 34px; }
+      .total-line strong { font-size: clamp(50px, 16vw, 92px); letter-spacing: -3px; }
+      .receipt { grid-template-columns: 1fr; }
+      .scanner { grid-template-columns: 1fr; }
+      .scanner .block-title:first-child,
+      .scanner .block-title:nth-of-type(2),
+      .product-row { grid-column: auto; }
+      .product-row { grid-template-columns: 54px minmax(0,1fr) 76px; }
+      .footer-total span:last-child { font-size: 30px; }
+    }
+
+    /* 18-bit challenge-box pass: flatter, squarer, less generated-app. */
+    html,
+    body {
+      background: #00ff00;
+      font-family: "Arial Black", Impact, Arial, Helvetica, sans-serif;
+      image-rendering: pixelated;
+    }
+
+    body {
+      padding: 18px;
+      background:
+        linear-gradient(#00ff00, #00ff00);
+    }
+
+    .shell {
+      width: min(100%, 760px);
+    }
+
+    .phone {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .phone::before {
+      display: none;
+    }
+
+    .phone-screen {
+      min-height: auto;
+      padding: 14px;
+      border: 6px solid #020202;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, #022fd5 0%, #001f9b 55%, #001266 100%);
+      box-shadow: 8px 8px 0 #020202, inset 0 0 0 3px #f7f2d2;
+    }
+
+    #app-content {
+      gap: 9px;
+    }
+
+    .app-head {
+      padding: 0 0 2px;
+      text-shadow: 3px 3px 0 #020202;
+    }
+
+    .app-title h1 {
+      color: #fff200;
+      font-size: clamp(29px, 5vw, 54px);
+      line-height: .88;
+      letter-spacing: -1px;
+    }
+
+    .app-title span {
+      color: #fffef1;
+      font-size: 11px;
+      letter-spacing: .3px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 36px;
+      border: 3px solid #fffef1;
+      background: #e01612;
+      color: #fffef1;
+      box-shadow: 4px 4px 0 #020202;
+    }
+
+    .market-badges {
+      gap: 7px;
+      width: 100%;
+    }
+
+    .market-badges span {
+      min-height: 38px;
+      border: 3px solid #020202;
+      background: #f7f2d2;
+      box-shadow: 4px 4px 0 #020202;
+      font-size: clamp(12px, 2.3vw, 19px);
+      line-height: .95;
+    }
+
+    .screen-top {
+      font-size: clamp(12px, 2vw, 18px);
+      text-shadow: 3px 3px 0 #020202;
+    }
+
+    .total-line {
+      margin-top: 4px;
+    }
+
+    .total-line span {
+      font-size: clamp(13px, 2vw, 20px);
+      text-shadow: 3px 3px 0 #020202;
+    }
+
+    .total-line strong {
+      color: #fff200;
+      font-size: clamp(44px, 10vw, 86px);
+      line-height: .82;
+      letter-spacing: -2px;
+      text-shadow: 5px 5px 0 #020202;
+    }
+
+    .receipt {
+      gap: 8px;
+    }
+
+    .progress,
+    .footer-total,
+    .scanner,
+    .admin-drawer {
+      border: 3px solid #fffef1;
+      background: rgba(0,0,0,.62);
+      box-shadow: 4px 4px 0 #020202;
+    }
+
+    .progress {
+      padding: 7px 9px;
+    }
+
+    .progress-row {
+      grid-template-columns: 82px 1fr 42px;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .track {
+      height: 13px;
+      border: 2px solid #fffef1;
+      background: #020202;
+    }
+
+    .footer-total {
+      min-height: 54px;
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+
+    .footer-total span:last-child {
+      font-size: clamp(20px, 3.8vw, 34px);
+      letter-spacing: -1px;
+    }
+
+    .scanner {
+      grid-template-columns: 112px minmax(0,1fr) auto auto auto;
+      gap: 7px;
+      padding: 8px;
+    }
+
+    .block-title {
+      font-size: 9px;
+      line-height: 1;
+    }
+
+    .product-row {
+      grid-template-columns: 48px minmax(90px,1fr) 72px;
+    }
+
+    input {
+      min-height: 32px;
+      border: 2px solid #020202;
+      background: #f7f2d2;
+      font-size: 12px;
+    }
+
+    .btn {
+      min-height: 34px;
+      border: 2px solid #fffef1;
+      background: #fff200;
+      box-shadow: 3px 3px 0 #020202;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .btn.green,
+    .btn.red {
+      background: #e01612;
+      color: #fffef1;
+    }
+
+    .btn:active {
+      transform: translate(1px,1px);
+      box-shadow: 2px 2px 0 #020202;
+    }
+
+    .admin-drawer summary {
+      min-height: 30px;
+      font-size: 10px;
+    }
+
+    .receipt-lines {
+      max-height: 58px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9px;
+    }
+
+    .toast {
+      border: 3px solid #fffef1;
+      background: #020202;
+      color: #fff200;
+      box-shadow: 4px 4px 0 #020202;
+    }
+
+    @media (max-width: 760px) {
+      body { padding: 10px; }
+      .phone-screen { padding: 10px; }
+      .market-badges span { min-height: 34px; font-size: 11px; }
+      .app-title h1 { font-size: 30px; }
+      .total-line strong { font-size: clamp(38px, 14vw, 64px); }
+      .scanner { grid-template-columns: 1fr; }
+      .scanner .block-title:first-child,
+      .scanner .block-title:nth-of-type(2),
+      .product-row { grid-column: auto; }
+      .product-row { grid-template-columns: 48px minmax(0,1fr) 70px; }
+    }
+
+    /* Ryan-style serious pass: simple progress board, bold numbers, no noisy flyer/app look. */
+    html,
+    body {
+      background: #ece8dc;
+      color: #070707;
+      font-family: Arial, Helvetica, sans-serif;
+      image-rendering: auto;
+    }
+
+    body {
+      align-items: start;
+      padding: max(12px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(0,0,0,.035) 1px, transparent 1px),
+        #ece8dc;
+      background-size: 34px 34px;
+    }
+
+    body.chroma {
+      background: #00ff00;
+    }
+
+    body.transparent {
+      background: transparent;
+    }
+
+    .shell {
+      width: min(100%, 820px);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0 0 10px;
+      padding: 0;
+    }
+
+    .phone {
+      border: 3px solid #070707;
+      background: #ffffff;
+      box-shadow: 8px 8px 0 #070707;
+    }
+
+    .phone-screen {
+      padding: clamp(14px, 2.4vw, 26px);
+      border: 0;
+      background: #ffffff;
+      box-shadow: none;
+    }
+
+    .app-head {
+      border-bottom: 3px solid #070707;
+      padding-bottom: 10px;
+      text-shadow: none;
+    }
+
+    .app-title h1,
+    .total-line strong,
+    .footer-total span:last-child,
+    .btn,
+    .market-badges span {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 1000;
+    }
+
+    .app-title h1 {
+      color: #070707;
+      font-size: clamp(34px, 6vw, 68px);
+      line-height: .9;
+      letter-spacing: -2px;
+    }
+
+    .app-title span {
+      color: #444;
+      font-size: 12px;
+      text-shadow: none;
+    }
+
+    .avatar {
+      border: 2px solid #070707;
+      background: #ffffff;
+      color: #070707;
+      box-shadow: 3px 3px 0 #070707;
+    }
+
+    .market-badges {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .market-badges span {
+      min-height: 34px;
+      border: 2px solid #070707;
+      background: #ffffff;
+      color: #070707 !important;
+      box-shadow: none;
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+
+    .screen {
+      border: 0;
+      background: transparent;
+    }
+
+    .screen-top {
+      justify-content: space-between;
+      color: #070707;
+      font-size: 12px;
+      text-shadow: none;
+      border-bottom: 2px solid #070707;
+      padding-bottom: 6px;
+    }
+
+    .screen-top span:last-child {
+      color: #070707;
+    }
+
+    .total-line span {
+      color: #070707;
+      font-size: 13px;
+      text-shadow: none;
+      letter-spacing: .08em;
+    }
+
+    .total-line strong {
+      color: #070707;
+      font-size: clamp(56px, 12vw, 118px);
+      letter-spacing: -5px;
+      text-shadow: none;
+    }
+
+    .receipt {
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .progress,
+    .footer-total,
+    .scanner,
+    .admin-drawer,
+    .auth-card {
+      border: 2px solid #070707;
+      background: #ffffff;
+      color: #070707;
+      box-shadow: 4px 4px 0 #070707;
+    }
+
+    .progress {
+      padding: 9px 10px;
+    }
+
+    .progress-row {
+      grid-template-columns: 86px 1fr 42px;
+      color: #070707;
+      font-size: 11px;
+      text-shadow: none;
+    }
+
+    .track {
+      height: 12px;
+      border: 2px solid #070707;
+      background: #ffffff;
+    }
+
+    .fill,
+    .fill.money {
+      background: #070707;
+    }
+
+    .footer-total {
+      min-height: 58px;
+      text-shadow: none;
+      font-size: 12px;
+    }
+
+    .footer-total span:last-child {
+      color: #070707;
+      font-size: clamp(24px, 4vw, 42px);
+      letter-spacing: -2px;
+    }
+
+    .scanner {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      padding: 10px;
+    }
+
+    .scanner .block-title:first-child,
+    .scanner .block-title:nth-of-type(2),
+    .product-row {
+      grid-column: auto;
+    }
+
+    .block-title,
+    .field label,
+    .sync-state,
+    .auth-card p,
+    .auth-message {
+      color: #070707;
+      font-size: 10px;
+      text-shadow: none;
+      letter-spacing: .05em;
+    }
+
+    .product-row {
+      grid-template-columns: 56px minmax(0, 1fr) 78px;
+    }
+
+    input {
+      min-height: 38px;
+      border: 2px solid #070707;
+      background: #f6f3ea;
+      color: #070707;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+    }
+
+    .btn {
+      min-height: 38px;
+      border: 2px solid #070707;
+      background: #ffffff;
+      color: #070707;
+      box-shadow: 3px 3px 0 #070707;
+      font-size: 11px;
+      border-radius: 0;
+    }
+
+    .btn.green,
+    .btn.red {
+      background: #070707;
+      color: #ffffff;
+    }
+
+    .btn.blue {
+      background: #f6f3ea;
+      color: #070707;
+    }
+
+    .admin-drawer {
+      color: #070707;
+    }
+
+    .admin-drawer summary {
+      color: #070707;
+      text-shadow: none;
+    }
+
+    .admin-drawer summary::after {
+      border: 2px solid #070707;
+      background: #ffffff;
+      color: #070707;
+    }
+
+    .receipt-lines {
+      color: #070707;
+    }
+
+    .receipt-row {
+      border-bottom: 1px solid #070707;
+    }
+
+    .auth-card {
+      max-width: 520px;
+      margin: auto;
+    }
+
+    .auth-card h1 {
+      color: #070707;
+      font-size: 30px;
+    }
+
+    @media (max-width: 760px) {
+      .topbar { grid-template-columns: 1fr 1fr; }
+      .receipt { grid-template-columns: 1fr; }
+      .total-line strong { font-size: clamp(48px, 18vw, 82px); letter-spacing: -3px; }
+      .phone { box-shadow: 5px 5px 0 #070707; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar" aria-label="Controles de caja">
+      <button class="btn green" id="top-login-btn" type="button">Ingresar</button>
+      <button class="btn" id="top-obs-btn" type="button">OBS</button>
+      <button class="btn" id="top-chroma-btn" type="button">Croma</button>
+      <button class="btn blue" id="top-transparent-btn" type="button">Transparente</button>
+    </div>
+    <section class="phone">
+      <div class="phone-screen">
+        <div class="status">
+          <span>9:41</span>
+          <span class="notch" aria-hidden="true"></span>
+          <span class="signal" aria-hidden="true"></span>
+        </div>
+        <div class="auth-card" id="auth-card">
+          <h1>Caja privada</h1>
+          <p>Solo entra tumberjeremy@gmail.com. Si todavia no existe en Supabase, creala desde aca.</p>
+          <div class="field">
+            <label for="auth-email">Mail</label>
+            <input id="auth-email" type="email" value="tumberjeremy@gmail.com" autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="auth-password">Contraseña</label>
+            <input id="auth-password" type="password" autocomplete="current-password" />
+          </div>
+          <div class="auth-actions">
+            <button class="btn green" id="login-btn" type="button">Entrar</button>
+            <button class="btn" id="signup-btn" type="button">Crear cuenta</button>
+          </div>
+          <div class="auth-message" id="auth-message"></div>
+        </div>
+        <div id="app-content" class="hidden">
+          <div class="app-head">
+            <div class="app-title">
+              <h1>Caja del reto</h1>
+              <span>Archivo98 Market</span>
+            </div>
+            <button class="avatar" id="logout-btn" type="button">98</button>
+          </div>
+          <div class="market-badges" aria-hidden="true">
+            <span>STICKERS</span>
+            <span>VENTA</span>
+            <span>WORLD LOOP</span>
+          </div>
+          <div class="screen">
+            <div class="screen-top"><span>Recaudado hoy</span><span>Caja 01</span></div>
+            <div class="total-line"><span>Total</span><strong id="screen-total">$0.00 USD</strong></div>
+          </div>
+          <div class="receipt">
+            <div class="progress">
+              <div class="progress-row"><span>Meta USD</span><div class="track"><div class="fill money" id="money-fill"></div></div><span id="money-label">0%</span></div>
+            </div>
+            <div class="footer-total"><span id="items-label">0 unidades</span><span id="summary">$0.00 USD</span></div>
+            <div class="footer-total world-loop-total"><span>World Loop</span><span id="world-loop-summary">0 / 40.075 km</span></div>
+            <div class="scanner quick-sale">
+              <div class="block-title">Cargar compra</div>
+              <button class="btn yellow" id="sticker-btn" type="button">Sticker x cantidad $1.00</button>
+              <div class="block-title">Cantidad / producto / precio</div>
+              <div class="product-row">
+                <input id="product-quantity-input" type="number" value="1" min="1" step="1" aria-label="Cantidad" />
+                <input id="product-name-input" type="text" value="Producto" aria-label="Producto" />
+                <input id="product-price-input" type="number" value="12" min="0" step="0.01" aria-label="Precio" />
+              </div>
+              <button class="btn red" id="add-product-btn" type="button">Sumar compra</button>
+              <button class="btn" id="reset-sales-btn" type="button">Reset ticket</button>
+              <button class="btn blue" id="force-obs-sync-btn" type="button">Forzar sync OBS</button>
+            </div>
+            <details class="admin-drawer">
+              <summary>Ajustes</summary>
+              <div class="admin-content">
+                <div class="grid">
+                  <div class="field"><label for="money-input">Recaudado</label><input id="money-input" type="number" value="0" min="0" step="0.01" /></div>
+                  <div class="field"><label for="money-goal-input">Meta USD</label><input id="money-goal-input" type="number" value="50" min="1" step="0.01" /></div>
+                  <div class="field"><label for="km-input">Km hoy</label><input id="km-input" type="number" value="8" min="0" step="0.1" /></div>
+                  <div class="field"><label for="km-goal-input">Meta km</label><input id="km-goal-input" type="number" value="25" min="1" step="0.1" /></div>
+                </div>
+                <div class="receipt-lines" id="sale-log"></div>
+                <div class="sync-state" id="sync-state">Memoria local</div>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="home-indicator"></div>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast">Listo</div>
+  <script>
+    const ALLOWED_EMAIL = "tumberjeremy@gmail.com";
+    const SALES_API = "/api/sales-records";
+    const CONFIG_API = "/api/supabase-config";
+    const WORLD_OVERLAY_API = "/api/world-loop-overlay";
+    const WORLD_LOOP_BROADCAST = "archivo98_world_loop_live";
+    const WORLD_LOOP_EVENT_KEY = "archivo98_world_loop_last_event";
+    const STORAGE_KEY = "archivo98_sales_daily_records";
+    let supabaseClient = null;
+    const authCard = document.getElementById("auth-card");
+    const appContent = document.getElementById("app-content");
+    const authEmailInput = document.getElementById("auth-email");
+    const authPasswordInput = document.getElementById("auth-password");
+    const authMessage = document.getElementById("auth-message");
+    const moneyInput = document.getElementById("money-input");
+    const moneyGoalInput = document.getElementById("money-goal-input");
+    const kmInput = document.getElementById("km-input");
+    const kmGoalInput = document.getElementById("km-goal-input");
+    const productQuantityInput = document.getElementById("product-quantity-input");
+    const productNameInput = document.getElementById("product-name-input");
+    const productPriceInput = document.getElementById("product-price-input");
+    const saleLog = document.getElementById("sale-log");
+    const syncState = document.getElementById("sync-state");
+    const toast = document.getElementById("toast");
+    const worldLoopSummary = document.getElementById("world-loop-summary");
+    const pageParams = new URLSearchParams(window.location.search);
+    let sales = [];
+    let records = [];
+    let currentAccessToken = "";
+
+    if (pageParams.get("chroma") === "1" || pageParams.get("bg") === "chroma") document.body.classList.add("chroma");
+    if (pageParams.get("transparent") === "1" || pageParams.get("bg") === "transparent") document.body.classList.add("transparent");
+
+    function todayKey() { return new Date().toISOString().slice(0, 10); }
+    function formatMoney(value) {
+      return (Number(value) || 0).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+    function clampPercent(value) { return Math.max(0, Math.min(100, Number.isFinite(value) ? value : 0)); }
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove("visible"), 1600);
+    }
+
+    function setSyncState(message) {
+      if (syncState) syncState.textContent = message;
+    }
+
+    function setAuthMessage(message) {
+      if (authMessage) authMessage.textContent = message || "";
+    }
+
+    function normalizeEmail(value) {
+      return String(value || "").trim().toLowerCase();
+    }
+
+    async function getAccessToken() {
+      if (!supabaseClient) return "";
+      const { data } = await supabaseClient.auth.getSession();
+      currentAccessToken = data.session?.access_token || "";
+      return currentAccessToken;
+    }
+
+    function showPrivateApp() {
+      authCard.classList.add("hidden");
+      appContent.classList.remove("hidden");
+    }
+
+    function showLogin() {
+      appContent.classList.add("hidden");
+      authCard.classList.remove("hidden");
+    }
+
+    async function setupSupabaseClient() {
+      if (!window.supabase?.createClient) {
+        setAuthMessage("No cargo la libreria de Supabase.");
+        return false;
+      }
+
+      try {
+        const response = await fetch(CONFIG_API, { cache: "no-store" });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "Falta config Supabase.");
+        supabaseClient = window.supabase.createClient(body.supabaseUrl, body.anonKey);
+        return true;
+      } catch (error) {
+        setAuthMessage(error.message || "Falta config Supabase en Vercel.");
+        return false;
+      }
+    }
+
+    function normalizeRecord(record) {
+      return {
+        date: record.date,
+        money: Math.max(0, Number(record.money) || 0),
+        moneyGoal: Math.max(1, Number(record.moneyGoal ?? record.money_goal) || 50),
+        km: Math.max(0, Number(record.km) || 0),
+        kmGoal: Math.max(1, Number(record.kmGoal ?? record.km_goal) || 25),
+        sales: Array.isArray(record.sales) ? record.sales.slice(0, 20) : [],
+        updatedAt: record.updatedAt || record.updated_at || new Date().toISOString()
+      };
+    }
+
+    async function loadRecords() {
+      let storedRecords = [];
+      try {
+        storedRecords = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        records = Array.isArray(storedRecords) ? storedRecords.map(normalizeRecord) : [];
+      } catch (_error) { records = []; }
+
+      try {
+        const token = await getAccessToken();
+        const response = await fetch(SALES_API, {
+          cache: "no-store",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "No pude cargar Supabase.");
+        records = mergeRecords(records, (body.records || []).map(normalizeRecord));
+        saveRecords();
+        setSyncState("Memoria Vercel + Supabase activa");
+      } catch (_error) {
+        setSyncState("Memoria local. Falta conectar Supabase");
+      }
+    }
+    function mergeRecords(localRecords, remoteRecords) {
+      const map = new Map();
+      [...remoteRecords, ...localRecords].forEach((record) => {
+        const safeRecord = normalizeRecord(record);
+        const previous = map.get(safeRecord.date);
+        const previousTime = previous ? new Date(previous.updatedAt || 0).getTime() : 0;
+        const nextTime = new Date(safeRecord.updatedAt || 0).getTime();
+        if (!previous || nextTime >= previousTime) map.set(safeRecord.date, safeRecord);
+      });
+      return [...map.values()].sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    }
+    function saveRecords() { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); }
+    function snapshot() {
+      return {
+        date: todayKey(),
+        money: Math.max(0, Number(moneyInput.value) || 0),
+        moneyGoal: Math.max(1, Number(moneyGoalInput.value) || 1),
+        km: Math.max(0, Number(kmInput.value) || 0),
+        kmGoal: Math.max(1, Number(kmGoalInput.value) || 1),
+        sales: sales.slice(0, 20),
+        updatedAt: new Date().toISOString(),
+      };
+    }
+    function saveToday() {
+      const record = snapshot();
+      const index = records.findIndex((item) => item.date === record.date);
+      if (index >= 0) records[index] = { ...records[index], ...record };
+      else records.push(record);
+      records.sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      saveRecords();
+      saveRecordRemote(record);
+    }
+    async function saveRecordRemote(record) {
+      try {
+        const token = await getAccessToken();
+        if (!token) throw new Error("Sesion no iniciada: entra con tu cuenta para conectar OBS.");
+        const response = await fetch(SALES_API, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ record })
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "No pude guardar Supabase.");
+        setSyncState("Guardado en Supabase. OBS conectado");
+        return true;
+      } catch (error) {
+        setSyncState(`Solo local: ${error.message || "falta conectar Supabase"}`);
+        return false;
+      }
+    }
+    async function syncVisibleRecord() {
+      render();
+      const record = snapshot();
+      const index = records.findIndex((item) => item.date === record.date);
+      if (index >= 0) records[index] = { ...records[index], ...record };
+      else records.push(record);
+      saveRecords();
+      return saveRecordRemote(record);
+    }
+    function restoreToday() {
+      const record = records.find((item) => item.date === todayKey());
+      if (!record) return;
+      moneyInput.value = Number(record.money || 0);
+      moneyGoalInput.value = Number(record.moneyGoal || 50);
+      kmInput.value = Number(record.km || 0);
+      kmGoalInput.value = Number(record.kmGoal || 25);
+      sales = Array.isArray(record.sales) ? record.sales.slice(0, 20).map((sale) => {
+        const quantity = Math.max(1, Number(sale.quantity) || 1);
+        const total = Math.max(0, Number(sale.total ?? sale.price) || 0);
+        const unitPrice = Math.max(0, Number(sale.unitPrice) || (total / quantity) || 0);
+        return { ...sale, quantity, unitPrice, total, price: total };
+      }) : [];
+    }
+    function renderSales() {
+      saleLog.innerHTML = sales.length ? sales.map((sale, index) => `
+        <div class="receipt-row"><span>${String(sale.quantity || 1).padStart(2, "0")} ${sale.name} x $${formatMoney(sale.unitPrice || sale.price)}</span><span>$${formatMoney(sale.total || sale.price)}</span></div>
+      `).join("") : '<div class="receipt-row"><span>Listo para cargar</span><span>$0.00</span></div>';
+    }
+    function render() {
+      const money = Math.max(0, Number(moneyInput.value) || 0);
+      const moneyGoal = Math.max(1, Number(moneyGoalInput.value) || 1);
+      const km = Math.max(0, Number(kmInput.value) || 0);
+      const kmGoal = Math.max(1, Number(kmGoalInput.value) || 1);
+      const moneyPercent = clampPercent((money / moneyGoal) * 100);
+      const kmPercent = clampPercent((km / kmGoal) * 100);
+      document.getElementById("screen-total").textContent = `$${formatMoney(money)} USD`;
+      document.getElementById("summary").textContent = `$${formatMoney(money)} USD`;
+      const itemCount = sales.reduce((sum, sale) => sum + Math.max(1, Number(sale.quantity) || 1), 0);
+      document.getElementById("items-label").textContent = `${itemCount} unidades`;
+      document.getElementById("money-fill").style.width = `${moneyPercent}%`;
+      document.getElementById("money-label").textContent = `${Math.round(moneyPercent)}%`;
+      renderSales();
+    }
+    function formatKm(value) {
+      return Number(value || 0).toLocaleString("es-AR");
+    }
+    async function loadWorldLoopSummary() {
+      try {
+        const response = await fetch(`${WORLD_OVERLAY_API}?_=${Date.now()}`, { cache: "no-store" });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "No pude cargar World Loop.");
+        const world = body.world || {};
+        worldLoopSummary.textContent = `${formatKm(world.totalKm)} / ${formatKm(world.goalKm || 40075)} km`;
+      } catch (_error) {
+        worldLoopSummary.textContent = "Sin conexion";
+      }
+    }
+    function renderWorldLoopSummary(world) {
+      if (!world) return;
+      worldLoopSummary.textContent = `${formatKm(world.totalKm)} / ${formatKm(world.goalKm || 40075)} km`;
+    }
+    function handleWorldLoopMessage(message) {
+      if (message?.type !== "world-loop-update" || !message.world) return;
+      renderWorldLoopSummary(message.world);
+    }
+    function addSale(name, unitPrice, quantity = 1) {
+      const safeQuantity = Math.max(1, Math.floor(Number(quantity) || 1));
+      const safeUnitPrice = Math.max(0, Number(unitPrice) || 0);
+      if (!safeUnitPrice) { showToast("Precio vacio"); return; }
+      const total = safeQuantity * safeUnitPrice;
+      sales.unshift({ name: name || "Producto", quantity: safeQuantity, unitPrice: safeUnitPrice, total, price: total });
+      moneyInput.value = Math.max(0, Number(moneyInput.value) || 0) + total;
+      render();
+      saveToday();
+      showToast(`${safeQuantity} ${name || "Producto"} +$${formatMoney(total)} USD`);
+    }
+    [moneyInput, moneyGoalInput, kmInput, kmGoalInput].forEach((input) => {
+      input.addEventListener("input", () => { render(); saveToday(); });
+    });
+    document.getElementById("sticker-btn").addEventListener("click", () => addSale("Sticker", 1, productQuantityInput.value));
+    document.getElementById("add-product-btn").addEventListener("click", () => addSale(productNameInput.value.trim() || "Producto", productPriceInput.value, productQuantityInput.value));
+    document.getElementById("reset-sales-btn").addEventListener("click", () => {
+      sales = [];
+      moneyInput.value = 0;
+      render();
+      saveToday();
+      showToast("Ticket reiniciado");
+    });
+    document.getElementById("force-obs-sync-btn").addEventListener("click", async () => {
+      const ok = await syncVisibleRecord();
+      showToast(ok ? "OBS actualizado" : "OBS no conectado");
+    });
+    document.getElementById("top-login-btn").addEventListener("click", () => {
+      if (appContent.classList.contains("hidden")) {
+        authPasswordInput.focus();
+        authCard.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        appContent.scrollIntoView({ behavior: "smooth", block: "start" });
+        showToast("Ya estas adentro");
+      }
+    });
+    document.getElementById("top-obs-btn").addEventListener("click", () => {
+      window.open(`./obs-layout-kick.html?v=obs-kick-19&transparent=1&bg=transparent&guides=0&streamchat=1&_=${Date.now()}`, "_blank", "noopener,noreferrer");
+    });
+    document.getElementById("top-chroma-btn").addEventListener("click", () => {
+      document.body.classList.remove("transparent");
+      document.body.classList.toggle("chroma");
+      showToast(document.body.classList.contains("chroma") ? "Fondo croma" : "Fondo normal");
+    });
+    document.getElementById("top-transparent-btn").addEventListener("click", () => {
+      document.body.classList.remove("chroma");
+      document.body.classList.toggle("transparent");
+      showToast(document.body.classList.contains("transparent") ? "Fondo transparente" : "Fondo normal");
+    });
+    async function authenticate(mode) {
+      if (!supabaseClient) {
+        setAuthMessage("No cargo Supabase.");
+        return;
+      }
+
+      const email = normalizeEmail(authEmailInput.value);
+      const password = authPasswordInput.value;
+      if (email !== ALLOWED_EMAIL) {
+        setAuthMessage("Ese mail no tiene permiso.");
+        return;
+      }
+      if (!password) {
+        setAuthMessage("Pone tu contraseña.");
+        return;
+      }
+
+      setAuthMessage(mode === "signup" ? "Creando cuenta..." : "Entrando...");
+      const result = mode === "signup"
+        ? await supabaseClient.auth.signUp({ email, password })
+        : await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (result.error) {
+        setAuthMessage(result.error.message || "No pude entrar.");
+        return;
+      }
+
+      const session = result.data.session || (await supabaseClient.auth.getSession()).data.session;
+      if (!session) {
+        setAuthMessage("Revisa tu mail si Supabase pide confirmar cuenta.");
+        return;
+      }
+      if (normalizeEmail(session.user?.email) !== ALLOWED_EMAIL) {
+        await supabaseClient.auth.signOut();
+        setAuthMessage("Ese usuario no tiene permiso.");
+        return;
+      }
+
+      currentAccessToken = session.access_token || "";
+      setAuthMessage("");
+      showPrivateApp();
+      await loadRecords();
+      restoreToday();
+      render();
+      loadWorldLoopSummary();
+      await syncVisibleRecord();
+    }
+
+    document.getElementById("login-btn").addEventListener("click", () => authenticate("login"));
+    document.getElementById("signup-btn").addEventListener("click", () => authenticate("signup"));
+    authPasswordInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") authenticate("login");
+    });
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      if (supabaseClient) await supabaseClient.auth.signOut();
+      currentAccessToken = "";
+      showLogin();
+      setAuthMessage("Sesion cerrada.");
+    });
+    async function boot() {
+      if (!(await setupSupabaseClient())) {
+        showLogin();
+        return;
+      }
+
+      const { data } = await supabaseClient.auth.getSession();
+      const session = data.session;
+      if (!session || normalizeEmail(session.user?.email) !== ALLOWED_EMAIL) {
+        if (session) await supabaseClient.auth.signOut();
+        showLogin();
+        render();
+        return;
+      }
+
+      currentAccessToken = session.access_token || "";
+      showPrivateApp();
+      await loadRecords();
+      restoreToday();
+      render();
+      loadWorldLoopSummary();
+      await syncVisibleRecord();
+    }
+    boot();
+    try {
+      if ("BroadcastChannel" in window) {
+        const worldChannel = new BroadcastChannel(WORLD_LOOP_BROADCAST);
+        worldChannel.onmessage = (event) => handleWorldLoopMessage(event.data);
+      }
+      window.addEventListener("storage", (event) => {
+        if (event.key !== WORLD_LOOP_EVENT_KEY || !event.newValue) return;
+        try { handleWorldLoopMessage(JSON.parse(event.newValue)); } catch (_error) {}
+      });
+    } catch (_error) {}
+    setInterval(loadWorldLoopSummary, 2500);
+  </script>
+</body>
+</html>

@@ -1,13 +1,24 @@
-const STATIC_CACHE = "archivo98-static-v1";
-const RUNTIME_CACHE = "archivo98-runtime-v1";
+const STATIC_CACHE = "archivo98-static-v124";
+const RUNTIME_CACHE = "archivo98-runtime-v124";
 
 const STATIC_ASSETS = [
   "./",
-  "./index.html",
-  "./styles.css",
-  "./app.js",
+  "./desktop/",
+  "./desktop/index.html",
   "./site.webmanifest",
   "./mobile-bootstrap.js",
+  "./ventas-metas.html",
+  "./obs-recaudado.html",
+  "./obs-layout-kick.html",
+  "./ventas-registro.html",
+  "./creator-pro.html",
+  "./alaxd.html",
+  "./under-maps.html",
+  "./xp-agar-strike.html",
+  "./assets/chat-flames.gif",
+  "./assets/DamagedHelmet.glb",
+  "./assets/vendor/three-r128.min.js",
+  "./assets/vendor/OrbitControls-r128.js",
   "./slot98.html",
   "./manychat-code.html",
   "./privacy-instagram.html",
@@ -41,7 +52,25 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  if (request.mode === "navigate") {
+  const url = new URL(request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+  const isFreshAppFile = isSameOrigin && (
+    request.mode === "navigate" ||
+    url.pathname.endsWith("/") ||
+    url.pathname.endsWith("/desktop/") ||
+    url.pathname.endsWith("/desktop/index.html") ||
+    url.pathname.endsWith("/index.html") ||
+    url.pathname.endsWith("/app.js") ||
+    url.pathname.endsWith("/styles.css") ||
+    url.pathname.endsWith("/mobile-bootstrap.js") ||
+    url.pathname.endsWith("/recording-studio.html") ||
+    url.pathname.endsWith("/creator-pro.html") ||
+    url.pathname.endsWith("/obs-recaudado.html")
+    || url.pathname.endsWith("/obs-layout-kick.html")
+    || url.pathname.endsWith("/alaxd.html")
+  );
+
+  if (isFreshAppFile) {
     event.respondWith(
       fetch(request)
         .then((response) => {
@@ -73,3 +102,6 @@ self.addEventListener("fetch", (event) => {
     }),
   );
 });
+
+
+

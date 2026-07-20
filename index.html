@@ -3,125 +3,1530 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Windows 98 Web OS</title>
-  <meta name="theme-color" content="#1b3f8b" />
+  <title>reelok</title>
+  <meta name="theme-color" content="#050505" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Archivo98" />
+  <meta name="apple-mobile-web-app-title" content="reelok" />
   <link rel="manifest" href="./site.webmanifest" />
   <link rel="apple-touch-icon" href="./player-shell-cutout.png" />
-  <link rel="stylesheet" href="./styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js?v=2"></script>
+  <style>
+    :root {
+      --paper: #f6f1df;
+      --ink: #050505;
+      --blue: #001a88;
+      --red: #e22b18;
+      --green: #19d267;
+      --line: #d8d0b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: #030303;
+      color: var(--paper);
+      font-family: "Courier New", Courier, monospace;
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .world-page {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035), rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
+        #030303;
+    }
+
+    .world-page::before {
+      content: "";
+      position: fixed;
+      inset: 12px;
+      z-index: 20;
+      border: 2px solid rgba(53,255,154,0.88);
+      box-shadow: inset 0 0 14px rgba(25,210,103,0.18), 0 0 18px rgba(25,210,103,0.28);
+      pointer-events: none;
+    }
+
+    .top-shell {
+      position: relative;
+      z-index: 12;
+      margin: 18px 18px 0;
+      overflow: visible;
+      background: #c0c0c0;
+      color: #050505;
+      border: 2px solid;
+      border-color: #ffffff #050505 #050505 #ffffff;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+      animation: matrix-shell-lock 2.8s steps(1, end) forwards;
+    }
+
+    .brand-row {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px clamp(12px, 3vw, 28px);
+      background: linear-gradient(90deg, #0b1688, #1084d0 58%, #0b1688);
+      color: #fff;
+      border-bottom: 2px solid #050505;
+      animation: matrix-titlebar-lock 2.8s steps(1, end) forwards;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff;
+      background: #050505;
+      color: var(--green);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.45);
+      font-size: 18px;
+    }
+
+    .brand-title {
+      display: grid;
+      line-height: 1;
+    }
+
+    .brand-title strong {
+      font-size: clamp(18px, 3vw, 28px);
+    }
+
+    .brand-title span {
+      margin-top: 3px;
+      font-size: 11px;
+      color: #d7ecff;
+      opacity: 0.78;
+      animation: matrix-text-lock 2.8s steps(1, end) forwards;
+    }
+
+    .apps-menu {
+      position: relative;
+      flex-shrink: 0;
+      z-index: 30;
+    }
+
+    .apps-button {
+      position: relative;
+      overflow: hidden;
+      min-height: 30px;
+      padding: 4px 12px;
+      border: 2px solid;
+      border-color: #ffffff #050505 #050505 #ffffff;
+      background: #c0c0c0;
+      color: #050505;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 1px 1px 0 rgba(0,0,0,0.45);
+      text-shadow: none;
+      animation: matrix-button-lock 2.8s steps(1, end) forwards;
+    }
+
+    .apps-button:active {
+      transform: translate(1px, 1px);
+    }
+
+    .apps-list {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: min(280px, calc(100vw - 24px));
+      max-height: min(70vh, 520px);
+      overflow: auto;
+      padding: 6px;
+      z-index: 35;
+      border: 1px solid rgba(53,255,154,0.95);
+      background: rgba(0,0,0,0.46);
+      color: #35ff9a;
+      box-shadow: 0 0 18px rgba(0,0,0,0.72), 0 0 16px rgba(25,210,103,0.2);
+      backdrop-filter: blur(2px);
+    }
+
+    .apps-list[hidden] {
+      display: none;
+    }
+
+    .apps-list.is-opening,
+    .panel-pop.is-opening {
+      animation: dropdown-open-glitch 680ms steps(1, end) 1;
+    }
+
+    .apps-list.is-opening a,
+    .apps-list.is-opening .apps-lock,
+    .panel-pop.is-opening,
+    .panel-pop.is-opening p,
+    .panel-pop.is-opening li {
+      animation: dropdown-text-glitch 680ms steps(1, end) 1;
+    }
+
+    .apps-lock strong::after,
+    .panel-pop h2::after {
+      content: ">_";
+      display: inline-block;
+      margin-left: 8px;
+      color: #65b7ff;
+      font-weight: 900;
+      text-shadow: 0 0 8px rgba(101,183,255,0.95);
+      animation: dos-cursor-blink 780ms steps(1, end) infinite;
+    }
+
+    .apps-list a {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      padding: 8px 10px;
+      border: 1px solid rgba(53,255,154,0.22);
+      color: #35ff9a;
+      font-size: 13px;
+      font-weight: 900;
+      text-shadow: 0 0 6px rgba(25,210,103,0.75);
+      animation: matrix-button-lock 2.8s steps(1, end) forwards;
+    }
+
+    .apps-list a:nth-child(3n + 1) {
+      color: #35ff9a;
+    }
+
+    .apps-list a:nth-child(3n + 2) {
+      color: #65b7ff;
+      border-color: rgba(101,183,255,0.32);
+      text-shadow: 0 0 7px rgba(101,183,255,0.75);
+    }
+
+    .apps-list a:nth-child(3n) {
+      color: #ff4f73;
+      border-color: rgba(255,79,115,0.28);
+      text-shadow: 0 0 7px rgba(255,79,115,0.72);
+    }
+
+    .apps-list a:hover {
+      background: transparent;
+      color: #65b7ff;
+      border-color: rgba(101,183,255,0.95);
+    }
+
+    .apps-lock {
+      display: grid;
+      gap: 8px;
+      padding: 8px;
+      color: #35ff9a;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .apps-lock strong {
+      text-transform: uppercase;
+    }
+
+    .apps-lock a {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      min-height: 32px;
+      margin-top: 2px;
+      border: 1px solid rgba(53,255,154,0.86);
+      background: transparent;
+      color: #35ff9a;
+      font-weight: 900;
+      text-align: center;
+      animation: matrix-button-lock 2.8s steps(1, end) forwards;
+    }
+
+    .nav-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-bottom: 2px solid #050505;
+      overflow: hidden;
+    }
+
+    .nav-row::after {
+      content: none;
+    }
+
+    .nav-row a {
+      position: relative;
+      overflow: hidden;
+      min-height: 38px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border-right: 2px solid #050505;
+      background: #fff8dc;
+      color: #050505;
+      font-size: clamp(12px, 2vw, 16px);
+      font-weight: 900;
+      text-transform: uppercase;
+      text-shadow: none;
+      animation: matrix-button-lock 2.8s steps(1, end) forwards;
+    }
+
+    .nav-row a:last-child {
+      border-right: 0;
+    }
+
+    .nav-row a:hover {
+      background: rgba(0,0,0,0.96);
+      color: #35ff9a;
+    }
+
+    .progress-strip {
+      position: absolute;
+      left: clamp(12px, 3vw, 28px);
+      right: clamp(12px, 3vw, 28px);
+      top: clamp(12px, 3vw, 28px);
+      z-index: 4;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 10px clamp(12px, 3vw, 28px);
+      background: rgba(16,16,16,0.86);
+      border: 2px solid #3a3a3a;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.55);
+    }
+
+    .progress-copy {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .progress-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #fff;
+      font-size: clamp(12px, 2vw, 15px);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .progress-label span:last-child {
+      color: #ff4b2b;
+      white-space: nowrap;
+    }
+
+    .bar {
+      height: 18px;
+      padding: 2px;
+      border: 2px solid #f5f5f5;
+      background: #050505;
+    }
+
+    .bar-fill {
+      width: 0%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.35) 0 7px, transparent 7px 12px),
+        linear-gradient(90deg, #19d267, #ffdf32, #ff4b2b);
+      transition: width 800ms ease;
+    }
+
+    .progress-status {
+      min-width: 145px;
+      padding: 8px 10px;
+      border: 1px solid #f5f5f5;
+      color: #d7d7d7;
+      text-align: right;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .world-stage {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .world-stage::before {
+      content: none;
+    }
+
+    .world-stage::after {
+      content: none;
+    }
+
+    #world-canvas {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    #world-canvas.is-dragging {
+      cursor: grabbing;
+    }
+
+    .world-telemetry {
+      --world-hud-scale: 1;
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      z-index: 3;
+      width: min(76vmin, 540px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%) scale(var(--world-hud-scale));
+      transform-origin: center;
+      pointer-events: none;
+      color: #35ff9a;
+      font-size: clamp(9px, 1.55vmin, 13px);
+      text-shadow: 0 0 6px rgba(25,210,103,0.95), 0 0 14px rgba(0,180,255,0.45);
+      filter: drop-shadow(0 0 8px rgba(25,210,103,0.35));
+      transition: transform 180ms ease;
+      animation: matrix-radar-lock 2.8s steps(1, end) forwards;
+    }
+
+    .telemetry-ring {
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(25,210,103,0.5);
+      border-radius: 50%;
+      box-shadow: inset 0 0 20px rgba(25,210,103,0.18), 0 0 16px rgba(0,180,255,0.2);
+    }
+
+    .telemetry-ring::before,
+    .telemetry-ring::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 112%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(25,210,103,0.58), transparent);
+      transform: translate(-50%, -50%);
+    }
+
+    .telemetry-ring::after {
+      width: 1px;
+      height: 112%;
+      background: linear-gradient(180deg, transparent, rgba(25,210,103,0.58), transparent);
+    }
+
+    .telemetry-node {
+      position: absolute;
+      min-width: 138px;
+      padding: 4px 6px;
+      border-left: 2px solid rgba(25,210,103,0.85);
+      background: transparent;
+      line-height: 1.25;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .telemetry-node strong {
+      display: block;
+      color: #d8ffe9;
+      font-size: 0.78em;
+      font-weight: 900;
+    }
+
+    .telemetry-node span {
+      font-weight: 900;
+    }
+
+    .telemetry-node.is-coords {
+      left: 3%;
+      top: 24%;
+    }
+
+    .telemetry-node.is-temp {
+      right: 0;
+      top: 35%;
+      text-align: right;
+      border-left: 0;
+      border-right: 2px solid rgba(25,210,103,0.85);
+      background: transparent;
+    }
+
+    .telemetry-node.is-rot {
+      left: 14%;
+      bottom: 13%;
+      animation: matrix-hud-lock 2.8s steps(1, end) forwards;
+    }
+
+    .telemetry-tick {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 46%;
+      height: 1px;
+      transform: translateY(-50%) rotate(var(--telemetry-rotation, 0deg));
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(25,210,103,0.95), transparent);
+      opacity: 0.85;
+      animation: matrix-tick-lock 2.8s steps(1, end) forwards;
+    }
+
+    .world-controls {
+      position: absolute;
+      right: clamp(12px, 3vw, 28px);
+      bottom: clamp(12px, 3vw, 28px);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(53,255,154,0.78);
+      background: transparent;
+      color: #35ff9a;
+    }
+
+    .world-control-btn {
+      position: relative;
+      overflow: hidden;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(53,255,154,0.86);
+      background: transparent;
+      color: #35ff9a;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      animation: matrix-button-lock 2.8s steps(1, end) forwards;
+    }
+
+    .apps-button::after,
+    .apps-list a::after,
+    .apps-lock a::after,
+    .nav-row a::after,
+    .world-control-btn::after {
+      content: none;
+    }
+
+    .world-control-btn:hover {
+      background: transparent;
+      color: #65b7ff;
+    }
+
+    .world-control-hint {
+      max-width: 180px;
+      color: #d8d8d8;
+      font-size: 10px;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .artifact-dock {
+      position: absolute;
+      right: clamp(14px, 3.5vw, 42px);
+      top: 48%;
+      z-index: 5;
+      width: clamp(116px, 13vw, 168px);
+      display: grid;
+      gap: 9px;
+      transform: translateY(-50%) scale(1);
+      transform-origin: right center;
+      transition: transform 180ms ease, filter 180ms ease;
+      filter: drop-shadow(0 0 12px rgba(25,210,103,0.25));
+    }
+
+    .artifact-dock:hover,
+    .artifact-dock:focus-within,
+    .artifact-dock.is-expanded {
+      transform: translateY(-50%) scale(1.34);
+      filter: drop-shadow(0 0 22px rgba(25,210,103,0.55));
+    }
+
+    .helmet-orbit,
+    .avatar-slot {
+      position: relative;
+      min-height: 96px;
+      border: 1px solid rgba(53,255,154,0.68);
+      background: rgba(0,0,0,0.28);
+      overflow: hidden;
+    }
+
+    .helmet-orbit::before,
+    .helmet-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(53,255,154,0.42);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: helmet-electric-spin 5.4s linear infinite;
+      box-shadow: 0 0 12px rgba(53,255,154,0.24), inset 0 0 16px rgba(53,255,154,0.13);
+    }
+
+    .helmet-orbit::after {
+      inset: 18px;
+      border-style: dashed;
+      animation-duration: 3.6s;
+      animation-direction: reverse;
+    }
+
+    .helmet-orbit model-viewer {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 128px;
+      background: transparent;
+      --poster-color: transparent;
+    }
+
+    .electric-field {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.78;
+      mix-blend-mode: screen;
+      background:
+        repeating-conic-gradient(from 0deg, transparent 0 13deg, rgba(53,255,154,0.45) 14deg 15deg, transparent 16deg 42deg),
+        repeating-linear-gradient(90deg, transparent 0 12px, rgba(53,255,154,0.18) 13px 14px);
+      animation: helmet-electric-spin 2.8s linear infinite, matrix-scan 1.2s steps(8, end) infinite;
+    }
+
+    .artifact-label {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      bottom: 5px;
+      z-index: 3;
+      color: #d8ffe9;
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(53,255,154,0.95);
+      pointer-events: none;
+    }
+
+    .avatar-slot {
+      min-height: 64px;
+      display: grid;
+      place-items: center;
+      color: rgba(216,255,233,0.86);
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .avatar-slot::before,
+    .avatar-slot::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .avatar-slot::before {
+      inset: 11px;
+      border: 1px dashed rgba(53,255,154,0.5);
+    }
+
+    .avatar-slot::after {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(53,255,154,0.58);
+      box-shadow: 0 0 18px rgba(53,255,154,0.2);
+    }
+
+    @keyframes helmet-electric-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes matrix-scan {
+      0%, 100% {
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 0.9;
+      }
+    }
+
+    .stage-caption {
+      position: absolute;
+      left: clamp(12px, 3vw, 28px);
+      bottom: clamp(12px, 3vw, 28px);
+      width: min(560px, calc(100vw - 24px));
+      padding: 10px 12px;
+      border: 2px solid rgba(246,241,223,0.85);
+      background: rgba(0,0,0,0.72);
+      color: var(--paper);
+      pointer-events: none;
+    }
+
+    .stage-caption strong {
+      display: block;
+      color: #fff;
+      font-size: clamp(16px, 3vw, 28px);
+      text-transform: uppercase;
+    }
+
+    .stage-caption span {
+      display: block;
+      margin-top: 5px;
+      color: #d8d8d8;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .panel-pop {
+      position: absolute;
+      left: clamp(12px, 3vw, 28px);
+      top: clamp(12px, 3vw, 28px);
+      z-index: 34;
+      margin-top: 82px;
+      width: min(620px, calc(100vw - 24px));
+      max-height: min(62vh, 620px);
+      overflow: auto;
+      padding: 12px;
+      border: 1px solid rgba(53,255,154,0.9);
+      background: rgba(0,0,0,0.46);
+      color: #35ff9a;
+      box-shadow: 0 0 18px rgba(0,0,0,0.72), 0 0 16px rgba(25,210,103,0.18);
+      backdrop-filter: blur(2px);
+    }
+
+    .panel-pop[hidden] {
+      display: none;
+    }
+
+    .panel-pop h2 {
+      margin: 0 0 6px;
+      color: #65b7ff;
+      font-size: 18px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(101,183,255,0.95);
+    }
+
+    .panel-pop p {
+      margin: 0;
+      color: #35ff9a;
+      font-size: 13px;
+      line-height: 1.45;
+      text-shadow: 0 0 6px rgba(25,210,103,0.6);
+    }
+
+    .panel-pop h3 {
+      margin: 14px 0 6px;
+      color: #65b7ff;
+      font-size: 13px;
+      text-transform: uppercase;
+      text-shadow: 0 0 7px rgba(101,183,255,0.8);
+    }
+
+    .panel-pop ul {
+      margin: 6px 0 0;
+      padding-left: 18px;
+      color: #35ff9a;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .panel-pop li + li,
+    .panel-pop p + p {
+      margin-top: 8px;
+    }
+
+    .panel-pop strong {
+      color: #65b7ff;
+      text-shadow: 0 0 7px rgba(101,183,255,0.85);
+    }
+
+    @keyframes dos-cursor-blink {
+      0%, 42% {
+        opacity: 1;
+      }
+      43%, 72% {
+        opacity: 0;
+      }
+      73%, 100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes dropdown-open-glitch {
+      0%, 100% {
+        transform: translate(0, 0);
+        border-color: rgba(53,255,154,0.9);
+      }
+      14% {
+        transform: translate(2px, -1px);
+        border-color: rgba(255,255,255,0.95);
+      }
+      28% {
+        transform: translate(-2px, 1px);
+        border-color: rgba(101,183,255,0.95);
+      }
+      42% {
+        transform: translate(1px, 0);
+        border-color: rgba(255,255,255,0.7);
+      }
+      58% {
+        transform: translate(0, -1px);
+      }
+    }
+
+    @keyframes dropdown-text-glitch {
+      0%, 100% {
+        color: inherit;
+        text-shadow: inherit;
+      }
+      12%, 34% {
+        color: #ffffff;
+        text-shadow: 0 0 9px rgba(255,255,255,0.95), 2px 0 0 rgba(101,183,255,0.65);
+      }
+      22%, 48% {
+        color: #d7fff0;
+        text-shadow: 0 0 7px rgba(53,255,154,0.9), -2px 0 0 rgba(255,79,115,0.5);
+      }
+    }
+
+    @keyframes matrix-shell-lock {
+      0%, 26%, 34%, 46% {
+        background: #c0c0c0;
+        color: #050505;
+        border-color: #ffffff #050505 #050505 #ffffff;
+        box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        background: transparent;
+        color: #35ff9a;
+        border-color: rgba(53,255,154,0.78);
+        box-shadow: 0 0 14px rgba(25,210,103,0.18);
+      }
+      30%, 38%, 42%, 48% {
+        background: rgba(0,0,0,0.18);
+        color: rgba(216,255,233,0.78);
+        transform: translate(1px, -1px);
+      }
+      54%, 100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes matrix-titlebar-lock {
+      0%, 26%, 34%, 46% {
+        background: linear-gradient(90deg, #0b1688, #1084d0 58%, #0b1688);
+        color: #fff;
+        border-bottom-color: #050505;
+        text-shadow: none;
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        background: rgba(0,0,0,0.18);
+        color: #35ff9a;
+        border-bottom-color: rgba(53,255,154,0.58);
+        text-shadow: 0 0 7px rgba(25,210,103,0.9);
+      }
+      30%, 38%, 42%, 48% {
+        background: transparent;
+        color: rgba(216,255,233,0.72);
+        transform: translate(-2px, 1px);
+      }
+      54%, 100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes matrix-text-lock {
+      0%, 35%, 50% {
+        color: #d7ecff;
+        text-shadow: none;
+      }
+      38%, 46%, 56%, 100% {
+        color: #35ff9a;
+        text-shadow: 0 0 7px rgba(25,210,103,0.85);
+      }
+      42% {
+        color: rgba(216,255,233,0.72);
+      }
+    }
+
+    @keyframes matrix-button-lock {
+      0%, 26%, 34%, 46% {
+        background: #fff8dc;
+        color: #050505;
+        border-color: #ffffff #050505 #050505 #ffffff;
+        box-shadow: 1px 1px 0 rgba(0,0,0,0.45);
+        text-shadow: none;
+        transform: translate(0, 0);
+        opacity: 1;
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        background: transparent;
+        color: #35ff9a;
+        border-color: rgba(53,255,154,0.92);
+        box-shadow: inset 0 0 12px rgba(25,210,103,0.08), 0 0 14px rgba(25,210,103,0.28);
+        text-shadow: 0 0 7px rgba(25,210,103,0.95);
+        opacity: 1;
+      }
+      30%, 38%, 42%, 48% {
+        background: transparent;
+        color: rgba(216,255,233,0.78);
+        border-color: rgba(143,255,186,0.55);
+        transform: translate(2px, -1px);
+        opacity: 0.42;
+      }
+      54%, 100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes matrix-hud-lock {
+      0%, 26%, 34%, 46% {
+        background: transparent;
+        color: rgba(53,255,154,0.25);
+        border-color: rgba(25,210,103,0.25);
+        opacity: 0.32;
+        transform: translate(0, 0);
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        background: transparent;
+        color: #35ff9a;
+        border-color: rgba(25,210,103,0.95);
+        box-shadow: 0 0 16px rgba(25,210,103,0.22);
+        text-shadow: 0 0 6px rgba(25,210,103,1);
+        opacity: 1;
+      }
+      30%, 38%, 42%, 48% {
+        background: transparent;
+        transform: translate(2px, -1px);
+        opacity: 0.38;
+      }
+      54%, 100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @keyframes matrix-tick-lock {
+      0%, 26%, 34%, 46% {
+        opacity: 0.2;
+        filter: none;
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 8px rgba(25,210,103,0.9));
+      }
+      30%, 38%, 42%, 48% {
+        opacity: 0.18;
+      }
+    }
+
+    @keyframes matrix-radar-lock {
+      0%, 26%, 34%, 46% {
+        opacity: 0.25;
+        filter: drop-shadow(0 0 2px rgba(25,210,103,0.2));
+      }
+      28%, 32%, 36%, 40%, 44%, 52%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 10px rgba(25,210,103,0.45));
+      }
+      30%, 38%, 42%, 48% {
+        opacity: 0.28;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .brand-row,
+      .progress-strip {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .brand-title span {
+        display: none;
+      }
+
+      .nav-row {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .nav-row a {
+        min-height: 34px;
+        padding: 7px 4px;
+        border-right: 2px solid var(--ink);
+        border-bottom: 0;
+        font-size: 11px;
+      }
+
+      .nav-row a:last-child {
+        border-right: 0;
+      }
+
+      .progress-strip {
+        grid-template-columns: 1fr;
+        left: 10px;
+        right: 10px;
+        top: 10px;
+      }
+
+      .progress-status {
+        text-align: left;
+      }
+
+      .stage-caption {
+        display: none;
+      }
+
+      .world-controls {
+        right: 10px;
+        bottom: 10px;
+      }
+
+      .artifact-dock {
+        left: auto;
+        right: 10px;
+        top: auto;
+        bottom: 88px;
+        width: 104px;
+        transform: scale(1);
+        transform-origin: right bottom;
+      }
+
+      .artifact-dock:hover,
+      .artifact-dock:focus-within,
+      .artifact-dock.is-expanded {
+        transform: scale(1.22);
+      }
+
+      .helmet-orbit {
+        min-height: 82px;
+      }
+
+      .helmet-orbit model-viewer {
+        height: 104px;
+      }
+
+      .avatar-slot {
+        min-height: 52px;
+        font-size: 9px;
+      }
+
+      .world-telemetry {
+        width: min(88vmin, 440px);
+        font-size: 9px;
+      }
+
+      .telemetry-node {
+        min-width: 112px;
+      }
+
+      .world-control-hint {
+        display: none;
+      }
+
+      .panel-pop {
+        margin-top: 122px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div id="desktop">
-    <div class="desktop-shortcuts" id="desktop-shortcuts">
-      <div class="shortcut" data-app="users">
-        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/user_1.png?v=1775528275" class="shortcut-icon icon-large" alt="User" />
-        <span>User</span>
-      </div>
-      <div class="shortcut" data-app="chat-global">
-        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/global_1.png?v=1775528275" class="shortcut-icon" alt="Global Under" />
-        <span>Global Chat</span>
-      </div>
-      <div class="shortcut" data-app="configuracion">
-        <svg class="shortcut-icon" viewBox="0 0 24 24" fill="#d5d9e8">
-          <path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.03 7.03 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 13.9 2h-3.8a.5.5 0 0 0-.49.42l-.36 2.54c-.58.23-1.12.54-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.48a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.39 1.05.71 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.8a.5.5 0 0 0 .49-.42l.36-2.54c.58-.23 1.12-.54 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"/>
-        </svg>
-        <span>Configuracion</span>
-      </div>
-      <div class="shortcut" data-app="proyectos">
-        <svg class="shortcut-icon" viewBox="0 0 24 24" fill="#ffe066">
-          <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
-        </svg>
-        <span>Proyectos</span>
-      </div>
-      <div class="shortcut" data-app="recording-studio">
-        <svg class="shortcut-icon icon-large" viewBox="0 0 24 24" fill="none">
-          <defs>
-            <radialGradient id="earthGlow" cx="50%" cy="42%" r="60%">
-              <stop offset="0%" stop-color="#72f1ff"/>
-              <stop offset="55%" stop-color="#2b7fff"/>
-              <stop offset="100%" stop-color="#0a235a"/>
-            </radialGradient>
-            <linearGradient id="earthBand" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#d8fff5" stop-opacity="0.95"/>
-              <stop offset="100%" stop-color="#7cf6c8" stop-opacity="0.25"/>
-            </linearGradient>
-          </defs>
-          <circle cx="12" cy="12" r="8.5" fill="url(#earthGlow)"/>
-          <path d="M6.2 12.5c1.8-1.5 3.2-2.2 4.4-2.2 1.5 0 2.3.8 3.4.8 1.2 0 2.3-.8 3.9-2.2-.3 3.9-1.8 6.3-4.2 7.5-2.8 1.4-5.8.6-7.5-3.9z" fill="#38d996" opacity="0.9"/>
-          <path d="M8 7.4c1.3-.9 2.2-1.2 3.2-1.2 1.3 0 2.1.5 3.1.4.9-.1 1.7-.7 2.6-1.3.2 1.8-.3 3-1.3 4-1.1 1-2.2 1.3-3.8 1.3-1.8 0-3.1-.6-3.8-3.2z" fill="#8cffd7" opacity="0.82"/>
-          <ellipse cx="12" cy="12" rx="8.5" ry="3.3" stroke="url(#earthBand)" stroke-width="1.15" opacity="0.8"/>
-          <path d="M12 3.7c2 1.7 3.1 4.5 3.1 8.3s-1.1 6.6-3.1 8.3c-2-1.7-3.1-4.5-3.1-8.3s1.1-6.6 3.1-8.3z" stroke="#c8f7ff" stroke-width="1" opacity="0.65"/>
-          <path d="M17.9 6.4l1.6-.9-.4 1.8 1.5 1.1-1.9.3-.8 1.7-.8-1.6-1.9-.2 1.4-1.2-.3-1.8 1.6.8z" fill="#ffffff" opacity="0.9"/>
-        </svg>
-        <span>World Loop</span>
-      </div>
-      <div class="shortcut" data-app="private-chat">
-        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/msn_367e7189-7738-45ba-baac-fe60233a0a09.png?v=1775529015" class="shortcut-icon" alt="MSN Under" />
-        <span>MSN Under</span>
-      </div>
-      <div class="shortcut" data-app="explorer-games">
-        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/juegos.png?v=1775529104" class="shortcut-icon icon-large" alt="Juegos" />
-        <span>Juegos</span>
-      </div>
-      <div class="shortcut" data-app="winamp">
-        <img src="https://cdn.shopify.com/s/files/1/0995/6432/3185/files/winunder.png?v=1775529015" class="shortcut-icon" alt="Under Music" />
-        <span>Under Music</span>
-      </div>
-    </div>
-
-    <div id="window-layer"></div>
-  </div>
-
-  <div class="taskbar">
-    <button class="start-btn" id="start-btn">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Windows_logo_1992.svg" width="16" alt="Inicio" />
-      Inicio
-    </button>
-    <div id="taskbar-items" class="taskbar-items"></div>
-    <div class="systray">
-      <span id="online-indicator">Offline</span>
-      <span class="systray-separator"></span>
-      <span id="clock">--:--</span>
-    </div>
-  </div>
-
-  <div id="start-menu" class="start-menu hidden">
-    <div class="start-menu-layout">
-      <div class="start-sidebar"><span>Windows 98</span></div>
-      <div class="start-content">
-        <button class="start-item" data-app="users">Perfil</button>
-        <button class="start-item" data-app="proyectos">Proyectos</button>
-        <button class="start-item" data-app="recording-studio">World Loop</button>
-        <button class="start-item" data-app="private-chat">MSN Under</button>
-        <button class="start-item" data-app="chat-global">Global Chat</button>
-        <button class="start-item" data-app="configuracion">Configuracion</button>
-        <button class="start-item" data-app="explorer-games">Juegos</button>
-        <button class="start-item" data-app="winamp">Under Music</button>
-        <hr />
-        <button class="start-item" id="restart-app">Reiniciar</button>
-      </div>
-    </div>
-  </div>
-
-  <template id="window-template">
-    <section class="window">
-      <div class="window-header">
-        <div class="header-title"></div>
-        <div class="header-controls">
-          <button class="win-btn" data-action="minimize">_</button>
-          <button class="win-btn" data-action="maximize">□</button>
-          <button class="win-btn" data-action="close">X</button>
+  <main class="world-page">
+    <header class="top-shell">
+      <div class="brand-row">
+        <a class="brand-mark" href="./" aria-label="reelok the founder">
+          <span class="brand-title">
+            <strong>reelok</strong>
+            <span>the founder</span>
+          </span>
+        </a>
+        <div class="apps-menu">
+          <button class="apps-button" id="apps-toggle" type="button" aria-expanded="false" aria-controls="apps-list">REGISTRO / APPS</button>
+          <nav class="apps-list" id="apps-list" hidden aria-label="Apps Archivo98"></nav>
         </div>
       </div>
-      <div class="window-body"></div>
-      <div class="window-resizer"></div>
-    </section>
-  </template>
+      <nav class="nav-row" aria-label="Secciones principales">
+        <a href="#productos" data-panel="productos">Productos</a>
+        <a href="#reglas" data-panel="reglas">Reglas</a>
+        <a href="#manifiesto" data-panel="manifiesto">Manifiesto</a>
+        <a href="#episodios" data-panel="episodios">Episodios</a>
+        <a href="#canales" data-panel="canales">Canales</a>
+      </nav>
+    </header>
 
-  <script src="./mobile-bootstrap.js"></script>
-  <script src="./app.js"></script>
+    <section class="world-stage" id="world-stage">
+      <canvas id="world-canvas"></canvas>
+      <div class="world-telemetry" id="world-telemetry" aria-hidden="true">
+        <div class="telemetry-ring"></div>
+        <div class="telemetry-tick" id="telemetry-tick"></div>
+        <div class="telemetry-node is-coords">
+          <strong>coord</strong>
+          <span id="telemetry-coords">LAT 00.00 / LON 000.00</span>
+        </div>
+        <div class="telemetry-node is-temp">
+          <strong>temp</strong>
+          <span id="telemetry-temp">24.0 C</span>
+        </div>
+        <div class="telemetry-node is-rot">
+          <strong>rotacion</strong>
+          <span id="telemetry-rotation">000.0 deg</span>
+        </div>
+      </div>
+      <aside class="artifact-dock" id="artifact-dock" aria-label="Casco del evento y espacio para avatar 3D">
+        <div class="helmet-orbit">
+          <model-viewer src="./assets/DamagedHelmet.glb" camera-controls auto-rotate rotation-per-second="24deg" interaction-prompt="none" exposure="1.1" shadow-intensity="0" camera-orbit="35deg 68deg 3.8m" min-camera-orbit="auto auto 2.6m" max-camera-orbit="auto auto 5m" alt="Casco 3D con electricidad verde"></model-viewer>
+          <div class="electric-field" aria-hidden="true"></div>
+          <span class="artifact-label">Evento posible</span>
+        </div>
+        <button class="avatar-slot" type="button" aria-label="Espacio reservado para avatar 3D">Avatar 3D</button>
+      </aside>
+      <div class="world-controls" aria-label="Controles del mundo">
+        <button class="world-control-btn" id="world-zoom-out" type="button" aria-label="Achicar mundo">-</button>
+        <button class="world-control-btn" id="world-zoom-in" type="button" aria-label="Agrandar mundo">+</button>
+        <span class="world-control-hint">Arrastra para girar. Rueda o pellizca para agrandar y achicar.</span>
+      </div>
+      <section class="progress-strip" aria-label="Progreso World Loop">
+        <div class="progress-copy">
+          <div class="progress-label">
+            <span id="world-km">0 km recorridos</span>
+            <span id="world-percent">0%</span>
+          </div>
+          <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="40075" aria-valuenow="0" aria-label="Kilometros recorridos">
+            <div class="bar-fill" id="world-fill"></div>
+          </div>
+        </div>
+        <div class="progress-status" id="world-status">Conectando World Loop...</div>
+      </section>
+      <aside class="panel-pop" id="info-panel" hidden>
+        <h2 id="info-title">Productos</h2>
+        <div id="info-copy">Productos, drops, stickers y herramientas se desbloquean desde una cuenta registrada.</div>
+      </aside>
+    </section>
+  </main>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <script src="./assets/vendor/three-r128.min.js"></script>
+  <script>
+    const WORLD_TEXTURE_URL = "./assets/world-earth-fast.jpg";
+    const WORLD_OVERLAY_API = "./api/world-loop-overlay";
+    const SUPABASE_URL = "https://qttxcfbgyfmvyglzwxct.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_8zeUhO0eNbsQddb7koQZ1w_VwuK8FjO";
+    const MAX_KM = 40075;
+    const APPS = [
+      ["World Loop", "./desktop/?app=recording-studio"],
+      ["Escritorio 98", "./desktop/"],
+      ["User", "./desktop/?app=users"],
+      ["Global Chat", "./desktop/?app=chat-global"],
+      ["Configuracion", "./desktop/?app=configuracion"],
+      ["Proyectos", "./desktop/?app=proyectos"],
+      ["Constructor", "./desktop/?app=episode-constructor"],
+      ["Under Maps", "./desktop/?app=under-maps"],
+      ["Caja del Reto", "./desktop/?app=sales-goals"],
+      ["Direct By", "./desktop/?app=creator-pro"],
+      ["Alaxd", "./desktop/?app=alaxd-overlay"],
+      ["MSN Under", "./desktop/?app=private-chat"],
+      ["Juegos", "./desktop/?app=explorer-games"],
+      ["XP Agar Strike", "./desktop/?app=xp-agar-strike"],
+      ["Under Music", "./desktop/?app=winamp"],
+      ["slot98", "./slot98.html"],
+    ];
+    const PANEL_COPY = {
+      productos: ["Productos", "<p>Drops, stickers, musica, mapas y herramientas viven adentro de UNDER. Para abrir todo, primero crea tu usuario.</p>"],
+      episodios: ["Episodios", `
+        <p>Acá van a vivir los episodios del proyecto.</p>
+        <ul>
+          <li>Episodio 1</li>
+          <li>Episodio 2</li>
+          <li>Episodio 3</li>
+        </ul>
+      `],
+      canales: ["Canales", `
+        <p>Acá vas a poder poner los desplegables de cada canal.</p>
+        <ul>
+          <li>Kick</li>
+          <li>Instagram</li>
+          <li>YouTube</li>
+          <li>TikTok</li>
+        </ul>
+      `],
+      reglas: ["Reglas del Reto 40.075 km", `
+        <h3>La misión</h3>
+        <p>Dar la vuelta al mundo (40.075 km) empezando desde cero, financiando el viaje construyendo un negocio real.</p>
+        <p>No hay patrocinadores iniciales, no hay dinero regalado y no hay atajos. Cada kilómetro se gana creando valor para otras personas.</p>
+        <h3>Las reglas</h3>
+        <ul>
+          <li>Cada compra aumenta las posibilidades de que el reto avance.</li>
+          <li>Cada producto representa una cantidad de kilómetros que se suman al objetivo.</li>
+          <li>El progreso será público y transparente.</li>
+          <li>El dinero generado se reinvierte en el crecimiento del proyecto y en seguir avanzando por el mundo.</li>
+          <li>Cada venta demuestra que el negocio está creando valor. Los kilómetros son la consecuencia de ese valor.</li>
+        </ul>
+        <h3>Sistema de kilómetros</h3>
+        <ul>
+          <li><strong>1 sticker = +1 km</strong></li>
+          <li><strong>1 remera (u otra prenda principal) = +10 km</strong></li>
+          <li><strong>Productos premium o de colección = +50 km</strong></li>
+          <li><strong>Artículos de lujo o ediciones muy limitadas = +100 km</strong></li>
+        </ul>
+        <h3>Una idea importante</h3>
+        <p>Los kilómetros no los compra el dinero.</p>
+        <p>Los kilómetros los hace posibles la confianza de una comunidad que decide apoyar el proyecto.</p>
+        <p>Cada sticker, cada remera y cada producto es un voto de confianza para demostrar que es posible construir una empresa desde cero mientras se da la vuelta al mundo.</p>
+        <p><strong>40.075 km. Un negocio. Una comunidad. Una misión.</strong></p>
+      `],
+      manifiesto: ["MANIFIESTO UNDER", `
+        <p>Nos dijeron que había un solo camino.</p>
+        <p>Estudiar. Conseguir un trabajo. Esperar el viernes. Pedir vacaciones. Repetir. Durante cuarenta años.</p>
+        <p>Y si soñabas con algo distinto, eras un irresponsable.</p>
+        <p>Nos enseñaron a seguir al rebaño, no a pensar por nosotros mismos.</p>
+        <p>Pero algunos nunca encajamos.</p>
+        <p>No porque fuéramos mejores.</p>
+        <p>Porque no podíamos ignorar esa voz que decía que la vida tenía que ser algo más que sobrevivir.</p>
+        <p><strong>El Under</strong> nació para desafiar la idea de que el destino de una persona ya está escrito.</p>
+        <p>Creemos en construir antes que aparentar.</p>
+        <p>En crear antes que consumir.</p>
+        <p>En servir antes que presumir.</p>
+        <p>Cuando hablamos de moda, hablamos de negocio.</p>
+        <p>Porque un negocio bien hecho mejora la vida de otras personas.</p>
+        <p>Si servís mejor, tu producto mejora.</p>
+        <p>Si tu producto mejora, tu empresa crece.</p>
+        <p>Y cuando tu empresa crece, también crecen las oportunidades para los demás.</p>
+        <p>No admiramos al que aparenta riqueza.</p>
+        <p>Admiramos al que construye algo real desde cero.</p>
+        <p>Al que fracasa.</p>
+        <p>Al que vuelve a intentarlo.</p>
+        <p>Al que trabaja cuando nadie lo ve.</p>
+        <p>Al que cambia su realidad sin esperar permiso.</p>
+        <p><strong>El Under</strong> no es seguir una tendencia.</p>
+        <p>Es recordar todos los días que no aceptaste vivir la vida que otros eligieron por vos.</p>
+        <p>Es una declaración silenciosa.</p>
+        <p>No contra las personas.</p>
+        <p>Sino contra la idea de que nacimos para conformarnos.</p>
+        <p>Este movimiento es para los que todavía creen que pueden construir algo que trascienda.</p>
+        <p>Para los que entienden que emprender no es solo ganar dinero.</p>
+        <p>Es recuperar la libertad.</p>
+        <p>No prometemos que será fácil.</p>
+        <p>Prometemos que valdrá la pena.</p>
+        <p>Porque el mundo no cambia cuando todos hacen lo mismo.</p>
+        <p>Cambia cuando alguien se anima a empezar.</p>
+        <p><strong>Conver𝗸ite en el fundador.</strong></p>
+        <p>Bienvenido al <strong>Under</strong>.</p>
+      `],
+    };
+    let isRegisteredUser = false;
+
+    const canvas = document.getElementById("world-canvas");
+    const stage = document.getElementById("world-stage");
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "high-performance" });
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 1000);
+    camera.position.set(0, 0.2, 3.35);
+    let targetCameraZ = camera.position.z;
+    let isWorldDragging = false;
+    let lastPointer = { x: 0, y: 0 };
+    const activePointers = new Map();
+    let lastPinchDistance = 0;
+    const telemetry = {
+      root: document.getElementById("world-telemetry"),
+      coords: document.getElementById("telemetry-coords"),
+      temp: document.getElementById("telemetry-temp"),
+      rotation: document.getElementById("telemetry-rotation"),
+      tick: document.getElementById("telemetry-tick"),
+    };
+
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
+    scene.add(ambient);
+    const sun = new THREE.DirectionalLight(0xffffff, 0.85);
+    sun.position.set(4, 3, 5);
+    scene.add(sun);
+
+    const texture = new THREE.TextureLoader().load(WORLD_TEXTURE_URL);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.flipY = false;
+    const earth = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 64, 64),
+      new THREE.MeshPhongMaterial({ map: texture, shininess: 8 })
+    );
+    earth.rotation.y = Math.PI * 0.1;
+    earth.rotation.z = Math.PI;
+    scene.add(earth);
+
+    const starsGeometry = new THREE.BufferGeometry();
+    const stars = [];
+    for (let i = 0; i < 1600; i += 1) {
+      stars.push((Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200);
+    }
+    starsGeometry.setAttribute("position", new THREE.Float32BufferAttribute(stars, 3));
+    scene.add(new THREE.Points(starsGeometry, new THREE.PointsMaterial({ color: 0x777777, size: 0.7 })));
+
+    function formatKm(value) {
+      return Math.max(0, Number(value) || 0).toLocaleString("es-AR", { maximumFractionDigits: 0 });
+    }
+
+    function renderWorldProgress(world) {
+      const total = Math.max(0, Math.min(MAX_KM, Number(world?.totalKm) || 0));
+      const percent = Math.max(0, Math.min(100, (total / MAX_KM) * 100));
+      document.getElementById("world-km").textContent = `${formatKm(total)} km recorridos`;
+      document.getElementById("world-percent").textContent = `${percent.toFixed(percent < 10 ? 1 : 0)}%`;
+      document.getElementById("world-fill").style.width = `${percent}%`;
+      document.querySelector(".bar").setAttribute("aria-valuenow", String(Math.round(total)));
+      document.getElementById("world-status").textContent = `Meta ${formatKm(MAX_KM)} km`;
+    }
+
+    async function loadWorldProgress() {
+      try {
+        const response = await fetch(`${WORLD_OVERLAY_API}?_=${Date.now()}`, { cache: "no-store" });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body?.error || "No data");
+        renderWorldProgress(body.world);
+      } catch (_error) {
+        document.getElementById("world-status").textContent = "World Loop sin conexion";
+      }
+    }
+
+    function resize() {
+      const rect = stage.getBoundingClientRect();
+      const width = Math.max(1, rect.width);
+      const height = Math.max(1, rect.height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      targetCameraZ = clampZoom(targetCameraZ || (width < 720 ? 4.2 : 3.35));
+      camera.updateProjectionMatrix();
+      updateTelemetry();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isWorldDragging && activePointers.size < 2) {
+        earth.rotation.y += 0.0012;
+      }
+      camera.position.z += (targetCameraZ - camera.position.z) * 0.16;
+      updateTelemetry();
+      renderer.render(scene, camera);
+    }
+
+    function clampZoom(value) {
+      return Math.max(1.9, Math.min(5.4, value));
+    }
+
+    function zoomWorld(delta) {
+      targetCameraZ = clampZoom(targetCameraZ + delta);
+      updateTelemetry();
+    }
+
+    function wrapDegrees(value) {
+      return ((value % 360) + 360) % 360;
+    }
+
+    function updateTelemetry() {
+      const yaw = wrapDegrees(THREE.MathUtils.radToDeg(earth.rotation.y));
+      const pitch = THREE.MathUtils.radToDeg(earth.rotation.x);
+      const lat = Math.max(-90, Math.min(90, pitch * 0.72));
+      const lon = wrapDegrees(yaw + 180) - 180;
+      const temp = 18 + Math.sin(earth.rotation.y * 1.7) * 9 + Math.cos(earth.rotation.x * 2.2) * 3;
+      const scale = Math.max(0.62, Math.min(1.5, 3.35 / camera.position.z));
+      telemetry.root.style.setProperty("--world-hud-scale", scale.toFixed(3));
+      telemetry.root.style.setProperty("--telemetry-rotation", `${yaw.toFixed(2)}deg`);
+      telemetry.coords.textContent = `LAT ${lat.toFixed(2)} / LON ${lon.toFixed(2)}`;
+      telemetry.temp.textContent = `${temp.toFixed(1)} C`;
+      telemetry.rotation.textContent = `${yaw.toFixed(1)} deg`;
+    }
+
+    function getPinchDistance() {
+      const points = Array.from(activePointers.values());
+      if (points.length < 2) return 0;
+      const dx = points[0].x - points[1].x;
+      const dy = points[0].y - points[1].y;
+      return Math.hypot(dx, dy);
+    }
+
+    function setupWorldInteraction() {
+      document.getElementById("world-zoom-in").addEventListener("click", () => zoomWorld(-0.35));
+      document.getElementById("world-zoom-out").addEventListener("click", () => zoomWorld(0.35));
+
+      const artifactDock = document.getElementById("artifact-dock");
+      artifactDock.addEventListener("click", () => {
+        artifactDock.classList.toggle("is-expanded");
+      });
+
+      canvas.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        zoomWorld(event.deltaY > 0 ? 0.28 : -0.28);
+      }, { passive: false });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        canvas.setPointerCapture(event.pointerId);
+        canvas.classList.add("is-dragging");
+        isWorldDragging = true;
+        lastPointer = { x: event.clientX, y: event.clientY };
+        lastPinchDistance = getPinchDistance();
+      });
+
+      canvas.addEventListener("pointermove", (event) => {
+        if (!activePointers.has(event.pointerId)) return;
+        activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+        if (activePointers.size >= 2) {
+          const nextDistance = getPinchDistance();
+          if (lastPinchDistance) zoomWorld((lastPinchDistance - nextDistance) * 0.01);
+          lastPinchDistance = nextDistance;
+          return;
+        }
+
+        const dx = event.clientX - lastPointer.x;
+        const dy = event.clientY - lastPointer.y;
+        earth.rotation.y += dx * 0.006;
+        earth.rotation.x = Math.max(-0.75, Math.min(0.75, earth.rotation.x + dy * 0.004));
+        lastPointer = { x: event.clientX, y: event.clientY };
+      });
+
+      const releasePointer = (event) => {
+        if (!activePointers.has(event.pointerId)) return;
+        activePointers.delete(event.pointerId);
+        if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
+        lastPinchDistance = getPinchDistance();
+        if (!activePointers.size) {
+          isWorldDragging = false;
+          canvas.classList.remove("is-dragging");
+        }
+      };
+
+      canvas.addEventListener("pointerup", releasePointer);
+      canvas.addEventListener("pointercancel", releasePointer);
+    }
+
+    function setupAppsMenu() {
+      const list = document.getElementById("apps-list");
+      const button = document.getElementById("apps-toggle");
+      renderAppsMenu();
+      button.addEventListener("click", () => {
+        const nextOpen = list.hasAttribute("hidden");
+        list.toggleAttribute("hidden", !nextOpen);
+        button.setAttribute("aria-expanded", String(nextOpen));
+        if (nextOpen) triggerDropdownGlitch(list);
+      });
+      document.addEventListener("click", (event) => {
+        if (event.target.closest(".apps-menu")) return;
+        list.setAttribute("hidden", "");
+        button.setAttribute("aria-expanded", "false");
+      });
+    }
+
+    function renderAppsMenu() {
+      const list = document.getElementById("apps-list");
+      if (!isRegisteredUser) {
+        list.innerHTML = `
+          <div class="apps-lock">
+            <strong>Acceso registrado</strong>
+            <span>Crea cuenta o ingresa para desbloquear todas las apps de reelok.</span>
+            <a href="./desktop/?app=users">Crear usuario / ingresar</a>
+          </div>
+        `;
+        return;
+      }
+      list.innerHTML = APPS.map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
+    }
+
+    async function setupRegisteredAccess() {
+      if (!window.supabase?.createClient) {
+        renderAppsMenu();
+        return;
+      }
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      try {
+        const { data } = await client.auth.getSession();
+        isRegisteredUser = Boolean(data?.session?.user);
+      } catch (_error) {
+        isRegisteredUser = false;
+      }
+      renderAppsMenu();
+      client.auth.onAuthStateChange((_event, session) => {
+        isRegisteredUser = Boolean(session?.user);
+        renderAppsMenu();
+      });
+    }
+
+    function triggerDropdownGlitch(element) {
+      element.classList.remove("is-opening");
+      void element.offsetWidth;
+      element.classList.add("is-opening");
+      window.setTimeout(() => element.classList.remove("is-opening"), 760);
+    }
+
+    function typePanelTitle(element, text) {
+      element.textContent = "";
+      let index = 0;
+      const writeNext = () => {
+        element.textContent = text.slice(0, index);
+        index += 1;
+        if (index <= text.length) window.setTimeout(writeNext, 28);
+      };
+      writeNext();
+    }
+
+    function setupPanels() {
+      const panel = document.getElementById("info-panel");
+      const title = document.getElementById("info-title");
+      const copy = document.getElementById("info-copy");
+      let activePanel = "";
+      document.querySelectorAll("[data-panel]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          const nextPanel = link.dataset.panel;
+          if (!panel.hidden && activePanel === nextPanel) {
+            panel.hidden = true;
+            activePanel = "";
+            return;
+          }
+          const [nextTitle, nextCopy] = PANEL_COPY[nextPanel] || PANEL_COPY.productos;
+          copy.innerHTML = nextCopy;
+          panel.hidden = false;
+          triggerDropdownGlitch(panel);
+          typePanelTitle(title, nextTitle);
+          activePanel = nextPanel;
+        });
+      });
+    }
+
+    window.addEventListener("resize", resize);
+    setupAppsMenu();
+    setupRegisteredAccess();
+    setupPanels();
+    setupWorldInteraction();
+    resize();
+    animate();
+    loadWorldProgress();
+    setInterval(loadWorldProgress, 30000);
+  </script>
 </body>
 </html>

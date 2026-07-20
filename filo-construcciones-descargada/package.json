@@ -1,0 +1,13 @@
+{
+  "name": "filo-construcciones-descargada",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web editable y orientada a conversion para FILO Constructora.",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

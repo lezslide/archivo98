@@ -1,0 +1,1967 @@
+{
+  "episodio": 4,
+  "titulo_provisional": "Convertí 100 stickers en mi primera prenda",
+  "dias": [
+    10,
+    11,
+    12
+  ],
+  "duracion_objetivo_segundos": 2098.8,
+  "duracion_objetivo_formato": "34:58.8",
+  "objetivo_del_episodio": "Buscar la primera muestra, validarla y conseguir la primera preventa.",
+  "pregunta_narrativa": "¿La primera prenda es suficientemente buena para que alguien pague por ella?",
+  "nota_para_codex": "Importar este archivo como un episodio independiente. No reemplazar otros episodios. No borrar campos antiguos. Para cada escena usar escena.toma; si falta, usar accion, contenido, descripcion o plano. Nunca guardar 'Toma sin definir' si existe texto en cualquier campo compatible.",
+  "bloques": [
+    {
+      "id": "ep4_b01",
+      "bloque": 1,
+      "plantilla": "B1 P1",
+      "dia": 10,
+      "nombre": "Gancho de curiosidad",
+      "tipo": "gancho",
+      "emocion_principal": "curiosidad",
+      "duracion_segundos": 19.8,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Prometer la revelación de la muestra, la crítica de la gente y la primera reserva.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 2,
+          "toma": "Plano cerrado de la bolsa cerrada sobre la mesa, sin revelar la muestra.",
+          "plano": "primer plano detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Abrir una pregunta visual.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 1,
+          "toma": "Mostrar apenas una esquina de tela saliendo de la bolsa.",
+          "plano": "macro de tela",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "intriga",
+          "funcion_narrativa": "Dar una pista sin revelar.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 3,
+          "toma": "Corte rapido usandola de espaldas o desenfocado, sin mostrarla completa.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "No quedó exactamente como lo imaginaba.",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Anticipar un problema.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 3.2,
+          "toma": "Montaje de tres reacciones distintas: gusta, duda y critica.",
+          "plano": "montaje de primeros planos",
+          "dialogo_o_voz_en_off": "'Está buena' / 'La cambiaría' / 'No pagaría eso'.",
+          "audio": "",
+          "emocion": "confusion",
+          "funcion_narrativa": "Mostrar que no hay una respuesta clara.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 2,
+          "toma": "Persona mirando la prenda y preguntando precio antes de decidir.",
+          "plano": "plano sobre hombro",
+          "dialogo_o_voz_en_off": "¿Cuánto sale?",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Pasar de opinión a intención de compra.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 1,
+          "toma": "Primer plano tuyo preocupado mirando a camara.",
+          "plano": "primerísimo primer plano",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Crear pausa.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 2.2,
+          "toma": "Pantalla con publicacion lista y contador de reservas en cero.",
+          "plano": "captura de celular",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Mostrar que todavía no hay venta.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular",
+            "contador"
+          ]
+        },
+        {
+          "numero": 8,
+          "duracion_segundos": 5.4,
+          "toma": "Notificacion entrando en el celular y corte antes de mostrar si es reserva.",
+          "plano": "primer plano de celular",
+          "dialogo_o_voz_en_off": "Después de todo esto, alguien estaba por decidir si realmente pagaba.",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Cerrar el gancho.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "dinero",
+        "celular",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Prometer la revelación de la muestra, la crítica de la gente y la primera reserva."
+    },
+    {
+      "id": "ep4_b02",
+      "bloque": 2,
+      "plantilla": "B2 P2",
+      "dia": 10,
+      "nombre": "Ir a buscar la primera muestra",
+      "tipo": "nuevo_viaje",
+      "emocion_principal": "expectativa",
+      "duracion_segundos": 110,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Construir expectativa antes de verla.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Preparar bolso con mockup, medidas, plata restante y celular con direccion.",
+          "plano": "plano cenital",
+          "dialogo_o_voz_en_off": "Hoy voy a buscar la primera prenda que salió de los stickers.",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Recordar la importancia del momento.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 28,
+          "toma": "Grabar trayecto completo: colectivo, calles, carteles y llegada al barrio.",
+          "plano": "montaje de trayecto",
+          "dialogo_o_voz_en_off": "Durante todo el viaje no sabía si iba a parecerse al diseño.",
+          "audio": "",
+          "emocion": "ansiedad",
+          "funcion_narrativa": "Aumentar tensión.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Plano exterior del taller o lugar de encuentro antes de entrar.",
+          "plano": "plano general",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Presentar un lugar nuevo.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 24,
+          "toma": "Conversacion corta con el costurero sobre que fue dificil de hacer.",
+          "plano": "plano medio conversación",
+          "dialogo_o_voz_en_off": "¿Hubo alguna parte complicada?",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Preparar posible problema.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "El costurero deja la bolsa frente a vos; mostrar tus manos sin abrirla.",
+          "plano": "plano fijo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Cortar antes de la revelación.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Construir expectativa antes de verla."
+    },
+    {
+      "id": "ep4_b03",
+      "bloque": 3,
+      "plantilla": "B3 P3",
+      "dia": 10,
+      "nombre": "La primera revelación",
+      "tipo": "revelacion",
+      "emocion_principal": "entusiasmo",
+      "duracion_segundos": 108,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar la muestra de forma progresiva.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 14,
+          "toma": "Abrir el paquete despacio, primero manos y sonido de bolsa.",
+          "plano": "primer plano manos",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Demorar la recompensa.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 16,
+          "toma": "Tocar la tela de cerca para mostrar textura y grosor real.",
+          "plano": "macro",
+          "dialogo_o_voz_en_off": "Se siente más pesada de lo que esperaba.",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Presentar materialidad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Detalle de cuello, punos, costuras y uniones antes del plano general.",
+          "plano": "detalle lateral",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "evaluacion",
+          "funcion_narrativa": "Revisar calidad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Plano del logo, estampa o detalle principal que define la prenda.",
+          "plano": "detalle frontal",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "entusiasmo",
+          "funcion_narrativa": "Entregar una recompensa visual.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 22,
+          "toma": "Abrirla completa frente a camara para verla por primera vez.",
+          "plano": "plano general",
+          "dialogo_o_voz_en_off": "Esta es la primera prenda del reto.",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Revelación principal.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Reaccion honesta: sorpresa, alivio o duda antes de probarla.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Me gusta, pero hay algo que no estoy seguro.",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Abrir conflicto.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar la muestra de forma progresiva."
+    },
+    {
+      "id": "ep4_b04",
+      "bloque": 4,
+      "plantilla": "B4 P4",
+      "dia": 10,
+      "nombre": "No quedó como el mockup",
+      "tipo": "primer_problema",
+      "emocion_principal": "duda",
+      "duracion_segundos": 122,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Detectar una diferencia concreta entre diseño y realidad.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Poner mockup y muestra lado a lado en la misma mesa.",
+          "plano": "pantalla dividida",
+          "dialogo_o_voz_en_off": "En la pantalla se veía más corta y más ancha.",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Hacer visible el problema.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 18,
+          "toma": "Senalar diferencia concreta de largo, manga, cuello o estampa.",
+          "plano": "detalle de zona problemática",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Enfocar el defecto.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 24,
+          "toma": "Probar movimiento: brazos arriba, caminar y ver como cae puesta.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "evaluacion",
+          "funcion_narrativa": "Probar funcionalidad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 22,
+          "toma": "Costurero explica por que la muestra salio distinta al dibujo.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "El molde de muestra no siempre responde igual que el mockup.",
+          "audio": "",
+          "emocion": "comprension",
+          "funcion_narrativa": "Dar contexto real.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Marcar cambios con dedos, cinta o alfileres sobre la prenda.",
+          "plano": "plano sobre mesa",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Mostrar que hay solución.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 18,
+          "toma": "Mostrar cuenta de cuanto cuesta o demora corregir esa diferencia.",
+          "plano": "primer plano calculadora",
+          "dialogo_o_voz_en_off": "Corregirla podía mejorarla, pero también gastar parte de lo que quedaba.",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Abrir conflicto económico.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Detectar una diferencia concreta entre diseño y realidad."
+    },
+    {
+      "id": "ep4_b05",
+      "bloque": 5,
+      "plantilla": "B5 P5",
+      "dia": 10,
+      "nombre": "La prueba puesta",
+      "tipo": "prueba",
+      "emocion_principal": "tension",
+      "duracion_segundos": 110,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Evaluar la muestra sobre el cuerpo.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 16,
+          "toma": "Entrar al plano ya con la prenda puesta para revelar calce real.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Preparar la prueba.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Giro frente y perfil frente al espejo o camara fija.",
+          "plano": "plano espejo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Dejar que la reacción respire.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 22,
+          "toma": "Plano medio mostrando largo, ancho de cuerpo y caida de mangas.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "evaluacion",
+          "funcion_narrativa": "Hacer visible el producto.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Senalar dos cosas que si funcionan: tela, color, forma o estampa.",
+          "plano": "primer plano hablando",
+          "dialogo_o_voz_en_off": "La tela y el ancho están bien.",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Equilibrar la crítica.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Marcar con la mano el ajuste principal que molesta.",
+          "plano": "detalle",
+          "dialogo_o_voz_en_off": "La haría un poco más corta.",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Preparar mejora.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 16,
+          "toma": "Decidir en camara esperar opiniones antes de corregir.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "Antes de gastar más, necesitaba saber si el problema lo veía solo yo.",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Llevar la historia a la calle.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "dinero",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Evaluar la muestra sobre el cuerpo."
+    },
+    {
+      "id": "ep4_b06",
+      "bloque": 6,
+      "plantilla": "B6 P6",
+      "dia": 10,
+      "nombre": "El molde todavía no estaba listo",
+      "tipo": "caida",
+      "emocion_principal": "preocupacion",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar que producir varias unidades exige una corrección.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Mostrar molde, medidas o papel de patronaje sobre la mesa.",
+          "plano": "cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Introducir la parte técnica.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Comparar como cambia el molde entre talles o variantes.",
+          "plano": "detalle con regla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "comprension",
+          "funcion_narrativa": "Explicar dificultad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Costurero explica que puede fallar si se hacen varias unidades asi.",
+          "plano": "plano medio costurero",
+          "dialogo_o_voz_en_off": "Si hacemos cinco así, pueden quedar diferentes entre sí.",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Aumentar riesgo.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 16,
+          "toma": "Mostrar precio aproximado o numero de correccion en calculadora.",
+          "plano": "calculadora",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Conectar calidad y dinero.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 16,
+          "toma": "Cerrar guardando la muestra para validarla antes de producir mas.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Voy a preguntarle a la gente antes de tocar el molde.",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Cerrar el día.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar que producir varias unidades exige una corrección."
+    },
+    {
+      "id": "ep4_b07",
+      "bloque": 7,
+      "plantilla": "B7 P7",
+      "dia": 10,
+      "nombre": "Mañana la decide la gente",
+      "tipo": "cierre_de_dia",
+      "emocion_principal": "expectativa",
+      "duracion_segundos": 75,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Preparar la validación real.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 14,
+          "toma": "Escribir en notas las tres preguntas: te la pondrias, que cambiarias, cuanto pagarias.",
+          "plano": "plano cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Preparar método.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 14,
+          "toma": "Colgar la prenda en percha o guardarla en bolso para salir al dia siguiente.",
+          "plano": "plano percha",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Preparar salida.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 14,
+          "toma": "Mostrar precio aproximado escrito y dejar claro que todavia es prueba.",
+          "plano": "primer plano pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Introducir barrera de compra.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 15,
+          "toma": "Abrir mapa o elegir zona donde se va a preguntar a gente real.",
+          "plano": "mapa o calle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Abrir nuevo escenario.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Cerrar preguntando a camara si alguien pagaria por esa muestra.",
+          "plano": "primer plano a cámara",
+          "dialogo_o_voz_en_off": "Mañana voy a descubrir si a alguien le gusta lo suficiente como para pagar por ella.",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Cliffhanger de día.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Preparar la validación real."
+    },
+    {
+      "id": "ep4_b08",
+      "bloque": 8,
+      "plantilla": "B8 P8",
+      "dia": 11,
+      "nombre": "Salir con la muestra",
+      "tipo": "apertura_de_dia",
+      "emocion_principal": "curiosidad",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Llevar la prenda a público real.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Plano de la zona elegida con gente real pasando cerca.",
+          "plano": "plano general",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Cambiar escenario.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "mapa"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 16,
+          "toma": "Sacar la muestra de la bolsa y mostrarla lista para entrevistar.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Presentar misión.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Explicar a camara que no buscas halagos, buscas respuestas utiles.",
+          "plano": "primer plano hablando",
+          "dialogo_o_voz_en_off": "No quiero que me digan que está linda. Quiero saber si la comprarían.",
+          "audio": "",
+          "emocion": "honestidad",
+          "funcion_narrativa": "Subir exigencia.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Mostrar tarjeta o celular con las tres preguntas principales.",
+          "plano": "texto en pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Dar estructura.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Acercarte a la primera persona y pedirle opinion sobre la prenda.",
+          "plano": "plano seguimiento",
+          "dialogo_o_voz_en_off": "¿Te puedo mostrar algo que estoy fabricando?",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Entrar en acción.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "mapa",
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Llevar la prenda a público real."
+    },
+    {
+      "id": "ep4_b09",
+      "bloque": 9,
+      "plantilla": "B9 P9",
+      "dia": 11,
+      "nombre": "Opiniones sinceras",
+      "tipo": "entrevistas",
+      "emocion_principal": "descubrimiento",
+      "duracion_segundos": 194,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Recoger respuestas variadas y útiles.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 32,
+          "toma": "Entrevista completa: persona habla de estilo, calce y primera impresion.",
+          "plano": "plano medio entrevista",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "curiosidad",
+          "funcion_narrativa": "Primera referencia real.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 28,
+          "toma": "Persona senala un problema de largo, manga, cuello o estampa.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "descubrimiento",
+          "funcion_narrativa": "Confirmar o negar tu duda.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 28,
+          "toma": "Preguntar precio directo y grabar la respuesta sin interrumpir.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Introducir precio.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 32,
+          "toma": "Persona dice que parece comun o que le falta algo para comprarla.",
+          "plano": "plano detalle + respuesta",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "golpe",
+          "funcion_narrativa": "Crear conflicto de identidad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 26,
+          "toma": "Montaje rapido de cinco opiniones cortas con textos sobre pantalla.",
+          "plano": "montaje",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "ritmo",
+          "funcion_narrativa": "Acelerar.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 28,
+          "toma": "Persona dice que si la compraria y explica por que.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Acercarse a venta.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 7,
+          "duracion_segundos": 20,
+          "toma": "Resumen tuyo anotando que respuestas se repiten.",
+          "plano": "primer plano hablando",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Cerrar bloque.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "personas",
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Recoger respuestas variadas y útiles."
+    },
+    {
+      "id": "ep4_b10",
+      "bloque": 10,
+      "plantilla": "B10 P10",
+      "dia": 11,
+      "nombre": "Gusta, pero no a cualquier precio",
+      "tipo": "conflicto_de_precio",
+      "emocion_principal": "presion",
+      "duracion_segundos": 110,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar que aprobación y compra son cosas distintas.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 22,
+          "toma": "Mostrar lista de precios que la gente dijo que pagaria.",
+          "plano": "gráfico simple",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "analisis",
+          "funcion_narrativa": "Cuantificar percepción.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Comparar costo de muestra contra costo estimado de serie.",
+          "plano": "calculadora",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Conectar con negocio.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 24,
+          "toma": "Persona interesada dice que la compraria solo mas barata.",
+          "plano": "entrevista",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Hacer visible la barrera.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 22,
+          "toma": "Calcular margen real despues de tela, costura y entrega.",
+          "plano": "plano cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Mostrar sostenibilidad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 22,
+          "toma": "Aceptar en camara que antes de vender hay que ajustar dos cosas.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "No era un fracaso, pero todavía no era un producto listo.",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Preparar corrección.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar que aprobación y compra son cosas distintas."
+    },
+    {
+      "id": "ep4_b11",
+      "bloque": 11,
+      "plantilla": "B11 P11",
+      "dia": 11,
+      "nombre": "Los cambios se repetían",
+      "tipo": "analisis",
+      "emocion_principal": "claridad",
+      "duracion_segundos": 96,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Identificar mejoras concretas.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Agrupar votos y criticas en papel: largo, manga, precio y estampa.",
+          "plano": "cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Ordenar información.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Plano detalle del cambio de largo que mas se repitio.",
+          "plano": "texto + detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Definir mejora.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Plano detalle del ajuste de manga, cuello o estampa.",
+          "plano": "texto + detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Definir mejora.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Definir rango viable de precio con calculadora o libreta.",
+          "plano": "calculadora",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Preparar venta.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Elegir solo las correcciones esenciales para no perder tiempo ni plata.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Voy a cambiar dos cosas y después intentar venderla.",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Mover a producción.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Identificar mejoras concretas."
+    },
+    {
+      "id": "ep4_b12",
+      "bloque": 12,
+      "plantilla": "B12 P12",
+      "dia": 11,
+      "nombre": "Volver con una decisión",
+      "tipo": "transicion",
+      "emocion_principal": "determinacion",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Enviar correcciones al costurero.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Ordenar la lista final de cambios para mandarla al costurero.",
+          "plano": "cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "enfoque",
+          "funcion_narrativa": "Preparar mensaje.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 18,
+          "toma": "Senalar sobre la prenda cada zona exacta que tiene que corregirse.",
+          "plano": "captura de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Evitar confusión.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero",
+            "mapa"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Enviar mensaje con fotos, medidas y referencias claras.",
+          "plano": "grabación de pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Abrir negociación.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Mostrar respuesta del costurero con condicion de precio o plazo.",
+          "plano": "primer plano celular",
+          "dialogo_o_voz_en_off": "Se puede, pero hay que tocar el molde.",
+          "audio": "",
+          "emocion": "preocupacion",
+          "funcion_narrativa": "Abrir costo.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 16,
+          "toma": "Aceptar la correccion y dejar la muestra lista para volver al taller.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Cerrar bloque.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero",
+        "mapa"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Enviar correcciones al costurero."
+    },
+    {
+      "id": "ep4_b13",
+      "bloque": 13,
+      "plantilla": "B13 P13",
+      "dia": 11,
+      "nombre": "El costurero acepta corregirla",
+      "tipo": "conversacion",
+      "emocion_principal": "alivio",
+      "duracion_segundos": 94,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Acordar cambios, precio y plazo.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Hablar con el costurero sobre los dos cambios principales.",
+          "plano": "plano medio + audio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Resolver detalles.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 18,
+          "toma": "Mostrar en la prenda donde se va a cortar, ajustar o modificar.",
+          "plano": "detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Evitar vaguedad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Acordar costo de correccion con numero visible.",
+          "plano": "calculadora",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Mostrar impacto.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Acordar fecha y hora aproximada para tenerla lista.",
+          "plano": "calendario",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Abrir día 12.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Cerrar acuerdo con saludo, mensaje confirmado o prenda entregada.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Mañana debería tener una versión lista para vender.",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Cierre.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Acordar cambios, precio y plazo."
+    },
+    {
+      "id": "ep4_b14",
+      "bloque": 14,
+      "plantilla": "B14 P14",
+      "dia": 12,
+      "nombre": "La pregunta era si alguien pagaría",
+      "tipo": "apertura_de_dia",
+      "emocion_principal": "presion",
+      "duracion_segundos": 90,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Transformar la muestra en una oferta concreta.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Mostrar la muestra corregida en plano limpio, lista para vender.",
+          "plano": "plano cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Revelar mejora.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 18,
+          "toma": "Definir precio final en pantalla o libreta.",
+          "plano": "texto + voz",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Dar claridad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Mostrar meta de cinco unidades como primer lote minimo.",
+          "plano": "contador",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "urgencia",
+          "funcion_narrativa": "Crear límite.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Definir monto de reserva y que cubre esa sena.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Hacer oferta real.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Explicar mirando a camara que falta una primera reserva real.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Hoy quiero saber si alguien realmente pone plata.",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Abrir venta.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Transformar la muestra en una oferta concreta."
+    },
+    {
+      "id": "ep4_b15",
+      "bloque": 15,
+      "plantilla": "B15 P15",
+      "dia": 12,
+      "nombre": "Preparar la preventa",
+      "tipo": "preparacion",
+      "emocion_principal": "esperanza",
+      "duracion_segundos": 114,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Crear material de venta.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Sacar fotos frontales, laterales y detalles con fondo simple.",
+          "plano": "montaje",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "creatividad",
+          "funcion_narrativa": "Crear material.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Grabar la prenda en movimiento: caminando, girando y mostrando calce.",
+          "plano": "plano dinámico",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "energia",
+          "funcion_narrativa": "Dar atractivo.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Escribir historia de venta: material, precio, sena y entrega.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Reducir dudas.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Mostrar como se elegiran talles, colores o variantes disponibles.",
+          "plano": "tabla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "confianza",
+          "funcion_narrativa": "Dar seguridad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Definir fecha estimada de entrega y aclararla antes de publicar.",
+          "plano": "calendario",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "seriedad",
+          "funcion_narrativa": "Parecer profesional.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Publicar historia o post y dejar visible la oferta completa.",
+          "plano": "grabación pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Iniciar espera.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Crear material de venta."
+    },
+    {
+      "id": "ep4_b16",
+      "bloque": 16,
+      "plantilla": "B16 P16",
+      "dia": 12,
+      "nombre": "Muchos mensajes, cero pagos",
+      "tipo": "caida",
+      "emocion_principal": "frustracion",
+      "duracion_segundos": 130,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar que el interés no equivale a venta.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 22,
+          "toma": "Mostrar reacciones, fueguitos y respuestas entrando al post.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "esperanza",
+          "funcion_narrativa": "Falsa subida.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 22,
+          "toma": "Abrir consultas de precio, talle y entrega sin mostrar datos privados.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Parecer cerca.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Mostrar mensajes que preguntan mucho pero no transfieren.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Primer golpe.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "celular"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 20,
+          "toma": "Plano del contador de reservas clavado en 0 de 5.",
+          "plano": "plano fijo",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Hacer visible el fracaso.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 24,
+          "toma": "Timelapse o cortes de espera sin nuevas transferencias.",
+          "plano": "timelapse",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "caida",
+          "funcion_narrativa": "Bajar energía.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 22,
+          "toma": "Decidir llevar la muestra a una persona interesada para cerrar en vivo.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Los likes no podían pagar la producción.",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Cambiar estrategia.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "celular",
+        "contador",
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar que el interés no equivale a venta."
+    },
+    {
+      "id": "ep4_b17",
+      "bloque": 17,
+      "plantilla": "B17 P17",
+      "dia": 12,
+      "nombre": "Llevar la muestra a una persona interesada",
+      "tipo": "nuevo_intento",
+      "emocion_principal": "tension",
+      "duracion_segundos": 124,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Convertir un mensaje en encuentro real.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Acordar por chat lugar y hora con la persona interesada.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Mover la historia.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 24,
+          "toma": "Grabar traslado al encuentro con la muestra en la bolsa.",
+          "plano": "montaje",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aventura",
+          "funcion_narrativa": "Cambiar escenario.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 20,
+          "toma": "Mostrar la prenda en persona sobre mesa, percha o en mano.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Prueba real.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto",
+            "personas"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 22,
+          "toma": "Persona se prueba la prenda o revisa calce frente a camara.",
+          "plano": "cuerpo entero",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "evaluacion",
+          "funcion_narrativa": "Acercar compra.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 20,
+          "toma": "Responder duda sobre otro color, fecha de entrega o talle.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Crear barrera.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 6,
+          "duracion_segundos": 20,
+          "toma": "Persona mira cuenta o celular antes de decidir si reserva.",
+          "plano": "primer plano celular",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "suspenso",
+          "funcion_narrativa": "Cortar antes del pago.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        }
+      ],
+      "recursos_usados": [
+        "producto",
+        "personas"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Convertir un mensaje en encuentro real."
+    },
+    {
+      "id": "ep4_b18",
+      "bloque": 18,
+      "plantilla": "B18 P18",
+      "dia": 12,
+      "nombre": "La primera reserva",
+      "tipo": "venta",
+      "emocion_principal": "victoria",
+      "duracion_segundos": 90,
+      "duracion_tipo": "variable",
+      "objetivo_narrativo": "Conseguir la primera seña.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 20,
+          "toma": "Confirmar talle, color y fecha antes de pedir la sena.",
+          "plano": "conversacion",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Cerrar objeción.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 18,
+          "toma": "Persona dice o escribe que quiere reservar.",
+          "plano": "plano medio",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "alivio",
+          "funcion_narrativa": "Victoria.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "personas"
+          ]
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Mostrar transferencia, comprobante o efectivo de la primera sena.",
+          "plano": "captura de celular",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Prueba real.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 16,
+          "toma": "Actualizar contador de 0 de 5 a 1 de 5 en pantalla.",
+          "plano": "gráfico",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Hacer visible avance.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "contador"
+          ]
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Plano de reaccion real: alivio porque la muestra ya vendio una.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Alguien acababa de pagar por una prenda que todavía no existía.",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Cerrar emocionalmente.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "personas",
+        "dinero",
+        "contador"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Conseguir la primera seña."
+    },
+    {
+      "id": "ep4_b19",
+      "bloque": 19,
+      "plantilla": "B19 P19",
+      "dia": 12,
+      "nombre": "Una venta no alcanzaba",
+      "tipo": "balance",
+      "emocion_principal": "claridad",
+      "duracion_segundos": 92,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Mostrar la nueva meta.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 18,
+          "toma": "Mostrar el dinero recibido por la primera reserva.",
+          "plano": "cenital",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "progreso",
+          "funcion_narrativa": "Validación.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 20,
+          "toma": "Calcular cuanto cuesta producir cinco unidades completas.",
+          "plano": "calculadora",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Abrir problema.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 18,
+          "toma": "Comparar la sena recibida contra el costo total del lote.",
+          "plano": "gráfico",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "duda",
+          "funcion_narrativa": "Mostrar distancia.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "dinero"
+          ]
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 18,
+          "toma": "Dejar visible la meta de cuatro reservas restantes.",
+          "plano": "pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Preparar episodio siguiente.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 18,
+          "toma": "Decir a camara que una venta valida, pero todavia no financia el lote.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "La primera estaba hecha. Ahora faltaban cuatro.",
+          "audio": "",
+          "emocion": "ambicion",
+          "funcion_narrativa": "Puente.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "dinero"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Mostrar la nueva meta."
+    },
+    {
+      "id": "ep4_b20",
+      "bloque": 20,
+      "plantilla": "B20 P20",
+      "dia": 12,
+      "nombre": "La muestra ya tenía comprador",
+      "tipo": "progreso",
+      "emocion_principal": "orgullo",
+      "duracion_segundos": 80,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Cerrar la transformación de idea a producto validado.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 16,
+          "toma": "Comparar mockup inicial y muestra corregida en el mismo encuadre.",
+          "plano": "pantalla dividida",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "orgullo",
+          "funcion_narrativa": "Mostrar progreso.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": [
+            "producto"
+          ]
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 16,
+          "toma": "Recordar en texto las criticas principales que cambiaron el producto.",
+          "plano": "montaje",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "aprendizaje",
+          "funcion_narrativa": "Mostrar evolución.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 16,
+          "toma": "Mostrar mejoras aplicadas sobre la prenda con planos detalle.",
+          "plano": "detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "claridad",
+          "funcion_narrativa": "Recompensa.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 16,
+          "toma": "Mostrar comprobante de primera reserva como prueba real.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "victoria",
+          "funcion_narrativa": "Confirmar validación.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 16,
+          "toma": "Guardar la muestra para seguir vendiendo y pasar al proximo objetivo.",
+          "plano": "plano final",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "expectativa",
+          "funcion_narrativa": "Abrir siguiente capítulo.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [
+        "producto"
+      ],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Cerrar la transformación de idea a producto validado."
+    },
+    {
+      "id": "ep4_b21",
+      "bloque": 21,
+      "plantilla": "B21 P21",
+      "dia": 12,
+      "nombre": "Faltaban cuatro",
+      "tipo": "cliffhanger_final",
+      "emocion_principal": "tension_abierta",
+      "duracion_segundos": 70,
+      "duracion_tipo": "objetivo",
+      "objetivo_narrativo": "Abrir el episodio 5.",
+      "cliffhanger": "",
+      "escenas": [
+        {
+          "numero": 1,
+          "duracion_segundos": 14,
+          "toma": "Mostrar contador 1 de 5 y meta de conseguir cuatro reservas mas.",
+          "plano": "gráfico",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "presion",
+          "funcion_narrativa": "Recordatorio.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 2,
+          "duracion_segundos": 14,
+          "toma": "Mostrar lista de nombres o interesados pendientes sin datos privados.",
+          "plano": "pantalla",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "tension",
+          "funcion_narrativa": "Visualizar faltante.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 3,
+          "duracion_segundos": 14,
+          "toma": "Abrir chats de gente interesada que todavia no pago.",
+          "plano": "captura",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "frustracion",
+          "funcion_narrativa": "Subir dificultad.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 4,
+          "duracion_segundos": 14,
+          "toma": "Preparar bolso, muestra y mensaje para salir a buscar reservas.",
+          "plano": "detalle",
+          "dialogo_o_voz_en_off": "",
+          "audio": "",
+          "emocion": "determinacion",
+          "funcion_narrativa": "Movimiento.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        },
+        {
+          "numero": 5,
+          "duracion_segundos": 14,
+          "toma": "Cerrar con mision clara: faltan cuatro para poder producir.",
+          "plano": "primer plano",
+          "dialogo_o_voz_en_off": "Tenía una reserva. Si no conseguía cuatro más, la primera producción nunca iba a existir.",
+          "audio": "",
+          "emocion": "tension_abierta",
+          "funcion_narrativa": "FIN EPISODIO 4.",
+          "continuidad": "Cortar a la siguiente toma manteniendo continuidad visual o temática.",
+          "recursos_necesarios": []
+        }
+      ],
+      "recursos_usados": [],
+      "pregunta_abierta": "",
+      "resultado_esperado": "Abrir el episodio 5."
+    }
+  ],
+  "schema_version": "2.0-compatible",
+  "recursos_generales": [
+    {
+      "id": "sticker",
+      "nombre": "Stickers del reto",
+      "tipo": "objeto"
+    },
+    {
+      "id": "dinero",
+      "nombre": "Dinero y comprobantes reales",
+      "tipo": "documento"
+    },
+    {
+      "id": "celular",
+      "nombre": "Mensajes, llamadas y publicaciones",
+      "tipo": "captura"
+    },
+    {
+      "id": "mapa",
+      "nombre": "Mapa y recorridos",
+      "tipo": "mapa"
+    },
+    {
+      "id": "producto",
+      "nombre": "Mockups, muestra, prendas, tela o molde",
+      "tipo": "producto"
+    },
+    {
+      "id": "personas",
+      "nombre": "Entrevistas, compradores y colaboradores",
+      "tipo": "personas"
+    },
+    {
+      "id": "contador",
+      "nombre": "Contadores visuales de progreso",
+      "tipo": "overlay"
+    }
+  ]
+}
