@@ -6540,7 +6540,7 @@ const desktopApps = {
       });
       win.querySelector("[data-open-under-maps-chroma]")?.addEventListener("click", () => {
         const frame = win.querySelector(".under-maps-frame");
-        if (frame) frame.src = "./under-maps?chroma=1&v=under-maps-1";
+        if (frame) frame.src = "./under-maps.html?chroma=1&v=under-maps-1";
       });
       win.querySelector("[data-open-world-loop]")?.addEventListener("click", () => openWindow("recording-studio"));
     },

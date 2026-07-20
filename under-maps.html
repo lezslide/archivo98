@@ -1729,7 +1729,7 @@
       const nextUrl = new URL(window.location.href);
       if (document.body.classList.contains("chroma-mode")) nextUrl.searchParams.delete("chroma");
       else {
-        nextUrl.pathname = nextUrl.pathname.replace(/\.html$/, "");
+        if (!nextUrl.pathname.endsWith(".html")) nextUrl.pathname = `${nextUrl.pathname.replace(/\/$/, "")}.html`;
         nextUrl.searchParams.set("chroma", "1");
       }
       window.location.href = nextUrl.toString();
