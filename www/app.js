@@ -4217,11 +4217,18 @@ function getSelectedChatImageName() {
   return state.chatSelectedImageName || "";
 }
 
+const HIDDEN_GLOBAL_CHAT_USERS = new Set(["tumberjeremy"]);
+
+function isHiddenGlobalChatMessage(message) {
+  return HIDDEN_GLOBAL_CHAT_USERS.has(String(message?.username || "").trim().toLowerCase());
+}
+
 function renderGlobalMessages() {
   const box = document.getElementById("chat-messages");
   if (!box) return;
 
   const liveMessages = [...state.globalMessages, ...state.underBotMessages]
+    .filter((message) => !isHiddenGlobalChatMessage(message))
     .sort((a, b) => new Date(a.created_at || 0).getTime() - new Date(b.created_at || 0).getTime());
   const messages = liveMessages.length
     ? liveMessages
@@ -5869,7 +5876,7 @@ const desktopApps = {
       const isMobile = isMobileViewport();
       const readOnlyChatAttrs = "";
       const chatPlaceholder = "Mandar mensaje a #general-under";
-      const channelCount = (state.globalMessages.length + state.underBotMessages.length) || 1;
+      const channelCount = [...state.globalMessages, ...state.underBotMessages].filter((message) => !isHiddenGlobalChatMessage(message)).length || 1;
       const incomingRequestsMarkup = state.incomingContactRequests.length
         ? state.incomingContactRequests.map((contact) => `
             <div class="discord-member-card">
@@ -6512,6 +6519,7 @@ const desktopApps = {
             </div>
             <div class="session-row">
               <button class="action-btn" data-open-world-loop="1">World Loop</button>
+              <button class="action-btn" data-open-under-maps-chroma="1">Croma</button>
               <button class="action-btn" data-open-under-maps-standalone="1">Abrir aparte</button>
             </div>
           </div>
@@ -6529,6 +6537,9 @@ const desktopApps = {
     bind(win) {
       win.querySelector("[data-open-under-maps-standalone]")?.addEventListener("click", () => {
         window.open("./under-maps.html?v=under-maps-1", "_blank", "noopener,noreferrer");
+      });
+      win.querySelector("[data-open-under-maps-chroma]")?.addEventListener("click", () => {
+        window.open("./under-maps.html?v=under-maps-1&chroma=1", "_blank", "noopener,noreferrer");
       });
       win.querySelector("[data-open-world-loop]")?.addEventListener("click", () => openWindow("recording-studio"));
     },

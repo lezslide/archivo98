@@ -2683,11 +2683,13 @@ body.private-apps-unlocked .start-item[data-private-app="1"] {
   min-height: 100%;
   padding: 0;
   background:
+    linear-gradient(rgba(5, 5, 5, 0.24), rgba(5, 5, 5, 0.78)),
+    url("./assets/chat-flames.gif") center bottom / cover no-repeat,
     linear-gradient(rgba(145, 255, 0, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(145, 255, 0, 0.08) 1px, transparent 1px),
     radial-gradient(circle at top left, rgba(70, 70, 70, 0.16), transparent 28%),
     linear-gradient(180deg, #090909 0%, #121212 100%);
-  background-size: 26px 26px, 26px 26px, auto, auto;
+  background-size: auto, cover, 26px 26px, 26px 26px, auto, auto;
   color: #eef4ff;
 }
 
@@ -2766,7 +2768,8 @@ body.private-apps-unlocked .start-item[data-private-app="1"] {
   min-height: 0;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 26%),
-    linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+    linear-gradient(180deg, rgba(17,17,17,0.84) 0%, rgba(10,10,10,0.72) 100%);
+  backdrop-filter: blur(1px);
 }
 
 .discord-topbar {
@@ -2810,7 +2813,10 @@ body.private-apps-unlocked .start-item[data-private-app="1"] {
   padding: 14px;
   display: grid;
   gap: 10px;
-  background: #0b0b0b;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.54), rgba(0,0,0,0.2)),
+    url("./assets/chat-flames.gif") center bottom / cover no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(255, 108, 18, 0.16);
 }
 
 .discord-messages .chat-row {

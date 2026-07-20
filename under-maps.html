@@ -32,12 +32,28 @@
       touch-action: none;
     }
 
+    body.chroma-mode {
+      background: #00ff00;
+    }
+
     #map-container {
       position: relative;
       width: 100%;
       height: 100%;
       background: #aad3df;
       overflow: hidden;
+    }
+
+    body.chroma-mode #map-container {
+      width: min(94vw, 1180px);
+      height: min(92vh, 820px);
+      margin: 4vh auto;
+      background: #00ff00;
+      box-shadow: none;
+    }
+
+    body.chroma-mode #map {
+      box-shadow: 0 0 0 12px #00ff00;
     }
 
     #map {
@@ -56,6 +72,29 @@
     .ui-layer {
       position: fixed;
       z-index: 1000;
+    }
+
+    body.chroma-mode .ui-layer,
+    body.chroma-mode #point-modal,
+    body.chroma-mode #location-panel,
+    body.chroma-mode #toast {
+      display: none !important;
+    }
+
+    .chroma-launch-btn {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      z-index: 1400;
+      width: 64px;
+      min-height: 30px;
+      border-radius: 8px;
+      font-size: 9px;
+      opacity: 0.78;
+    }
+
+    body.chroma-mode .chroma-launch-btn {
+      display: none;
     }
 
     .interactive {
@@ -634,6 +673,7 @@
 </head>
 <body>
   <input type="file" id="photo-upload" accept="image/*" hidden>
+  <button class="under-btn green chroma-launch-btn" id="chroma-map-btn" type="button" title="Abrir mapa con fondo croma">Croma</button>
 
   <div id="settings-panel" class="ui-layer interactive">
     <div class="under-card stack" id="settings-card">
@@ -792,8 +832,10 @@
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
       : null;
     const urlParams = new URLSearchParams(window.location.search);
+    const isChromaMode = urlParams.get("chroma") === "1";
     const isAdminParam = urlParams.get("admin") === "user98";
     if (isAdminParam) localStorage.setItem("archivo98_under_maps_admin", "1");
+    if (isChromaMode) document.body.classList.add("chroma-mode");
     const isMapAdmin = isAdminParam || localStorage.getItem("archivo98_under_maps_admin") === "1";
     const COMMUNITY_MIN_ZOOM = 12;
 
@@ -1573,6 +1615,9 @@
     document.getElementById("journey-btn").addEventListener("click", startJourney);
     document.getElementById("locate-btn").addEventListener("click", locateUser);
     document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
+    document.getElementById("chroma-map-btn").addEventListener("click", () => {
+      window.open("./under-maps.html?chroma=1", "_blank", "noopener,noreferrer");
+    });
     document.getElementById("reset-view-btn").addEventListener("click", () => {
       if (points.length) map.fitBounds(points.map((point) => point.latlng), { padding: [70, 70] });
       else map.setView([20, 0], 3);

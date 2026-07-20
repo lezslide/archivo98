@@ -570,28 +570,33 @@
     .avatar-slot {
       position: relative;
       min-height: 96px;
-      border: 1px solid rgba(53,255,154,0.68);
-      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(53,255,154,0.9);
+      background:
+        linear-gradient(rgba(53,255,154,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(53,255,154,0.08) 1px, transparent 1px),
+        rgba(0,0,0,0.38);
+      background-size: 12px 12px;
       overflow: hidden;
+      box-shadow: inset 0 0 18px rgba(53,255,154,0.12), 0 0 14px rgba(53,255,154,0.16);
     }
 
     .helmet-orbit::before,
     .helmet-orbit::after {
       content: "";
       position: absolute;
-      inset: 9px;
-      border: 1px solid rgba(53,255,154,0.42);
-      border-radius: 50%;
+      border-radius: 0;
       pointer-events: none;
-      animation: helmet-electric-spin 5.4s linear infinite;
-      box-shadow: 0 0 12px rgba(53,255,154,0.24), inset 0 0 16px rgba(53,255,154,0.13);
+    }
+
+    .helmet-orbit::before {
+      inset: 7px;
+      border: 1px solid rgba(53,255,154,0.42);
     }
 
     .helmet-orbit::after {
-      inset: 18px;
-      border-style: dashed;
-      animation-duration: 3.6s;
-      animation-direction: reverse;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0 48%, rgba(53,255,154,0.26) 50%, transparent 52% 100%);
+      opacity: 0.45;
     }
 
     .helmet-orbit model-viewer {
@@ -601,19 +606,6 @@
       height: 128px;
       background: transparent;
       --poster-color: transparent;
-    }
-
-    .electric-field {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      opacity: 0.78;
-      mix-blend-mode: screen;
-      background:
-        repeating-conic-gradient(from 0deg, transparent 0 13deg, rgba(53,255,154,0.45) 14deg 15deg, transparent 16deg 42deg),
-        repeating-linear-gradient(90deg, transparent 0 12px, rgba(53,255,154,0.18) 13px 14px);
-      animation: helmet-electric-spin 2.8s linear infinite, matrix-scan 1.2s steps(8, end) infinite;
     }
 
     .artifact-label {
@@ -662,21 +654,6 @@
       border-radius: 50%;
       border: 1px solid rgba(53,255,154,0.58);
       box-shadow: 0 0 18px rgba(53,255,154,0.2);
-    }
-
-    @keyframes helmet-electric-spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @keyframes matrix-scan {
-      0%, 100% {
-        opacity: 0.5;
-      }
-      50% {
-        opacity: 0.9;
-      }
     }
 
     .stage-caption {
@@ -1101,8 +1078,7 @@
       </div>
       <aside class="artifact-dock" id="artifact-dock" aria-label="Casco del evento y espacio para avatar 3D">
         <div class="helmet-orbit">
-          <model-viewer src="./assets/DamagedHelmet.glb" camera-controls auto-rotate rotation-per-second="24deg" interaction-prompt="none" exposure="1.1" shadow-intensity="0" camera-orbit="35deg 68deg 3.8m" min-camera-orbit="auto auto 2.6m" max-camera-orbit="auto auto 5m" alt="Casco 3D con electricidad verde"></model-viewer>
-          <div class="electric-field" aria-hidden="true"></div>
+          <model-viewer src="./assets/DamagedHelmet.glb" camera-controls auto-rotate rotation-per-second="24deg" interaction-prompt="none" exposure="1.1" shadow-intensity="0" camera-orbit="35deg 68deg 3.8m" min-camera-orbit="auto auto 2.6m" max-camera-orbit="auto auto 5m" alt="Casco 3D"></model-viewer>
           <span class="artifact-label">Evento posible</span>
         </div>
         <button class="avatar-slot" type="button" aria-label="Espacio reservado para avatar 3D">Avatar 3D</button>
