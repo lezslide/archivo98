@@ -6539,7 +6539,8 @@ const desktopApps = {
         window.open("./under-maps.html?v=under-maps-1", "_blank", "noopener,noreferrer");
       });
       win.querySelector("[data-open-under-maps-chroma]")?.addEventListener("click", () => {
-        window.open("./under-maps.html?v=under-maps-1&chroma=1", "_blank", "noopener,noreferrer");
+        const frame = win.querySelector(".under-maps-frame");
+        if (frame) frame.src = "./under-maps?chroma=1&v=under-maps-1";
       });
       win.querySelector("[data-open-world-loop]")?.addEventListener("click", () => openWindow("recording-studio"));
     },

@@ -45,15 +45,7 @@
     }
 
     body.chroma-mode #map-container {
-      width: min(94vw, 1180px);
-      height: min(92vh, 820px);
-      margin: 4vh auto;
-      background: #00ff00;
-      box-shadow: none;
-    }
-
-    body.chroma-mode #map {
-      box-shadow: 0 0 0 12px #00ff00;
+      display: none;
     }
 
     #map {
@@ -74,11 +66,50 @@
       z-index: 1000;
     }
 
-    body.chroma-mode .ui-layer,
+    body.chroma-mode .ui-layer {
+      display: block !important;
+      pointer-events: auto;
+    }
+
     body.chroma-mode #point-modal,
-    body.chroma-mode #location-panel,
-    body.chroma-mode #toast {
+    body.chroma-mode #location-panel {
       display: none !important;
+    }
+
+    body.chroma-mode #settings-panel,
+    body.chroma-mode #stats-panel-wrap,
+    body.chroma-mode #search-panel,
+    body.chroma-mode #controls-panel {
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+    }
+
+    body.chroma-mode #settings-panel {
+      left: 12px !important;
+      top: 12px !important;
+    }
+
+    body.chroma-mode #stats-panel-wrap {
+      left: 12px !important;
+      top: 250px !important;
+    }
+
+    body.chroma-mode #search-panel {
+      right: 12px !important;
+      top: 12px !important;
+    }
+
+    body.chroma-mode #controls-panel {
+      right: 12px !important;
+      bottom: 12px !important;
+    }
+
+    body.chroma-mode .under-card {
+      --card-scale: 1 !important;
+      opacity: 1 !important;
     }
 
     .chroma-launch-btn {
@@ -94,7 +125,10 @@
     }
 
     body.chroma-mode .chroma-launch-btn {
-      display: none;
+      right: 12px;
+      bottom: 78px;
+      background: #fff;
+      color: #000;
     }
 
     .interactive {
@@ -303,6 +337,14 @@
 
     .minimized .mini-icon {
       display: flex;
+    }
+
+    body.chroma-mode .minimized > *:not(.mini-icon) {
+      display: revert !important;
+    }
+
+    body.chroma-mode .minimized.stack {
+      display: flex !important;
     }
 
     #settings-panel {
@@ -668,12 +710,75 @@
       .under-btn {
         min-height: 34px;
       }
+
+      body.chroma-mode {
+        overflow: auto;
+        touch-action: pan-y;
+      }
+
+      body.chroma-mode #settings-panel,
+      body.chroma-mode #stats-panel-wrap,
+      body.chroma-mode #search-panel,
+      body.chroma-mode #controls-panel {
+        position: fixed;
+        width: calc(50vw - 18px) !important;
+      }
+
+      body.chroma-mode #settings-panel {
+        left: 10px !important;
+        top: 10px !important;
+      }
+
+      body.chroma-mode #search-panel {
+        right: 10px !important;
+        top: 10px !important;
+      }
+
+      body.chroma-mode #stats-panel-wrap {
+        left: 10px !important;
+        top: 178px !important;
+      }
+
+      body.chroma-mode #controls-panel {
+        right: 10px !important;
+        top: 178px !important;
+        bottom: auto !important;
+      }
+
+      body.chroma-mode .under-card {
+        border-width: 4px;
+        border-radius: 16px;
+        box-shadow: 5px 5px 0 #000;
+      }
+
+      body.chroma-mode #settings-card,
+      body.chroma-mode #stats-card,
+      body.chroma-mode #search-card,
+      body.chroma-mode #controls-card {
+        padding: 10px;
+      }
+
+      body.chroma-mode .metric-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      body.chroma-mode .metric-actions,
+      body.chroma-mode #controls-card .row {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      body.chroma-mode #controls-card .under-btn {
+        width: 100%;
+        min-width: 0 !important;
+      }
     }
   </style>
 </head>
 <body>
   <input type="file" id="photo-upload" accept="image/*" hidden>
-  <button class="under-btn green chroma-launch-btn" id="chroma-map-btn" type="button" title="Abrir mapa con fondo croma">Croma</button>
+  <button class="under-btn green chroma-launch-btn" id="chroma-map-btn" type="button" title="Alternar fondo croma">Croma</button>
 
   <div id="settings-panel" class="ui-layer interactive">
     <div class="under-card stack" id="settings-card">
@@ -836,6 +941,11 @@
     const isAdminParam = urlParams.get("admin") === "user98";
     if (isAdminParam) localStorage.setItem("archivo98_under_maps_admin", "1");
     if (isChromaMode) document.body.classList.add("chroma-mode");
+    const chromaMapButton = document.getElementById("chroma-map-btn");
+    if (chromaMapButton) chromaMapButton.textContent = isChromaMode ? "Mapa" : "Croma";
+    if (isChromaMode) {
+      document.querySelectorAll(".under-card").forEach((card) => card.classList.remove("minimized"));
+    }
     const isMapAdmin = isAdminParam || localStorage.getItem("archivo98_under_maps_admin") === "1";
     const COMMUNITY_MIN_ZOOM = 12;
 
@@ -1616,7 +1726,13 @@
     document.getElementById("locate-btn").addEventListener("click", locateUser);
     document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
     document.getElementById("chroma-map-btn").addEventListener("click", () => {
-      window.open("./under-maps.html?chroma=1", "_blank", "noopener,noreferrer");
+      const nextUrl = new URL(window.location.href);
+      if (document.body.classList.contains("chroma-mode")) nextUrl.searchParams.delete("chroma");
+      else {
+        nextUrl.pathname = nextUrl.pathname.replace(/\.html$/, "");
+        nextUrl.searchParams.set("chroma", "1");
+      }
+      window.location.href = nextUrl.toString();
     });
     document.getElementById("reset-view-btn").addEventListener("click", () => {
       if (points.length) map.fitBounds(points.map((point) => point.latlng), { padding: [70, 70] });
