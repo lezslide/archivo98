@@ -1,5 +1,5 @@
-const STATIC_CACHE = "archivo98-static-v124";
-const RUNTIME_CACHE = "archivo98-runtime-v124";
+const STATIC_CACHE = "archivo98-static-v125";
+const RUNTIME_CACHE = "archivo98-runtime-v125";
 
 const STATIC_ASSETS = [
   "./",
@@ -63,6 +63,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith("/app.js") ||
     url.pathname.endsWith("/styles.css") ||
     url.pathname.endsWith("/mobile-bootstrap.js") ||
+    url.pathname.endsWith("/under-maps.html") ||
     url.pathname.endsWith("/recording-studio.html") ||
     url.pathname.endsWith("/creator-pro.html") ||
     url.pathname.endsWith("/obs-recaudado.html")

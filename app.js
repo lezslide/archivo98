@@ -1045,7 +1045,7 @@ function openMobileApp(appId) {
     return;
   }
   if (appId === "under-maps") {
-    window.location.href = "./under-maps.html?v=under-maps-1";
+    window.location.href = "./under-maps.html?v=under-maps-2";
     return;
   }
   if (appId === "sales-goals") {
@@ -6525,7 +6525,7 @@ const desktopApps = {
           </div>
           <iframe
             class="recording-studio-frame under-maps-frame"
-            src="./under-maps.html?v=under-maps-1"
+            src="./under-maps.html?v=under-maps-2"
             title="Under Maps"
             loading="lazy"
             allow="geolocation; fullscreen"
@@ -6535,12 +6535,25 @@ const desktopApps = {
       `;
     },
     bind(win) {
+      const frame = win.querySelector(".under-maps-frame");
+      frame?.addEventListener("load", () => {
+        if (frame.dataset.chromaMode !== "1") return;
+        frame.contentWindow?.postMessage({
+          type: "archivo98:under-maps:set-chroma",
+          enabled: true
+        }, "*");
+      });
       win.querySelector("[data-open-under-maps-standalone]")?.addEventListener("click", () => {
-        window.open("./under-maps.html?v=under-maps-1", "_blank", "noopener,noreferrer");
+        window.open("./under-maps.html?v=under-maps-2", "_blank", "noopener,noreferrer");
       });
       win.querySelector("[data-open-under-maps-chroma]")?.addEventListener("click", () => {
-        const frame = win.querySelector(".under-maps-frame");
-        if (frame) frame.src = "./under-maps.html?chroma=1&v=under-maps-1";
+        if (!frame) return;
+        const nextChroma = frame.dataset.chromaMode !== "1";
+        frame.dataset.chromaMode = nextChroma ? "1" : "0";
+        frame.contentWindow?.postMessage({
+          type: "archivo98:under-maps:set-chroma",
+          enabled: nextChroma
+        }, "*");
       });
       win.querySelector("[data-open-world-loop]")?.addEventListener("click", () => openWindow("recording-studio"));
     },

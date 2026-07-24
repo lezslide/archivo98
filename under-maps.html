@@ -894,6 +894,24 @@
       toastTimer = setTimeout(() => toast.classList.remove("visible"), 2600);
     }
 
+    function setChromaMode(enabled, updateUrl = true) {
+      document.body.classList.toggle("chroma-mode", Boolean(enabled));
+      if (chromaMapButton) chromaMapButton.textContent = enabled ? "Mapa" : "Croma";
+
+      if (!updateUrl) return;
+      const nextUrl = new URL(window.location.href);
+      if (enabled) nextUrl.searchParams.set("chroma", "1");
+      else nextUrl.searchParams.delete("chroma");
+      window.history.replaceState({}, "", nextUrl.toString());
+    }
+
+    window.addEventListener("message", (event) => {
+      if (event.source !== window.parent) return;
+      if (event.data?.type !== "archivo98:under-maps:set-chroma") return;
+      setChromaMode(Boolean(event.data.enabled));
+      if (map) setTimeout(() => map.invalidateSize(), 50);
+    });
+
     function escapeHtml(value) {
       return String(value || "")
         .replace(/&/g, "&amp;")
@@ -1631,13 +1649,8 @@
     document.getElementById("locate-btn").addEventListener("click", locateUser);
     document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
     document.getElementById("chroma-map-btn").addEventListener("click", () => {
-      const nextUrl = new URL(window.location.href);
-      if (document.body.classList.contains("chroma-mode")) nextUrl.searchParams.delete("chroma");
-      else {
-        if (!nextUrl.pathname.endsWith(".html")) nextUrl.pathname = `${nextUrl.pathname.replace(/\/$/, "")}.html`;
-        nextUrl.searchParams.set("chroma", "1");
-      }
-      window.location.href = nextUrl.toString();
+      setChromaMode(!document.body.classList.contains("chroma-mode"));
+      if (map) setTimeout(() => map.invalidateSize(), 50);
     });
     document.getElementById("reset-view-btn").addEventListener("click", () => {
       if (points.length) map.fitBounds(points.map((point) => point.latlng), { padding: [70, 70] });
