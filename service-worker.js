@@ -1,5 +1,5 @@
-const STATIC_CACHE = "archivo98-static-v125";
-const RUNTIME_CACHE = "archivo98-runtime-v125";
+const STATIC_CACHE = "archivo98-static-v126";
+const RUNTIME_CACHE = "archivo98-runtime-v126";
 
 const STATIC_ASSETS = [
   "./",
