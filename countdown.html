@@ -40,39 +40,4 @@
   sync = async function() { await originalSync(); renderBaggyCount(); };
   renderBaggyCount();
   setTheme("blue"); render(); sync(); setInterval(sync, 1000);
-</script><script type="module">
-  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js";
-  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/loaders/GLTFLoader.js";
-  const stage = document.querySelector(".product-stage");
-  const canvas = document.createElement("canvas");
-  canvas.className = "baggy-canvas";
-  stage.appendChild(canvas);
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(32, 1, 0.01, 100);
-  camera.position.set(0, 0.05, 2.35);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x151525, 2.2));
-  const key = new THREE.DirectionalLight(0xffffff, 3.5); key.position.set(2, 3, 4); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x55ff99, 2.2); rim.position.set(-3, 1, -2); scene.add(rim);
-  const loader = new GLTFLoader();
-  const product = new THREE.Group();
-  scene.add(product);
-  loader.load("./assets/products/baggy-pants-negro-violeta.glb", (gltf) => {
-    const model = gltf.scene;
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.sub(center);
-    model.scale.setScalar(1.45 / Math.max(size.y, 0.01));
-    product.add(model);
-    resize();
-  }, undefined, (error) => console.error("No se pudo cargar Baggy Kravitz", error));
-  function resize() { const w = stage.clientWidth; const h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
-  new ResizeObserver(resize).observe(stage);
-  function animate(time) { product.rotation.y = time * 0.00055; renderer.render(scene, camera); requestAnimationFrame(animate); }
-  requestAnimationFrame(animate);
 </script></body></html>
