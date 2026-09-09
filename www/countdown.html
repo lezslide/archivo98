@@ -8,8 +8,17 @@
   }
   </style>
 </head>
-<body><main class="screen"><section class="content" aria-label="Oferta en tiempo real"><div class="product-stage"><model-viewer src="./assets/products/baggy-pants-negro-violeta.glb" camera-controls auto-rotate rotation-per-second="18deg" interaction-prompt="none" environment-image="neutral" exposure="1.1" shadow-intensity="0.4" camera-orbit="0deg 75deg 2.4m" camera-target="0m 0.5m 0m" field-of-view="35deg" alt="Baggy Kravitz"></model-viewer></div><p class="product-name">Baggy Kravitz</p><div class="stock" aria-label="Unidades disponibles hoy"><strong id="baggy-stock">1</strong><span>unidades disponibles hoy</span></div><p id="counter" aria-live="polite">1,800,000.00</p><div class="caption">segundos restantes</div><a class="offer" href="https://micatalogo.ar/reelok" target="_blank" rel="noopener noreferrer">obtener 34% off</a></section></main>
-<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js"></script>
+<body><main class="screen"><section class="content" aria-label="Oferta en tiempo real"><div class="product-stage"><model-viewer src="./assets/products/baggy-pants-negro-violeta.glb" camera-controls auto-rotate rotation-per-second="18deg" interaction-prompt="none" exposure="0.82" shadow-intensity="0.4" camera-orbit="0deg 75deg 2.4m" camera-target="0m 0.5m 0m" field-of-view="35deg" alt="Baggy Kravitz"></model-viewer></div><p class="product-name">Baggy Kravitz</p><div class="stock" aria-label="Unidades disponibles hoy"><strong id="baggy-stock">1</strong><span>unidades disponibles hoy</span></div><p id="counter" aria-live="polite">1,800,000.00</p><div class="caption">segundos restantes</div><a class="offer" href="https://micatalogo.ar/reelok" target="_blank" rel="noopener noreferrer">obtener 34% off</a></section></main>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js"></script><script>
+  const viewer = document.querySelector("model-viewer");
+  viewer?.addEventListener("load", () => {
+    for (const material of viewer.model?.materials || []) {
+      const pbr = material.pbrMetallicRoughness;
+      pbr.setMetallicFactor(0.02);
+      pbr.setRoughnessFactor(0.88);
+    }
+  });
+</script>
 <script>
   const DEFAULT_SECONDS = 1800000; const BAGGY_GOAL = 100; let state = { status:"idle", durationSeconds:DEFAULT_SECONDS, startedAt:null, serverCreatedAt:null, theme:"blue", baggyCount:1 }; const counter = document.getElementById("counter");
   function left() { const startedAt = state.startedAt || state.serverCreatedAt; const remaining = state.status === "running" && startedAt ? state.durationSeconds - (Date.now() - Date.parse(startedAt)) / 1000 : state.durationSeconds; return Math.min(state.durationSeconds, Math.max(0, Number.isFinite(remaining) ? remaining : state.durationSeconds)); }
