@@ -1,5 +1,5 @@
-const STATIC_CACHE = "archivo98-static-v126";
-const RUNTIME_CACHE = "archivo98-runtime-v126";
+const STATIC_CACHE = "archivo98-static-v135";
+const RUNTIME_CACHE = "archivo98-runtime-v135";
 
 const STATIC_ASSETS = [
   "./",
@@ -15,6 +15,7 @@ const STATIC_ASSETS = [
   "./alaxd.html",
   "./under-maps.html",
   "./xp-agar-strike.html",
+  "./assets/Monito 1.glb",
   "./assets/chat-flames.gif",
   "./assets/DamagedHelmet.glb",
   "./assets/vendor/three-r128.min.js",
@@ -66,6 +67,8 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith("/under-maps.html") ||
     url.pathname.endsWith("/recording-studio.html") ||
     url.pathname.endsWith("/creator-pro.html") ||
+    url.pathname.endsWith("/xp-agar-strike") ||
+    url.pathname.endsWith("/xp-agar-strike.html") ||
     url.pathname.endsWith("/obs-recaudado.html")
     || url.pathname.endsWith("/obs-layout-kick.html")
     || url.pathname.endsWith("/alaxd.html")
