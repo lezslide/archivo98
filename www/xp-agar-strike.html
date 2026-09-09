@@ -149,6 +149,7 @@
       font-weight: 900;
     }
 
+
     #hotbar {
       position: absolute;
       left: 50%;
@@ -394,7 +395,7 @@
   <div id="center-card">
     <div class="boot-card">
       <h2>Entrar al mapa</h2>
-      <p>Mapa libre para mirar productos. El pantalón está en el pedestal central y los demás puestos quedan reservados.</p>
+      <p>Mapa libre para mirar productos. El patio queda armado con prendas 3D y la carpa apartada del lado abierto.</p>
       <button id="startBtn" type="button">Entrar</button>
     </div>
   </div>
@@ -427,10 +428,24 @@
     };
     const pedestals = [];
     const products = [];
+    const linkButtons = [];
+    const linkRaycaster = new THREE.Raycaster();
+    const linkPointer = new THREE.Vector2();
     const WORLD_OVERLAY_API = "./api/world-loop-overlay";
     const MAX_KM = 40075;
-    let progressSignTexture;
-    let progressSignContext;
+    const PRODUCT_LINKS = {
+      mercadoLibre: "https://www.mercadolibre.com.ar/",
+      catalogo: "https://user98.lezslide.com/"
+    };
+    const PRODUCT_SPOTS = [
+      { id: 1, x: 0, z: -5.5, label: "Baggy Kravitz", type: "pants", description: "Pantalon baggy negro y violeta del drop." },
+      { id: 2, x: -13, z: -2.5, label: "Black Handbag", type: "handbag", description: "Cartera negra 3D." },
+      { id: 3, x: 13, z: -2.5, label: "Sticker Drop 1", type: "sticker-drop", description: "Sticker base del primer drop." },
+      { id: 4, x: -8, z: -12, label: "Pantalon Marron Melange", type: "melange-pants", description: "Pantalon marron/melange agregado al patio." },
+      { id: 5, x: 8, z: -12, label: "Sticker 3", type: "sticker-3", description: "Sticker del set RETO." },
+      { id: 6, x: -17, z: 7, label: "Puesto libre", type: "empty" },
+      { id: 7, x: 17, z: 7, label: "Puesto libre", type: "empty" }
+    ];
 
     init();
     animate();
@@ -459,9 +474,9 @@
     }
 
     function addLights() {
-      scene.add(new THREE.HemisphereLight(0xdff4ff, 0x3e451d, 1.12));
+      scene.add(new THREE.HemisphereLight(0xdff4ff, 0x8a8a84, 1.15));
 
-      const sun = new THREE.DirectionalLight(0xfff0bf, 1.9);
+      const sun = new THREE.DirectionalLight(0xfff4cf, 1.45);
       sun.position.set(-12, 24, 14);
       sun.castShadow = true;
       sun.shadow.mapSize.set(2048, 2048);
@@ -471,7 +486,11 @@
       sun.shadow.camera.bottom = -35;
       scene.add(sun);
 
-      const centerLight = new THREE.PointLight(0xd8fff6, 1.1, 14);
+      const fill = new THREE.DirectionalLight(0xd7e5ff, 0.42);
+      fill.position.set(14, 12, 18);
+      scene.add(fill);
+
+      const centerLight = new THREE.PointLight(0xffffff, 0.75, 18);
       centerLight.position.set(0, 4.8, -3);
       scene.add(centerLight);
     }
@@ -497,31 +516,26 @@
 
       addTerrainBlocks(grass, grassSide);
       addWalls(concrete);
-      addClouds();
       addUnderDoor(concrete);
+      addUserLogoWall();
+      addGlobalChatWall();
       addProgressWallSign();
       updateProgressWallSign();
     }
 
-    function addTerrainBlocks(grass, grassSide) {
+    function addTerrainBlocks(floorTexture, sideTexture) {
       const spots = [
         [-10, -6, 6, 4, 0.55], [10, -6, 6, 4, 0.55], [-10, 5, 7, 5, 0.55], [10, 5, 7, 5, 0.55],
         [0, -5, 7, 5, 0.7], [-3.5, 2, 6, 4, 0.45], [4.5, 2.5, 5, 4, 0.45],
         [-16, 2, 5, 8, 0.5], [16, 2, 5, 8, 0.5]
       ];
-      for (const [x, z, w, d, h] of spots) addGrassBlock(x, z, w, d, h, grass, grassSide);
-
-      for (let index = 0; index < 90; index += 1) {
-        const tuft = createTuft();
-        tuft.position.set(random(-20, 20), 0.05, random(-16, 13));
-        scene.add(tuft);
-      }
+      for (const [x, z, w, d, h] of spots) addFloorBlock(x, z, w, d, h, floorTexture, sideTexture);
     }
 
-    function addGrassBlock(x, z, w, d, h, grass, grassSide) {
+    function addFloorBlock(x, z, w, d, h, floorTexture, sideTexture) {
       const group = new THREE.Group();
-      const sideMat = new THREE.MeshLambertMaterial({ map: grassSide });
-      const topMat = new THREE.MeshLambertMaterial({ map: grass });
+      const sideMat = new THREE.MeshLambertMaterial({ map: sideTexture });
+      const topMat = new THREE.MeshLambertMaterial({ map: floorTexture });
       const sides = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), sideMat);
       sides.position.y = h / 2 - 0.02;
       sides.castShadow = true;
@@ -534,6 +548,16 @@
       group.add(top);
       group.position.set(x, 0, z);
       scene.add(group);
+    }
+
+    function addCeiling() {
+      const ceiling = new THREE.Mesh(
+        new THREE.BoxGeometry(MAP_SIZE * 2, 0.45, MAP_SIZE * 2),
+        new THREE.MeshLambertMaterial({ color: 0xb4b7bb })
+      );
+      ceiling.position.set(0, 8.35, 0);
+      ceiling.receiveShadow = true;
+      scene.add(ceiling);
     }
 
     function addWalls(concrete) {
@@ -561,6 +585,162 @@
         door.position.set(x, 2, -24.42);
         scene.add(door);
       }
+    }
+
+    function addWallLeds() {
+      const ledMat = new THREE.MeshBasicMaterial({ color: 0xd7f6ff });
+      const glowMat = new THREE.MeshBasicMaterial({ color: 0xa7dfff, transparent: true, opacity: 0.22 });
+      const strips = [
+        { x: 0, y: 0.92, z: -24.38, w: MAP_SIZE * 2 - 5, h: 0.12, d: 0.08 },
+        { x: -24.38, y: 0.92, z: 0, w: 0.08, h: 0.12, d: MAP_SIZE * 2 - 5 },
+        { x: 24.38, y: 0.92, z: 0, w: 0.08, h: 0.12, d: MAP_SIZE * 2 - 5 }
+      ];
+      for (const strip of strips) {
+        const core = new THREE.Mesh(new THREE.BoxGeometry(strip.w, strip.h, strip.d), ledMat);
+        core.position.set(strip.x, strip.y, strip.z);
+        scene.add(core);
+
+        const glow = new THREE.Mesh(new THREE.BoxGeometry(strip.w + 0.08, 0.5, strip.d + 0.08), glowMat);
+        glow.position.set(strip.x, strip.y + 0.03, strip.z);
+        scene.add(glow);
+      }
+
+      const ledPoints = [
+        [-18, -23], [-9, -23], [0, -23], [9, -23], [18, -23],
+        [-23, -14], [-23, -5], [-23, 5], [-23, 14],
+        [23, -14], [23, -5], [23, 5], [23, 14]
+      ];
+      for (const [x, z] of ledPoints) {
+        const light = new THREE.PointLight(0xdff7ff, 0.45, 8, 1.7);
+        light.position.set(x, 1.35, z);
+        scene.add(light);
+      }
+    }
+
+    function addGlobalChatWall() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 768;
+      canvas.height = 512;
+      const ctx = canvas.getContext("2d");
+      const texture = new THREE.CanvasTexture(canvas);
+      const panel = new THREE.Mesh(
+        new THREE.PlaneGeometry(8.8, 5.8),
+        new THREE.MeshBasicMaterial({ map: texture })
+      );
+      panel.position.set(13.2, 3.8, -24.32);
+      scene.add(panel);
+      addChatFlameWall();
+      drawGlobalChat(ctx, texture, []);
+      loadGlobalChatWall(ctx, texture);
+      window.setInterval(() => loadGlobalChatWall(ctx, texture), 3500);
+    }
+
+    async function loadGlobalChatWall(ctx, texture) {
+      try {
+        const response = await fetch("./api/global-messages?_=" + Date.now(), { cache: "no-store" });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body?.error || "chat-error");
+        drawGlobalChat(ctx, texture, filterWallMessages(Array.isArray(body.messages) ? body.messages : []).slice(-8));
+      } catch (_error) {
+        drawGlobalChat(ctx, texture, [{ username: "UNDER", content: "Global Chat sin conexion", created_at: "" }]);
+      }
+    }
+
+    function filterWallMessages(messages) {
+      return messages.filter((message) => {
+        const username = String(message.username || "").toLowerCase();
+        const content = String(message.content || "").trim().toLowerCase();
+        if ((username.includes("tumber") || username.includes("jeremy")) && /^(hola+|hello+|hi+|buenas*)[!. ]*$/.test(content)) return false;
+        return content && !content.includes("<script") && !content.includes("</script");
+      });
+    }
+
+    function drawGlobalChat(ctx, texture, messages) {
+      ctx.clearRect(0, 0, 768, 512);
+      ctx.fillStyle = "rgba(8, 14, 18, 0.94)";
+      ctx.fillRect(0, 0, 768, 512);
+      ctx.strokeStyle = "rgba(142, 255, 190, 0.9)";
+      ctx.lineWidth = 6;
+      ctx.strokeRect(10, 10, 748, 492);
+      ctx.fillStyle = "#8effb3";
+      ctx.font = "900 30px Courier New";
+      ctx.fillText("GLOBAL CHAT", 30, 52);
+      ctx.fillStyle = "rgba(255,255,255,0.18)";
+      ctx.fillRect(30, 72, 708, 2);
+      let y = 112;
+      const rows = messages.length ? messages : [
+        { username: "UNDER BOT", content: "Bienvenido al mapa. El chat global aparece aca en vivo." },
+        { username: "UNDER BOT", content: "Acercate a los pedestales para ver los productos." }
+      ];
+      for (const message of rows) {
+        const user = String(message.username || "Anon").slice(0, 18).toUpperCase();
+        const content = String(message.content || "").replace(/\s+/g, " ").slice(0, 70);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 20px Courier New";
+        ctx.fillText(user, 34, y);
+        ctx.fillStyle = "#d7ecff";
+        ctx.font = "700 20px Courier New";
+        wrapCanvasText(ctx, content, 34, y + 28, 690, 24, 2);
+        y += 70;
+      }
+      texture.needsUpdate = true;
+    }
+
+    function addChatFlameWall() {
+      const loader = new THREE.TextureLoader();
+      loader.load("assets/chat-flames.gif", (texture) => {
+        const flame = new THREE.Mesh(
+          new THREE.PlaneGeometry(3.1, 1.2),
+          new THREE.MeshBasicMaterial({ map: texture, transparent: true })
+        );
+        flame.position.set(16.6, 6.9, -24.29);
+        scene.add(flame);
+      });
+    }
+
+    function addUserLogoWall() {
+      const canvas = document.createElement("canvas");
+      canvas.width = 768;
+      canvas.height = 256;
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, 768, 256);
+      ctx.fillStyle = "rgba(0,0,0,0)";
+      ctx.fillRect(0, 0, 768, 256);
+      ctx.fillStyle = "#f4f4ee";
+      ctx.strokeStyle = "#111111";
+      ctx.lineWidth = 10;
+      ctx.font = "900 104px Courier New";
+      ctx.strokeText("USER98", 40, 150);
+      ctx.fillText("USER98", 40, 150);
+      ctx.font = "900 28px Courier New";
+      ctx.fillStyle = "#111111";
+      ctx.fillText("PRODUCT MAP", 48, 198);
+      const texture = new THREE.CanvasTexture(canvas);
+      const logo = new THREE.Mesh(
+        new THREE.PlaneGeometry(10.6, 3.5),
+        new THREE.MeshBasicMaterial({ map: texture, transparent: true })
+      );
+      logo.position.set(-14, 4.7, -24.3);
+      scene.add(logo);
+    }
+
+    function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines) {
+      const words = String(text || "").split(" ");
+      let line = "";
+      let lines = 0;
+      for (const word of words) {
+        const test = line ? line + " " + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) {
+          ctx.fillText(line, x, y);
+          y += lineHeight;
+          lines += 1;
+          line = word;
+          if (lines >= maxLines) return;
+        } else {
+          line = test;
+        }
+      }
+      if (line && lines < maxLines) ctx.fillText(line, x, y);
     }
 
     function addUnderDoor(concrete) {
@@ -625,7 +805,7 @@
       ctx.strokeRect(8, 8, 496, 176);
       ctx.fillStyle = "#f4fff4";
       ctx.font = "900 28px Courier New";
-      ctx.fillText("TRAMO RECORRIDO", 32, 48);
+      ctx.fillText("META 40.075 KM", 32, 48);
       ctx.font = "900 42px Courier New";
       ctx.fillText(`${Math.round(totalKm).toLocaleString("es-AR")} KM`, 32, 105);
       ctx.fillStyle = "rgba(255,255,255,0.18)";
@@ -638,62 +818,184 @@
       progressSignTexture.needsUpdate = true;
     }
 
-    function addClouds() {
-      const cloudMat = new THREE.MeshLambertMaterial({ color: 0xe5edf7, transparent: true, opacity: 0.72 });
-      const spots = [[-14, 12, -14], [-4, 10, -18], [9, 11, -16], [16, 12, -9], [-17, 11, 3], [4, 13, 3]];
+    function addCeilingLights() {
+      const lightMat = new THREE.MeshBasicMaterial({ color: 0xf2fbff });
+      const rimMat = new THREE.MeshLambertMaterial({ color: 0x2c3137 });
+      const spots = [[-14, 7.9, -14], [-4, 7.9, -18], [9, 7.9, -16], [16, 7.9, -9], [-17, 7.9, 3], [4, 7.9, 3]];
       for (const [x, y, z] of spots) {
-        const cloud = new THREE.Group();
-        for (let i = 0; i < 4; i += 1) {
-          const block = new THREE.Mesh(new THREE.BoxGeometry(2.4 + i * 0.2, 0.45, 1.1), cloudMat);
-          block.position.set(i * 1.4, (i % 2) * 0.18, (i % 3) * 0.35);
-          cloud.add(block);
-        }
-        cloud.position.set(x, y, z);
-        cloud.rotation.y = random(-0.25, 0.25);
-        scene.add(cloud);
+        const fixture = new THREE.Group();
+        const rim = new THREE.Mesh(new THREE.BoxGeometry(4.6, 0.16, 1.35), rimMat);
+        const panel = new THREE.Mesh(new THREE.BoxGeometry(4.15, 0.08, 1.05), lightMat);
+        panel.position.y = -0.09;
+        fixture.add(rim);
+        fixture.add(panel);
+        fixture.position.set(x, y, z);
+        fixture.rotation.y = random(-0.25, 0.25);
+        scene.add(fixture);
+
+        const lamp = new THREE.RectAreaLight(0xffffff, 8.5, 4.2, 1.1);
+        lamp.position.set(x, y - 0.18, z);
+        lamp.rotation.x = -Math.PI / 2;
+        lamp.rotation.z = fixture.rotation.y;
+        scene.add(lamp);
+
+        const downLight = new THREE.PointLight(0xffffff, 2.2, 17);
+        downLight.position.set(x, y - 0.55, z);
+        scene.add(downLight);
       }
     }
 
     function createPedestals() {
-      const spots = [
-        { id: 1, x: 0, z: -5.5, label: "Baggy Jeans", type: "pants", description: "Pantalon principal del drop." },
-        { id: 2, x: -13, z: -2.5, label: "Black Handbag", type: "handbag", description: "Cartera negra 3D." },
-        { id: 3, x: 13, z: -2.5, label: "Sticker Drop 1", type: "sticker-drop", description: "Sticker base del primer drop." },
-        { id: 4, x: -8, z: -12, label: "Sticker 2", type: "sticker-2", description: "Sticker del set RETO." },
-        { id: 5, x: 8, z: -12, label: "Sticker 3", type: "sticker-3", description: "Sticker del set RETO." },
-        { id: 6, x: -17, z: 7, label: "Puesto libre", type: "empty" },
-        { id: 7, x: 17, z: 7, label: "Puesto libre", type: "empty" }
-      ];
-
-      for (const spot of spots) {
+      for (const spot of PRODUCT_SPOTS) {
         const pedestal = createPedestal(spot.type === "empty");
         pedestal.position.set(spot.x, 0, spot.z);
         pedestal.userData = spot;
         scene.add(pedestal);
         pedestals.push(pedestal);
+        if (spot.type !== "empty") {
+          addProductSpotLight(spot.x, spot.z);
+          addPedestalLinkButtons(spot);
+        }
+      }
+    }
+
+    function addProductSpotLight(x, z) {
+      const glow = new THREE.PointLight(0xffffff, 1.45, 10, 1.45);
+      glow.position.set(x, 2.45, z);
+      scene.add(glow);
+
+      const rim = new THREE.SpotLight(0xffffff, 1.15, 12, Math.PI / 4, 0.7, 1.25);
+      rim.position.set(x + 1.4, 5.2, z + 1.2);
+      rim.target.position.set(x, 1.1, z);
+      rim.castShadow = true;
+      scene.add(rim);
+      scene.add(rim.target);
+    }
+
+    function addPedestalLinkButtons(spot) {
+      addLinkButton({
+        modelUrl: "assets/buttons/mercado-libre-badge.glb",
+        targetUrl: PRODUCT_LINKS.mercadoLibre,
+        label: `${spot.label} en Mercado Libre`,
+        x: spot.x - 0.72,
+        z: spot.z + 1.34,
+        rotationY: -0.12
+      });
+      addLinkButton({
+        modelUrl: "assets/buttons/round-logo-badge.glb",
+        targetUrl: PRODUCT_LINKS.catalogo,
+        label: `${spot.label} en catalogo`,
+        x: spot.x + 0.72,
+        z: spot.z + 1.34,
+        rotationY: 0.12
+      });
+    }
+
+    function addLinkButton({ modelUrl, targetUrl, label, x, z, rotationY = 0 }) {
+      const holder = new THREE.Group();
+      holder.position.set(x, 1.02, z);
+      holder.rotation.set(-0.18, rotationY, 0);
+      holder.userData = {
+        isLinkButton: true,
+        targetUrl,
+        label,
+        baseY: 1.02,
+        spinSpeed: 0,
+        floatAmp: 0
+      };
+      scene.add(holder);
+      linkButtons.push(holder);
+
+      if (!THREE.GLTFLoader) {
+        holder.add(createLinkButtonFallback());
+        return;
+      }
+
+      const loader = new THREE.GLTFLoader();
+      loader.load(
+        modelUrl,
+        (gltf) => {
+          const model = gltf.scene;
+          prepareModel(model, { brighten: true });
+          fitModel(model, 0.42);
+          model.traverse((node) => {
+            node.userData.isLinkButton = true;
+            node.userData.buttonRoot = holder;
+          });
+          holder.add(model);
+        },
+        undefined,
+        () => holder.add(createLinkButtonFallback())
+      );
+    }
+
+    function createLinkButtonFallback() {
+      const group = new THREE.Group();
+      const base = new THREE.Mesh(
+        new THREE.BoxGeometry(0.8, 0.16, 0.44),
+        new THREE.MeshPhongMaterial({ color: 0xf2d13b, shininess: 45 })
+      );
+      base.castShadow = true;
+      group.add(base);
+      return group;
+    }
+
+    function handleLinkButtonClick(event) {
+      const button = getClickedLinkButton(event);
+      if (!button || !button.userData.targetUrl) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openTargetUrl(button.userData.targetUrl);
+      button.visible = false;
+      button.userData.disabled = true;
+    }
+
+    function getClickedLinkButton(event) {
+      if (!linkButtons.length) return null;
+      if (isLocked) {
+        linkPointer.set(0, 0);
+      } else {
+        linkPointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        linkPointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      }
+      linkRaycaster.setFromCamera(linkPointer, camera);
+      const hits = linkRaycaster.intersectObjects(linkButtons.filter((button) => button.visible), true);
+      const hit = hits.find((item) => item.object.userData.isLinkButton || item.object.parent?.userData.isLinkButton);
+      if (!hit) return null;
+      let node = hit.object;
+      while (node && !node.userData.buttonRoot && !node.userData.isLinkButton) node = node.parent;
+      return node?.userData.buttonRoot || (node?.userData.isLinkButton ? node : null);
+    }
+
+    function openTargetUrl(targetUrl) {
+      try {
+        const url = new URL(targetUrl, window.location.href);
+        window.open(url.href, "_blank", "noopener,noreferrer");
+      } catch (_error) {
+        console.warn("URL invalida para boton 3D:", targetUrl);
       }
     }
 
     function createPedestal(isEmpty) {
       const group = new THREE.Group();
-      const concrete = new THREE.MeshLambertMaterial({ map: makeConcreteTexture() });
-      const base = new THREE.Mesh(new THREE.BoxGeometry(3.9, 1.1, 3.2), concrete);
-      base.position.y = 0.55;
+      const concrete = new THREE.MeshLambertMaterial({ map: makeConcreteTexture(), color: 0xb9b9b4 });
+      const base = new THREE.Mesh(new THREE.BoxGeometry(3.9, 0.62, 3.2), concrete);
+      base.position.y = 0.31;
       base.castShadow = true;
       base.receiveShadow = true;
       group.add(base);
 
-      const top = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.45, 2.5), concrete);
-      top.position.y = 1.3;
+      const top = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.28, 2.5), concrete);
+      top.position.y = 0.78;
       top.castShadow = true;
       top.receiveShadow = true;
       group.add(top);
 
       const ring = new THREE.Mesh(
         new THREE.TorusGeometry(1.05, 0.035, 8, 56),
-        new THREE.MeshBasicMaterial({ color: isEmpty ? 0xd9fff5 : 0x86fff1, transparent: true, opacity: isEmpty ? 0.55 : 0.95 })
+        new THREE.MeshBasicMaterial({ color: isEmpty ? 0xd6d8d6 : 0xe9efef, transparent: true, opacity: isEmpty ? 0.45 : 0.72 })
       );
-      ring.position.y = 1.56;
+      ring.position.y = 1.0;
       ring.rotation.x = Math.PI / 2;
       group.add(ring);
       return group;
@@ -701,18 +1003,19 @@
 
     function loadProducts() {
       loadBaggyJeans();
-      loadProductModel("assets/products/black-handbag.glb", -13, -2.5, 1.85, "Black Handbag", "Cartera negra 3D.", { y: Math.PI * 0.12 });
+      loadProductModel("assets/products/black-handbag.glb", -13, -2.5, 0.82, "Black Handbag", "Cartera negra 3D.", { y: Math.PI * 0.12 });
       loadProductModel("assets/products/sticker-drop-1.glb", 13, -2.5, 1.45, "Sticker Drop 1", "Sticker base del primer drop.", { y: -Math.PI * 0.08 });
-      loadProductModel("assets/products/sticker-2.glb", -8, -12, 1.35, "Sticker 2", "Sticker del set RETO.", { y: Math.PI * 0.18 });
+      loadProductModel("assets/products/patio/melange-brown-sweatpants.glb", -8, -12, 1.65, "Pantalon Marron Melange", "Pantalon marron/melange agregado al patio.", { y: Math.PI * 0.08 }, { brighten: true });
       loadProductModel("assets/products/sticker-3.glb", 8, -12, 1.35, "Sticker 3", "Sticker del set RETO.", { y: -Math.PI * 0.18 });
+      loadPatioTent();
       loadCornerMonito();
     }
 
-    function loadProductModel(url, x, z, targetHeight, name, description, rotation = {}) {
+    function loadProductModel(url, x, z, targetHeight, name, description, rotation = {}, options = {}) {
       const holder = new THREE.Group();
-      holder.position.set(x, 2.05, z);
+      holder.position.set(x, 1.08, z);
       holder.rotation.set(rotation.x || 0, rotation.y || 0, rotation.z || 0);
-      holder.userData = { name, description };
+      holder.userData = { name, description, baseY: 1.08, spinSpeed: 0.12, floatAmp: 0.018 };
       scene.add(holder);
       products.push(holder);
 
@@ -726,7 +1029,7 @@
         url,
         (gltf) => {
           const model = gltf.scene;
-          prepareModel(model);
+          prepareModel(model, options);
           fitModel(model, targetHeight);
           holder.add(model);
         },
@@ -737,8 +1040,8 @@
 
     function loadBaggyJeans() {
       const holder = new THREE.Group();
-      holder.position.set(0, 2.05, -5.5);
-      holder.userData = { name: "Baggy Jeans", description: "Pantalon cargado en el pedestal central." };
+      holder.position.set(0, 1.04, -5.5);
+      holder.userData = { name: "Baggy Kravitz", description: "Baggy Kravitz cargado en el pedestal central.", baseY: 1.04, spinSpeed: 0.08, floatAmp: 0.012 };
       scene.add(holder);
       products.push(holder);
 
@@ -748,22 +1051,43 @@
       }
 
       const loader = new THREE.GLTFLoader();
-      fetch("assets/products/baggy-jeans/Baggy%20Jeans_gltf_thin.bin", { method: "HEAD" })
-        .then((response) => {
-          if (!response.ok) throw new Error("baggy-bin-missing");
-          loader.load(
-            "assets/products/baggy-jeans/Baggy%20Jeans_gltf_thin.gltf",
-            (gltf) => {
-              const model = gltf.scene;
-              prepareModel(model);
-              fitModel(model, 1.75);
-              holder.add(model);
-            },
-            undefined,
-            () => holder.add(createPantsFallback())
-          );
-        })
-        .catch(() => holder.add(createPantsFallback()));
+      loader.load(
+        "assets/products/baggy-pants-negro-violeta.glb",
+        (gltf) => {
+          const model = gltf.scene;
+          prepareModel(model);
+          fitModel(model, 1.75);
+          holder.add(model);
+        },
+        undefined,
+        () => holder.add(createPantsFallback())
+      );
+    }
+
+    function loadPatioTent() {
+      const holder = new THREE.Group();
+      holder.position.set(13.8, 0.06, 20.4);
+      holder.rotation.y = -Math.PI * 0.38;
+      holder.userData = { name: "Carpa", description: "Carpa apartada en el extremo abierto del patio, del lado donde se ve el cielo." };
+      scene.add(holder);
+
+      if (!THREE.GLTFLoader) {
+        holder.add(createTentFallback());
+        return;
+      }
+
+      const loader = new THREE.GLTFLoader();
+      loader.load(
+        "assets/products/patio/camping-tent.glb",
+        (gltf) => {
+          const model = gltf.scene;
+          prepareModel(model, { brighten: true });
+          fitModel(model, 2.15);
+          holder.add(model);
+        },
+        undefined,
+        () => holder.add(createTentFallback())
+      );
     }
 
     function loadCornerMonito() {
@@ -792,12 +1116,24 @@
       );
     }
 
-    function prepareModel(object) {
+    function prepareModel(object, options = {}) {
       object.traverse((node) => {
         if (!node.isMesh) return;
         node.castShadow = true;
         node.receiveShadow = true;
-        if (node.material) node.material.needsUpdate = true;
+        const materials = Array.isArray(node.material) ? node.material : [node.material];
+        for (const material of materials) {
+          if (!material) continue;
+          if (options.brighten) {
+            if (material.map) material.map.encoding = THREE.sRGBEncoding;
+            if (material.emissiveMap) material.emissiveMap.encoding = THREE.sRGBEncoding;
+            if (material.color) material.color.multiplyScalar(1.6);
+            if (material.emissive) material.emissive.setHex(0x1a1a1a);
+            if (material.roughness !== undefined) material.roughness = Math.min(material.roughness, 0.72);
+            material.side = THREE.DoubleSide;
+          }
+          material.needsUpdate = true;
+        }
       });
     }
 
@@ -853,17 +1189,51 @@
       return group;
     }
 
+    function createTentFallback() {
+      const group = new THREE.Group();
+      const canvas = new THREE.Mesh(
+        new THREE.ConeGeometry(1.5, 1.65, 4),
+        new THREE.MeshLambertMaterial({ color: 0x476d45 })
+      );
+      canvas.position.y = 0.82;
+      canvas.rotation.y = Math.PI / 4;
+      canvas.scale.z = 1.65;
+      canvas.castShadow = true;
+      canvas.receiveShadow = true;
+      group.add(canvas);
+
+      const opening = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.05, 1.15),
+        new THREE.MeshBasicMaterial({ color: 0x161712, side: THREE.DoubleSide })
+      );
+      opening.position.set(0, 0.58, 1.72);
+      group.add(opening);
+      return group;
+    }
+
     function makeGrassTexture() {
       const canvas = document.createElement("canvas");
       canvas.width = 64;
       canvas.height = 64;
       const ctx = canvas.getContext("2d");
-      const colors = ["#6ea81f", "#7ebc25", "#5b8c18", "#8fc936"];
+      const colors = ["#2c6f1f", "#347d24", "#1f5e18", "#3f8b2d"];
       for (let y = 0; y < 64; y += 4) {
         for (let x = 0; x < 64; x += 4) {
           ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
           ctx.fillRect(x, y, 4, 4);
         }
+      }
+      ctx.strokeStyle = "rgba(20,58,18,0.22)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 64; i += 16) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, 64);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(64, i);
+        ctx.stroke();
       }
       return new THREE.CanvasTexture(canvas);
     }
@@ -873,7 +1243,7 @@
       canvas.width = 64;
       canvas.height = 64;
       const ctx = canvas.getContext("2d");
-      const colors = ["#477f1e", "#5f9b25", "#3d6f19", "#72ae2d"];
+      const colors = ["#255f1b", "#317125", "#1e4f18", "#3f7d2f"];
       for (let y = 0; y < 64; y += 4) {
         for (let x = 0; x < 64; x += 4) {
           ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
@@ -888,13 +1258,13 @@
       canvas.width = 64;
       canvas.height = 64;
       const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "#70746d";
+      ctx.fillStyle = "#8c8e8a";
       ctx.fillRect(0, 0, 64, 64);
       for (let y = 0; y < 64; y += 16) {
         for (let x = 0; x < 64; x += 16) {
-          ctx.fillStyle = Math.random() > 0.5 ? "#797d75" : "#656961";
+          ctx.fillStyle = Math.random() > 0.5 ? "#a0a29d" : "#797c77";
           ctx.fillRect(x, y, 16, 16);
-          ctx.fillStyle = "#343833";
+          ctx.fillStyle = "#565b56";
           ctx.fillRect(x + 2, y + 2, 2, 2);
           ctx.fillRect(x + 13, y + 13, 2, 2);
         }
@@ -928,6 +1298,7 @@
 
     function bindInput() {
       document.getElementById("startBtn").addEventListener("click", lockMap);
+      window.addEventListener("click", handleLinkButtonClick);
       document.addEventListener("pointerlockchange", () => {
         isLocked = document.pointerLockElement === document.body;
         document.getElementById("center-card").style.display = isLocked ? "none" : "flex";
@@ -950,7 +1321,13 @@
         document.getElementById("center-card").style.display = "none";
         return;
       }
-      document.body.requestPointerLock();
+      const lockRequest = document.body.requestPointerLock();
+      if (lockRequest && lockRequest.catch) {
+        lockRequest.catch(() => {
+          isLocked = true;
+          document.getElementById("center-card").style.display = "none";
+        });
+      }
     }
 
     function handleKey(event, isDown) {
@@ -1026,6 +1403,16 @@
       camera.rotation.x = pitch;
     }
 
+    function animateProducts(time, dt) {
+      for (const product of products) {
+        const baseY = product.userData.baseY || product.position.y;
+        const floatAmp = product.userData.floatAmp || 0.025;
+        const spinSpeed = product.userData.spinSpeed || 0.08;
+        product.position.y = baseY + Math.sin(time * 0.9 + product.position.x * 0.2) * floatAmp;
+        product.rotation.y += spinSpeed * dt;
+      }
+    }
+
     function updateSelection() {
       let nearest = null;
       let nearestDistance = Infinity;
@@ -1086,6 +1473,7 @@
       lastTime = now;
       updateMovement(dt);
       updateSelection();
+      animateProducts(now / 1000, dt);
       renderer.render(scene, camera);
     }
 
