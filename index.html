@@ -365,6 +365,54 @@
       text-transform: uppercase;
     }
 
+    .map-direct {
+      position: absolute;
+      left: clamp(12px, 3vw, 28px);
+      top: clamp(92px, 13vh, 138px);
+      z-index: 7;
+      width: min(360px, calc(100vw - 24px));
+      padding: 14px;
+      background: #c0c0c0;
+      color: #050505;
+      border: 2px solid;
+      border-color: #ffffff #050505 #050505 #ffffff;
+      box-shadow: 5px 5px 0 rgba(0,0,0,0.62);
+      text-shadow: none;
+    }
+
+    .map-direct strong {
+      display: block;
+      font-size: clamp(18px, 3.2vw, 30px);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .map-direct span {
+      display: block;
+      margin-top: 8px;
+      color: #222;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .map-direct a {
+      display: inline-grid;
+      place-items: center;
+      min-height: 38px;
+      margin-top: 12px;
+      padding: 8px 14px;
+      border: 2px solid;
+      border-color: #ffffff #050505 #050505 #ffffff;
+      background: #050505;
+      color: #35ff9a;
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.45);
+    }
+
     .world-stage {
       position: relative;
       min-height: 0;
@@ -977,6 +1025,11 @@
         text-align: left;
       }
 
+      .map-direct {
+        top: 108px;
+        width: min(310px, calc(100vw - 24px));
+      }
+
       .stage-caption {
         display: none;
       }
@@ -1100,6 +1153,11 @@
         </div>
         <div class="progress-status" id="world-status">Conectando World Loop...</div>
       </section>
+      <section class="map-direct" aria-label="Acceso directo a Striqe Map">
+        <strong>Striqe Map</strong>
+        <span>Entrada publica sin login para recorrer productos 3D.</span>
+        <a href="./xp-agar-strike.html">Entrar directo</a>
+      </section>
       <aside class="panel-pop" id="info-panel" hidden>
         <h2 id="info-title">Productos</h2>
         <div id="info-copy">Productos, drops, stickers y herramientas se desbloquean desde una cuenta registrada.</div>
@@ -1129,7 +1187,9 @@
       ["Alaxd", "./desktop/?app=alaxd-overlay"],
       ["MSN Under", "./desktop/?app=private-chat"],
       ["Juegos", "./desktop/?app=explorer-games"],
-      ["XP Agar Strike", "./desktop/?app=xp-agar-strike"],
+      ["Striqe Map", "./xp-agar-strike.html"],
+      ["Countdown 1.8M", "./countdown.html"],
+      ["Countdown Admin", "./countdown-admin.html"],
       ["Under Music", "./desktop/?app=winamp"],
       ["slot98", "./slot98.html"],
     ];
@@ -1217,6 +1277,11 @@
       `],
     };
     let isRegisteredUser = false;
+    const PUBLIC_APPS = [
+      ["Striqe Map", "./xp-agar-strike.html"],
+      ["Countdown 1.8M", "./countdown.html"],
+      ["Countdown Admin", "./countdown-admin.html"],
+    ];
 
     const canvas = document.getElementById("world-canvas");
     const stage = document.getElementById("world-stage");
@@ -1251,7 +1316,6 @@
       new THREE.MeshPhongMaterial({ map: texture, shininess: 8 })
     );
     earth.rotation.y = Math.PI * 0.1;
-    earth.rotation.z = Math.PI;
     scene.add(earth);
 
     const starsGeometry = new THREE.BufferGeometry();
@@ -1422,9 +1486,10 @@
       const list = document.getElementById("apps-list");
       if (!isRegisteredUser) {
         list.innerHTML = `
+          ${PUBLIC_APPS.map(([label, href]) => `<a href="${href}">${label}</a>`).join("")}
           <div class="apps-lock">
             <strong>Acceso registrado</strong>
-            <span>Crea cuenta o ingresa para desbloquear todas las apps de reelok.</span>
+            <span>El mapa de productos es publico. Crea cuenta o ingresa para desbloquear el resto de apps de reelok.</span>
             <a href="./desktop/?app=users">Crear usuario / ingresar</a>
           </div>
         `;
